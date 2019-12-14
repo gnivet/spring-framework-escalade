@@ -14,29 +14,28 @@
 		</div>
 	</div>
 	<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet"
-	href="/webapp/resources/css/escalade.css" />
-   <link rel="stylesheet" href="/resources/css/escalade.css"/>  
-<title><c:out value="${title}" /></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="/webapp/resources/css/escalade.css" />
+		<link rel="stylesheet" href="/resources/css/escalade.css" />
+		<title><c:out value="${title}" /></title>
 	</head>
 	<body>
-
 		<h2>
-			<!--  Message
-		<fmt:message key="welcome" />	 -->
+			<!--<fmt:message key="welcome" /> -->
 			<span> <c:out value="${message}" /></span>
 		</h2>
 		<aside>
-			<form method="post" action="users/userInfo">
+			<form name='f' method="post" action="/j_spring_security_check">
 				<fieldset>
 					<legend>Login</legend>
-					<label for="email">Email<span class="requis">*</span></label> <input
-						type="text" id="email" name="email" value="" size="20"
+					<label for="username">User name<span class="requis">*</span></label>
+					<input type="text" id="username" name="username" value="" size="20"
 						maxlength="60" /> <br /> <label for="password">Password
 						<span class="requis">*</span>
 					</label> <input type="password" id="password" name="password" value=""
-						size="20" maxlength="20" /> <br /> <input type="submit"
+						size="20" maxlength="20" /> <br />
+					<legend>Remember Me?</legend>
+					<input type="checkbox" name="remember-me" /> <input type="submit"
 						value="Send" class="sansLabel" /> <br />
 				</fieldset>
 			</form>

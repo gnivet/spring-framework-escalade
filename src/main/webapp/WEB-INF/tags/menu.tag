@@ -13,6 +13,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
             </button>
         </div>
         <div class="navbar-collapse collapse" id="main-navbar">
@@ -23,7 +28,19 @@
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                     <span>Home</span>
                 </escalade:menuItem> 
-               
+                
+                <escalade:menuItem active="${name eq 'user'}" url="/userInfo" title="user page">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    <span>User Info</span>
+                </escalade:menuItem> 
+                
+                
+                <escalade:menuItem active="${name eq 'admin'}" url="/admin" title="admin page">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    <span>Admin Info</span>
+                </escalade:menuItem> 
+                
+                
 				<escalade:menuItem active="${name eq 'areas'}" url="/areas" title="topos">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     <span>Topos</span>
@@ -58,6 +75,11 @@
                     <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
                     <span>Error</span>
                 </escalade:menuItem>
+                
+                <escalade:menuItem active="${name eq 'logout'}" url="/logout" title="logoutSuccessfulPage page">
+                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                    <span>Logout</span>
+                </escalade:menuItem> 
 
             </ul>
         </div>

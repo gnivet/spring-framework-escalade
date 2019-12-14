@@ -5,14 +5,15 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
-<escalade:layout pageName="userInfoPage">
+<escalade:layout pageName="adminPage">
 	<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" href="/webapp/resources/css/escalade.css" />
-<link rel="stylesheet" href="/resources/css/escalade.css" />
-</head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="/webapp/resources/css/escalade.css" />
+		<link rel="stylesheet" href="/resources/css/escalade.css" />
+		<title><c:out value="${title}" /></title>
+	</head>
 <body>
-<h2>user Information</h2>
+<h2>Admin Information</h2>
     <table class="table table-striped">
         <tr>
             <th>Name</th>
@@ -29,4 +30,3 @@
 </body>
 	</html>
 </escalade:layout>
-

@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
-<escalade:layout pageName="loginPage">
+<escalade:layout pageName="home">
 	<div class="row">
 		<div class="col-md-12">
 			<spring:url value="/resources/images/topos.png" htmlEscape="true"
@@ -14,15 +14,14 @@
 		</div>
 	</div>
 	<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" href="/webapp/resources/css/escalade.css" />
-<link rel="stylesheet" href="/resources/css/escalade.css" />
-<title><c:out value="${title}" /></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="/webapp/resources/css/escalade.css" />
+		<link rel="stylesheet" href="/resources/css/escalade.css" />
+		<title><c:out value="${title}" /></title>
 	</head>
 	<body>
 		<h2>
-			<!--  Message
-		<fmt:message key="welcome" />	 -->
+			<fmt:message key="welcome" />
 			<span> <c:out value="${message}" /></span>
 		</h2>
 		<aside>
@@ -34,10 +33,10 @@
 						maxlength="60" /> <br /> <label for="password">Password
 						<span class="requis">*</span>
 					</label> <input type="password" id="password" name="password" value=""
-						size="20" maxlength="20" /> <br /> <input type="submit"
-						value="Send" class="sansLabel" /> <br />
+						size="20" maxlength="20" /> <br />
 					<legend>Remember Me?</legend>
-					<input type="checkbox" name="remember-me" /> <br />
+					<input type="checkbox" name="remember-me" /> <input type="submit"
+						value="Send" class="sansLabel" /> <br />
 				</fieldset>
 			</form>
 		</aside>

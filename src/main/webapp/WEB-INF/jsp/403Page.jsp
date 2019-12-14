@@ -5,31 +5,25 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
-<escalade:layout pageName="userInfoPage">
+<escalade:layout pageName="403Page">
 	<head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="/webapp/resources/css/escalade.css" />
 <link rel="stylesheet" href="/resources/css/escalade.css" />
-<title><c:out value="${title}" /></title>
+<title>Access Denied</title>
 	</head>
 	<body>
-		<h2>User Info Page</h2>
-		<h3>
-			<c:out value="${userPrincipal.name}"></c:out>
-		</h3>
-		<b>This is protected page!</b>
-		<br />
-		<br />
+		<h2>user Information</h2>
+		<table class="table table-striped">
+			<tr>
+				<td><b><c:out value="${ message }" /></b></td>
+			</tr>
+
+		</table>
 		<div>
-			<!-- 
-			<c:set var="test" value="Mateo21" scope="page" />  -->
-			<c:if test="${userInfo != null }">
-				<p>
-					<c:out value="${ userInfo }"></c:out>
-				</p>
-			</c:if>
+			<c:out value="${ userInfo }"></c:out>
 		</div>
+	</body>
 	</html>
 </escalade:layout>
-
 
