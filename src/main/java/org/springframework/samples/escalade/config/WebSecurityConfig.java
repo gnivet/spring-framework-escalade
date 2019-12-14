@@ -51,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // If no login, it will redirect to /login page.
         http.authorizeRequests().antMatchers("/userInfo").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/areas").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/users").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/areas/toposList").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/escalade/areas/toposList").hasAnyRole("USER", "ADMIN");
