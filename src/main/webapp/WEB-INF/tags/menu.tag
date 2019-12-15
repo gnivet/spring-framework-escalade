@@ -31,13 +31,13 @@
                 
                 <escalade:menuItem active="${name eq 'user'}" url="/userInfo" title="user page">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                    <span>User Info</span>
+                    <span>User</span>
                 </escalade:menuItem> 
                 
                 
                 <escalade:menuItem active="${name eq 'admin'}" url="/admin" title="admin page">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                    <span>Admin Info</span>
+                    <span>Admin</span>
                 </escalade:menuItem> 
                 
                 

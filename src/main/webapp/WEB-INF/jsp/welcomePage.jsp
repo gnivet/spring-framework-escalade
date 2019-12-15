@@ -24,6 +24,7 @@
 			<!--<fmt:message key="welcome" /> -->
 			<span> <c:out value="${message}" /></span>
 		</h2>
+		<!-- 
 		<aside>
 			<form name='f' method="post" action="/j_spring_security_check">
 				<fieldset>
@@ -39,7 +40,8 @@
 						value="Send" class="sansLabel" /> <br />
 				</fieldset>
 			</form>
-		</aside>
+		</aside> 
+		 -->
 	</body>
 	</html>
 </escalade:layout>
