@@ -40,9 +40,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 /**
  * Simple business object representing a Topo.
  *
- * @author Guillaume Nivet
- * @author Guillaume Nivet
- * @author Guillaume Nivet
+ * @author Guillaume Nivet 
  */
 
 @Entity
@@ -52,9 +50,11 @@ public class Topo extends NamedEntity {
 	@Column(name = "birth_date")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate birthDate;
-
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "type_id")
+	@Transient	
 	private TopoType type;
 
 	@ManyToOne
@@ -240,4 +240,13 @@ public class Topo extends NamedEntity {
 		visit.setTopo(this);
 	}
 
+	@Override
+	public String toString() {
+		return "TopoType [type=" + type + "]";
+	}
+
+	
+	
+	
+	
 }

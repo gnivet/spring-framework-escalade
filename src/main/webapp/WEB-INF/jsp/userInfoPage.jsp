@@ -9,7 +9,6 @@
 	<head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="/webapp/resources/css/escalade.css" />
-<link rel="stylesheet" href="/resources/css/escalade.css" />
 </head>
 <body>
 <h2>user Information</h2>

@@ -32,9 +32,9 @@ public class Length extends NamedEntity {
 	@Column(name = "comment")
 	@NotEmpty
 	private String comment;
-
+	
 	@Column(name = "length_status")
-	@NotNull
+	@NotNull	
 	private boolean length_status;
 
 	@ManyToOne

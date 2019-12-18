@@ -24,8 +24,7 @@ import javax.validation.constraints.NotEmpty;
  * Simple JavaBean domain object adds a name property to <code>BaseEntity</code>. Used as a base class for objects
  * needing these properties.
  *
- * @author Guillaume Nivet
- * @author Guillaume Nivet
+ * @author Guillaume Nivet 
  */
 @MappedSuperclass
 public class NamedEntity extends BaseEntity {
@@ -43,8 +42,10 @@ public class NamedEntity extends BaseEntity {
     }
 
     @Override
-    public String toString() {
-        return this.getName();
-    }
+	public String toString() {
+		return "NamedEntity [name=" + name + ", id=" + id + ", getName()=" + getName() + ", getId()=" + getId()
+				+ ", isNew()=" + isNew() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
+	}
 
 }

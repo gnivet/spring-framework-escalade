@@ -241,10 +241,11 @@ public class User extends Person {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + id + ", firstName=" + firstName + ", " + "lastName=" + lastName + "," + "email="
-				+ firstEmail + "," + "address" + address + "," + "postalcode" + postalcode + "," + "city" + city + ","
-				+ "telephone" + telephone + "," + "password" + password + "," + "username" + username + "]";
-
+		return "User [address=" + address + ", postalcode=" + postalcode + ", areas=" + areas + ", city=" + city
+				+ ", telephone=" + telephone + ", topos=" + topos + ", username=" + username + ", password=" + password
+				+ ", role=" + role + ", valid=" + valid + "]";
 	}
+
+	
 
 }
