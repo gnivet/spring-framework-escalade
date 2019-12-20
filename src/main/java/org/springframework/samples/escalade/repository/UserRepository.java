@@ -18,6 +18,7 @@ package org.springframework.samples.escalade.repository;
 import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.escalade.model.AppUser;
 import org.springframework.samples.escalade.model.BaseEntity;
 import org.springframework.samples.escalade.model.User;
 
@@ -42,7 +43,7 @@ public interface UserRepository {
 	User findById(long id) throws DataAccessException;
 
 	/**
-	 * Save an <code>USer</code> to the data store, either inserting or updating it.
+	 * Save an <code>User</code> to the data store, either inserting or updating it.
 	 *
 	 * @param user the <code>User</code> to save
 	 * @see BaseEntity#isNew
@@ -50,7 +51,7 @@ public interface UserRepository {
 	void save(User user) throws DataAccessException;
 
 	/**
-	 * Retrieve <code>USer</code>s from the data store by last name, returning all
+	 * Retrieve <code>User</code>s from the data store by last name, returning all
 	 * users whose last name <i>starts</i> with the given name.
 	 *
 	 * @param lastName Value to search for
@@ -72,4 +73,14 @@ public interface UserRepository {
 	 */
 	Collection<User> findAll() throws DataAccessException;
 
+	
+	/**
+	 * Save an <code>AppUSer</code> to the data store, either inserting or updating it.
+	 *
+	 * @param appuser the <code>AppUser</code> to save
+	 * @see BaseEntity#isNew
+	 */
+	void saveAppUser(AppUser user) throws DataAccessException;
+	
+	
 }

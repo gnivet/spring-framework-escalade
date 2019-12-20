@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
  
         // The pages does not require login
-        http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
+        http.authorizeRequests().antMatchers("/", "/login", "/register", "/logout", "/registerSuccessfulPage.jsp").permitAll();
  
         // /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
         // If no login, it will redirect to /login page.
@@ -56,7 +56,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/areas/toposList").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/escalade/areas/toposList").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/escalade/users/find").hasAnyRole("USER", "ADMIN");
-        // For ADMIN only. /users/find
+        
+        
+        // For ADMIN only. /users/find        
         http.authorizeRequests().antMatchers("/admin").hasRole("ADMIN");
  
         // When the user has logged in as XX.

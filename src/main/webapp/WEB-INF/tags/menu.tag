@@ -26,49 +26,38 @@
 										
                 <escalade:menuItem active="${name eq 'home'}" url="/" title="home page">
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                    <span>Home</span>
-                </escalade:menuItem> 
-                
-                <escalade:menuItem active="${name eq 'user'}" url="/userInfo" title="user page">
+                    <span>Home Info</span>
+                </escalade:menuItem>
+                 
+                <escalade:menuItem active="${name eq 'app_user'}" url="/userInfo" title="user page">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     <span>User</span>
-                </escalade:menuItem> 
+                </escalade:menuItem>                
                 
+                <escalade:menuItem active="${name eq 'app_user'}" url="/register" title="register">
+                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                    <span>Register</span>
+                </escalade:menuItem>
                 
                 <escalade:menuItem active="${name eq 'admin'}" url="/admin" title="admin page">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     <span>Admin</span>
-                </escalade:menuItem> 
-                
+                </escalade:menuItem>
                 
 				<escalade:menuItem active="${name eq 'areas'}" url="/areas" title="topos">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     <span>Topos</span>
-                </escalade:menuItem>
-                <!-- 
-				<escalade:menuItem active="${name eq 'areas'}" url="/areas/find.html" title="find topos">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    <span>Find topos</span> 
-                </escalade:menuItem>  -->
+                </escalade:menuItem>               
                 				
                 <escalade:menuItem active="${name eq 'users'}" url="/users/find" title="find users">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     <span>Find users</span>
                 </escalade:menuItem>
-                <!--  
-                <escalade:menuItem active="${name eq 'users'}" url="/users/new.html" title="logins">
-                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Logins</span>
-                </escalade:menuItem>
                 
-                -->
-
                 <escalade:menuItem active="${name eq 'users'}" url="/users" title="users">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Users</span>
                 </escalade:menuItem>
-                
-                
 
                 <escalade:menuItem active="${name eq 'error'}" url="/oups"
                             title="trigger a RuntimeException to see how it is handled">
@@ -77,7 +66,7 @@
                 </escalade:menuItem>
                 
                 <escalade:menuItem active="${name eq 'logout'}" url="/logout" title="logoutSuccessfulPage page">
-                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                     <span>Logout</span>
                 </escalade:menuItem> 
 

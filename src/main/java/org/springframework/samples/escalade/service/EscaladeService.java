@@ -18,6 +18,7 @@ package org.springframework.samples.escalade.service;
 import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.escalade.model.AppUser;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.AreaType;
 import org.springframework.samples.escalade.model.Topo;
@@ -59,4 +60,13 @@ public interface EscaladeService {
 
 	Collection<User> findUserByLastName(String lastName) throws DataAccessException;
 	
+	/*
+	 * 
+	 */
+	
+	void saveAppUser(AppUser user) throws DataAccessException;
+
+	String findLoggedInUsername();
+
+    void autoLogin(String username, String password);
 }

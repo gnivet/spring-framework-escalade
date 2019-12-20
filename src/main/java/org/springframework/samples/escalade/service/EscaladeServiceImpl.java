@@ -19,6 +19,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.escalade.model.AppUser;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.AreaType;
 import org.springframework.samples.escalade.model.Length;
@@ -158,5 +159,26 @@ public class EscaladeServiceImpl implements EscaladeService {
 		// TODO Auto-generated method stub
 		return userRepository.findAll();
 	}
+
+	@Override
+	public void saveAppUser(AppUser user) throws DataAccessException {
+		// TODO Auto-generated method stub
+		
+		userRepository.saveAppUser(user);
+	}
+
+	@Override
+	public String findLoggedInUsername() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void autoLogin(String username, String password) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 }

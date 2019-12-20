@@ -32,14 +32,16 @@
 						anim..</p>
 					<h3>Some Links</h3>
 					<p>Lorem ipsum dolor sit ame.</p>
-					<!--  
+					 
 					<ul class="nav nav-pills flex-column">
 						<li class="nav-item"><a class="nav-link active" href="/login">login</a></li>						
 					</ul>
-					-->
+					
+					
+					
 					<hr class="d-sm-none">
 				</div>
-				  
+				<!--    
 				<div class="col-sm-8">
 					<h2>Le Grand Toit.</h2>
 					<h5>Bloc falaise, Hauteur 10 à 18 m, 400 voies</h5>
@@ -47,7 +49,7 @@
 						htmlEscape="true" var="toposImage" />
 					<img class="img-responsive" src="${toposImage}" />
 					<p>Les Eaux Claires</p>
-					<p>PuyMoyen</p>
+					<p>PuyMoyen</p> -->
 					<!--
 					<br>
 					<h2>Bloc de la Brioche</h2>

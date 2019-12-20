@@ -55,7 +55,8 @@ public class UserController {
 
 	@RequestMapping(value = "/users/new", method = RequestMethod.GET)
 	public String initCreationForm(Map<String, Object> model) {
-		User user = new User();		model.put("user", user);
+		User user = new User();	
+		model.put("user", user);
 		
 		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 	}
