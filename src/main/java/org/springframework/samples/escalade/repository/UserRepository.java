@@ -18,7 +18,6 @@ package org.springframework.samples.escalade.repository;
 import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.escalade.model.AppUser;
 import org.springframework.samples.escalade.model.BaseEntity;
 import org.springframework.samples.escalade.model.User;
 
@@ -74,13 +73,9 @@ public interface UserRepository {
 	Collection<User> findAll() throws DataAccessException;
 
 	
-	/**
-	 * Save an <code>AppUSer</code> to the data store, either inserting or updating it.
-	 *
-	 * @param appuser the <code>AppUser</code> to save
-	 * @see BaseEntity#isNew
-	 */
-	void saveAppUser(AppUser user) throws DataAccessException;
+	
+
+	
 	
 	
 }

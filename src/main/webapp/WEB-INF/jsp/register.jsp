@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <escalade:layout pageName="register">
 	<div class="row">
 		<div class="col-md-12">
@@ -24,6 +25,7 @@
 			<span> <c:out value="${message}" /></span>			
 		</h2>
 		<aside>
+			<sec:authorize access="isAnonymous()">
 			<form:form  method="POST" action="/register" modelAttribute = "userForm">
 				<fieldset>
 					<legend>User Name</legend>					
@@ -46,6 +48,7 @@
 					</ul>
 				</fieldset>
 			</form:form>
+			</sec:authorize>
 		</aside>
 	</body>
 	</html>

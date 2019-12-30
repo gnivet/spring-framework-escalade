@@ -24,7 +24,6 @@ import javax.persistence.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
-import org.springframework.samples.escalade.model.AppUser;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.stereotype.Repository;
@@ -113,21 +112,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		return (User) query.getSingleResult();
 	}
 
-	@Override
-	public void saveAppUser(AppUser appuser ) throws DataAccessException {
-		// TODO Auto-generated method stub
-		
-		if (appuser.getUserId() == null) {
-			 //Object bCryptPasswordEncoder;
-			String encrytedPassword = null;
-			appuser.setEncrytedPassword(encrytedPassword);
-			this.em.persist(appuser);
-		} else {
-			this.em.merge(appuser);
-		}
-		
-	}
-
+	
 	/*
 	 * @Override
 	 * 

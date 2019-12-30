@@ -57,16 +57,16 @@ public interface EscaladeService {
 	void saveUser(User user) throws DataAccessException;
 
 	User findUserById(long userId) throws DataAccessException;
-
+	
+	
 	Collection<User> findUserByLastName(String lastName) throws DataAccessException;
 	
-	/*
-	 * 
-	 */
 	
 	void saveAppUser(AppUser user) throws DataAccessException;
 
 	String findLoggedInUsername();
 
     void autoLogin(String username, String password);
+
+	Collection<AppUser> findAppUserByUserName(String userName) throws DataAccessException;
 }

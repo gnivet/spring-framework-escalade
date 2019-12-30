@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.escalade.service;
 
+
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import org.springframework.samples.escalade.model.Visit;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.AreaRepository;
+import org.springframework.samples.escalade.repository.HomeRepository;
 import org.springframework.samples.escalade.repository.TopoRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.repository.VisitRepository;
@@ -52,14 +54,16 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 	private VisitRepository visitRepository;
 	private AreaRepository areaRepository;
+	private HomeRepository homeRepository;
 
 	@Autowired
 	public EscaladeServiceImpl(TopoRepository topoRepository, UserRepository userRepository,
-			VisitRepository visitRepository, AreaRepository areaRepository) {
+			VisitRepository visitRepository, AreaRepository areaRepository, HomeRepository homeRepository) {
 		this.topoRepository = topoRepository;
 		this.userRepository = userRepository;
 		this.visitRepository = visitRepository;
 		this.areaRepository = areaRepository;
+		this.homeRepository = homeRepository;
 	}
 
 	@Transactional(readOnly = true)
@@ -133,7 +137,6 @@ public class EscaladeServiceImpl implements EscaladeService {
 		return visitRepository.findByTopoId(TopoId);
 	}
 
-	@Override
 	public Collection<Visit> findVisitsByAreaId(long AreaId) {
 		// TODO Auto-generated method stub
 		return visitRepository.findByAreaId(AreaId);
@@ -161,10 +164,10 @@ public class EscaladeServiceImpl implements EscaladeService {
 	}
 
 	@Override
-	public void saveAppUser(AppUser user) throws DataAccessException {
+	public void saveAppUser(AppUser appuser) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
-		userRepository.saveAppUser(user);
+		homeRepository.saveAppUser(appuser);
 	}
 
 	@Override
@@ -179,6 +182,11 @@ public class EscaladeServiceImpl implements EscaladeService {
 		
 	}
 
-	
+	@Override
+	@Transactional(readOnly = true)
+	public Collection<AppUser> findAppUserByUserName(String userName) throws DataAccessException {
+		return HomeRepository.findAppUserByLastName(userName);
+	}
+
 
 }

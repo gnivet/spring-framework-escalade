@@ -3,6 +3,7 @@
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags" %>
 <%@ attribute name="name" required="true" rtexprvalue="true"
               description="Name of the active menu: home, users, topos, areas or error" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>              
 
 <nav class="navbar navbar-default" role="navigation">
     <div class="container">
@@ -19,6 +20,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+                   
         </div>
         <div class="navbar-collapse collapse" id="main-navbar">
             <ul class="nav navbar-nav navbar-right">
@@ -33,13 +35,13 @@
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     <span>User</span>
                 </escalade:menuItem>                
-                
-                <escalade:menuItem active="${name eq 'app_user'}" url="/register" title="register">
+                <sec:authorize access="isAuthenticated() == false">
+                <escalade:menuItem active="${name eq 'app_user'}"  url="/register" title="register">
                     <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
                     <span>Register</span>
-                </escalade:menuItem>
-                
-                <escalade:menuItem active="${name eq 'admin'}" url="/admin" title="admin page">
+                </escalade:menuItem></sec:authorize>
+                                             
+                <escalade:menuItem active="${name eq 'admin'}"  url="/admin" title="admin page">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     <span>Admin</span>
                 </escalade:menuItem>

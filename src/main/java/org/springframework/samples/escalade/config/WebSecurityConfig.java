@@ -56,6 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/areas/toposList").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/escalade/areas/toposList").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/escalade/users/find").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/userAccountInfo").hasAnyRole("USER", "ADMIN");
         
         
         // For ADMIN only. /users/find        

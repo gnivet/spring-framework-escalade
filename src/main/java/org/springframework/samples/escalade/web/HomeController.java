@@ -38,8 +38,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -241,6 +243,54 @@ public class HomeController {
 
 		return "userInfoPage";
 	}
+	
+	
+	
+	 /*
+	 * login auth.
+	 */
+	
+	@RequestMapping(value = "/userAccountInfo", method = RequestMethod.GET)
+	public String userAccountInfo(Model model, Principal principal) {
+
+		// After user login successfully.
+		String userName = principal.getName();
+
+		System.out.println("User Name: " + userName);
+
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+
+		//String userInfo = WebUtils.toString(loginedUser);
+		//model.addAttribute("userInfo", userInfo);
+
+		return "userAccountInfo";
+	}
+	
+	
+	/**
+	 * Custom handler for displaying an user.
+	 *
+	 * @param userId the ID of the user to display
+	 * @return a ModelMap with the model attributes for the view
+	 */
+	@RequestMapping("/userAccountInfo")
+	public ModelAndView showUser(@PathVariable("userName") String userName) {
+		ModelAndView mav = new ModelAndView("userAccountInfo");
+		mav.addObject(this.escaladeService.findAppUserByUserName(userName));
+		return mav;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public String accessDenied(Model model, Principal principal) {
