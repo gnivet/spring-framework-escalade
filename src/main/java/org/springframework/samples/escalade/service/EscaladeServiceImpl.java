@@ -18,8 +18,11 @@ package org.springframework.samples.escalade.service;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.AppUser;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.AreaType;
@@ -28,7 +31,6 @@ import org.springframework.samples.escalade.model.Part;
 import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoType;
-import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.Visit;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
@@ -127,9 +129,8 @@ public class EscaladeServiceImpl implements EscaladeService {
 		return userRepository.findByLastName(lastName);
 	}
 
-	@Override
 	@Transactional
-	public void saveUser(User User) throws DataAccessException {
+	public void saveUser1(User User) throws DataAccessException {
 		userRepository.save(User);
 	}
 
@@ -164,10 +165,10 @@ public class EscaladeServiceImpl implements EscaladeService {
 	}
 
 	@Override
-	public void saveAppUser(AppUser appuser) throws DataAccessException {
+	public void saveUser(User user) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
-		homeRepository.saveAppUser(appuser);
+		homeRepository.saveUser(user);
 	}
 
 	@Override
@@ -184,9 +185,17 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Collection<AppUser> findAppUserByUserName(String userName) throws DataAccessException {
-		return HomeRepository.findAppUserByLastName(userName);
+	public Collection<User> findUserByUserName(String userName) throws DataAccessException {
+		return HomeRepository.findUserByUserName(userName);
 	}
+
+	@Override
+	public void saveUser(org.springframework.security.core.userdetails.@Valid User user) throws DataAccessException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 
 }

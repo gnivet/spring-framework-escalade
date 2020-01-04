@@ -84,7 +84,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 
 	@Override
 	public void save(User user) {
-		if (user.getId() == null) {
+		if (user.getUserId() == null) {
 			this.em.persist(user);
 		} else {
 			this.em.merge(user);

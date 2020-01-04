@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
-<escalade:layout pageName="registerPage">
+<escalade:layout pageName="users">
 	<div class="row">
 		<div class="col-md-12">
 			<spring:url value="/resources/images/topos.png" htmlEscape="true"
@@ -24,7 +24,7 @@
 			<span> <c:out value="${message}" /></span>
 		</h2>
 		<aside>
-			<form name="${appUserForm}" method="post" action="/register">
+			<form name="${UserForm}" method="post" action="/register">
 				<fieldset>
 					<legend>User Name</legend>
 					<spring:bind path="username">

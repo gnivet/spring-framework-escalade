@@ -45,18 +45,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
  
         // The pages does not require login
-        http.authorizeRequests().antMatchers("/", "/login", "/register", "/logout", "/registerSuccessfulPage.jsp").permitAll();
+        http.authorizeRequests().antMatchers("/", "/users/login", "/users/register", "/users/registration", "/users/logout", "/users/registerSuccessful.jsp").permitAll();
  
         // /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
         // If no login, it will redirect to /login page.
-        http.authorizeRequests().antMatchers("/userInfo").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/users/userInfo").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/areas").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/users").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/areas/toposList").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/escalade/areas/toposList").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/escalade/users/find").hasAnyRole("USER", "ADMIN");
-        http.authorizeRequests().antMatchers("/userAccountInfo").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/users/userAccountInfo").hasAnyRole("USER", "ADMIN");
         
         
         // For ADMIN only. /users/find        
@@ -71,13 +71,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().and().formLogin()//
                 // Submit URL of login page.
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
-                .loginPage("/login")//
+                .loginPage("/users/login")//
                 .defaultSuccessUrl("/userAccountInfo")//
-                .failureUrl("/login?error=true")//
+                .failureUrl("/users/login?error=true")//
                 .usernameParameter("username")//
                 .passwordParameter("password")
                 // Config for Logout Page
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");              
+                .and().logout().logoutUrl("/users/logout").logoutSuccessUrl("/users/logoutSuccessful");              
                
         
  

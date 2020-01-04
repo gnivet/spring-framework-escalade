@@ -17,6 +17,8 @@ package org.springframework.samples.escalade.service;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.AppUser;
 import org.springframework.samples.escalade.model.Area;
@@ -54,7 +56,7 @@ public interface EscaladeService {
 
 	Collection<Area> findTopoByPostalCode(String postalCode) throws DataAccessException;
 
-	void saveUser(User user) throws DataAccessException;
+	void saveUser(org.springframework.security.core.userdetails.@Valid User user) throws DataAccessException;
 
 	User findUserById(long userId) throws DataAccessException;
 	
@@ -62,11 +64,15 @@ public interface EscaladeService {
 	Collection<User> findUserByLastName(String lastName) throws DataAccessException;
 	
 	
-	void saveAppUser(AppUser user) throws DataAccessException;
+	//void saveUser(User user) throws DataAccessException;
 
 	String findLoggedInUsername();
 
     void autoLogin(String username, String password);
 
-	Collection<AppUser> findAppUserByUserName(String userName) throws DataAccessException;
+	Collection<User> findUserByUserName(String userName) throws DataAccessException;
+
+	void saveUser(@Valid User user);
+
+	
 }

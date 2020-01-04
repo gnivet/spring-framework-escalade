@@ -5,7 +5,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.escalade.model.AppUser;
+import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.HomeRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,10 +16,10 @@ public class JpaHomeRepositoryImpl implements HomeRepository{
 	private EntityManager em;
 
 	
-	public AppUser selectAppUserByUsername(long id) throws DataAccessException {
-		Query query = this.em.createQuery("select appuser from AppUser appuser where user.userName = ?");
+	public User selectUserByUsername(long id) throws DataAccessException {
+		Query query = this.em.createQuery("select user from User user where user.userName = ?");
 		query.setParameter("id", id);
-		return (AppUser) query.getSingleResult();
+		return (User) query.getSingleResult();
 	}
 
 	
@@ -29,16 +29,16 @@ public class JpaHomeRepositoryImpl implements HomeRepository{
 	
 	
 	@Override
-	public void saveAppUser(AppUser appuser ) throws DataAccessException {
+	public void saveUser(User user ) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
-		if (appuser.getUserId() == null) {
+		if (user.getUserId() == null) {
 			 //Object bCryptPasswordEncoder;
 			String encrytedPassword = null;
-			appuser.setEncrytedPassword(encrytedPassword);
-			this.em.persist(appuser);
+			user.setEncrytedPassword(encrytedPassword);
+			this.em.persist(user);
 		} else {
-			this.em.merge(appuser);
+			this.em.merge(user);
 		}
 		
 	}	

@@ -31,17 +31,17 @@
                     <span>Home Info</span>
                 </escalade:menuItem>
                  
-                <escalade:menuItem active="${name eq 'app_user'}" url="/userInfo" title="user page">
+                <escalade:menuItem active="${name eq 'users'}" url="/users/userInfo" title="user page">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     <span>User</span>
                 </escalade:menuItem>                
                 <sec:authorize access="isAuthenticated() == false">
-                <escalade:menuItem active="${name eq 'app_user'}"  url="/register" title="register">
+                <escalade:menuItem active="${name eq 'users'}"  url="/users/register" title="register">
                     <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
                     <span>Register</span>
                 </escalade:menuItem></sec:authorize>
                                              
-                <escalade:menuItem active="${name eq 'admin'}"  url="/admin" title="admin page">
+                <escalade:menuItem active="${name eq 'admin'}"  url="/users/admin" title="admin page">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     <span>Admin</span>
                 </escalade:menuItem>
@@ -67,7 +67,7 @@
                     <span>Error</span>
                 </escalade:menuItem>
                 
-                <escalade:menuItem active="${name eq 'logout'}" url="/logout" title="logoutSuccessfulPage page">
+                <escalade:menuItem active="${name eq 'logout'}" url="/users/logout" title="logoutSuccessfulPage page">
                     <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                     <span>Logout</span>
                 </escalade:menuItem> 

@@ -5,7 +5,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
-<escalade:layout pageName="app_user">
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<escalade:layout pageName="users">
 	<div class="row">
 		<div class="col-md-12">
 			<spring:url value="/resources/images/topos.png" htmlEscape="true"
@@ -21,32 +22,33 @@
 	<body>
 		<h2>
 			<fmt:message key="welcome" />
-			<span> <c:out value="${message}" /></span>
+			<span> <c:out value="${message}" /></span>			
 		</h2>
 		<aside>
-			<form name="${appUserForm}" method="post" action="/register">
+			<sec:authorize access="isAnonymous()">
+			<form:form  method="POST" action="/register" modelAttribute = "userForm">
 				<fieldset>
-					<legend>User Name</legend>
-					<spring:bind path="username">
-						<div class="form-group ${username.error ? 'has-error' : ''}">
-							<label>User Name</label>
-							<form:input path="username" type="text" id="name" />
-							<form:errors path="username" />
-						</div>
-					</spring:bind>
-					<legend>Password</legend>
-					<spring:bind path="password">
-						<div class="form-group ${password.error ? 'has-error' : ''}">
+					<legend>User Name</legend>					
+						<!--  <div class="form-group ${username.error ? 'has-error' : ''}"> -->
+							<div class="form-group" >
+							<form:label path="userName">User Name</form:label>
+							<form:input path="userName" type="text" id="userName" />
+							<form:errors path="userName" />
+							</div>					
+					<legend>Password</legend>					
+						<!-- <div class="form-group ${password.error ? 'has-error' : ''}">  -->
+							<div class="form-group" >
+							<form:label path="password">Password</form:label>
 							<form:input path="password" type="text" id="password" />
 							<form:errors path="password" />
-						</div>
-					</spring:bind>
+						</div>					
 					<input type="submit" value="Submit" />
 					<ul class="nav nav-pills flex-column">
 						<li class="nav-item"><a class="nav-link active" href="@{/}">Cancel</a></li>
 					</ul>
 				</fieldset>
-			</form>
+			</form:form>
+			</sec:authorize>
 		</aside>
 	</body>
 	</html>

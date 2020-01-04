@@ -84,21 +84,22 @@ public class HomeController {
 	      // ...
 	   }
 	
-	   @RequestMapping("/registerSuccessful")
+	   @RequestMapping("/users/registerSuccessful")
 	   public String viewRegisterSuccessful(Model model) {
 	 
-	      return "registerSuccessfulPage";
+	      return "/users/registerSuccessful";
 	   }
 	
 	
 	// Show Register page.
-	   @RequestMapping(value = "/register", method = RequestMethod.GET)
+	   @RequestMapping(value = "/users/register", method = RequestMethod.GET)
 	   public String viewRegister(Model model) {
 		   
 	      AppUserForm form = new AppUserForm();	      	 
 	      model.addAttribute("userForm", form);
 	     	 
-	      return "register";
+	      //return "register";
+	      return "/users/createOrUpdateUserForm";
 	   }
 	
 	   // This method is called to save the registration information.
@@ -128,12 +129,12 @@ public class HomeController {
 	      // Other error!!
 	      catch (Exception e) {	         	         
 	         model.addAttribute("errorMessage", "Error: " + e.getMessage());
-	         return "registerPage";
+	         return "/users/register";
 	      }
 	 
 	      redirectAttributes.addFlashAttribute("flashUser", newUser);
 	       
-	      return "redirect:/registerSuccessful";
+	      return "redirect:/users/registerSuccessful";
 	   }   
 	   
 	   
@@ -142,11 +143,11 @@ public class HomeController {
 	   
 	
 	@RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
-	public String welcomePage(Model model) {
+	public String welcome(Model model) {
 		model.addAttribute("title", "Welcome");
 		model.addAttribute("message", "This is welcome page!");	
 	
-		return "welcomePage";
+		return "welcome";
 	}
 
 	/*
@@ -162,10 +163,10 @@ public class HomeController {
 	}
 	*/
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/login", method = RequestMethod.GET)
 	public String loginPage(Model model) {
 
-		return "loginPage";
+		return "/users/login";
 	}
 
 	/*
@@ -187,23 +188,23 @@ public class HomeController {
 	 */
 	
 	
-	@RequestMapping(value = "/registrationPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/registration", method = RequestMethod.GET)
 	public String initCreationUserForm(Map<String, Object> model) {
 		
-		AppUser appuser = new AppUser();
-		model.put("appuser", appuser);
-		return "registrationPage";
+		User user = new User(null, null, false, false, false, false, null);
+		model.put("user", user);
+		return "/users/registration";
 	}
 		
 
-	@RequestMapping(value = "/registrationPage", method = RequestMethod.POST)
-	public String processCreationUserForm(@Valid  AppUser appuser, BindingResult result) {
+	@RequestMapping(value = "/users/registration", method = RequestMethod.POST)
+	public String processCreationUserForm(@Valid  User user, BindingResult result) {
 		 
 		if (result.hasErrors()) {
-			return "registrationPage";
+			return "/users/registration";
 		} else {
-			this.escaladeService.saveAppUser(appuser);
-			return "redirect:/" + appuser.getUserName();
+			this.escaladeService.saveUser(user);
+			return "redirect:/users/" + user.getUsername();
 			
 		}
 	}
@@ -218,17 +219,17 @@ public class HomeController {
 	
 		
 	
-	@RequestMapping(value = "/logoutSuccessful", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/logoutSuccessful", method = RequestMethod.GET)
 	public String logoutSuccessfulPage(Model model) {
 		model.addAttribute("title", "Logout");
-		return "logoutSuccessfulPage";
+		return "/users/logoutSuccessful";
 	}
 
 	/*
 	 * login auth.
 	 */
 	
-	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/userInfo", method = RequestMethod.GET)
 	public String userInfo(Model model, Principal principal) {
 
 		// After user login successfully.
@@ -241,7 +242,7 @@ public class HomeController {
 		//String userInfo = WebUtils.toString(loginedUser);
 		//model.addAttribute("userInfo", userInfo);
 
-		return "userInfoPage";
+		return "userInfo";
 	}
 	
 	
@@ -250,7 +251,7 @@ public class HomeController {
 	 * login auth.
 	 */
 	
-	@RequestMapping(value = "/userAccountInfo", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/userAccountInfo", method = RequestMethod.GET)
 	public String userAccountInfo(Model model, Principal principal) {
 
 		// After user login successfully.
@@ -273,10 +274,10 @@ public class HomeController {
 	 * @param userId the ID of the user to display
 	 * @return a ModelMap with the model attributes for the view
 	 */
-	@RequestMapping("/userAccountInfo")
+	@RequestMapping("/users/userAccountInfo")
 	public ModelAndView showUser(@PathVariable("userName") String userName) {
 		ModelAndView mav = new ModelAndView("userAccountInfo");
-		mav.addObject(this.escaladeService.findAppUserByUserName(userName));
+		mav.addObject(this.escaladeService.findUserByUserName(userName));
 		return mav;
 	}
 	
@@ -308,7 +309,31 @@ public class HomeController {
 
 		}
 
-		return "403Page";
+		return "/users/403";
 	}
 
+	
+	
+	@RequestMapping(value = "/users/new", method = RequestMethod.GET)
+	public String initCreationForm(Map<String, Object> model) {
+		User user = new User(null, null, false, false, false, false, null);	
+		model.put("user", user);
+		
+		return  "users/userAccountInfo";
+	}
+
+	@RequestMapping(value = "/users/new", method = RequestMethod.POST)
+	public String processCreationForm(@Valid User user, BindingResult result) {
+		 
+		if (result.hasErrors()) {
+			return "/users/userAccountInfo";
+		} else {
+			this.escaladeService.saveUser(user);
+			return "redirect:/users/" + user.getUsername();
+		}
+	}
+	
+	
+	
+	
 }

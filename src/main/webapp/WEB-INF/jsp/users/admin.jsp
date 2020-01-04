@@ -5,18 +5,27 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
-<escalade:layout pageName="logoutSuccessfulPage">
+<escalade:layout pageName="admin">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" href="/webapp/resources/css/escalade.css" />
+		<link rel="stylesheet" href="/webapp/resources/css/escalade.css" />		
 		<title><c:out value="${title}" /></title>
 	</head>
-	<body>
-		<table class="table table-striped">
-			<tr>
-				<th><h1>Logout Successfull!</h1></th>
-			</tr>			
-		</table>
-	</body>
+<body>
+<h2>Admin Information</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <td><b><c:out value="${ userPrincipal.name }"/></b></td>
+        </tr>
+    	<tr>   
+			<th>This is protected page!</th>
+			
+		</tr>	
+    </table>  
+    <div>
+    <c:out value="${ userInfo }"></c:out>    
+     </div>  
+</body>
 	</html>
 </escalade:layout>

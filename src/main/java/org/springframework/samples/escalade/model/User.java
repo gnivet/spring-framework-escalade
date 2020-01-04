@@ -25,10 +25,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 
@@ -41,10 +44,49 @@ import org.springframework.beans.support.PropertyComparator;
  * @author Guillaume Nivet
  */
 
-@Entity
-@Table(name = "users")
-public class User extends Person {
 
+
+	@Entity
+	@Table(name = "users", //
+	        uniqueConstraints = { //
+	                @UniqueConstraint(name = "USER_UK", columnNames = "User_Name") })
+	public class User   {
+	 
+	    @Id
+	    @GeneratedValue
+	    @Column(name = "User_Id", nullable = false)
+	    private Long userId;
+	 
+	    @Column(name = "User_Name", length = 36, nullable = false)
+	    private String userName;
+	 
+	    @Column(name = "Encryted_Password", length = 128, nullable = false)
+	    private String encrytedPassword;
+	 
+	    @Column(name = "Enabled", length = 1, nullable = false)
+	    private boolean enabled;
+	    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Column(name = "address")
 	@NotEmpty
 	private String address;
@@ -146,6 +188,9 @@ public class User extends Person {
 
 	@Column(name = "valid")
 	private boolean valid;
+	
+	@Column(name = "lastName")
+	private String lastName;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 
@@ -238,14 +283,119 @@ public class User extends Person {
 		this.lastName = lastName.toUpperCase();
 		return lastName;
 	}
-
+	/*
 	@Override
 	public String toString() {
 		return "User [address=" + address + ", postalcode=" + postalcode + ", areas=" + areas + ", city=" + city
 				+ ", telephone=" + telephone + ", topos=" + topos + ", username=" + username + ", password=" + password
 				+ ", role=" + role + ", valid=" + valid + "]";
 	}
+	*/
 
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getEncrytedPassword() {
+		return encrytedPassword;
+	}
+
+	public void setEncrytedPassword(String encrytedPassword) {
+		this.encrytedPassword = encrytedPassword;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public Set<Area> getAreas() {
+		return areas;
+	}
+
+	public void setAreas(Set<Area> areas) {
+		this.areas = areas;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setTopos(Set<Topo> topos) {
+		this.topos = topos;
+	}
+
+	/**
+	 * @param userId
+	 * @param userName
+	 * @param encrytedPassword
+	 * @param enabled
+	 * @param address
+	 * @param postalcode
+	 * @param areas
+	 * @param city
+	 * @param telephone
+	 * @param topos
+	 * @param username2
+	 * @param password
+	 * @param role
+	 * @param valid
+	 * @param lastName
+	 */
+	public User(Long userId, String userName, String encrytedPassword, boolean enabled, @NotEmpty String address,
+			@NotEmpty String postalcode, Set<Area> areas, @NotEmpty String city,
+			@NotEmpty @Digits(fraction = 0, integer = 10) String telephone, Set<Topo> topos, String username2,
+			String password, Role role, boolean valid, String lastName) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.encrytedPassword = encrytedPassword;
+		this.enabled = enabled;
+		this.address = address;
+		this.postalcode = postalcode;
+		this.areas = areas;
+		this.city = city;
+		this.telephone = telephone;
+		this.topos = topos;
+		username = username2;
+		this.password = password;
+		this.role = role;
+		this.valid = valid;
+		this.lastName = lastName;
+	}
+
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
+	
 	
 
 }

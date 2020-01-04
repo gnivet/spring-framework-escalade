@@ -52,7 +52,7 @@ public class UserController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-
+	/*
 	@RequestMapping(value = "/users/new", method = RequestMethod.GET)
 	public String initCreationForm(Map<String, Object> model) {
 		User user = new User();	
@@ -71,7 +71,7 @@ public class UserController {
 			return "redirect:/users/" + user.getId();
 		}
 	}
-
+	*/
 	@RequestMapping(value = "/users/find", method = RequestMethod.GET)
 	public String initFindForm(Map<String, Object> model) {
 		model.put("user", new User());
@@ -95,7 +95,7 @@ public class UserController {
 		} else if (results.size() == 1) {
 			// 1 user found
 			user = results.iterator().next();
-			return "redirect:/users/" + user.getId();
+			return "redirect:/users/" + user.getUserId();
 		} else {
 			// multiple users found
 			model.put("selections", results);
@@ -115,7 +115,7 @@ public class UserController {
 		if (result.hasErrors()) {
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		} else {
-			user.setId(userId);
+			user.setUserId(userId);
 			this.escaladeService.saveUser(user);
 			return "redirect:/users/{userId}";
 		}
@@ -136,7 +136,7 @@ public class UserController {
 		if (result.hasErrors()) {
 			return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
 		} else {
-			user.setId(userId);
+			user.setUserId(userId);
 			this.escaladeService.findUserById(userId);
 			return "redirect:/users/{userId}/topos/{topoId}";
 		}
