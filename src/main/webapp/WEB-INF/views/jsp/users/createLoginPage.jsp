@@ -6,21 +6,21 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
 
-<escalade:layout pageName="app_user">
+<escalade:layout pageName="user">
     <h2>
-        <c:if test="${app_user['new']}">New </c:if> User
+        <c:if test="${user['new']}">New </c:if> User
     </h2>
-    <form:form modelAttribute="AppUser" class="form-horizontal" id="add-app_user-form">
+    <form:form modelAttribute="User" class="form-horizontal" id="add-user-form">
         <div class="form-group has-feedback">
-        	<input type="hidden" name="id" value="${app_user.user_id}" /> 
+        	<input type="hidden" name="id" value="${user.user_id}" /> 
             <escalade:inputField label="User Name" name="user_name"/>
             <escalade:inputField label="Password" name="encryted_password "/>
-            <input type="hidden" name="id" value="${app_user.enabled}" /> 
+            <input type="hidden" name="id" value="${user.enabled}" /> 
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
-                    <c:when test="${app_user['new']}">
+                    <c:when test="${user['new']}">
                         <button class="btn btn-default" type="submit">Add User</button>
                     </c:when>
                     <c:otherwise>

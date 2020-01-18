@@ -16,7 +16,7 @@ public class JpaHomeRepositoryImpl implements HomeRepository{
 	private EntityManager em;
 
 	
-	public User selectUserByUsername(long id) throws DataAccessException {
+	public User selectAppUserByUsername(long id) throws DataAccessException {
 		Query query = this.em.createQuery("select user from User user where user.userName = ?");
 		query.setParameter("id", id);
 		return (User) query.getSingleResult();

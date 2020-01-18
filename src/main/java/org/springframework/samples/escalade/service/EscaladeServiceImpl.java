@@ -18,12 +18,9 @@ package org.springframework.samples.escalade.service;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.escalade.model.User;
-import org.springframework.samples.escalade.model.AppUser;
+
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.AreaType;
 import org.springframework.samples.escalade.model.Length;
@@ -31,6 +28,7 @@ import org.springframework.samples.escalade.model.Part;
 import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoType;
+import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.Visit;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
@@ -38,7 +36,7 @@ import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.samples.escalade.repository.HomeRepository;
 import org.springframework.samples.escalade.repository.TopoRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
-import org.springframework.samples.escalade.repository.VisitRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,16 +52,16 @@ public class EscaladeServiceImpl implements EscaladeService {
 	private TopoRepository topoRepository;
 	private UserRepository userRepository;
 
-	private VisitRepository visitRepository;
+	
 	private AreaRepository areaRepository;
 	private HomeRepository homeRepository;
 
 	@Autowired
 	public EscaladeServiceImpl(TopoRepository topoRepository, UserRepository userRepository,
-			VisitRepository visitRepository, AreaRepository areaRepository, HomeRepository homeRepository) {
+			CommentaireRepository commentaireRepository, AreaRepository areaRepository, HomeRepository homeRepository) {
 		this.topoRepository = topoRepository;
 		this.userRepository = userRepository;
-		this.visitRepository = visitRepository;
+		this.commentaireRepository = commentaireRepository;
 		this.areaRepository = areaRepository;
 		this.homeRepository = homeRepository;
 	}
@@ -129,21 +127,14 @@ public class EscaladeServiceImpl implements EscaladeService {
 		return userRepository.findByLastName(lastName);
 	}
 
+	@Override
 	@Transactional
-	public void saveUser1(User User) throws DataAccessException {
+	public void saveUser(User User) throws DataAccessException {
 		userRepository.save(User);
 	}
 
-	public Collection<Visit> findVisitsByTopoId(long TopoId) {
-		return visitRepository.findByTopoId(TopoId);
-	}
 
-	public Collection<Visit> findVisitsByAreaId(long AreaId) {
-		// TODO Auto-generated method stub
-		return visitRepository.findByAreaId(AreaId);
-	}
-
-	public Collection<AreaType> findAreaTypes() throws DataAccessException {
+	public Collection<SiteType> findSiteTypes() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -165,10 +156,10 @@ public class EscaladeServiceImpl implements EscaladeService {
 	}
 
 	@Override
-	public void saveUser(User user) throws DataAccessException {
+	public void saveAppUser(AppUser appuser) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
-		homeRepository.saveUser(user);
+		homeRepository.saveAppUser(appuser);
 	}
 
 	@Override
@@ -185,17 +176,9 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Collection<User> findUserByUserName(String userName) throws DataAccessException {
-		return HomeRepository.findUserByUserName(userName);
+	public Collection<AppUser> findAppUserByUserName(String userName) throws DataAccessException {
+		return HomeRepository.findAppUserByLastName(userName);
 	}
-
-	@Override
-	public void saveUser(org.springframework.security.core.userdetails.@Valid User user) throws DataAccessException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 
 
 }

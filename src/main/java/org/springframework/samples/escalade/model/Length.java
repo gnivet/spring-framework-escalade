@@ -1,9 +1,12 @@
 package org.springframework.samples.escalade.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -37,17 +40,16 @@ public class Length extends NamedEntity {
 	@NotNull	
 	private boolean length_status;
 
+	
+
 	@ManyToOne
-	@JoinColumn(name = "point_id")
-	private PointType type;
+	@JoinColumn(name = "way_id")
+	private Way way;
+	
+	@OneToMany(mappedBy="length")
+    private Set<Point> points;
 
-	public PointType getType() {
-		return type;
-	}
-
-	public void setType(PointType type) {
-		this.type = type;
-	}
+	
 
 	public Integer getCotation() {
 		return cotation;
@@ -88,4 +90,21 @@ public class Length extends NamedEntity {
 		this.length_status = length_status;
 	}
 
+	public Set<Point> getPoints() {
+		return points;
+	}
+
+	public void setPoints(Set<Point> point) {
+		this.points = point;
+	}
+
+	public Way getWay() {
+		return way;
+	}
+
+	public void setWay(Way way) {
+		this.way = way;
+	}
+	
+	
 }

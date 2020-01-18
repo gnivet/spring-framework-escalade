@@ -15,28 +15,19 @@
  */
 package org.springframework.samples.escalade.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotEmpty;
-
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PropertyComparator;
 
 /**
  * Simple JavaBean domain object representing a user.
@@ -45,55 +36,39 @@ import org.springframework.beans.support.PropertyComparator;
  */
 
 
+@Entity
+@Table(name = "users", //
+		uniqueConstraints = { //
+				@UniqueConstraint(name = "USER_UK", columnNames = "User_Name") })
+public class User {
 
-	@Entity
-	@Table(name = "users", //
-	        uniqueConstraints = { //
-	                @UniqueConstraint(name = "USER_UK", columnNames = "User_Name") })
-	public class User   {
-	 
-	    @Id
-	    @GeneratedValue
-	    @Column(name = "User_Id", nullable = false)
-	    private Long userId;
-	 
-	    @Column(name = "User_Name", length = 36, nullable = false)
-	    private String userName;
-	 
-	    @Column(name = "Encryted_Password", length = 128, nullable = false)
-	    private String encrytedPassword;
-	 
-	    @Column(name = "Enabled", length = 1, nullable = false)
-	    private boolean enabled;
-	    
+	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "base_entity_generator")
+	@SequenceGenerator(name = "base_entity_generator", sequenceName = "base_entity_sequence")
+	@Column(name = "User_Id", nullable = false)
+	private Long userId;
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Column(name = "User_Name", length = 36, nullable = false)
+	private String userName;
+
+	//@Column(name = "Encryted_Password", length = 128, nullable = false)
+	@Column(name = "Encryted_Password", length = 128, nullable = false)
+	private String encrytedPassword;
+
+	@Column(name = "Enabled", length = 1, nullable = false)
+	private boolean enabled;
+
 	@Column(name = "address")
-	@NotEmpty
+	
 	private String address;
 
 	@Column(name = "postalcode")
-	@NotEmpty
+	
 	private String postalcode;
+	
 
 	public String getPostalcode() {
 		return postalcode;
@@ -103,21 +78,19 @@ import org.springframework.beans.support.PropertyComparator;
 		this.postalcode = postalcode;
 	}
 
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Area> areas;
 
 	@Column(name = "city")
-	@NotEmpty
+	
 	private String city;
 
-	@Column(name = "telephone")
-	@NotEmpty
+	@Column(name = "telephone")	
 	@Digits(fraction = 0, integer = 10)
 	private String telephone;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<Topo> topos;
-
+	
 	public String getAddress() {
 		return this.address;
 	}
@@ -142,17 +115,6 @@ import org.springframework.beans.support.PropertyComparator;
 		this.telephone = telephone;
 	}
 
-	@Column(name = "username")
-	protected String username;
-
-	public String getUsername() {
-		return this.username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	@Column(name = "password")
 	protected String password;
 
@@ -164,14 +126,7 @@ import org.springframework.beans.support.PropertyComparator;
 		this.password = password;
 	}
 
-	/**
-	 * Holds value of property roles. FOREIGN KEY (role_id)
-	 */
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "role_id", nullable = true)
-	private Role role;
-
+	
 	/**
 	 * Holds value of property roles. FOREIGN KEY (specialty_id)
 	 */
@@ -186,73 +141,19 @@ import org.springframework.beans.support.PropertyComparator;
 	 * Holds value of property roles. FOREIGN KEY (specialty_id)
 	 */
 
-	@Column(name = "valid")
-	private boolean valid;
-	
 	@Column(name = "lastName")
 	private String lastName;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+	
 
-	public boolean isValid() {
-		return valid;
-	}
+	@OneToMany(mappedBy="user")
+    private Set<Topo> topos;
 
-	public void setValid(boolean valid) {
-		this.valid = valid;
-	}
+	@OneToMany(mappedBy="user")
+    private Set<Reservation> reservations;
 
-	protected Set<Topo> getToposInternal() {
-		if (this.topos == null) {
-			this.topos = new HashSet<>();
-		}
-		return this.topos;
-	}
-
-	protected void setToposInternal(Set<Topo> topos) {
-		this.topos = topos;
-	}
-
-	public List<Topo> getTopos() {
-		List<Topo> sortedTopos = new ArrayList<>(getToposInternal());
-		PropertyComparator.sort(sortedTopos, new MutableSortDefinition("name", true, true));
-		return Collections.unmodifiableList(sortedTopos);
-	}
-
-	public void addTopo(Topo topo) {
-		getToposInternal().add(topo);
-		topo.setUser(this);
-	}
-
-	/**
-	 * Return the Topo with the given name, or null if none found for this User.
-	 *
-	 * @param name to test
-	 * @return true if topo name is already in use
-	 */
-	public Topo getTopo(String name) {
-		return getTopo(name, false);
-	}
-
-	/**
-	 * Return the Topo with the given name, or null if none found for this User.
-	 *
-	 * @param name to test
-	 * @return true if topo name is already in use
-	 */
-	public Topo getTopo(String name, boolean ignoreNew) {
-		name = name.toLowerCase();
-		for (Topo topo : getToposInternal()) {
-			if (!ignoreNew || !topo.isNew()) {
-				String compName = topo.getName();
-				compName = compName.toLowerCase();
-				if (compName.equals(name)) {
-					return topo;
-				}
-			}
-		}
-		return null;
-	}
+			
+	
 
 	/**
 	 * /* Constructor Return firstname with Capitalize at the first Letter*
@@ -278,19 +179,23 @@ import org.springframework.beans.support.PropertyComparator;
 	 * 
 	 */
 
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public String getUser(String lastName) {
 
 		this.lastName = lastName.toUpperCase();
 		return lastName;
 	}
-	/*
-	@Override
-	public String toString() {
-		return "User [address=" + address + ", postalcode=" + postalcode + ", areas=" + areas + ", city=" + city
-				+ ", telephone=" + telephone + ", topos=" + topos + ", username=" + username + ", password=" + password
-				+ ", role=" + role + ", valid=" + valid + "]";
-	}
-	*/
 
 	public Long getUserId() {
 		return userId;
@@ -332,13 +237,6 @@ import org.springframework.beans.support.PropertyComparator;
 		this.areas = areas;
 	}
 
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
 
 	public String getLastName() {
 		return lastName;
@@ -348,10 +246,56 @@ import org.springframework.beans.support.PropertyComparator;
 		this.lastName = lastName;
 	}
 
+	
+	public Set<Topo> getTopos() {
+		return topos;
+	}
+
 	public void setTopos(Set<Topo> topos) {
 		this.topos = topos;
 	}
 
+	public Set<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(Set<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+
+	
+
+	
+
+		
+	
+	
+	
+
+
+	public User findUserAccount(String userName2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void addTopo(Site topo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Object getTopo(String name, boolean b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
+	
 	/**
 	 * @param userId
 	 * @param userName
@@ -362,18 +306,16 @@ import org.springframework.beans.support.PropertyComparator;
 	 * @param areas
 	 * @param city
 	 * @param telephone
-	 * @param topos
-	 * @param username2
 	 * @param password
-	 * @param role
-	 * @param valid
 	 * @param lastName
+	 * @param topos
+	 * @param reservations
 	 */
-	public User(Long userId, String userName, String encrytedPassword, boolean enabled, @NotEmpty String address,
-			@NotEmpty String postalcode, Set<Area> areas, @NotEmpty String city,
-			@NotEmpty @Digits(fraction = 0, integer = 10) String telephone, Set<Topo> topos, String username2,
-			String password, Role role, boolean valid, String lastName) {
-		super();
+	public User(Long userId, String userName, String encrytedPassword, boolean enabled,  String address,
+		String postalcode, Set<Area> areas, String city,
+		String telephone, String password, String lastName,
+		Set<Topo> topos, Set<Reservation> reservations)
+		{
 		this.userId = userId;
 		this.userName = userName;
 		this.encrytedPassword = encrytedPassword;
@@ -383,19 +325,24 @@ import org.springframework.beans.support.PropertyComparator;
 		this.areas = areas;
 		this.city = city;
 		this.telephone = telephone;
-		this.topos = topos;
-		username = username2;
 		this.password = password;
-		this.role = role;
-		this.valid = valid;
 		this.lastName = lastName;
-	}
+		this.topos = topos;
+		this.reservations = reservations;
+		}
 
-	public User() {
+	public User(long userId, String userName, String encrytedPassword, String enabled, String address,
+			String postalcode, String city, String telephone, String password, String lastName, String topo,
+			String reservation) {
 		// TODO Auto-generated constructor stub
 	}
 
+
 	
+		
 	
 
+	
+	
+	
 }

@@ -82,16 +82,12 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		return (User) query.getSingleResult();
 	}
 
-	@Override
-	public void save(User user) {
-		if (user.getUserId() == null) {
-			this.em.persist(user);
-		} else {
-			this.em.merge(user);
-		}
-
-	}
-
+	/*
+	 * @Override public void save(User user) { if (user.getUserId() == null) {
+	 * this.em.persist(user); } else { this.em.merge(user); }
+	 * 
+	 * }
+	 */
 	@Modifying
 	public User deleteByUserId(long id) throws DataAccessException {
 		Query query = this.em.createQuery("DELETE FROM User user WHERE user.id = :id");
@@ -112,7 +108,42 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		return (User) query.getSingleResult();
 	}
 
-	
+	@Override
+	public User findById(Long id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void save(User user) throws DataAccessException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public User deleteByUserId(Long id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User selectUser(Long id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User selectByUserId(Long id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User findUserById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/*
 	 * @Override
 	 * 

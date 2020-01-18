@@ -2,10 +2,10 @@ package org.springframework.samples.escalade.config;
 
 import javax.sql.DataSource;
 
-import org.springframework.samples.escalade.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.samples.escalade.service.UserDetailsServiceImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,8 +17,8 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
- 
-    @Autowired
+	
+    @Autowired   
     private UserDetailsServiceImpl userDetailsService;
  
     @Autowired
@@ -30,6 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return bCryptPasswordEncoder;
     }
  
+    
+    
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
  
@@ -45,18 +47,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
  
         // The pages does not require login
-        http.authorizeRequests().antMatchers("/", "/users/login", "/users/register", "/users/registration", "/users/logout", "/users/registerSuccessful.jsp").permitAll();
+        http.authorizeRequests().antMatchers("/", "/login", "/register", "/logout", "/registerSuccessfulPage.jsp" ,"/save-user").permitAll();
  
         // /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
         // If no login, it will redirect to /login page.
-        http.authorizeRequests().antMatchers("/users/userInfo").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/userInfo").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/areas").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/users").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/areas/toposList").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/escalade/areas/toposList").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/escalade/users/find").hasAnyRole("USER", "ADMIN");
-        http.authorizeRequests().antMatchers("/users/userAccountInfo").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/userAccountInfo").hasAnyRole("USER", "ADMIN");
         
         
         // For ADMIN only. /users/find        
@@ -71,13 +73,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().and().formLogin()//
                 // Submit URL of login page.
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
-                .loginPage("/users/login")//
+                .loginPage("/login")//
                 .defaultSuccessUrl("/userAccountInfo")//
-                .failureUrl("/users/login?error=true")//
+                .failureUrl("/login?error=true")//
                 .usernameParameter("username")//
                 .passwordParameter("password")
                 // Config for Logout Page
-                .and().logout().logoutUrl("/users/logout").logoutSuccessUrl("/users/logoutSuccessful");              
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");              
                
         
  

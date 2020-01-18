@@ -16,7 +16,7 @@
 package org.springframework.samples.escalade.web;
 
 
-import org.springframework.samples.escalade.model.Topo;
+import org.springframework.samples.escalade.model.Site;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -35,7 +35,7 @@ public class TopoValidator implements Validator {
 
     @Override
     public void validate(Object obj, Errors errors) {
-        Topo Topo = (Topo) obj;
+        Site Topo = (Site) obj;
         String name = Topo.getName();
         // name validation
         if (!StringUtils.hasLength(name)) {
@@ -67,7 +67,7 @@ public class TopoValidator implements Validator {
      */
     @Override
     public boolean supports(Class<?> clazz) {
-        return Topo.class.isAssignableFrom(clazz);
+        return Site.class.isAssignableFrom(clazz);
     }
 
 

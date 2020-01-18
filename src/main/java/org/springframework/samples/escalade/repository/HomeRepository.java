@@ -12,11 +12,16 @@ public interface HomeRepository {
 
 	
 	
-	static Collection<User> findUserByUserName(String userName) {
+	static Collection<User> findUserByLastName(String userName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	void saveUser(User user) throws DataAccessException;
+
+	static Collection<User> findUserByUserName(String userName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

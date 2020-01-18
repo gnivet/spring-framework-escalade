@@ -10,22 +10,22 @@ import javax.persistence.Query;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.escalade.beanform.AppUserForm;
-import org.springframework.samples.escalade.model.AppUser;
+import org.springframework.samples.escalade.beanform.UserForm;
+import org.springframework.samples.escalade.model.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public class AppUserDAO {
+public class UserDAO {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	private static final Map<Long, AppUser> USERS_MAP = new HashMap<>();
+	private static final Map<Long, User> USERS_MAP = new HashMap<>();
 
-	public static void put(Long userId, AppUser tom) {
+	public static void put(Long userId, User tom) {
 		// TODO Auto-generated method stub
 
 	}
@@ -37,8 +37,8 @@ public class AppUserDAO {
 	private static void initDATA() {
 		String encrytedPassword = "";
 
-		AppUser tom = new AppUser(1L, "tom", encrytedPassword, false);
-		AppUser jerry = new AppUser(2L, "jerry", encrytedPassword, false);
+		User tom = new User();
+		User jerry = new User();
 
 		USERS_MAP.put(tom.getUserId(), tom);
 		USERS_MAP.put(jerry.getUserId(), jerry);
@@ -56,9 +56,9 @@ public class AppUserDAO {
 		return max;
 	}
 	
-	public AppUser findAppUserByUserName(String userName) {
-		Collection<AppUser> appUsers = USERS_MAP.values();
-		for (AppUser u : appUsers) {
+	public User findUserByUserName(String userName) {
+		Collection<User> Users = USERS_MAP.values();
+		for (User u : Users) {
 			if (u.getUserName().equals(userName)) {
 				return u;
 			}
@@ -69,25 +69,25 @@ public class AppUserDAO {
 	@Autowired
 	private EntityManager entityManager;
 
-	public AppUser findUserAccount(String userName) {
+	public User findUserAccount(String userName) {
 		try {
-			String sql = "Select e from " + AppUser.class.getName() + " e " //
+			String sql = "Select e from " + User.class.getName() + " e " //
 					+ " Where e.userName = :userName ";
 
-			Query query = entityManager.createQuery(sql, AppUser.class);
+			Query query = entityManager.createQuery(sql, User.class);
 			query.setParameter("userName", userName);
 
-			return (AppUser) query.getSingleResult();
+			return (User) query.getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		}
 	}
 
-	public AppUser createAppUser(AppUserForm form) {
+	public User createUser(UserForm form) {
         Long userId = this.getMaxUserId() + 1;
         String encrytedPassword = this.passwordEncoder.encode(form.getPassword());
  
-        AppUser user = new AppUser(userId, form.getUserName(), encrytedPassword, false);
+        User user = new User();
         USERS_MAP.put(userId, user);
         return user;
     }

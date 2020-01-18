@@ -30,18 +30,7 @@ import javax.persistence.SequenceGenerator;
 @MappedSuperclass
 public class BaseEntity {
 
-	/*
-	 * GNI
-	 */
-	// @Id
-	// @GeneratedValue(strategy=GenerationType.AUTO)
-	//@Id
-	//
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "base_entity_generator")
-	//@SequenceGenerator(name = "base_entity_generator", sequenceName = "base_entity_sequence")
-	// @Id
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Id		
+	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "base_entity_generator")
 	@SequenceGenerator(name = "base_entity_generator", sequenceName = "base_entity_sequence")
 	protected Long id;
@@ -63,5 +52,5 @@ public class BaseEntity {
 		return "BaseEntity [id=" + id + ", getId()=" + getId() + ", isNew()=" + isNew() + ", getClass()=" + getClass()
 				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
-	
+
 }

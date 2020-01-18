@@ -21,7 +21,7 @@ import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
-import org.springframework.samples.escalade.model.TopoType;
+import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.service.EscaladeService;
 
 /**
@@ -39,30 +39,26 @@ import org.springframework.samples.escalade.service.EscaladeService;
  * @author Guillaume Nivet
  * 
  */
-public class TopoTypeFormatter implements Formatter<TopoType> {
-
-	private final EscaladeService EscaladeService;
+public class SiteTypeFormatter implements Formatter<SiteType> {
 
 	@Autowired
-	public TopoTypeFormatter(EscaladeService EscaladeService) {
-		this.EscaladeService = EscaladeService;
+	public SiteTypeFormatter(EscaladeService EscaladeService) {
 	}
 
 	@Override
-	public String print(TopoType TopoType, Locale locale) {
-		return TopoType.getName();
+	public String print(SiteType object, Locale locale) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	//
 	@Override
-	public TopoType parse(String text, Locale locale) throws ParseException {
-		Collection<TopoType> findTopoTypes = this.EscaladeService.findTopoTypes();
-		for (TopoType type : findTopoTypes) {
-			if (type.getName().equals(text)) {
-				return type;
-			}
-		}
-		throw new ParseException("type not found: " + text, 0);
+	public SiteType parse(String text, Locale locale) throws ParseException {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	
+	
+	
 
 }

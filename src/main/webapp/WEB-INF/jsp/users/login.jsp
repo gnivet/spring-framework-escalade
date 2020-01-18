@@ -15,7 +15,7 @@
 <body>
 
 	<div class="container">
-		<form method="POST" action="/users/login" class="form-signin">
+		<form method="POST" action="/users/loginCheck.jsp" class="form-signin" ">
 			<h2 class="form-heading">Log in</h2>
 
 			<div class="form-group ${error != null ? 'has-error' : ''}">
@@ -32,7 +32,7 @@
 					<a href="/users/registration">Create an account</a>
 				</h4>
 			</div>
-		</form>
+		</form>		
 	</div>
 </body>
 </html>

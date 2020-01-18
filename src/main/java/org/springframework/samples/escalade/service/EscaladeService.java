@@ -20,13 +20,13 @@ import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.escalade.model.AppUser;
-import org.springframework.samples.escalade.model.Area;
-import org.springframework.samples.escalade.model.AreaType;
-import org.springframework.samples.escalade.model.Topo;
-import org.springframework.samples.escalade.model.TopoType;
 import org.springframework.samples.escalade.model.User;
-import org.springframework.samples.escalade.model.Visit;
+import org.springframework.samples.escalade.model.Area;
+import org.springframework.samples.escalade.model.Commentaire;
+import org.springframework.samples.escalade.model.Site;
+import org.springframework.samples.escalade.model.SiteType;
+import org.springframework.samples.escalade.model.Topo;
+
 
 /**
  * Mostly used as a facade so all controllers have a single point of entry
@@ -34,45 +34,40 @@ import org.springframework.samples.escalade.model.Visit;
  * @author Guillaume Nivet
  */
 public interface EscaladeService {
-	Collection<TopoType> findTopoTypes() throws DataAccessException;
-
-	Collection<AreaType> findAreaTypes() throws DataAccessException;
 
 	Topo findTopoById(long id) throws DataAccessException;
 
 	Area findAreaById(long id) throws DataAccessException;
 
-	void saveArea(Area Area) throws DataAccessException;
+	void saveCommentaire(@Valid Commentaire commentaire) throws DataAccessException;
 
-	void saveTopo(Topo Topo) throws DataAccessException;
-
-	void saveVisit(Visit visit) throws DataAccessException;
+	void saveTopo(Site Topo) throws DataAccessException;
 
 	Collection<User> findUsers() throws DataAccessException;
-
-	Collection<Visit> findVisitsByTopoId(long TopoId) throws DataAccessException;
-
-	Collection<Visit> findVisitsByAreaId(long AreaId) throws DataAccessException;
 
 	Collection<Area> findTopoByPostalCode(String postalCode) throws DataAccessException;
 
 	void saveUser(org.springframework.security.core.userdetails.@Valid User user) throws DataAccessException;
 
 	User findUserById(long userId) throws DataAccessException;
-	
-	
+
 	Collection<User> findUserByLastName(String lastName) throws DataAccessException;
-	
-	
-	//void saveUser(User user) throws DataAccessException;
 
-	String findLoggedInUsername();
+	
+	String findLoggedInUsername() throws DataAccessException;
 
-    void autoLogin(String username, String password);
+	void autoLogin(String username, String password) throws DataAccessException;
 
 	Collection<User> findUserByUserName(String userName) throws DataAccessException;
 
-	void saveUser(@Valid User user);
+	void saveUser(User user) throws DataAccessException;
 
-	
+	Collection<SiteType> findSiteTypes() throws DataAccessException;
+
+	Collection<Commentaire> findSiteByName(String commentaire);
+
+	void saveArea(@Valid Area area);
+
+	Commentaire findCommentaireById(long commentaireId);
+
 }

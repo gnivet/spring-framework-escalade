@@ -17,8 +17,9 @@ package org.springframework.samples.escalade.repository;
 
 import java.util.Collection;
 
+import javax.transaction.Transactional;
+
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.escalade.model.BaseEntity;
 import org.springframework.samples.escalade.model.User;
 
 /**
@@ -39,29 +40,22 @@ public interface UserRepository {
 	 * @return the <code>User</code> if found
 	 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 	 */
-	User findById(long id) throws DataAccessException;
+	User findById(Long id) throws DataAccessException;
 
-	/**
-	 * Save an <code>User</code> to the data store, either inserting or updating it.
-	 *
-	 * @param user the <code>User</code> to save
-	 * @see BaseEntity#isNew
-	 */
 	void save(User user) throws DataAccessException;
 
-	/**
-	 * Retrieve <code>User</code>s from the data store by last name, returning all
-	 * users whose last name <i>starts</i> with the given name.
-	 *
-	 * @param lastName Value to search for
-	 * @return a <code>Collection</code> of matching <code>User</code>s (or an empty
-	 *         <code>Collection</code> if none found)
-	 */
 	Collection<User> findByLastName(String lastName) throws DataAccessException;
 
-	User selectUser(long id) throws DataAccessException;
+	Collection<User> findAll() throws DataAccessException;
 
-	User selectByUserId(long id) throws DataAccessException;
+	@Transactional
+	User deleteByUserId(Long id) throws DataAccessException;
+
+	User selectUser(Long id) throws DataAccessException;
+
+	User selectByUserId(Long id) throws DataAccessException;
+
+	User findUserById(long id);
 
 	/**
 	 * Retrieve all <code>User</code>s from the data store.
@@ -70,12 +64,5 @@ public interface UserRepository {
 	 * 
 	 * </code>
 	 */
-	Collection<User> findAll() throws DataAccessException;
 
-	
-	
-
-	
-	
-	
 }

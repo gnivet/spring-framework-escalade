@@ -15,23 +15,11 @@
  */
 package org.springframework.samples.escalade.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PropertyComparator;
 
 //import javax.persistence.Id;
 
@@ -39,36 +27,14 @@ import org.springframework.beans.support.PropertyComparator;
  * Simple business object representing a Area.
  *
  * @author Guillaume Nivet
- * @author Guillaume Nivet
- * @author Guillaume Nivet
  */
 
 @Entity
 @Table(name = "areas")
 public class Area extends NamedEntity {
 
-	@ManyToOne
-	@JoinColumn(name = "type_id")
-	private AreaType type;
-
-	public AreaType getType() {
-		return this.type;
-	}
-
-	public void setType(AreaType type) {
-		this.type = type;
-	}
-
 	@Column(name = "street")
 	private String street;
-
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
 
 	@Column(name = "postalcode")
 	private String postalcode;
@@ -115,22 +81,23 @@ public class Area extends NamedEntity {
 		this.gpscoordinate = gpscoordinate;
 	}
 
-	// GNI
-	// @OneToMany(cascade = CascadeType.ALL, mappedBy = "area")
-	// private Set<Topo> topos;
+	public String getStreet() {
+		return street;
+	}
 
-	// @OneToMany
-	// @JoinColumn(name = "topos")
+	public void setStreet(String street) {
+		this.street = street;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "topo_id", nullable = true)
-	private Topo topo;
+	private Site topo;
 
-	public Topo getTopo() {
+	public Site getTopo() {
 		return topo;
 	}
 
-	public void setTopo(Topo topo) {
+	public void setTopo(Site topo) {
 		this.topo = topo;
 	}
 
@@ -155,36 +122,6 @@ public class Area extends NamedEntity {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "topo", fetch = FetchType.LAZY)
-	private Set<Visit> visits;
-
-	protected Set<Visit> getVisitsInternal() {
-		if (this.visits == null) {
-			this.visits = new HashSet<>();
-		}
-		return this.visits;
-	}
-
-	protected void setVisitsInternal(Set<Visit> visits) {
-		this.visits = visits;
-	}
-
-	public List<Visit> getVisits() {
-		List<Visit> sortedVisits = new ArrayList<>(getVisitsInternal());
-		PropertyComparator.sort(sortedVisits, new MutableSortDefinition("date", false, false));
-		return Collections.unmodifiableList(sortedVisits);
-	}
-
-	// public void addVisit(Visit visit) {
-	// getVisitsInternal().add(visit);
-	// visit.setArea(this);
-
-	// }
-
-	public void setVisits(Set<Visit> visits) {
-		this.visits = visits;
 	}
 
 }

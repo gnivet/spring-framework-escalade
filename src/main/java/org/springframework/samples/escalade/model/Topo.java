@@ -1,252 +1,29 @@
-/*
- * Copyright 2002-2013 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.springframework.samples.escalade.model;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PropertyComparator;
-import org.springframework.format.annotation.DateTimeFormat;
-
-/**
- * Simple business object representing a Topo.
- *
- * @author Guillaume Nivet 
- */
 
 @Entity
 @Table(name = "topos")
 public class Topo extends NamedEntity {
 
-	@Column(name = "birth_date")
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private LocalDate birthDate;
+	@Column(name = "comment")
+	@NotEmpty
+	private String comment;
 	
+	@Column(name = "accepted")
+	private Boolean accepted;
+	
+	@Column(name = "date")
+	private Boolean date;
 	
 	@ManyToOne
-	@JoinColumn(name = "type_id")
-	@Transient	
-	private TopoType type;
-
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
-
-	/*
-	 * @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	 * 
-	 * @JoinColumn(name = "area_id" , nullable = true) private Area aera;
-	 */
-
-	/**
-	 * Holds value of property roles. FOREIGN KEY (zone_id)
-	 */
-
-	// @ManyToOne
-	// @JoinColumn( name = "zone_id", nullable = true)
-	// private Zone zone;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "zone_id", nullable = true)
-	private Zone zone;
-
-	/**
-	 * Holds value of property roles. FOREIGN KEY (length_id)
-	 */
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "length_id", nullable = true)
-	private Length length;
-	/**
-	 * Holds value of property roles. FOREIGN KEY (voie_id)
-	 */
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "way_id", nullable = true)
-	private Way way;
-
-	/**
-	 * Holds value of property roles. FOREIGN KEY (partie_id)
-	 */
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "part_id", nullable = true)
-	private Part part;
-
-	/**
-	 * Holds value of property roles. FOREIGN KEY (point_id)
-	 */
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "point_id", nullable = true)
-	private Point point;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "area_id", nullable = true)
-	private Area area;
-
-	@Transient
-	@Column(name = "length_status")
-	@NotNull
-	private boolean length_status;
-
-	@Column(name = "valid")
-	@NotNull
-	private boolean valid;
-
-	public Zone getZone() {
-		return zone;
-	}
-
-	public void setZone(Zone zone) {
-		this.zone = zone;
-	}
-
-	public Way getWay() {
-		return way;
-	}
-
-	public void setWay(Way way) {
-		this.way = way;
-	}
-
-	public Part getPart() {
-		return part;
-	}
-
-	public void setPart(Part part) {
-		this.part = part;
-	}
-
-	public Length getLength() {
-		return length;
-	}
-
-	public void setLength(Length length) {
-		this.length = length;
-	}
-
-	public Point getPoint() {
-		return point;
-	}
-
-	public void setPoint(Point point) {
-		this.point = point;
-	}
-
-	public void setVisits(Set<Visit> visits) {
-		this.visits = visits;
-	}
-
-	public boolean isValid() {
-		return valid;
-	}
-
-	public void setValid(boolean valid) {
-		this.valid = valid;
-	}
-
-	public Area getArea() {
-		return area;
-	}
-
-	public void setArea(Area area) {
-		this.area = area;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "topo", fetch = FetchType.EAGER)
-	private Set<Visit> visits;
-
-	public void setBirthDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
-	}
-
-	public LocalDate getBirthDate() {
-		return this.birthDate;
-	}
-
-	public TopoType getType() {
-		return this.type;
-	}
-
-	public void setType(TopoType type) {
-		this.type = type;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public boolean isLength_status() {
-		return length_status;
-	}
-
-	public void setLength_status(boolean length_status) {
-		this.length_status = length_status;
-	}
-
-	protected Set<Visit> getVisitsInternal() {
-		if (this.visits == null) {
-			this.visits = new HashSet<>();
-		}
-		return this.visits;
-	}
-
-	protected void setVisitsInternal(Set<Visit> visits) {
-		this.visits = visits;
-	}
-
-	public List<Visit> getVisits() {
-		List<Visit> sortedVisits = new ArrayList<>(getVisitsInternal());
-		PropertyComparator.sort(sortedVisits, new MutableSortDefinition("date", false, false));
-		return Collections.unmodifiableList(sortedVisits);
-	}
-
-	public void addVisit(Visit visit) {
-		getVisitsInternal().add(visit);
-		visit.setTopo(this);
-	}
-
-	@Override
-	public String toString() {
-		return "TopoType [type=" + type + "]";
-	}
-
-	
-	
-	
-	
+	@JoinColumn(name = "user_id", nullable = true)
+	private User user;	
+		
 }

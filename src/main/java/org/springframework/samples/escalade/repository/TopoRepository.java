@@ -15,16 +15,16 @@
  */
 package org.springframework.samples.escalade.repository;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.BaseEntity;
 import org.springframework.samples.escalade.model.Length;
-import org.springframework.samples.escalade.model.Part;
 import org.springframework.samples.escalade.model.Point;
+import org.springframework.samples.escalade.model.Site;
+import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
-import org.springframework.samples.escalade.model.TopoType;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 
@@ -36,15 +36,10 @@ import org.springframework.samples.escalade.model.Zone;
  *
  * @author Guillaume Nivet
  */
+
 public interface TopoRepository {
 
-	/**
-	 * Retrieve all <code>TopoType</code>s from the data store.
-	 *
-	 * @return a <code>Collection</code> of <code>TopoType</code>s
-	 */
-	List<TopoType> findTopoTypes() throws DataAccessException;
-
+	
 	/**
 	 * Retrieve a <code>Topo</code> from the data store by id.
 	 *
@@ -52,7 +47,8 @@ public interface TopoRepository {
 	 * @return the <code>Topo</code> if found
 	 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 	 */
-	Topo findById(long id) throws DataAccessException;
+	
+	Site findById(long id) throws DataAccessException;
 
 	/**
 	 * Save a <code>Topo</code> to the data store, either inserting or updating it.
@@ -61,7 +57,7 @@ public interface TopoRepository {
 	 * @see BaseEntity#isNew
 	 */
 
-	void save(Topo Topo) throws DataAccessException;
+	void save(Site site) throws DataAccessException;
 
 	/**
 	 * Retrieve a <code>Zone</code> from the data store by id.
@@ -97,23 +93,7 @@ public interface TopoRepository {
 	 */
 	void saveWay(Way Way) throws DataAccessException;
 
-	/**
-	 * Retrieve a <code>Part</code> from the data store by id.
-	 *
-	 * @param id the id to search for
-	 * @return the <code>Part</code> if found
-	 * @throws org.springframework.dao.DataRetrievalFailureException if not found
-	 */
-	Part findPartById(long id) throws DataAccessException;
-
-	/**
-	 * Save a <code>Part</code> to the data store, either inserting or updating it.
-	 *
-	 * @param Zone the <code>Part</code> to save
-	 * @see BaseEntity#isNew
-	 */
-	void savePart(Part Part) throws DataAccessException;
-
+	
 	/**
 	 * Retrieve a <code>Length</code> from the data store by id.
 	 *
@@ -165,4 +145,8 @@ public interface TopoRepository {
 	 * @see BaseEntity#isNew
 	 */
 	void saveArea(Area Area) throws DataAccessException;
+
+	Collection<SiteType> findSiteTypes();
+
+	void save(Topo topo);
 }

@@ -15,49 +15,43 @@
  */
 package org.springframework.samples.escalade.repository.jpa;
 
-import java.util.List;
-
+import java.util.Collection;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Length;
-import org.springframework.samples.escalade.model.Part;
 import org.springframework.samples.escalade.model.Point;
-import org.springframework.samples.escalade.model.Topo;
-import org.springframework.samples.escalade.model.TopoType;
+import org.springframework.samples.escalade.model.Site;
+import org.springframework.samples.escalade.model.Site;
+import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
-import org.springframework.samples.escalade.repository.TopoRepository;
+import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * JPA implementation of the {@link TopoRepository} longerface.
+ * JPA implementation of the {@link SiteRepository} longerface.
  *
  * @author Guillaume Nivet
  * @since 3.12.2019
  */
 @Repository
-public class JpaTopoRepositoryImpl implements TopoRepository {
+public class JpaSiteRepositoryImpl implements SiteRepository {
 
 	@PersistenceContext
 	private EntityManager em;
 
-	@SuppressWarnings("unchecked")
-	public List<TopoType> findTopoTypes() {
-		return this.em.createQuery("SELECT ptype FROM TopoType ptype ORDER BY ptype.name").getResultList();
+	public Site findById(long id) {
+		return this.em.find(Site.class, id);
 	}
 
-	public Topo findById(long id) {
-		return this.em.find(Topo.class, id);
-	}
-
-	public void save(Topo Topo) {
-		if (Topo.getId() == null) {
-			this.em.persist(Topo);
+	public void save(Site Site) {
+		if (Site.getId() == null) {
+			this.em.persist(Site);
 		} else {
-			this.em.merge(Topo);
+			this.em.merge(Site);
 		}
 	}
 
@@ -65,7 +59,7 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 		return this.em.find(Zone.class, id);
 	}
 
-	// Add Zone to Topo form
+	// Add Zone to Site form
 	public void saveZone(Zone Zone) throws DataAccessException {
 		if (Zone.getId() == null) {
 			this.em.persist(Zone);
@@ -79,7 +73,7 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 		return this.em.find(Way.class, id);
 	}
 
-	// Add Way to Topo form
+	// Add Way to Site form
 	public void saveWay(Way Way) throws DataAccessException {
 		if (Way.getId() == null) {
 			this.em.persist(Way);
@@ -89,25 +83,13 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 
 	}
 
-	public Part findPartById(long id) {
-		return this.em.find(Part.class, id);
-	}
-
-	// Add Part to Topo form
-	public void savePart(Part Part) throws DataAccessException {
-		if (Part.getId() == null) {
-			this.em.persist(Part);
-		} else {
-			this.em.merge(Part);
-		}
-
-	}
+	
 
 	public Length findLengthById(long id) {
 		return this.em.find(Length.class, id);
 	}
 
-	// Add Length to Topo form
+	// Add Length to Site form
 	public void saveLength(Length Length) throws DataAccessException {
 		if (Length.getId() == null) {
 			this.em.persist(Length);
@@ -121,7 +103,7 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 		return this.em.find(Point.class, id);
 	}
 
-	// Add Point to Topo form
+	// Add Point to Site form
 	public void savePoint(Point Point) throws DataAccessException {
 		if (Point.getId() == null) {
 			this.em.persist(Point);
@@ -135,7 +117,7 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 		return this.em.find(Area.class, id);
 	}
 
-	// Add Area to Topo form
+	// Add Area to Site form
 	public void saveArea(Area Area) throws DataAccessException {
 		if (Area.getId() == null) {
 			this.em.persist(Area);
@@ -144,4 +126,12 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 		}
 
 	}
+
+	
+	public Collection<Site> findSiteByPostalcode(String postalcode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }

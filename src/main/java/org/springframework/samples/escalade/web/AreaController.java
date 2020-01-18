@@ -1,3 +1,4 @@
+ 
 /*
  * Copyright 2002-2013 the original author or authors.
  *
@@ -51,7 +52,7 @@ public class AreaController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
+
 	@RequestMapping(value = "/areas/new", method = RequestMethod.GET)
 	public String initCreationForm(Map<String, Object> model) {
 		Area area = new Area();
@@ -110,7 +111,7 @@ public class AreaController {
 	}
 
 	@RequestMapping(value = "/areas/{areaId}/edit", method = RequestMethod.POST)
-	public String processUpdateAreaForm(@Valid Area area, BindingResult result, @PathVariable("areaId") Long areaId) {
+	public String processUpdateAreaForm(@Valid Area area, BindingResult result, @PathVariable("areaId") long areaId) {
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 		} else {

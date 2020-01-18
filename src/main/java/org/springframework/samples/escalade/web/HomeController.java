@@ -24,12 +24,11 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.escalade.beanform.AppUserForm;
-import org.springframework.samples.escalade.dao.AppUserDAO;
-import org.springframework.samples.escalade.model.AppUser;
+import org.springframework.samples.escalade.beanform.UserForm;
+import org.springframework.samples.escalade.dao.UserDAO;
+import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,8 +48,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class HomeController {
 
-	 @Autowired
-	   private AppUserDAO appUserDAO;
+	
+	 private UserDAO UserDAO;
 	
 	
 	private final EscaladeService escaladeService = null;
@@ -64,7 +63,7 @@ public class HomeController {
 	/*addin */
 	
 	@Autowired
-	   private Validator appUserValidator;
+	   private Validator UserValidator;
 	
 	
 	
@@ -78,8 +77,8 @@ public class HomeController {
 	      }
 	      System.out.println("Target=" + target);
 	 
-	      if (target.getClass() == AppUserForm.class) {
-	         dataBinder.setValidator(appUserValidator);
+	      if (target.getClass() == UserForm.class) {
+	         dataBinder.setValidator(UserValidator);
 	      }
 	      // ...
 	   }
@@ -95,7 +94,7 @@ public class HomeController {
 	   @RequestMapping(value = "/users/register", method = RequestMethod.GET)
 	   public String viewRegister(Model model) {
 		   
-	      AppUserForm form = new AppUserForm();	      	 
+	      UserForm form = new UserForm();	      	 
 	      model.addAttribute("userForm", form);
 	     	 
 	      //return "register";
@@ -107,7 +106,7 @@ public class HomeController {
 	   // has been Validated before this method is invoked.
 	   @RequestMapping(value = "/register", method = RequestMethod.POST)
 	   public String saveRegister(Model model,  @ModelAttribute("userForm")
-	         @Validated AppUserForm appUserForm, 
+	         @Validated UserForm UserForm, 
 	         BindingResult result,
 	         final RedirectAttributes redirectAttributes) 
 	    	{
@@ -117,9 +116,9 @@ public class HomeController {
 	     
 	      
 	      
-	      AppUser newUser= null;
+	      User newUser= null;
 	      try {
-	         newUser = appUserDAO.createAppUser(appUserForm);
+	         newUser = UserDAO.createUser(UserForm);
 	      }
 	      
 	      
@@ -138,10 +137,14 @@ public class HomeController {
 	   }   
 	   
 	   
+	 @RequestMapping("/welcome")  
+	 public String welcome()
+	 {
+		 return "welcome";
+				 }
 	   
 	   
-	   
-	
+	/*
 	@RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
 	public String welcome(Model model) {
 		model.addAttribute("title", "Welcome");
@@ -149,7 +152,7 @@ public class HomeController {
 	
 		return "welcome";
 	}
-
+	*/
 	/*
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String adminPage(Model model, Principal principal) {
@@ -164,11 +167,18 @@ public class HomeController {
 	*/
 
 	@RequestMapping(value = "/users/login", method = RequestMethod.GET)
-	public String loginPage(Model model) {
+	public String loginPage1(Model model) {
 
 		return "/users/login";
 	}
 
+	
+	@RequestMapping(value = "/users/login", method = RequestMethod.POST)
+	public String loginPage(Model model) {
+
+		return "/users/login";
+	}
+	
 	/*
 	@RequestMapping(value= "/user/new", method = RequestMethod.GET)
 	
@@ -191,7 +201,7 @@ public class HomeController {
 	@RequestMapping(value = "/users/registration", method = RequestMethod.GET)
 	public String initCreationUserForm(Map<String, Object> model) {
 		
-		User user = new User(null, null, false, false, false, false, null);
+		User user = new User();
 		model.put("user", user);
 		return "/users/registration";
 	}
@@ -204,7 +214,7 @@ public class HomeController {
 			return "/users/registration";
 		} else {
 			this.escaladeService.saveUser(user);
-			return "redirect:/users/" + user.getUsername();
+			return "redirect:/users/" + user.getUserName();
 			
 		}
 	}
@@ -316,7 +326,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/users/new", method = RequestMethod.GET)
 	public String initCreationForm(Map<String, Object> model) {
-		User user = new User(null, null, false, false, false, false, null);	
+		User user = new User();	
 		model.put("user", user);
 		
 		return  "users/userAccountInfo";
@@ -329,7 +339,7 @@ public class HomeController {
 			return "/users/userAccountInfo";
 		} else {
 			this.escaladeService.saveUser(user);
-			return "redirect:/users/" + user.getUsername();
+			return "redirect:/users/" + user.getUserName();
 		}
 	}
 	

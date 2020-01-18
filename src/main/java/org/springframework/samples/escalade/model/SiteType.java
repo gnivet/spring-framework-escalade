@@ -15,29 +15,28 @@
  */
 package org.springframework.samples.escalade.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
- * Simple domain object representing a list of Users. Mostly here to be used for the 'Admins' {@link
- * org.springframework.web.servlet.view.xml.MarshallingView}.
- *
  * @author Guillaume Nivet
+ *         Can be ...
  */
-@XmlRootElement
-public class Admins {
+@Entity
+@Table(name = "sitetypes")
+public class SiteType extends NamedEntity {
 
-    private List<Admin> admins;
+private Long sitetype_id;
 
-    @XmlElement
-    public List<Admin> getAdminrList() {
-        if (admins == null) {
-            admins = new ArrayList<>();
-        }
-        return admins;
-    }
+public Long getSitetype_id() {
+	return sitetype_id;
+}
+
+public void setSitetype_id(Long sitetype_id) {
+	this.sitetype_id = sitetype_id;
+}
+
+
+
 
 }

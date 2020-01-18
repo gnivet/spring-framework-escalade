@@ -5,18 +5,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-/**
- * @author Guillaume Nivet
- *         Can be ...
- */
 @Entity
-@Table(name = "points")
-public class Point extends NamedEntity {
-
+@Table(name = "reservations")
+public class Reservation extends NamedEntity {
+	
 	@ManyToOne
-	@JoinColumn(name = "length_id", nullable = true)
-	private Length length;
-		
+	@JoinColumn(name = "user_id", nullable = true)
+	private User user;
+
+	
+	
 }
-
-
