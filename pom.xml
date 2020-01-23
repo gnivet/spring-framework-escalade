@@ -55,6 +55,13 @@
 			<artifactId>bootstrap</artifactId>
 			<version>${webjars-bootstrap.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/tomcat/catalina GN -->
+		<dependency>
+			<groupId>tomcat</groupId>
+			<artifactId>catalina</artifactId>
+			<version>5.5.23</version>
+		</dependency>
+
 		<!-- end of webjars -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -84,7 +91,7 @@
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-server</artifactId>			
+			<artifactId>jetty-server</artifactId>
 		</dependency>
 
 	</dependencies>

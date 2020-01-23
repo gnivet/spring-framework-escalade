@@ -1,52 +1,50 @@
 package org.springframework.samples.escalade.model;
 
-import javax.persistence.Column;
+import java.util.Set;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
- * @author Guillaume Nivet
- *         Can be ...
+ * @author Guillaume Nivet Can be ...
+ * @param
  */
 @Entity
 @Table(name = "commentaires")
-public class Commentaire {
+public class Commentaire extends NamedEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "base_entity_generator")
-	@SequenceGenerator(name = "base_entity_generator", sequenceName = "base_entity_sequence")
-	protected Long id;
-	
-	
-	@Column(name = "commentaire")	
 	protected String commentaire;
 	
-	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = true)
-	private User user;	
-	
-	@ManyToOne
-	@JoinColumn(name = "site_id", nullable = true)
-	private Site site;	
-	
+	  @ManyToOne	  
+	  @JoinColumn(name = "user_id", nullable = true)
+	  private UserType userType;
+	  
+	  @ManyToOne
+	  
+	  @JoinColumn(name = "site_id", nullable = true)
+	  private SiteType siteType;
+	  
+	 
+	  
+	 
+	  /*
+	  @OneToMany(cascade = CascadeType.ALL, mappedBy = "commentaire") private
+	  Set<User> users;
+	  
+	 @OneToMany(cascade = CascadeType.ALL, mappedBy = "commentaire") private
+	  Set<Site>sites;
+	 */
+	@Transient  
+	@OneToMany(mappedBy = "commentaire")
+	private Set<User> users;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public boolean isNew() {
-		return this.id == null;
-	}
+	@Transient  
+	@OneToMany(mappedBy = "commentaire")
+	private Set<Site> sites;
 
 	public String getCommentaire() {
 		return commentaire;
@@ -56,18 +54,49 @@ public class Commentaire {
 		this.commentaire = commentaire;
 	}
 
-	public User getUser() {
-		return user;
+	public Set<User> getUsers() {
+		return users;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 
-	public Site getSite() {
-		return site;
+	public Set<Site> getSites() {
+		return sites;
 	}
 
+	public void setSites(Set<Site> sites) {
+		this.sites = sites;
+	}
+
+	
+	public Commentaire() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "Commentaire [commentaire=" + commentaire + ", userType=" + userType + ", siteType=" + siteType
+				+ ", users=" + users + ", sites=" + sites + ", id=" + id + "]";
+	}
+
+	/**
+	 * @param commentaire
+	 * @param userType
+	 * @param siteType
+	 * @param users
+	 * @param sites
+	 */
+	public Commentaire(String commentaire, UserType userType, SiteType siteType, Set<User> users, Set<Site> sites) {
+		this.commentaire = commentaire;
+		this.userType = userType;
+		this.siteType = siteType;
+		this.users = users;
+		this.sites = sites;
+	}
+	
+	
 	
 	
 }

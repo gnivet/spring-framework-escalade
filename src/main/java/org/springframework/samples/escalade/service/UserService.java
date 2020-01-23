@@ -15,7 +15,12 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 
-	public void saveMyUser(User user) {
+	public void saveUser(User user) {
 		userRepository.save(user);
+	}
+
+	public Object findByusername(String username) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

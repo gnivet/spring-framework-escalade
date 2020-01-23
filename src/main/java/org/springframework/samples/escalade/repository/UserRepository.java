@@ -22,6 +22,7 @@ import javax.transaction.Transactional;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.User;
 
+
 /**
  * Repository class for <code>User</code> domain objects All method names are
  * compliant with Spring Data naming conventions so this interface can easily be
@@ -56,6 +57,12 @@ public interface UserRepository {
 	User selectByUserId(Long id) throws DataAccessException;
 
 	User findUserById(long id);
+	
+	
+
+	User findByUsername(String username);
+
+
 
 	/**
 	 * Retrieve all <code>User</code>s from the data store.

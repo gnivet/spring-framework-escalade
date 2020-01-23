@@ -37,7 +37,7 @@
         </tr> 
          <tr>
             <th>User name</th>
-            <td><c:out value="${user.firstUsername}"/></td>
+            <td><c:out value="${user.firstusername}"/></td>
         </tr> 
         <tr>
             <th>Password</th>

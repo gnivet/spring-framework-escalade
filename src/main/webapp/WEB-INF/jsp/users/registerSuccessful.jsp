@@ -10,9 +10,9 @@
 	<table class="table table-striped" >
 		<tr>
 			<th>Name</th>
-			<td><b><c:out value="${user.user_name} " /></b></td>
-			<td><b><c:out value="${userName}"/></b></td>
-			<td><b><c:out value="${user_name}"/></b></td>
+			<td><b><c:out value="${user.username} " /></b></td>
+			<td><b><c:out value="${username}"/></b></td>
+			
 			
 		</tr>
 		<tr>

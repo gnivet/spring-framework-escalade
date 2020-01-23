@@ -33,6 +33,9 @@ public class BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "base_entity_generator")
 	@SequenceGenerator(name = "base_entity_generator", sequenceName = "base_entity_sequence")
+	
+	
+	
 	protected Long id;
 
 	public Long getId() {

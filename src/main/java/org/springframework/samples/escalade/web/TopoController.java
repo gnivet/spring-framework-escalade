@@ -22,9 +22,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Area;
-import org.springframework.samples.escalade.model.Site;
-import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
+import org.springframework.samples.escalade.model.TopoType;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
@@ -53,9 +52,9 @@ public class TopoController {
 		this.escaladeService = escaladeService;
 	}
 
-	@ModelAttribute("sitetypes")
-	public Collection<SiteType> populatesiteTypes() {
-		return this.escaladeService.findSiteTypes();
+	@ModelAttribute("types")
+	public Collection<TopoType> populatetopoTypes() {
+		return this.escaladeService.findTopoTypes();
 	}
 
 	@ModelAttribute("user")
@@ -75,16 +74,14 @@ public class TopoController {
 
 	@RequestMapping(value = "/topos/new", method = RequestMethod.GET)
 	public String initCreationForm(User user, ModelMap model) {
-		Site topo = new Site();
+		Topo topo = new Topo();
 		user.addTopo(topo);
-		
-		
 		model.put("topo", topo);
 		return VIEWS_TOPOS_CREATE_OR_UPDATE_FORM;
 	}
 
 	@RequestMapping(value = "/topos/new", method = RequestMethod.POST)
-	public String processCreationForm(User user, @Valid Site topo, BindingResult result, ModelMap model) {
+	public String processCreationForm(User user, @Valid Topo topo, BindingResult result, ModelMap model) {
 		if (StringUtils.hasLength(topo.getName()) && topo.isNew() && user.getTopo(topo.getName(), true) != null) {
 			result.rejectValue("name", "duplicate", "already exists");
 		}
@@ -106,7 +103,7 @@ public class TopoController {
 	}
 
 	@RequestMapping(value = "/topos/{topoId}/edit", method = RequestMethod.POST)
-	public String processUpdateForm(@Valid Site topo, BindingResult result, User user, ModelMap model) {
+	public String processUpdateForm(@Valid Topo topo, BindingResult result, User user, ModelMap model) {
 		if (result.hasErrors()) {
 			model.put("topo", topo);
 			return VIEWS_TOPOS_CREATE_OR_UPDATE_FORM;

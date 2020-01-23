@@ -20,12 +20,13 @@ import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Commentaire;
-import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
+import org.springframework.samples.escalade.model.TopoType;
+import org.springframework.samples.escalade.model.User;
+
 
 
 /**
@@ -41,7 +42,7 @@ public interface EscaladeService {
 
 	void saveCommentaire(@Valid Commentaire commentaire) throws DataAccessException;
 
-	void saveTopo(Site Topo) throws DataAccessException;
+	void saveTopo(Topo topo) throws DataAccessException;
 
 	Collection<User> findUsers() throws DataAccessException;
 
@@ -54,11 +55,11 @@ public interface EscaladeService {
 	Collection<User> findUserByLastName(String lastName) throws DataAccessException;
 
 	
-	String findLoggedInUsername() throws DataAccessException;
+	String findLoggedInusername() throws DataAccessException;
 
 	void autoLogin(String username, String password) throws DataAccessException;
 
-	Collection<User> findUserByUserName(String userName) throws DataAccessException;
+	Collection<User> findUserByusername(String username) throws DataAccessException;
 
 	void saveUser(User user) throws DataAccessException;
 
@@ -66,8 +67,12 @@ public interface EscaladeService {
 
 	Collection<Commentaire> findSiteByName(String commentaire);
 
-	void saveArea(@Valid Area area);
-
 	Commentaire findCommentaireById(long commentaireId);
+
+	void saveArea(Area area);
+
+	Collection<TopoType> findTopoTypes();
+
+	
 
 }

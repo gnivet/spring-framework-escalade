@@ -47,7 +47,7 @@
                     <c:out value="${user.telephone}"/>
                 </td>
                  <td>
-                    <c:out value="${user.firstUsername}"/>
+                    <c:out value="${user.firstusername}"/>
                 </td>
                  <td>
                     <c:out value="${user.firstPassword}"/>

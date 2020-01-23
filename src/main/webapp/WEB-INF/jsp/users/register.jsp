@@ -31,9 +31,9 @@
 					<legend>User Name</legend>					
 						<!--  <div class="form-group ${username.error ? 'has-error' : ''}"> -->
 							<div class="form-group" >
-							<form:label path="userName">User Name</form:label>
-							<form:input path="userName" type="text" id="userName" />
-							<form:errors path="userName" />
+							<form:label path="username">User Name</form:label>
+							<form:input path="username" type="text" id="username" />
+							<form:errors path="username" />
 							</div>					
 					<legend>Password</legend>					
 						<!-- <div class="form-group ${password.error ? 'has-error' : ''}">  -->

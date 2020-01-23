@@ -144,6 +144,12 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		return null;
 	}
 
+	@Override
+	public User findByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/*
 	 * @Override
 	 * 

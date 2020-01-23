@@ -24,6 +24,11 @@ public class Topo extends NamedEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = true)
-	private User user;	
+	private User user;
+
+	public void setUser(User user) {
+		// TODO Auto-generated method stub
+		
+	}	
 		
 }

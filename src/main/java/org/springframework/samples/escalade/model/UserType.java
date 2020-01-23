@@ -24,8 +24,8 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "sitetypes" )
-public class SiteType extends NamedEntity {
+@Table(name = "usertypes" )
+public class UserType extends NamedEntity {
 
 
 

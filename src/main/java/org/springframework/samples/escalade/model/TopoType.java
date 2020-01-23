@@ -18,16 +18,8 @@ package org.springframework.samples.escalade.model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-/**
- * @author Guillaume Nivet
- *         Can be ...
- */
-
 @Entity
-@Table(name = "sitetypes" )
-public class SiteType extends NamedEntity {
-
-
-
+@Table(name = "topotypes")
+public class TopoType extends NamedEntity{
 
 }

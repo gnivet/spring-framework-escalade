@@ -1,43 +1,45 @@
 package org.springframework.samples.escalade.model;
 
-import javax.persistence.Column;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "roles", //
-		uniqueConstraints = { //
-				@UniqueConstraint(name = "ROLE_UK", columnNames = "Role_Name") })
+@Table(name = "roles" )
 public class Role {
+    private Integer role_id;
+    private String name;
+    private Set<User> users;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "base_entity_generator")
-	@SequenceGenerator(name = "base_entity_generator", sequenceName = "base_entity_sequence")
-	@Column(name = "Role_Id", nullable = false)
-	protected Long roleId;
+    @Id    
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
+        return role_id;
+    }
 
-	@Column(name = "Role_Name", length = 30, nullable = false)
-	private String roleName;
+    public void setId(Integer role_id) {
+        this.role_id = role_id;
+    }
 
-	public Long getRoleId() {
-		return roleId;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getRoleName() {
-		return roleName;
-	}
+    @ManyToMany(mappedBy = "roles")
+    public Set<User> getUsers() {
+        return users;
+    }
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 }
