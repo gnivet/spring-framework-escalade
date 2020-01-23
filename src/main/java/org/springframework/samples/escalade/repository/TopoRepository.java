@@ -17,12 +17,8 @@ package org.springframework.samples.escalade.repository;
 
 import java.util.Collection;
 
+import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoType;
-
-
-
-
-
 
 /**
  * Repository class for <code>Topo</code> domain objects All method names are
@@ -35,7 +31,7 @@ import org.springframework.samples.escalade.model.TopoType;
 
 public interface TopoRepository {
 
-	
-	
+	Topo findById(long id);
+
 	Collection<TopoType> findTopoTypes();
 }

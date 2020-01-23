@@ -2,11 +2,9 @@ package org.springframework.samples.escalade;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-//import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScan;
 
 //@SpringBootApplication
-@ComponentScan({"/WEB-INF/views/jsp"})
+//@ComponentScan({"/WEB-INF/jsp"})
 @SpringBootApplication
 public class SpringFrameworkEscaladeApplication {
 

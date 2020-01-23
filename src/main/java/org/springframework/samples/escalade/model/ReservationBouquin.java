@@ -15,6 +15,10 @@ public class ReservationBouquin extends NamedEntity{
 	private User user;	
 	
 	private Boolean accepted;
+	
+	@ManyToOne
+	@JoinColumn(name = "topo_id", nullable = true)
+	private Topo topo;	
 
 	public User getUser() {
 		return user;
@@ -30,6 +34,14 @@ public class ReservationBouquin extends NamedEntity{
 
 	public void setAccepted(Boolean accepted) {
 		this.accepted = accepted;
+	}
+
+	public Topo getTopo() {
+		return topo;
+	}
+
+	public void setTopo(Topo topo) {
+		this.topo = topo;
 	}	
 	
 }

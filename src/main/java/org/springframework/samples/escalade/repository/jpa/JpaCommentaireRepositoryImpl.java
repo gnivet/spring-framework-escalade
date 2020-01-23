@@ -13,14 +13,14 @@ public class JpaCommentaireRepositoryImpl implements CommentaireRepository{
 	@PersistenceContext
 	private EntityManager em;
 	
+
 	@Override
 	public Commentaire findById(long id) {
-		
+		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT commentaire FROM Commentaire commentaire WHERE commentaire.id =:id");
 		query.setParameter("id", id);
-		return (Commentaire) query.getSingleResult();
+		return (Commentaire) query.getResultList();
 	}
-	
 	
 	@Override
 	public void saveCommentaire(Commentaire commentaire) throws DataAccessException {
@@ -32,4 +32,10 @@ public class JpaCommentaireRepositoryImpl implements CommentaireRepository{
 		}
 	}
 
+	
+
+
+
+
+	
 }

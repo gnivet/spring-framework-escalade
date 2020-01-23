@@ -16,9 +16,6 @@ public class Topo extends NamedEntity {
 	@NotEmpty
 	private String comment;
 	
-	@Column(name = "accepted")
-	private Boolean accepted;
-	
 	@Column(name = "date")
 	private Boolean date;
 	
