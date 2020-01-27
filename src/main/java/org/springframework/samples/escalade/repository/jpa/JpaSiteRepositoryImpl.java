@@ -45,7 +45,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		return this.em.find(Site.class, id);
 	}
 
-	public void save(Site Site) {
+	public void saveSite(Site Site) {
 		if (Site.getId() == null) {
 			this.em.persist(Site);
 		} else {

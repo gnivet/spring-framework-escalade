@@ -6,8 +6,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity  
-@Table(name="reservationBouquins")  
-public class ReservationBouquin extends NamedEntity{
+@Table(name="topoBookings")  
+public class TopoBooking extends NamedEntity{
 
 	
 	@ManyToOne

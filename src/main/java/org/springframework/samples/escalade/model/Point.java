@@ -16,7 +16,16 @@ public class Point extends NamedEntity {
 	@ManyToOne
 	@JoinColumn(name = "length_id", nullable = true)
 	private Length length;
+
+	public Length getLength() {
+		return length;
+	}
+
+	public void setLength(Length length) {
+		this.length = length;
+	}
 		
+	
 }
 
 

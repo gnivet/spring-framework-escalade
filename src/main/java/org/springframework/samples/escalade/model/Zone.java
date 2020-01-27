@@ -34,7 +34,8 @@ public class Zone extends NamedEntity{
 	public void setWays(Set<Way> ways) {
 		this.ways = ways;
 	}
-		
+	
+	
 }
 
 

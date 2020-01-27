@@ -65,4 +65,10 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 		}
 	}
 
+	@Override
+	public void saveArea(Area area) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

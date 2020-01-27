@@ -10,4 +10,6 @@ public interface AreaRepository {
 
 	Collection<Area> findTopoByPostalcode(String postalcode);
 
+	void saveArea(Area area);
+
 }

@@ -67,13 +67,7 @@ public class Length extends NamedEntity {
 		this.under_cotation = under_cotation;
 	}
 
-	/*
-	 * public Point getPoint() { return point; }
-	 * 
-	 * 
-	 * public void setPoint(Point point) { this.point = point; }
-	 */
-
+	
 	public String getComment() {
 		return comment;
 	}

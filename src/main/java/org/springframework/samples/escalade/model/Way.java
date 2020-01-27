@@ -38,5 +38,7 @@ public class Way extends NamedEntity {
 	public void setLengths(Set<Length> lengths) {
 		this.lengths = lengths;
 	}
+	
+	
 
 }
