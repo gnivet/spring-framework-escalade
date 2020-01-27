@@ -1,9 +1,7 @@
 package org.springframework.samples.escalade.repository.jpa;
 
-import java.util.Collection;
 import java.util.List;
 
-import javax.management.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -31,93 +29,7 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 	@PersistenceContext
 	private EntityManager em;
 
-	@SuppressWarnings("unchecked")
-	public Collection<Topo> findTopoByName(String name) {
-		// TODO Auto-generated method stub
-
-		Query query = this.em.createQuery("SELECT DISTINCT topo from Topo topo WHERE topo.name LIKE :name");
-		query.setParameter("name", name + "%");
-		return query.getResultList();
-	}
-
 	
-	public Topo findById(long id) {
-		// using 'join fetch' because a single query should load both areas and topos
-		// using 'left join fetch' because it might happen that an owner does not have
-		// topos yet
-
-		Query query = this.em.createQuery("SELECT topo FROM Topo topo WHERE topo.id =:id");
-		query.setParameter("id", id);
-		return (Topo) query.getSingleResult();
-	}
-
-	public void saveTopo(Topo Topo) {
-		if (Topo.getId() == null) {
-			this.em.persist(Topo);
-		} else {
-			this.em.merge(Topo);
-		}
-	}
-
-	public Collection<TopoType> findTopoTypes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-
-	@Override
-	public void saveZone(Zone zone) {
-		if (Zone.getId() == null) {
-			this.em.persist(Zone);
-		} else {
-			this.em.merge(Zone);
-		}
-		
-	}
-
-
-	@Override
-	public void saveWay(Way way) {		
-		if (Way.getId() == null) {
-			this.em.persist(Way);
-		}
-		else	
-			this.em.merge(Way);
-		}
-		
-	}
-
-
-	@Override
-	public void saveLength(Length length) {
-		if (Length.getId() == null) {
-			this.em.persist(Length);
-		}
-		else	
-			this.em.merge(Length);
-		}
-		
-	}
-
-
-	@Override
-	public void savePoint(Point point) {
-		if (Point.getId() == null) {
-			this.em.persist(Point);
-		}
-		else	
-			this.em.merge(Point);
-		
-	}
-
-
-	@Override
-	public List<TopoType> findTopoTypes() throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	@Override
 	public Topo findById(Long id) throws DataAccessException {
@@ -166,4 +78,50 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public List<TopoType> findTopoTypes() throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void saveTopo(Topo Topo) throws DataAccessException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void saveZone(Zone Zone) throws DataAccessException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void saveWay(Way Way) throws DataAccessException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void saveLength(Length Length) throws DataAccessException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void savePoint(Point point) throws DataAccessException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
 }

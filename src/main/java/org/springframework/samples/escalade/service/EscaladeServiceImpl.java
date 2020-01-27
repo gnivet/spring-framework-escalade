@@ -32,8 +32,11 @@ import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.AreaRepository;
+import org.springframework.samples.escalade.repository.LengthRepository;
+import org.springframework.samples.escalade.repository.PointRepository;
 import org.springframework.samples.escalade.repository.TopoRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
+import org.springframework.samples.escalade.repository.ZoneRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -204,6 +207,10 @@ public class EscaladeServiceImpl  implements EscaladeService {
 		return null;
 	}
 	
-	
+	public Zone findZoneById(Long id) throws DataAccessException {
+		return zoneRepository.findById(id);
+	}
 
+	
+	
 }

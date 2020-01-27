@@ -32,7 +32,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * Simple business object representing a Topo.
+ * Simple business object representing a site.
  *
  * @author Guillaume Nivet
  */
@@ -87,10 +87,6 @@ public class Site extends NamedEntity {
 	@OneToMany(mappedBy = "site")
 	private Set<Zone> zone;
 	
-	@OneToMany(mappedBy = "site")
-	private Set<Topo> topo;
-	
-
 	public boolean isValid() {
 		return valid;
 	}
@@ -151,39 +147,32 @@ public class Site extends NamedEntity {
 		this.zone = zone;
 	}
 
-	public Set<Topo> getTopo() {
-		return topo;
+	public Way getWay() {
+		return way;
 	}
 
-	public void setTopo(Set<Topo> topo) {
-		this.topo = topo;
-	}
-	
-	
-	
-	/*
-	public Long getSite_id() {
-		return site_id;
+	public void setWay(Way way) {
+		this.way = way;
 	}
 
-	public void setSite_id(Long site_id) {
-		this.site_id = site_id;
-	}
-	*/
-	
-	
-	/*
-	@ManyToOne
-	@JoinColumn(name = "site_id", nullable = true)
-	private Commentaire commentaire;
-
-	public Commentaire getCommentaire() {
-		return commentaire;
+	public Length getLength() {
+		return length;
 	}
 
-	public void setCommentaire(Commentaire commentaire) {
-		this.commentaire = commentaire;
+	public void setLength(Length length) {
+		this.length = length;
+	}
+
+	public Point getPoint() {
+		return point;
+	}
+
+	public void setPoint(Point point) {
+		this.point = point;
 	}
 	
-	*/
+	
+	
+	
+	
 }
