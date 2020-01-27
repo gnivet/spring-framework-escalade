@@ -144,9 +144,40 @@ public class EscaladeServiceImpl  implements EscaladeService {
 	@Override
 	public User findUserById(long userId) throws DataAccessException {
 		// TODO Auto-generated method stub
-		return null;
+		return userRepository.findById(userId);
 	}
 
+	@Override
+	public Topo findTopoById(long id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return topoRepository.findById(id);
+	}
+
+
+
+	@Override
+	public Area findAreaById(long id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return areaRepository.findById(id);
+	}
+	
+	public Zone findZoneById(Long id) throws DataAccessException {
+		return zoneRepository.findById(id);
+	}
+	
+	
+	public Length findLengthById(Long id) throws DataAccessException {
+		return lengthRepository.findById(id);
+	}
+	
+	public Point findPointById(Long id) throws DataAccessException {
+		return pointRepository.findById(id);
+	}
+	
+	
+	
+	
+	
 
 	@Override
 	public Collection<User> findUserByLastName(String lastName) throws DataAccessException {
@@ -193,23 +224,7 @@ public class EscaladeServiceImpl  implements EscaladeService {
 
 
 
-	@Override
-	public Topo findTopoById(long id) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-
-
-	@Override
-	public Area findAreaById(long id) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public Zone findZoneById(Long id) throws DataAccessException {
-		return zoneRepository.findById(id);
-	}
 
 	
 	
