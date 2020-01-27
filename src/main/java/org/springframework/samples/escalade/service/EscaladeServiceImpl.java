@@ -23,7 +23,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
-import org.springframework.samples.escalade.model.Commentaire;
 import org.springframework.samples.escalade.model.Length;
 import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.model.SiteType;
@@ -33,8 +32,6 @@ import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.AreaRepository;
-import org.springframework.samples.escalade.repository.CommentaireRepository;
-import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.samples.escalade.repository.TopoRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -44,130 +41,79 @@ import org.springframework.stereotype.Service;
  * for @Transactional and @Cacheable annotations
  *
  * @author Guillaume Nivet
+ * @param <ZoneRepository>
  */
 @Service
-public class EscaladeServiceImpl implements EscaladeService {
+public class EscaladeServiceImpl  implements EscaladeService {
 
 	private TopoRepository topoRepository;
-	private UserRepository userRepository;	
+	private UserRepository userRepository;
 	private AreaRepository areaRepository;
-	private CommentaireRepository commentaireRepository;
-	private SiteRepository siteRepository;
+	private ZoneRepository zoneRepository;
+	private LengthRepository lengthRepository;
+	private PointRepository pointRepository;
+
 
 	@Autowired
 	public EscaladeServiceImpl(TopoRepository topoRepository, UserRepository userRepository,
-			CommentaireRepository commentaireRepository, AreaRepository areaRepository ) {
+		 AreaRepository areaRepository, ZoneRepository zoneRepository, LengthRepository lengthRepository, PointRepository pointRepository) {
 		this.topoRepository = topoRepository;
 		this.userRepository = userRepository;
 		this.areaRepository = areaRepository;
-		this.commentaireRepository = commentaireRepository;
-		this.siteRepository = siteRepository;
-		
-		
+		this.zoneRepository = zoneRepository;
+		this.lengthRepository = lengthRepository;
+		this.pointRepository = pointRepository;
+	}
+
+
+	
+	public Topo findTopoById(Long id) throws DataAccessException {
+		return topoRepository.findById(id);
+	}
+
+
+	
+	public Area findAreaById(Long id) throws DataAccessException {
+		return areaRepository.findById(id);
+	}
+
+
+	public void saveTopo(Topo Topo) throws DataAccessException {
+		topoRepository.saveTopo(Topo);
 	}
 
 	
-	public Collection<TopoType> findTopoTypes() throws DataAccessException {
-		return topoRepository.findTopoTypes();
-	}
-
-	
-
-	
-
-	@Override
 	@Transactional
-	public void saveUser(User User) throws DataAccessException {
-		userRepository.save(User);
+	public void saveZone(Zone Zone) throws DataAccessException {
+		topoRepository.saveZone(Zone);
 	}
 
-
-	public Collection<SiteType> findSiteTypes() throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public void saveWay(Way Way) throws DataAccessException {
+		topoRepository.saveWay(Way);
 	}
 
+	
+	@Transactional
+	public void saveLength(Length Length) throws DataAccessException {
+		topoRepository.saveLength(Length);
+	}
+
+	@Transactional
+	public void savePoint(Point Point) throws DataAccessException {
+		topoRepository.savePoint(Point);
+	}
+
+	@Transactional
+	public void saveArea(Area Area) throws DataAccessException {
+		topoRepository.saveArea(Area);
+	}
 	
 
 	@Override
 	public Collection<User> findUsers() throws DataAccessException {
 		// TODO Auto-generated method stub
-		return userRepository.findAll();
-	}
-
-		
-	
-
-	@Override
-	public String findLoggedInusername() {
-		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void autoLogin(String username, String password) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-
-	@Override
-	public void saveCommentaire(@Valid Commentaire commentaire) throws DataAccessException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	
-	
-	
-
-	@Override
-	public void saveUser(org.springframework.security.core.userdetails.@Valid User user) throws DataAccessException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-
-	@Override
-	public Collection<Commentaire> findSiteByName(String commentaire) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Commentaire findCommentaireById(long commentaireId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Collection<User> findUserByusername(String username) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Topo findTopoById(long id) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Area findAreaById(long id) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public void saveTopo(Topo topo) throws DataAccessException {
-		// TODO Auto-generated method stub
-		
 	}
 
 
@@ -175,6 +121,20 @@ public class EscaladeServiceImpl implements EscaladeService {
 	public Collection<Area> findTopoByPostalCode(String postalCode) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public void saveUser(org.springframework.security.core.userdetails.@Valid User user) throws DataAccessException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void saveUser(User user) throws DataAccessException {
+		// TODO Auto-generated method stub
+		
 	}
 
 
@@ -193,10 +153,57 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 
 	@Override
-	public void saveArea(Area area) {
+	public String findLoggedInusername() throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void autoLogin(String username, String password) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
 	}
 
+
+	@Override
+	public Collection<User> findUserByusername(String username) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Collection<SiteType> findSiteTypes() throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	
+
+	@Override
+	public Collection<TopoType> findTopoTypes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public Topo findTopoById(long id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public Area findAreaById(long id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 
 }

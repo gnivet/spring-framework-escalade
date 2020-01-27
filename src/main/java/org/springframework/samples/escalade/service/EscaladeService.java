@@ -21,7 +21,6 @@ import javax.validation.Valid;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
-import org.springframework.samples.escalade.model.Commentaire;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoType;
@@ -39,9 +38,9 @@ public interface EscaladeService {
 	Topo findTopoById(long id) throws DataAccessException;
 
 	Area findAreaById(long id) throws DataAccessException;
-
-	void saveCommentaire(@Valid Commentaire commentaire) throws DataAccessException;
-
+	/*
+	void saveCommentaire(Commentaire commentaire) throws DataAccessException;
+	*/
 	void saveTopo(Topo topo) throws DataAccessException;
 
 	Collection<User> findUsers() throws DataAccessException;
@@ -64,11 +63,11 @@ public interface EscaladeService {
 	void saveUser(User user) throws DataAccessException;
 
 	Collection<SiteType> findSiteTypes() throws DataAccessException;
-
+	/*
 	Collection<Commentaire> findSiteByName(String commentaire);
 
 	Commentaire findCommentaireById(long commentaireId);
-
+	*/
 	void saveArea(Area area);
 
 	Collection<TopoType> findTopoTypes();

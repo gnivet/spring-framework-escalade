@@ -123,5 +123,5 @@ public class Area extends NamedEntity {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+	
 }

@@ -61,6 +61,19 @@ public class Site extends NamedEntity {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "area_id", nullable = true)
 	private Area area;
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "way_id", nullable = true)
+	private Way way;	
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "length_id", nullable = true)
+	private Length length;
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "point_id", nullable = true)
+	private Point point;
+
 
 	@Transient
 	@Column(name = "length_status")
@@ -73,6 +86,10 @@ public class Site extends NamedEntity {
 
 	@OneToMany(mappedBy = "site")
 	private Set<Zone> zone;
+	
+	@OneToMany(mappedBy = "site")
+	private Set<Topo> topo;
+	
 
 	public boolean isValid() {
 		return valid;
@@ -133,6 +150,17 @@ public class Site extends NamedEntity {
 	public void setZone(Set<Zone> zone) {
 		this.zone = zone;
 	}
+
+	public Set<Topo> getTopo() {
+		return topo;
+	}
+
+	public void setTopo(Set<Topo> topo) {
+		this.topo = topo;
+	}
+	
+	
+	
 	/*
 	public Long getSite_id() {
 		return site_id;
@@ -142,6 +170,9 @@ public class Site extends NamedEntity {
 		this.site_id = site_id;
 	}
 	*/
+	
+	
+	/*
 	@ManyToOne
 	@JoinColumn(name = "site_id", nullable = true)
 	private Commentaire commentaire;
@@ -154,5 +185,5 @@ public class Site extends NamedEntity {
 		this.commentaire = commentaire;
 	}
 	
-	
+	*/
 }
