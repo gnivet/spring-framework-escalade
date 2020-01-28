@@ -1,6 +1,6 @@
 package org.springframework.samples.escalade.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -18,8 +20,9 @@ public class Topo extends NamedEntity {
 	@NotEmpty
 	private String comment;
 	
-	@Column(name = "date")
-	private Date date;
+	@Column(name = "comment_date")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	private LocalDate commentDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = true)
@@ -37,13 +40,14 @@ public class Topo extends NamedEntity {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
+	
 
-	public Date getDate() {
-		return date;
+	public LocalDate getCommentDate() {
+		return commentDate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setCommentDate(LocalDate commentDate) {
+		this.commentDate = commentDate;
 	}
 
 	public User getUser() {

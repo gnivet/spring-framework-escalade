@@ -1,7 +1,6 @@
 package org.springframework.samples.escalade.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.service.SecurityService;
 import org.springframework.samples.escalade.service.UserService;

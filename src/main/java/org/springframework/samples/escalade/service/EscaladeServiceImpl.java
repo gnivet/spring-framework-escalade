@@ -17,19 +17,15 @@ package org.springframework.samples.escalade.service;
 
 import java.util.Collection;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
-import org.springframework.samples.escalade.model.Length;
-import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoType;
 import org.springframework.samples.escalade.model.User;
-import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.samples.escalade.repository.LengthRepository;
@@ -39,6 +35,7 @@ import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.repository.WayRepository;
 import org.springframework.samples.escalade.repository.ZoneRepository;
 import org.springframework.stereotype.Service;
+
 
 /**
  * Mostly used as a facade for all escalade controllers Also a placeholder
@@ -51,74 +48,33 @@ import org.springframework.stereotype.Service;
 @Service
 public class EscaladeServiceImpl  implements EscaladeService {
 
-	private TopoRepository topoRepository;
-	private UserRepository userRepository;
-	private AreaRepository areaRepository;
-	private ZoneRepository zoneRepository;
-	private LengthRepository lengthRepository;
-	private PointRepository pointRepository;
-	private WayRepository wayRepository;
-
-
 	@Autowired
 	public EscaladeServiceImpl(TopoRepository topoRepository, UserRepository userRepository,
 		 AreaRepository areaRepository, ZoneRepository zoneRepository, LengthRepository lengthRepository, PointRepository pointRepository, WayRepository wayRepository) {
-		this.topoRepository = topoRepository;
-		this.userRepository = userRepository;
-		this.areaRepository = areaRepository;
-		this.zoneRepository = zoneRepository;
-		this.lengthRepository = lengthRepository;
-		this.pointRepository = pointRepository;
-		this.wayRepository = wayRepository;
 	}
 
 
-	public Topo findTopoById(Long id) throws DataAccessException {
-		return topoRepository.findById(id);
-	}
-
-	public Way findWayById(Long id) throws DataAccessException {
-		return wayRepository.findById(id);
-	}
-
-	
-	public Area findAreaById(Long id) throws DataAccessException {
-		return areaRepository.findById(id);
+	@Override
+	public Topo findTopoById(long id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
-	public void saveTopo(Topo Topo) throws DataAccessException {
-		topoRepository.saveTopo(Topo);
+	@Override
+	public Area findAreaById(long id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	
-	@Transactional
-	public void saveZone(Zone Zone) throws DataAccessException {
-		zoneRepository.saveZone(Zone);
+
+	@Override
+	public void saveTopo(Topo topo) throws DataAccessException {
+		// TODO Auto-generated method stub
+		
 	}
 
-	@Transactional
-	public void saveWay(Way Way) throws DataAccessException {
-		topoRepository.saveWay(Way);
-	}
 
-	
-	@Transactional
-	public void saveLength(Length Length) throws DataAccessException {
-		lengthRepository.saveLength(Length);
-	}
-
-	@Transactional
-	public void savePoint(Point Point) throws DataAccessException {
-		pointRepository.savePoint(Point);
-	}
-
-	@Transactional
-	public void saveArea(Area Area) throws DataAccessException {
-		areaRepository.saveArea(Area);
-	}
-	
-	
 	@Override
 	public Collection<User> findUsers() throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -150,41 +106,9 @@ public class EscaladeServiceImpl  implements EscaladeService {
 	@Override
 	public User findUserById(long userId) throws DataAccessException {
 		// TODO Auto-generated method stub
-		return userRepository.findById(userId);
+		return null;
 	}
 
-	@Override
-	public Topo findTopoById(long id) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return topoRepository.findById(id);
-	}
-
-
-
-	@Override
-	public Area findAreaById(long id) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return areaRepository.findById(id);
-	}
-	
-	public Zone findZoneById(Long id) throws DataAccessException {
-		return zoneRepository.findById(id);
-	}
-	
-	
-	public Length findLengthById(Long id) throws DataAccessException {
-		return lengthRepository.findById(id);
-	}
-	
-	public Point findPointById(Long id) throws DataAccessException {
-	
-		return pointRepository.findById(id);
-	}
-	
-	
-	
-	
-	
 
 	@Override
 	public Collection<User> findUserByLastName(String lastName) throws DataAccessException {
@@ -221,7 +145,12 @@ public class EscaladeServiceImpl  implements EscaladeService {
 	}
 
 
-	
+	@Override
+	public void saveArea(Area area) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	@Override
 	public Collection<TopoType> findTopoTypes() {
@@ -230,9 +159,27 @@ public class EscaladeServiceImpl  implements EscaladeService {
 	}
 
 
+	@Override
+	public void saveZone(Zone zone) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
-	
+	@Override
+	public Zone findZoneById(int zoneId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Collection<Zone> findZoneByName(String name) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 	
 
 

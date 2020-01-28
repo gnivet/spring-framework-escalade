@@ -32,20 +32,43 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	public Integer getId() {
 		return user_id;
 	}
 
-	public void setId(Integer user_id) {
+	public void setId(Integer role_id) {
+		this.user_id = role_id;
+	}
+
+	@ManyToMany
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void addTopo(Topo topo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public Object getTopo(String name, boolean b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(Integer user_id) {
 		this.user_id = user_id;
 	}
 
-	public String getusername() {
+	public String getUsername() {
 		return username;
 	}
 
-	public void setusername(String username) {
+	public void setUsername(String username) {
 		this.username = username;
 	}
 
@@ -57,31 +80,12 @@ public class User {
 		this.password = password;
 	}
 
-	@Transient
 	public String getPasswordConfirm() {
 		return passwordConfirm;
 	}
 
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
-	}
-
-	@ManyToMany
-	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
-	public Integer getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(Integer user_id) {
-		this.user_id = user_id;
 	}
 
 	public String getFirstName() {
@@ -148,16 +152,13 @@ public class User {
 		this.enabled = enabled;
 	}
 
-	public void addTopo(Topo topo) {
-		// TODO Auto-generated method stub
-
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
-
-	public Object getTopo(String name, boolean b) {
+	@Transient
+	public String getusername() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 
 }

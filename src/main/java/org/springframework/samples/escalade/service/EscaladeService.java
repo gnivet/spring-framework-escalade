@@ -25,6 +25,7 @@ import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoType;
 import org.springframework.samples.escalade.model.User;
+import org.springframework.samples.escalade.model.Zone;
 
 
 
@@ -71,6 +72,12 @@ public interface EscaladeService {
 	void saveArea(Area area);
 
 	Collection<TopoType> findTopoTypes();
+
+	void saveZone(@Valid Zone zone)throws DataAccessException;
+
+	Zone findZoneById(int zoneId)throws DataAccessException;
+
+	Collection<Zone> findZoneByName(String name)throws DataAccessException;
 
 	
 

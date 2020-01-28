@@ -37,6 +37,12 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 	@PersistenceContext
 	private EntityManager em;
 
+	
+	public Area findAreaById(long id) {
+		return this.em.find(Area.class, id);
+	}
+
+	
 	@SuppressWarnings("unchecked")
 	public Collection<Area> findTopoByPostalcode(String postalcode) {
 		// TODO Auto-generated method stub
@@ -57,18 +63,29 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 		return (Area) query.getSingleResult();
 	}
 
-	public void save(Area Area) {
-		if (Area.getId() == null) {
-			this.em.persist(Area);
-		} else {
-			this.em.merge(Area);
-		}
-	}
 
 	@Override
 	public void saveArea(Area area) {
 		// TODO Auto-generated method stub
 		
+			/*
+			if (Area.getId() == null) {
+				this.em.persist(Area);
+			} else {
+				this.em.merge(Area);
+			}
+			*/
+		
+		
 	}
 
-}
+	
+		
+		
+	}
+
+	
+
+	
+
+

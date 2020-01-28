@@ -19,7 +19,7 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	public Object findByusername(String username) {
+	public User findByusername(String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}
