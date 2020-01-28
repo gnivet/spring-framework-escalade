@@ -42,8 +42,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Site extends NamedEntity {
 	
 	
-	//@Column(name = "site_id", nullable = false)
-	//private Long site_id;
+	@Column(name = "site_id", nullable = false)
+	private Long site_id;
 
 	@Column(name = "birth_date")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
@@ -169,6 +169,14 @@ public class Site extends NamedEntity {
 
 	public void setPoint(Point point) {
 		this.point = point;
+	}
+
+	public Long getSite_id() {
+		return site_id;
+	}
+
+	public void setSite_id(Long site_id) {
+		this.site_id = site_id;
 	}
 	
 	

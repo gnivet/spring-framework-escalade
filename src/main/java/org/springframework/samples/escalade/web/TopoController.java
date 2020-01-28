@@ -125,7 +125,7 @@ public class TopoController {
 		}
 
 		// find topos by postal code
-		Collection<Area> results = this.escaladeService.findTopoByPostalCode(area.getPostalcode());
+		Collection<Area> results = this.escaladeService.findSiteByPostalCode(area.getPostalcode());
 		if (results.isEmpty()) {
 			// no users found
 			result.rejectValue("postalcode", "notFound", "not found");

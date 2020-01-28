@@ -8,7 +8,7 @@ import org.springframework.samples.escalade.model.Point;
 
 public class JpaPointRepositoryImpl {
 
-	public class JpaWayRepository {
+	
 
 		@PersistenceContext
 		private EntityManager em;
@@ -26,5 +26,5 @@ public class JpaPointRepositoryImpl {
 			}
 
 		}
-	}
+	
 }

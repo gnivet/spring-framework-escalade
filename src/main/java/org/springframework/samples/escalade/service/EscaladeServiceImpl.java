@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
+import org.springframework.samples.escalade.model.Comment;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoType;
@@ -53,13 +54,11 @@ public class EscaladeServiceImpl  implements EscaladeService {
 		 AreaRepository areaRepository, ZoneRepository zoneRepository, LengthRepository lengthRepository, PointRepository pointRepository, WayRepository wayRepository) {
 	}
 
-
 	@Override
 	public Topo findTopoById(long id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public Area findAreaById(long id) throws DataAccessException {
@@ -67,13 +66,11 @@ public class EscaladeServiceImpl  implements EscaladeService {
 		return null;
 	}
 
-
 	@Override
 	public void saveTopo(Topo topo) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 	@Override
 	public Collection<User> findUsers() throws DataAccessException {
@@ -81,13 +78,11 @@ public class EscaladeServiceImpl  implements EscaladeService {
 		return null;
 	}
 
-
 	@Override
-	public Collection<Area> findTopoByPostalCode(String postalCode) throws DataAccessException {
+	public Collection<Comment> findCommentByName(String name) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public void saveUser(org.springframework.security.core.userdetails.@Valid User user) throws DataAccessException {
@@ -95,13 +90,11 @@ public class EscaladeServiceImpl  implements EscaladeService {
 		
 	}
 
-
 	@Override
 	public void saveUser(User user) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 	@Override
 	public User findUserById(long userId) throws DataAccessException {
@@ -109,13 +102,11 @@ public class EscaladeServiceImpl  implements EscaladeService {
 		return null;
 	}
 
-
 	@Override
 	public Collection<User> findUserByLastName(String lastName) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public String findLoggedInusername() throws DataAccessException {
@@ -123,13 +114,11 @@ public class EscaladeServiceImpl  implements EscaladeService {
 		return null;
 	}
 
-
 	@Override
 	public void autoLogin(String username, String password) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 	@Override
 	public Collection<User> findUserByusername(String username) throws DataAccessException {
@@ -137,13 +126,11 @@ public class EscaladeServiceImpl  implements EscaladeService {
 		return null;
 	}
 
-
 	@Override
 	public Collection<SiteType> findSiteTypes() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public void saveArea(Area area) {
@@ -151,27 +138,23 @@ public class EscaladeServiceImpl  implements EscaladeService {
 		
 	}
 
-
 	@Override
 	public Collection<TopoType> findTopoTypes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
 	@Override
-	public void saveZone(Zone zone) {
+	public void saveZone(@Valid Zone zone) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
 	}
 
-
 	@Override
-	public Zone findZoneById(int zoneId) {
+	public Zone findZoneById(long zoneId) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public Collection<Zone> findZoneByName(String name) throws DataAccessException {
@@ -179,9 +162,23 @@ public class EscaladeServiceImpl  implements EscaladeService {
 		return null;
 	}
 
+	@Override
+	public void saveComment(@Valid Comment comment) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	
+	@Override
+	public Comment findCommentById(long commentId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public Collection<Area> findSiteByPostalCode(String postalcode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	
 	

@@ -21,11 +21,14 @@ import javax.validation.Valid;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
+import org.springframework.samples.escalade.model.Comment;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoType;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.Zone;
+import org.springframework.stereotype.Service;
+
 
 
 
@@ -34,6 +37,7 @@ import org.springframework.samples.escalade.model.Zone;
  *
  * @author Guillaume Nivet
  */
+
 public interface EscaladeService {
 
 	Topo findTopoById(long id) throws DataAccessException;
@@ -46,7 +50,7 @@ public interface EscaladeService {
 
 	Collection<User> findUsers() throws DataAccessException;
 
-	Collection<Area> findTopoByPostalCode(String postalCode) throws DataAccessException;
+	Collection<Comment> findCommentByName(String name) throws DataAccessException;
 
 	void saveUser(org.springframework.security.core.userdetails.@Valid User user) throws DataAccessException;
 
@@ -64,20 +68,22 @@ public interface EscaladeService {
 	void saveUser(User user) throws DataAccessException;
 
 	Collection<SiteType> findSiteTypes() throws DataAccessException;
-	/*
-	Collection<Commentaire> findSiteByName(String commentaire);
-
-	Commentaire findCommentaireById(long commentaireId);
-	*/
+	
 	void saveArea(Area area);
 
 	Collection<TopoType> findTopoTypes();
 
 	void saveZone(@Valid Zone zone)throws DataAccessException;
 
-	Zone findZoneById(int zoneId)throws DataAccessException;
+	Zone findZoneById(long zoneId)throws DataAccessException;
 
 	Collection<Zone> findZoneByName(String name)throws DataAccessException;
+
+	void saveComment(@Valid Comment comment);
+
+	Comment findCommentById(long commentId);
+
+	Collection<Area> findSiteByPostalCode(String postalcode);
 
 	
 

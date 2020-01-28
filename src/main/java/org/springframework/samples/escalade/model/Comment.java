@@ -18,6 +18,7 @@ import javax.validation.constraints.NotEmpty;
 public class Comment extends NamedEntity {
 
 	
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;	
@@ -53,7 +54,22 @@ public class Comment extends NamedEntity {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
+
+	/**
+	 * @param user
+	 * @param site
+	 * @param comment
+	 */
+	public Comment(User user, Site site, @NotEmpty String comment) {
+		this.user = user;
+		this.site = site;
+		this.comment = comment;
+	}
+
+	public Comment() {
+		// TODO Auto-generated constructor stub
+	}
+
 	
 	
 	}
