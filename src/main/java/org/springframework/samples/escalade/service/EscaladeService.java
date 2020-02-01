@@ -17,20 +17,12 @@ package org.springframework.samples.escalade.service;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Comment;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
-import org.springframework.samples.escalade.model.TopoType;
-import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.Zone;
-import org.springframework.stereotype.Service;
-
-
-
 
 /**
  * Mostly used as a facade so all controllers have a single point of entry
@@ -40,50 +32,40 @@ import org.springframework.stereotype.Service;
 
 public interface EscaladeService {
 
-	Topo findTopoById(long id) throws DataAccessException;
+	Topo findTopoById(Integer id) throws DataAccessException;
 
-	Area findAreaById(long id) throws DataAccessException;
-	/*
-	void saveCommentaire(Commentaire commentaire) throws DataAccessException;
-	*/
+	Area findAreaById(Integer id) throws DataAccessException;
+	
 	void saveTopo(Topo topo) throws DataAccessException;
 
-	Collection<User> findUsers() throws DataAccessException;
+	Collection<org.springframework.boot.autoconfigure.security.SecurityProperties.User> findUsers() throws DataAccessException;
 
 	Collection<Comment> findCommentByName(String name) throws DataAccessException;
-
-	void saveUser(org.springframework.security.core.userdetails.@Valid User user) throws DataAccessException;
-
-	User findUserById(long userId) throws DataAccessException;
-
-	Collection<User> findUserByLastName(String lastName) throws DataAccessException;
-
 	
 	String findLoggedInusername() throws DataAccessException;
 
 	void autoLogin(String username, String password) throws DataAccessException;
 
-	Collection<User> findUserByusername(String username) throws DataAccessException;
+	
 
-	void saveUser(User user) throws DataAccessException;
+
 
 	Collection<SiteType> findSiteTypes() throws DataAccessException;
 	
 	void saveArea(Area area);
 
-	Collection<TopoType> findTopoTypes();
+	void saveZone( Zone zone)throws DataAccessException;
 
-	void saveZone(@Valid Zone zone)throws DataAccessException;
-
-	Zone findZoneById(long zoneId)throws DataAccessException;
+	Zone findZoneById(Integer zoneId)throws DataAccessException;
 
 	Collection<Zone> findZoneByName(String name)throws DataAccessException;
 
-	void saveComment(@Valid Comment comment);
+	void saveComment( Comment comment);
 
-	Comment findCommentById(long commentId);
+	Comment findCommentById(Integer commentId);
 
 	Collection<Area> findSiteByPostalCode(String postalcode);
+	
 
 	
 

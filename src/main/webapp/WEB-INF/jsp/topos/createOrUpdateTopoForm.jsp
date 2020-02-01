@@ -103,7 +103,7 @@
                    		  <input type="hidden" name="id" value="${topotype.id}" />    
                    		 	<div class="control-group">
                     			<escalade:selectField name="type" label="Type"
-								names="${topotypes}" size="5" />
+								names="${sitetypes}" size="5" />
                 			</div>  
                    		 
                    		 	                 		 		 	 	 
@@ -115,7 +115,7 @@
                    		 	
                    		 	<label for="type">Type</label> : <input type="text" name="type" id="type" />
                    		   -->	
-                   		 	<input type="hidden" name="id" value="${topotype.id}" />  
+                   		 	<input type="hidden" name="id" value="${sitetype.id}" />  
                    		 	<div class="col-sm-10" class="form-horizontal">
        							<p>Please choose your topo type:</p><br />
       							 <input type="radio" name="type.name" value="cliff" id="cliff" /> <label for="cliff">cliff</label><br />

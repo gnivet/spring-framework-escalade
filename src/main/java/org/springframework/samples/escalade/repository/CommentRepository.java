@@ -5,6 +5,6 @@ import org.springframework.samples.escalade.model.Comment;
 
 public interface CommentRepository {
 
-	Comment findById(Long id) throws DataAccessException;
+	Comment findCommentById(Integer id) throws DataAccessException;
 	void saveComment(Comment comment)throws DataAccessException;
 }

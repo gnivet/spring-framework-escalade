@@ -13,7 +13,7 @@ public class JpaWayRepositoryImpl {
 		@PersistenceContext
 		private EntityManager em;
 
-		public Way findWayById(long id) {
+		public Way findWayById(Integer id) {
 			return this.em.find(Way.class, id);
 		}
 

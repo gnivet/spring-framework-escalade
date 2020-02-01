@@ -5,6 +5,6 @@ import org.springframework.samples.escalade.model.Point;
 
 public interface PointRepository {
 
-	Point findById(Long id) throws DataAccessException;
+	Point findById(Integer id) throws DataAccessException;
 	void savePoint(Point point)throws DataAccessException;
 }

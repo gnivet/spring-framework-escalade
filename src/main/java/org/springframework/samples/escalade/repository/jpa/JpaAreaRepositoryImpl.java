@@ -26,7 +26,7 @@ import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * JPA implementation of the {@link AreaRepository} longerface.
+ * JPA implementation of the {@link AreaRepository} Integererface.
  *
  * @author Guillaume Nivet
  * @since 3.12.2019
@@ -37,12 +37,6 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 	@PersistenceContext
 	private EntityManager em;
 
-	
-	public Area findAreaById(long id) {
-		return this.em.find(Area.class, id);
-	}
-
-	
 	@SuppressWarnings("unchecked")
 	public Collection<Area> findTopoByPostalcode(String postalcode) {
 		// TODO Auto-generated method stub
@@ -53,7 +47,7 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 	}
 
 	@Override
-	public Area findById(long id) {
+	public Area findAreaById(Integer id) {
 		// using 'join fetch' because a single query should load both areas and topos
 		// using 'left join fetch' because it might happen that an owner does not have
 		// topos yet
@@ -63,29 +57,18 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 		return (Area) query.getSingleResult();
 	}
 
-
-	@Override
 	public void saveArea(Area area) {
-		// TODO Auto-generated method stub
-		
-			/*
-			if (Area.getId() == null) {
-				this.em.persist(Area);
-			} else {
-				this.em.merge(Area);
-			}
-			*/
-		
-		
-	}
-
-	
-		
-		
+		/*
+		if (Area.getId() == null) {
+			this.em.persist(Area);
+		} else {
+			this.em.merge(Area);
+		}
+		*/
 	}
 
 	
 
 	
 
-
+}

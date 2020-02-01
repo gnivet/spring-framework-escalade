@@ -113,7 +113,7 @@ public class CommentController {
 	}
 
 	@RequestMapping(value = "/comments/{commentId}/edit", method = RequestMethod.POST)
-	public String processUpdateCommentForm(@Valid Comment comment, BindingResult result, @PathVariable("commentId") Long commentId) {
+	public String processUpdateCommentForm(@Valid Comment comment, BindingResult result, @PathVariable("commentId") Integer commentId) {
 		if (result.hasErrors()) {
 			return VIEWS_COMMENT_CREATE_OR_UPDATE_FORM;
 		} else {

@@ -13,7 +13,7 @@ public class JpaPointRepositoryImpl {
 		@PersistenceContext
 		private EntityManager em;
 
-		public Point findPointById(long id) {
+		public Point findPointById(Integer id) {
 			return this.em.find(Point.class, id);
 		}
 

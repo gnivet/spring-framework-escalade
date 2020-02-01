@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
-
-
 @Controller
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired	
+    @Autowired
     private SecurityService securityService;
 
     @Autowired
@@ -35,21 +33,36 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-        userValidator.validate(userForm, bindingResult);
+       // userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "registration";
         }
 
-        userService.saveUser(userForm);
+        userService.save(userForm);
 
-        securityService.autologin(userForm.getusername(), userForm.getPasswordConfirm());
+        securityService.autologin(userForm.getUsername(), userForm.getPassword());
+
+        return "redirect:/welcome";
+    }
+    
+    @RequestMapping(value="/login", method = RequestMethod.POST)
+    public String loginUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+       // userValidator.validate(userForm, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+        
+        securityService.autologin(userForm.getUsername(), userForm.getPassword());
 
         return "redirect:/welcome";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
+    	   model.addAttribute("userForm", new User());
+
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
 
@@ -62,7 +75,4 @@ public class UserController {
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
         return "welcome";
-    }
-	
-	
-}
+    }}

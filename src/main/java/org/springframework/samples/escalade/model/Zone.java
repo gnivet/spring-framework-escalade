@@ -12,10 +12,7 @@ import javax.persistence.Table;
 @Table(name="zones")  
 public class Zone extends NamedEntity{
 	
-	@ManyToOne
-    @JoinColumn(name = "zone_id")
-    private ZoneType type;
-							
+								
 	@ManyToOne
 	@JoinColumn(name = "site_id", nullable = false)
 	private Site site;

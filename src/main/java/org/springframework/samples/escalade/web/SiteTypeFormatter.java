@@ -24,7 +24,7 @@ import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.service.EscaladeService;
 
 /**
- * Instructs Spring MVC on how to parse and print elements of type 'TopoType'.
+ * Instructs Spring MVC on how to parse and print elements of type 'SiteType'.
  * Starting from Spring 3.0, Formatters have come as an improvement in
  * comparison to legacy PropertyEditors. See the following links for more
  * details: - The Spring ref doc:

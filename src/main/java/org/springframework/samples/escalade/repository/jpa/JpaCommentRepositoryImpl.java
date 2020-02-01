@@ -10,7 +10,7 @@ public class JpaCommentRepositoryImpl {
 	@PersistenceContext
 	private EntityManager em;
 
-	public Comment findCommentById(long id) {
+	public Comment findCommentById(Integer id) {
 		return this.em.find(Comment.class, id);
 	}
 

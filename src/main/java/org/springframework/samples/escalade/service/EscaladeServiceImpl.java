@@ -17,51 +17,38 @@ package org.springframework.samples.escalade.service;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Comment;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
-import org.springframework.samples.escalade.model.TopoType;
-import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.Zone;
-import org.springframework.samples.escalade.repository.AreaRepository;
-import org.springframework.samples.escalade.repository.LengthRepository;
-import org.springframework.samples.escalade.repository.PointRepository;
-import org.springframework.samples.escalade.repository.TopoRepository;
-import org.springframework.samples.escalade.repository.UserRepository;
-import org.springframework.samples.escalade.repository.WayRepository;
-import org.springframework.samples.escalade.repository.ZoneRepository;
 import org.springframework.stereotype.Service;
-
 
 /**
  * Mostly used as a facade for all escalade controllers Also a placeholder
  * for @Transactional and @Cacheable annotations
  *
  * @author Guillaume Nivet
- * @param <ZoneRepository>
+ * 
  */
 
 @Service
-public class EscaladeServiceImpl  implements EscaladeService {
+public class EscaladeServiceImpl implements EscaladeService {
 
-	@Autowired
-	public EscaladeServiceImpl(TopoRepository topoRepository, UserRepository userRepository,
-		 AreaRepository areaRepository, ZoneRepository zoneRepository, LengthRepository lengthRepository, PointRepository pointRepository, WayRepository wayRepository) {
-	}
+	
+
+	
 
 	@Override
-	public Topo findTopoById(long id) throws DataAccessException {
+	public Topo findTopoById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Area findAreaById(long id) throws DataAccessException {
+	public Area findAreaById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -85,30 +72,6 @@ public class EscaladeServiceImpl  implements EscaladeService {
 	}
 
 	@Override
-	public void saveUser(org.springframework.security.core.userdetails.@Valid User user) throws DataAccessException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void saveUser(User user) throws DataAccessException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public User findUserById(long userId) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Collection<User> findUserByLastName(String lastName) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String findLoggedInusername() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
@@ -118,12 +81,6 @@ public class EscaladeServiceImpl  implements EscaladeService {
 	public void autoLogin(String username, String password) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public Collection<User> findUserByusername(String username) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -139,19 +96,13 @@ public class EscaladeServiceImpl  implements EscaladeService {
 	}
 
 	@Override
-	public Collection<TopoType> findTopoTypes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void saveZone(@Valid Zone zone) throws DataAccessException {
+	public void saveZone(Zone zone) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Zone findZoneById(long zoneId) throws DataAccessException {
+	public Zone findZoneById(Integer zoneId) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -163,13 +114,13 @@ public class EscaladeServiceImpl  implements EscaladeService {
 	}
 
 	@Override
-	public void saveComment(@Valid Comment comment) {
+	public void saveComment(Comment comment) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Comment findCommentById(long commentId) {
+	public Comment findCommentById(Integer commentId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -182,4 +133,6 @@ public class EscaladeServiceImpl  implements EscaladeService {
 
 	
 	
+
+		
 }

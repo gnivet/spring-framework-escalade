@@ -12,7 +12,7 @@ public class JpaLengthRepositoryImpl {
 		@PersistenceContext
 		private EntityManager em;
 
-		public Length findLengthById(long id) {
+		public Length findLengthById(Integer id) {
 			return this.em.find(Length.class, id);
 		}
 

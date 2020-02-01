@@ -15,11 +15,7 @@ public class Way extends NamedEntity {
 	/**
 	 * Holds value of property roles. FOREIGN KEY (partie_id)
 	 */
-	@ManyToOne
-    @JoinColumn(name = "way_id")
-    private WayType type;
-	
-	
+		
 	@ManyToOne
 	@JoinColumn(name = "zone_id", nullable = true)
 	private Zone zone;

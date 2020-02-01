@@ -113,7 +113,7 @@ public class ZoneController {
 	}
 
 	@RequestMapping(value = "/zones/{zoneId}/edit", method = RequestMethod.POST)
-	public String processUpdatezoneForm(Zone zone, BindingResult result, @PathVariable("zoneId") long zoneId) {
+	public String processUpdatezoneForm(Zone zone, BindingResult result, @PathVariable("zoneId") Integer zoneId) {
 		if (result.hasErrors()) {
 			return VIEWS_ZONE_CREATE_OR_UPDATE_FORM;
 		} else {

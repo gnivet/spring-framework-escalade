@@ -24,7 +24,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Area;
-import org.springframework.samples.escalade.model.BaseEntity;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,7 +67,7 @@ public class AreaController {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 		} else {
 			this.escaladeService.saveArea(area);
-			return "redirect:/areas/" + ((BaseEntity) area).getId();
+			return "redirect:/areas/" + area.getId();
 		}
 	}
 
@@ -113,7 +112,7 @@ public class AreaController {
 	}
 
 	@RequestMapping(value = "/areas/{areaId}/edit", method = RequestMethod.POST)
-	public String processUpdateAreaForm(Area area, BindingResult result, @PathVariable("areaId") long areaId) {
+	public String processUpdateAreaForm(Area area, BindingResult result, @PathVariable("areaId") Integer areaId) {
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 		} else {

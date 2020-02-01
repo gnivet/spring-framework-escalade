@@ -19,9 +19,6 @@ public class Comment extends NamedEntity {
 
 	
 	
-	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = true)
-	private User user;	
 	
 	@ManyToOne
 	@JoinColumn(name = "site_id", nullable = true)
@@ -31,13 +28,7 @@ public class Comment extends NamedEntity {
 	@NotEmpty
 	private String comment;
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+	
 
 	public Site getSite() {
 		return site;
@@ -55,16 +46,7 @@ public class Comment extends NamedEntity {
 		this.comment = comment;
 	}
 
-	/**
-	 * @param user
-	 * @param site
-	 * @param comment
-	 */
-	public Comment(User user, Site site, @NotEmpty String comment) {
-		this.user = user;
-		this.site = site;
-		this.comment = comment;
-	}
+	
 
 	public Comment() {
 		// TODO Auto-generated constructor stub

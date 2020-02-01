@@ -8,8 +8,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-
-
 @Component
 public class UserValidator implements Validator {
     @Autowired
@@ -25,10 +23,10 @@ public class UserValidator implements Validator {
         User user = (User) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
-        if (user.getusername().length() < 6 || user.getusername().length() > 32) {
+        if (user.getUsername().length() < 6 || user.getUsername().length() > 32) {
             errors.rejectValue("username", "Size.userForm.username");
         }
-        if (userService.findByusername(user.getusername()) != null) {
+        if (userService.findByUsername(user.getUsername()) != null) {
             errors.rejectValue("username", "Duplicate.userForm.username");
         }
 
@@ -42,5 +40,3 @@ public class UserValidator implements Validator {
         }
     }
 }
-
-

@@ -42,9 +42,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Site extends NamedEntity {
 	
 	
-	@Column(name = "site_id", nullable = false)
-	private Long site_id;
-
 	@Column(name = "birth_date")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate birthDate;
@@ -62,19 +59,6 @@ public class Site extends NamedEntity {
 	@JoinColumn(name = "area_id", nullable = true)
 	private Area area;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "way_id", nullable = true)
-	private Way way;	
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "length_id", nullable = true)
-	private Length length;
-	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "point_id", nullable = true)
-	private Point point;
-
-
 	@Transient
 	@Column(name = "length_status")
 	@NotNull
@@ -135,11 +119,7 @@ public class Site extends NamedEntity {
 		this.length_status = length_status;
 	}
 
-	public String toString() {
-		return "TopoType [type=" + type + "]";
-	}
-
-	public Set<Zone> getZone() {
+		public Set<Zone> getZone() {
 		return zone;
 	}
 
@@ -147,39 +127,6 @@ public class Site extends NamedEntity {
 		this.zone = zone;
 	}
 
-	public Way getWay() {
-		return way;
-	}
-
-	public void setWay(Way way) {
-		this.way = way;
-	}
-
-	public Length getLength() {
-		return length;
-	}
-
-	public void setLength(Length length) {
-		this.length = length;
-	}
-
-	public Point getPoint() {
-		return point;
-	}
-
-	public void setPoint(Point point) {
-		this.point = point;
-	}
-
-	public Long getSite_id() {
-		return site_id;
-	}
-
-	public void setSite_id(Long site_id) {
-		this.site_id = site_id;
-	}
-	
-	
 	
 	
 	

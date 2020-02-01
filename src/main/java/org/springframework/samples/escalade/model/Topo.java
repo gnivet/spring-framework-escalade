@@ -11,36 +11,46 @@ import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-
 @Entity
 @Table(name = "topos")
 public class Topo extends NamedEntity {
 
-	@Column(name = "comment")
+	@Column(name = "description")
 	@NotEmpty
-	private String comment;
-	
+	private String description;
+
+	@Column(name = "available")
+	@NotEmpty
+	private boolean available;
+
 	@Column(name = "comment_date")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate commentDate;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
 
 	public void setUser(User user) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	public String getComment() {
-		return comment;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	
+
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
 
 	public LocalDate getCommentDate() {
 		return commentDate;
@@ -52,7 +62,6 @@ public class Topo extends NamedEntity {
 
 	public User getUser() {
 		return user;
-	}	
-		
-	
+	}
+
 }

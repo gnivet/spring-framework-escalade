@@ -11,7 +11,7 @@ public class JpaZoneRepository {
 	@PersistenceContext
 	private EntityManager em;
 
-	public Zone findZoneById(long id) {
+	public Zone findZoneById(Integer id) {
 		return this.em.find(Zone.class, id);
 	}
 

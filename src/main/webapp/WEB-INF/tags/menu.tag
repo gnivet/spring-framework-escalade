@@ -3,7 +3,7 @@
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags" %>
 <%@ attribute name="name" required="true" rtexprvalue="true"
               description="Name of the active menu: home, users, topos, areas or error" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>              
+<!--  <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> -->             
 
 <nav class="navbar navbar-default" role="navigation">
     <div class="container">
