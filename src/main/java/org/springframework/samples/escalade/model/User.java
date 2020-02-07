@@ -16,7 +16,7 @@ import javax.persistence.Transient;
 @Table(name = "users")
 public class User {
 
-	private Integer user_id;
+	private Integer id;
 	private String username;
 	private String password;
 	private String passwordConfirm;
@@ -32,13 +32,15 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	public Integer getId() {
-		return user_id;
+		return id;
 	}
 
-	public void setId(Integer role_id) {
-		this.user_id = role_id;
+	public void setId(Integer id) {
+		this.id = id;
 	}
+	
 
 	@ManyToMany
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
@@ -46,23 +48,19 @@ public class User {
 		return roles;
 	}
 
-	public void addTopo(Topo topo) {
+	
+
+	public void addSite(Site site) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public Object getTopo(String name, boolean b) {
+	public Object getSite(String name, boolean b) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Integer getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(Integer user_id) {
-		this.user_id = user_id;
-	}
+	
 
 	public String getUsername() {
 		return username;

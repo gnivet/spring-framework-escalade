@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 
 		// The pages does not require login
-		http.authorizeRequests().antMatchers("/", "/login", "/register", "/logout", "/registerSuccessfulPage.jsp", "welcome.jsp")
+		http.authorizeRequests().antMatchers("/", "/login", "/register", "/logout", "/registerSuccessfulPage.jsp", "welcome.jsp", "/users/news.jsp" , "/registration" , "/areas/new" , "/areas", "/areas/find", "/areas/new")
 				.permitAll();
 
 		// /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/userInfo").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/areas").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/users").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
+		//http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/areas/toposList").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/areas/toposList").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/users/find").hasAnyRole("USER", "ADMIN");

@@ -20,6 +20,7 @@ package org.springframework.samples.escalade.web;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Guillaume Nivet 
  */
 @Controller
+@Transactional
 public class AreaController {
 
 	private static final String VIEWS_AREA_CREATE_OR_UPDATE_FORM = "areas/createOrUpdateAreaForm";
@@ -74,7 +76,7 @@ public class AreaController {
 	@RequestMapping(value = "/areas/find", method = RequestMethod.GET)
 	public String initFindForm(Map<String, Object> model) {
 		model.put("area", new Area());
-		return "areas/findTopos";
+		return "areas/findSites";
 		// return "areas/{areaId}";
 	}
 
@@ -92,7 +94,7 @@ public class AreaController {
 		if (results.isEmpty()) {
 			// no areas found
 			result.rejectValue("postalcode", "notFound", "not found");
-			return "areas/findTopos";
+			return "areas/findSites";
 			/*
 			 * } else if (results.size() == 1) { // 1 area found area =
 			 * results.iterator().next(); return "redirect:/areas/" + area.getId();
@@ -100,7 +102,7 @@ public class AreaController {
 		} else {
 			// multiple areas found
 			model.put("selections", results);
-			return "areas/toposList";
+			return "areas/sitesList";
 		}
 	}
 

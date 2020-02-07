@@ -7,11 +7,11 @@
 	
 <escalade:layout pageName="areas">
 
-    <h2>Find Topos</h2>
-    <!-- Research topos by areas -->
+    <h2>Find sites</h2>
+    <!-- Research sites by areas -->
     <spring:url value="/areas" var="formUrl"/>
     <form:form modelAttribute="area" action="${fn:escapeXml(formUrl)}" method="get" class="form-horizontal"
-               id="search-topo-form">
+               id="search-site-form">
         <div class="form-group">
             <div class="control-group" id="postalcode">
                 <label class="col-sm-2 control-label">Code area </label>
@@ -23,7 +23,7 @@
         </div> </div>  
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Find topo</button>
+                <button type="submit" class="btn btn-default">Find site</button>
             </div>
         </div>
 

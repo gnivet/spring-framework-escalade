@@ -17,13 +17,16 @@ package org.springframework.samples.escalade.service;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Comment;
+import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.Zone;
+import org.springframework.samples.escalade.repository.areaRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -36,11 +39,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EscaladeServiceImpl implements EscaladeService {
+	
+	@Autowired
+	private areaRepository areaRepository;
 
 	
-
 	
-
+	
 	@Override
 	public Topo findTopoById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -50,20 +55,20 @@ public class EscaladeServiceImpl implements EscaladeService {
 	@Override
 	public Area findAreaById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
-		return null;
+		return areaRepository.findAreaById(id);
 	}
 
+	
+
+	
+	
 	@Override
 	public void saveTopo(Topo topo) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public Collection<User> findUsers() throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public Collection<Comment> findCommentByName(String name) throws DataAccessException {
@@ -89,10 +94,11 @@ public class EscaladeServiceImpl implements EscaladeService {
 		return null;
 	}
 
+	
 	@Override
-	public void saveArea(Area area) {
-		// TODO Auto-generated method stub
+	public void saveArea(Area Area) throws DataAccessException {
 		
+		areaRepository.saveArea(Area);
 	}
 
 	@Override
@@ -127,6 +133,37 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 	@Override
 	public Collection<Area> findSiteByPostalCode(String postalcode) {
+		// TODO Auto-generated method stub
+		return areaRepository.findSiteByPostalcode(postalcode);
+	}
+	
+	
+	
+
+	@Override
+	public void saveSite(Site site) throws DataAccessException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Site findSiteById(Integer id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+
+
+	@Override
+	public org.springframework.samples.escalade.model.User findUserByID(Integer id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Collection<User> findUsers() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}

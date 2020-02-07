@@ -9,21 +9,22 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "roles" )
 public class Role {
-    private Integer role_id;
+    private Integer id;
     private String name;
     private Set<User> users;
 
     @Id    
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getId() {
-        return role_id;
+        return id;
     }
 
-    public void setId(Integer role_id) {
-        this.role_id = role_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

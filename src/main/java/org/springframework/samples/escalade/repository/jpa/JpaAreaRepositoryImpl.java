@@ -22,17 +22,17 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.samples.escalade.model.Area;
-import org.springframework.samples.escalade.repository.AreaRepository;
+import org.springframework.samples.escalade.repository.areaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * JPA implementation of the {@link AreaRepository} Integererface.
+ * JPA implementation of the {@link areaRepository} Integererface.
  *
  * @author Guillaume Nivet
  * @since 3.12.2019
  */
 @Repository
-public class JpaAreaRepositoryImpl implements AreaRepository {
+public class JpaAreaRepositoryImpl implements areaRepository {
 
 	@PersistenceContext
 	private EntityManager em;
@@ -58,13 +58,19 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 	}
 
 	public void saveArea(Area area) {
-		/*
-		if (Area.getId() == null) {
-			this.em.persist(Area);
+		
+		if (area.getId() == null) {
+			this.em.persist(area);
 		} else {
-			this.em.merge(Area);
+			this.em.merge(area);
 		}
-		*/
+		
+	}
+
+	@Override
+	public Collection<Area> findSiteByPostalcode(String postalcode) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

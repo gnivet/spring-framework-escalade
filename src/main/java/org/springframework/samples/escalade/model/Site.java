@@ -52,7 +52,7 @@ public class Site extends NamedEntity {
 	private SiteType type;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -33,9 +33,7 @@ public class BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "base_entity_generator")
 	@SequenceGenerator(name = "base_entity_generator", sequenceName = "base_entity_sequence")
-	
-	
-	
+		
 	protected Integer id;
 
 	public Integer getId() {
@@ -47,13 +45,15 @@ public class BaseEntity {
 	}
 
 	public boolean isNew() {
-		return this.id == 0;
+		return this.id == null;
 	}
-
+	/*
 	@Override
 	public String toString() {
 		return "BaseEntity [id=" + id + ", getId()=" + getId() + ", isNew()=" + isNew() + ", getClass()=" + getClass()
 				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
+	
+	*/
 
 }

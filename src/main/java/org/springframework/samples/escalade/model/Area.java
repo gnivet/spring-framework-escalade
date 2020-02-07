@@ -21,7 +21,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
 /**
  * Simple business object representing a Area.
  *
@@ -36,7 +35,8 @@ public class Area extends NamedEntity {
 	private String street;
 
 	@Column(name = "postalcode")
-	private String postalcode;
+	private String postalcode;	
+	
 
 	public String getPostalcode() {
 		return postalcode;
@@ -80,6 +80,8 @@ public class Area extends NamedEntity {
 		this.gpscoordinate = gpscoordinate;
 	}
 
+	
+	
 	public String getStreet() {
 		return street;
 	}
@@ -89,28 +91,17 @@ public class Area extends NamedEntity {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "topo_id", nullable = true)
-	private Site topo;
+	@JoinColumn(name = "site_id", nullable = true)
+	private Site site;
 
-	public Site getTopo() {
-		return topo;
+	public Site getSite() {
+		return site;
 	}
 
-	public void setTopo(Site topo) {
-		this.topo = topo;
+	public void setSite(Site site) {
+		this.site = site;
 	}
-
-	@Column(name = "topos")
-	private String topos;
-
-	public String getTopos() {
-		return topos;
-	}
-
-	public void setTopos(String topos) {
-		this.topos = topos;
-	}
-
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
@@ -122,5 +113,4 @@ public class Area extends NamedEntity {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
 }

@@ -30,5 +30,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username);
     }
 
+	@Override
+	public void save(org.springframework.security.core.userdetails.User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }
