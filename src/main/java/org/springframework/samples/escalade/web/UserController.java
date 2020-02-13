@@ -24,19 +24,19 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
 
-        return "registration";
+        return "/users/registration";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
        // userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return "/users/registration";
         }
 
         userService.save(userForm);
@@ -46,12 +46,12 @@ public class UserController {
         return "redirect:/welcome";
     }
     
-    @RequestMapping(value="/login", method = RequestMethod.POST)
+    @RequestMapping(value="/users/login", method = RequestMethod.POST)
     public String loginUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
        // userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return "/users/registration";
         }
         
         securityService.autologin(userForm.getUsername(), userForm.getPassword());
@@ -59,7 +59,7 @@ public class UserController {
         return "redirect:/welcome";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
     	   model.addAttribute("userForm", new User());
 
@@ -69,10 +69,29 @@ public class UserController {
         if (logout != null)
             model.addAttribute("message", "You have been logged out successfully.");
 
-        return "login";
+        return "/users/login";
     }
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
-        return "welcome";
-    }}
+        return "/welcome";
+    }
+
+	public UserValidator getUserValidator() {
+		return userValidator;
+	}
+
+	public void setUserValidator(UserValidator userValidator) {
+		this.userValidator = userValidator;
+	}
+	
+	 @RequestMapping(value = "/users/logout", method = RequestMethod.GET)
+		public String logoutSuccessfulPage(Model model) {
+			model.addAttribute("title", "Logout");
+			return "/users/logout";
+		}
+
+
+
+
+}

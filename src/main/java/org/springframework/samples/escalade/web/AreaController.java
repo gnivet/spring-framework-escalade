@@ -70,6 +70,7 @@ public class AreaController {
 		} else {
 			this.escaladeService.saveArea(area);
 			return "redirect:/areas/" + area.getId();
+			
 		}
 	}
 

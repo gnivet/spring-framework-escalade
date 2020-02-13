@@ -17,6 +17,8 @@ package org.springframework.samples.escalade.service;
 
 import java.util.Collection;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.dao.DataAccessException;
@@ -26,7 +28,9 @@ import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.Zone;
-import org.springframework.samples.escalade.repository.areaRepository;
+import org.springframework.samples.escalade.repository.AreaRepository;
+import org.springframework.samples.escalade.repository.CommentRepository;
+import org.springframework.samples.escalade.repository.ZoneRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -41,28 +45,72 @@ import org.springframework.stereotype.Service;
 public class EscaladeServiceImpl implements EscaladeService {
 	
 	@Autowired
-	private areaRepository areaRepository;
-
+	private AreaRepository areaRepository;
+	@Autowired
+	private CommentRepository commentRepository;
 	
+	private ZoneRepository zoneRepository;
 	
-	
-	@Override
-	public Topo findTopoById(Integer id) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
+	@Autowired
+	public EscaladeServiceImpl
+	(
+			
+			 AreaRepository areaRepository,
+			 CommentRepository commentRepository,
+			 ZoneRepository zoneRepository
+			
+	)
+	{
+		this.areaRepository = areaRepository;
+		this.commentRepository = commentRepository;
+		this.zoneRepository = zoneRepository;
+		
 	}
 
-	@Override
+	
+
+	
 	public Area findAreaById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return areaRepository.findAreaById(id);
 	}
 
 	
+	public Comment findCommentById(Integer id) throws DataAccessException{
+		return commentRepository.findCommentById(id);
+	}
+//Comment findCommentById(Integer commentId)throws DataAccessException;
+	
+	public Collection<Comment> findCommentByName(String name) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return commentRepository.findCommentByName(name);
+	}
+	
+	
+	public void saveComment(Comment comment) throws DataAccessException {
+		
+		commentRepository.saveComment(comment);
+		
+	}
+	
+	
+	
 
 	
 	
-	@Override
+	
+	
+	
+	
+	
+	
+	
+	public Topo findTopoById(Integer id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 	public void saveTopo(Topo topo) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
@@ -70,68 +118,57 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 	
 
-	@Override
-	public Collection<Comment> findCommentByName(String name) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
-	@Override
+	
 	public String findLoggedInusername() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public void autoLogin(String username, String password) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public Collection<SiteType> findSiteTypes() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	
-	@Override
-	public void saveArea(Area Area) throws DataAccessException {
+	
+	public void saveArea(Area area) throws DataAccessException {
 		
-		areaRepository.saveArea(Area);
+		areaRepository.saveArea(area);
 	}
 
-	@Override
+	
 	public void saveZone(Zone zone) throws DataAccessException {
 		// TODO Auto-generated method stub
+		zoneRepository.saveZone(zone);
 		
 	}
 
-	@Override
+	
 	public Zone findZoneById(Integer zoneId) throws DataAccessException {
 		// TODO Auto-generated method stub
-		return null;
+		return zoneRepository.findZoneById(zoneId);
 	}
 
-	@Override
+	
 	public Collection<Zone> findZoneByName(String name) throws DataAccessException {
 		// TODO Auto-generated method stub
-		return null;
+		return zoneRepository.findZoneByName(name);
 	}
 
-	@Override
-	public void saveComment(Comment comment) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
-	@Override
-	public Comment findCommentById(Integer commentId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
-	@Override
+	@Transactional
 	public Collection<Area> findSiteByPostalCode(String postalcode) {
 		// TODO Auto-generated method stub
 		return areaRepository.findSiteByPostalcode(postalcode);
@@ -140,13 +177,13 @@ public class EscaladeServiceImpl implements EscaladeService {
 	
 	
 
-	@Override
+	@Transactional
 	public void saveSite(Site site) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	@Transactional
 	public Site findSiteById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
@@ -156,13 +193,13 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 
 
-	@Override
+	@Transactional
 	public org.springframework.samples.escalade.model.User findUserByID(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
-	@Override
+	@Transactional
 	public Collection<User> findUsers() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;

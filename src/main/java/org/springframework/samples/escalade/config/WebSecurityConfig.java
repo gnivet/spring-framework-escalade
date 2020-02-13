@@ -37,26 +37,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		UserDetailsService userDetailsService = myUserDetailsService();
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
-
+   
+	
+	
+	
+	
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.csrf().disable();
 
 		// The pages does not require login
-		http.authorizeRequests().antMatchers("/", "/login", "/register", "/logout", "/registerSuccessfulPage.jsp", "welcome.jsp", "/users/news.jsp" , "/registration" , "/areas/new" , "/areas", "/areas/find", "/areas/new")
+		/*
+		http.authorizeRequests().antMatchers("/", "/users/login", "/logout", "/welcome",
+				"/users/new" , "/users/registration" , "/areas/new" , "/areas", "/areas/find", "/areas/new", "/comments/find", "/comments/new" , "/comments" , "/zones/new")
 				.permitAll();
-
+		*/		
+		http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
 		// /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
 		// If no login, it will redirect to /login page.
-		http.authorizeRequests().antMatchers("/userInfo").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/areas").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/users").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/areas/toposList").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/escalade/areas/toposList").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/areas/sitesList").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/areas/sitesList").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/users/find").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/userAccountInfo").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/comments/find").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/users/userInfo").hasAnyRole("USER", "ADMIN");
+		//http.authorizeRequests().antMatchers("/users/registration").hasAnyRole("USER", "ADMIN");
 
 		// For ADMIN only. /users/find
 		http.authorizeRequests().antMatchers("/admin").hasRole("ADMIN");

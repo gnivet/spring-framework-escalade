@@ -15,23 +15,29 @@
  */
 package org.springframework.samples.escalade.web;
 
+import java.util.Collection;
+import java.util.Map;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.escalade.model.User;
-import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Site;
+import org.springframework.samples.escalade.model.SiteType;
+import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-
-import java.util.Collection;
-import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author Juergen Hoeller
@@ -70,7 +76,7 @@ public class SiteController {
         dataBinder.setValidator(new SiteValidator());
     }
 	*/
-    @RequestMapping(value = "/users/new", method = RequestMethod.GET)
+    @GetMapping(value = "/users/new")
     public String initCreationForm(User user, ModelMap model) {
         Site site = new Site();
         user.addSite(site);
@@ -79,7 +85,7 @@ public class SiteController {
     }
         
     
-    @RequestMapping(value = "/sites/new", method = RequestMethod.POST)
+    @PostMapping(value = "/sites/new")
     public String processCreationForm(User user, @Valid Site site, BindingResult result, ModelMap model) {
         if (StringUtils.hasLength(site.getName()) && site.isNew() && user.getSite(site.getName(), true) != null){
             result.rejectValue("name", "duplicate", "already exists");
@@ -94,14 +100,14 @@ public class SiteController {
         }
     }
 
-    @RequestMapping(value = "/sites/{siteId}/edit", method = RequestMethod.GET)
+    @GetMapping(value = "/sites/{siteId}/edit")
     public String initUpdateForm(@PathVariable("siteId") int siteId, ModelMap model) {
         Site site = this.escaladeService.findSiteById(siteId);
         model.put("site", site);
         return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
     }
 
-    @RequestMapping(value = "/sites/{siteId}/edit", method = RequestMethod.POST)
+    @PostMapping(value = "/sites/{siteId}/edit")
     public String processUpdateForm(@Valid Site site, BindingResult result, User user, ModelMap model) {
         if (result.hasErrors()) {
             model.put("site", site);
@@ -124,7 +130,7 @@ public class SiteController {
             area.setPostalcode(""); // empty string signifies broadest possible search
         }
  
-    // find topos by postal code
+    // find topos by postal code		
     Collection<Area> results = this.escaladeService.findSiteByPostalCode(area.getPostalcode());
     if (results.isEmpty()) {
         // no users found

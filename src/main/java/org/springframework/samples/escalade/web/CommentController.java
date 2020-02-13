@@ -18,6 +18,7 @@ package org.springframework.samples.escalade.web;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Michael Isvy
  */
 @Controller
+@Transactional
 public class CommentController {
 
 	private static final String VIEWS_COMMENT_CREATE_OR_UPDATE_FORM = "comments/createOrUpdateCommentForm";
@@ -75,11 +77,11 @@ public class CommentController {
 	@RequestMapping(value = "/comments/find", method = RequestMethod.GET)
 	public String initFindForm(Map<String, Object> model) {
 		model.put("comment", new Comment());
-		return "comments/findTopos";
+		return "comments/findSites";
 		// return "comments/{commentId}";
 	}
 
-//findTopos
+//findSites
 	@RequestMapping(value = "/comments", method = RequestMethod.GET)
 	public String processFindForm(Comment comment, BindingResult result, Map<String, Object> model) {
 
@@ -93,7 +95,7 @@ public class CommentController {
 		if (results.isEmpty()) {
 			// no comments found
 			result.rejectValue("postalcode", "notFound", "not found");
-			return "comments/findTopos";
+			return "comments/findSites";
 			/*
 			 * } else if (results.size() == 1) { // 1 comment found comment =
 			 * results.iterator().next(); return "redirect:/comments/" + comment.getId();
@@ -101,7 +103,7 @@ public class CommentController {
 		} else {
 			// multiple comments found
 			model.put("selections", results);
-			return "comments/toposList";
+			return "comments/sitesList";
 		}
 	}
 

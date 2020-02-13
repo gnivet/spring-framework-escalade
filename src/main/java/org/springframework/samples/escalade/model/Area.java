@@ -102,6 +102,19 @@ public class Area extends NamedEntity {
 		this.site = site;
 	}
 	
+	@Column(name = "sites")	
+	private String sites;
+    public String getSites() {
+		return sites;
+	}
+
+	public void setSites(String sites) {
+		this.sites = sites;
+	}
+	
+	
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;

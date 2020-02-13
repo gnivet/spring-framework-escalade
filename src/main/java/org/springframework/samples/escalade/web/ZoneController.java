@@ -105,9 +105,9 @@ public class ZoneController {
 		}
 	}
 
-	@RequestMapping(value = "/zones/{zoneId}/edit", method = RequestMethod.GET)
-	public String initUpdatezoneForm(@PathVariable("zoneId") int zoneId, Model model) {
-		Zone zone = this.escaladeService.findZoneById(zoneId);
+	@RequestMapping(value = "/zones/{id}/edit", method = RequestMethod.GET)
+	public String initUpdatezoneForm(@PathVariable("id") int id, Model model) {
+		Zone zone = this.escaladeService.findZoneById(id);
 		model.addAttribute(zone);
 		return VIEWS_ZONE_CREATE_OR_UPDATE_FORM;
 	}

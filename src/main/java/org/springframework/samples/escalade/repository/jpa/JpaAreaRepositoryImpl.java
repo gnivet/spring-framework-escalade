@@ -22,17 +22,17 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.samples.escalade.model.Area;
-import org.springframework.samples.escalade.repository.areaRepository;
+import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * JPA implementation of the {@link areaRepository} Integererface.
+ * JPA implementation of the {@link AreaRepository} Integererface.
  *
  * @author Guillaume Nivet
  * @since 3.12.2019
  */
 @Repository
-public class JpaAreaRepositoryImpl implements areaRepository {
+public class JpaAreaRepositoryImpl implements AreaRepository {
 
 	@PersistenceContext
 	private EntityManager em;

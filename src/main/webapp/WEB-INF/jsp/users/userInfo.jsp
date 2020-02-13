@@ -15,7 +15,7 @@
     <table class="table table-striped">
         <tr>
             <th>Name</th>
-            <td><b><c:out value="${ userPrincipal.name }"/></b></td>
+            <td><b><c:out value="${userName}"/></b></td>
         </tr>
     	<tr>   
 			<th>This is protected page!</th>
@@ -28,4 +28,3 @@
 </body>
 	</html>
 </escalade:layout>
-

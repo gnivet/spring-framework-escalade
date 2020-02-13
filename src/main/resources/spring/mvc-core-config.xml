@@ -41,7 +41,7 @@
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="formatters">
             <set>
-                <bean class="org.springframework.samples.escalade.web.TopoTypeFormatter"/>
+                <bean class="org.springframework.samples.escalade.web.SiteTypeFormatter"/>                	
             </set>
         </property>
     </bean>

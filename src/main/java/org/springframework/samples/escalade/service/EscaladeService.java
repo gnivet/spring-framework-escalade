@@ -33,46 +33,75 @@ import org.springframework.samples.escalade.model.Zone;
  */
 
 public interface EscaladeService {
+	
+	/*
+	 * User
+	 */
 
 	User findUserByID (Integer id)  throws DataAccessException;
 	
+	
+	/*
+	 * Topo
+	 */
+	
 	Topo findTopoById(Integer id) throws DataAccessException;
+	void saveTopo(Topo topo) throws DataAccessException;
+
+	
+	/*
+	 * Area
+	 */
 
 	Area findAreaById(Integer id) throws DataAccessException;
 	
-	void saveTopo(Topo topo) throws DataAccessException;
+	void saveArea(Area area)throws DataAccessException;
 
+	Collection<Area> findSiteByPostalCode(String postalcode)throws DataAccessException;
+
+	/*
+	 * Comment
+	 */
+	
 	Collection<org.springframework.boot.autoconfigure.security.SecurityProperties.User> findUsers() throws DataAccessException;
+	
+	void saveComment( Comment comment)throws DataAccessException;
+
+	Comment findCommentById(Integer id)throws DataAccessException;
 
 	Collection<Comment> findCommentByName(String name) throws DataAccessException;
+	
+	/*
+	 * Zone
+	 */
+	
+	void saveZone( Zone zone)throws DataAccessException;
+
+	Zone findZoneById(Integer id)throws DataAccessException;
+
+	Collection<Zone> findZoneByName(String name) throws DataAccessException;
+	
+	
+	
+	/*
+	 * Site
+	 */
+	
+	void saveSite(Site site)throws DataAccessException;
+
+	Site findSiteById(Integer id)throws DataAccessException;
+	
+	
+	/*
+	 * SiteType
+	 */
+	
+	Collection<SiteType> findSiteTypes() throws DataAccessException;
+	
 	
 	String findLoggedInusername() throws DataAccessException;
 
 	void autoLogin(String username, String password) throws DataAccessException;
-
-	
-
-
-
-	Collection<SiteType> findSiteTypes() throws DataAccessException;
-	
-	void saveArea(Area area)throws DataAccessException;
-
-	void saveZone( Zone zone)throws DataAccessException;
-
-	Zone findZoneById(Integer zoneId)throws DataAccessException;
-
-	Collection<Zone> findZoneByName(String name)throws DataAccessException;
-
-	void saveComment( Comment comment)throws DataAccessException;
-
-	Comment findCommentById(Integer commentId)throws DataAccessException;
-
-	Collection<Area> findSiteByPostalCode(String postalcode)throws DataAccessException;
-
-	void saveSite(Site site)throws DataAccessException;
-
-	Site findSiteById(Integer id)throws DataAccessException;
 
 	
 	
