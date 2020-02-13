@@ -1,10 +1,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
-<%@ attribute name="name" required="true" rtexprvalue="true"
-	description="Name of the active menu: home, users, topos, areas or error"%>
+<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
+<%@ attribute name="name" required="true" rtexprvalue="true" description="Name of the active menu: home, users, topos, areas or error"%>	
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>	
 
 
 <nav class="navbar navbar-default" role="navigation">
@@ -31,12 +30,15 @@
 					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 					<span>Home Info</span>
 				</escalade:menuItem>
-
-				<escalade:menuItem active="${name eq 'login'}" url="/users/login"
+				
+				<sec:authorize access="isAuthenticated() == false">
+				    <escalade:menuItem active="${name eq 'login'}" url="/users/login"
 					title="login page">
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 					<span>Login</span>
 				</escalade:menuItem>
+				</sec:authorize>
+				
 				<!--  
                 <escalade:menuItem active="${name eq 'users'}" url="/users/userInfo" title="user page">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -81,13 +83,15 @@
                     <span>Users</span>
                 </escalade:menuItem>
 				-->
-
-
+						
+				<!-- == true -->
+				<sec:authorize access="isAuthenticated()">
 				<escalade:menuItem active="${name eq 'logout'}" url="/users/logout"
 					title="logoutSuccessfulPage page">
 					<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
 					<span>Logout</span>
 				</escalade:menuItem>
+				</sec:authorize>
 
 				<escalade:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">

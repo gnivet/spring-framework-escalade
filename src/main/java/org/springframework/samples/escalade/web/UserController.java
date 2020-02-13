@@ -8,13 +8,18 @@ import org.springframework.samples.escalade.validator.UserValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 @Controller
 public class UserController {
+	
+	@SuppressWarnings("unused")
+	private static final String VIEWS_USER_CREATE_OR_UPDATE_FORM = "users/createOrUpdateUserForm";
+	//private final EscaladeService escaladeService;
+	
     @Autowired
     private UserService userService;
 
@@ -24,14 +29,14 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-    @RequestMapping(value = "/users/registration", method = RequestMethod.GET)
+    @GetMapping(value = "/users/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
 
         return "/users/registration";
     }
 
-    @RequestMapping(value = "/users/registration", method = RequestMethod.POST)
+    @PostMapping(value = "/users/registration")
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
        // userValidator.validate(userForm, bindingResult);
 
@@ -41,14 +46,14 @@ public class UserController {
 
         userService.save(userForm);
 
-        securityService.autologin(userForm.getUsername(), userForm.getPassword());
+        //securityService.autologin(userForm.getUsername(), userForm.getPassword());
 
         return "redirect:/welcome";
     }
     
-    @RequestMapping(value="/users/login", method = RequestMethod.POST)
+    @PostMapping(value="/users/login")
     public String loginUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-       // userValidator.validate(userForm, bindingResult);
+        //userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "/users/registration";
@@ -59,7 +64,7 @@ public class UserController {
         return "redirect:/welcome";
     }
 
-    @RequestMapping(value = "/users/login", method = RequestMethod.GET)
+    @GetMapping(value = "/users/login")
     public String login(Model model, String error, String logout) {
     	   model.addAttribute("userForm", new User());
 
@@ -72,7 +77,33 @@ public class UserController {
         return "/users/login";
     }
 
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
+    /*
+    @GetMapping(value = "/users/new")
+    public String initCreationForm(Map<String, Object> model) {
+        User user = new User();
+        model.put("user", user);
+        return VIEWS_USER_CREATE_OR_UPDATE_FORM;
+    }
+
+    @PostMapping(value = "/users/new")
+    public String processCreationForm(@Valid User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return VIEWS_USER_CREATE_OR_UPDATE_FORM;
+        } else {
+            this.userService.save(user);
+            return "redirect:/users/" + user.getId();
+        }
+    }
+    */
+    
+    
+    
+    
+    
+    
+    
+    
+    @GetMapping(value = {"/", "/welcome"})
     public String welcome(Model model) {
         return "/welcome";
     }
@@ -85,7 +116,7 @@ public class UserController {
 		this.userValidator = userValidator;
 	}
 	
-	 @RequestMapping(value = "/users/logout", method = RequestMethod.GET)
+	 @GetMapping(value = "/users/logout")
 		public String logoutSuccessfulPage(Model model) {
 			model.addAttribute("title", "Logout");
 			return "/users/logout";

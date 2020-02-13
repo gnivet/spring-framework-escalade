@@ -14,9 +14,6 @@
 		</div>
 	</div>
 	<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet"
-	href="/spring-framework-escalade/src/main/webapp/resources/css/escalade.css" />
 <title><c:out value="${title}" /></title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,9 +28,10 @@
 
 			<form:form method="POST" modelAttribute="userForm"
 				class="form-signin">
-				<h2 class="form-signin-heading">Create your account</h2>
+
 				<div class="row">
-					<div class="col-md-2 col-lg-push-1">
+					<div class="col-md-2 col-lg-push-5">
+						<h2 class="form-signin-heading">Create your account</h2>
 						<spring:bind path="username">
 							<div class="form-group ${status.error ? 'has-error' : ''}">
 								<form:input type="text" path="username" class="form-control"
@@ -44,7 +42,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-2 col-lg-push-1">
+					<div class="col-md-2 col-lg-push-5">
 						<spring:bind path="password">
 							<div class="form-group ${status.error ? 'has-error' : ''}">
 								<form:input type="password" path="password" class="form-control"
@@ -55,7 +53,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-2 col-lg-push-1">
+					<div class="col-md-2 col-lg-push-5">
 						<spring:bind path="passwordConfirm">
 							<div class="form-group ${status.error ? 'has-error' : ''}">
 								<form:input type="password" path="passwordConfirm"
@@ -63,11 +61,14 @@
 								<form:errors path="passwordConfirm"></form:errors>
 							</div>
 						</spring:bind>
-						<button class="btn btn-lg btn-danger btn-block" type="submit">Submit</button>
+						<button class="btn btn-default" type="submit">Submit</button>
 					</div>
 				</div>
 			</form:form>
 		</div>
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 	</body>
 	</html>
 </escalade:layout>

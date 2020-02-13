@@ -11,5 +11,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	Collection<org.springframework.boot.autoconfigure.security.SecurityProperties.User> findUserById(Integer id);
 	
-	
+	//User findById(int id);
+
+	//User save(int id);
+
+	org.springframework.security.core.userdetails.User findUserById(int id);
+
+	void save(org.springframework.security.core.userdetails.User user);
 }

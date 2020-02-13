@@ -54,11 +54,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/users/new" , "/users/registration" , "/areas/new" , "/areas", "/areas/find", "/areas/new", "/comments/find", "/comments/new" , "/comments" , "/zones/new")
 				.permitAll();
 		*/		
-		http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
+		http.authorizeRequests().antMatchers("/", "/login", "/logout" , "/users/registration").permitAll();
 		// /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
 		// If no login, it will redirect to /login page.
 		http.authorizeRequests().antMatchers("/areas").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/users").hasAnyRole("USER", "ADMIN");
+		//http.authorizeRequests().antMatchers("/users").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/areas/sitesList").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/areas/sitesList").hasAnyRole("USER", "ADMIN");
@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// When the user has logged in as XX.
 		// But access a page that requires role YY,
 		// AccessDeniedException will be thrown.
-		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+		//http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
 		// Config for Login Form
 		
