@@ -35,11 +35,7 @@ import org.springframework.stereotype.Repository;
 /**
  * JPA implementation of the {@link OwnerRepository} interface.
  *
- * @author Mike Keith
- * @author Rod Johnson
- * @author Sam Brannen
- * @author Michael Isvy
- * @since 22.4.2006
+ * @author Guillaume Nivet 
  */
 @Repository
 public class JpaUserRepositoryImpl implements UserRepository {
@@ -64,26 +60,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
         return query.getResultList();
     }
 
-    @Override
-    public User findUserById(int id) {
-    		
-        // using 'join fetch' because a single query should load both owners and pets
-        // using 'left join fetch' because it might happen that an owner does not have pets yet
-        Query query = this.em.createQuery("SELECT user FROM User user left join fetch user.sites WHERE user.id =:id");
-        query.setParameter("id", id);
-        return (User) query.getSingleResult();
-    }
-
-
-    @Override
-    public void save(User user) {
-        if (user.getUsername() == null) {
-            this.em.persist(user);
-        } else {
-            this.em.merge(user);
-        }
-
-    }
+   
 
 	@Override
 	public List<org.springframework.samples.escalade.model.User> findAll() {
@@ -97,12 +74,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		return null;
 	}
 
-	@Override
-	public List<org.springframework.samples.escalade.model.User> findAllById(Iterable<Integer> ids) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public <S extends org.springframework.samples.escalade.model.User> List<S> saveAll(Iterable<S> entities) {
 		// TODO Auto-generated method stub
@@ -133,11 +105,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		
 	}
 
-	@Override
-	public org.springframework.samples.escalade.model.User getOne(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public <S extends org.springframework.samples.escalade.model.User> List<S> findAll(Example<S> example) {
@@ -163,17 +131,8 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		return null;
 	}
 
-	@Override
-	public Optional<org.springframework.samples.escalade.model.User> findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public boolean existsById(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 
 	@Override
 	public long count() {
@@ -181,11 +140,8 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		return 0;
 	}
 
-	@Override
-	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	
 
 	@Override
 	public void delete(org.springframework.samples.escalade.model.User entity) {
@@ -236,25 +192,48 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		return null;
 	}
 
+
+
 	@Override
-	public Collection<org.springframework.boot.autoconfigure.security.SecurityProperties.User> findUserById(
-			Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	/*
-	@Override
-	public org.springframework.samples.escalade.model.User findById(int id) {
+	public List<org.springframework.samples.escalade.model.User> findAllById(Iterable<Long> ids) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+
+
 	@Override
-	public org.springframework.samples.escalade.model.User save(int id) {
+	public org.springframework.samples.escalade.model.User getOne(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	*/
+
+
+
+	@Override
+	public Optional<org.springframework.samples.escalade.model.User> findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public boolean existsById(Long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public void deleteById(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	
 	
 
 }

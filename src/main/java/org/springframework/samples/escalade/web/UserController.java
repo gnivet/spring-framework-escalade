@@ -1,3 +1,4 @@
+ 
 package org.springframework.samples.escalade.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -5,6 +6,7 @@ import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.service.SecurityService;
 import org.springframework.samples.escalade.service.UserService;
 import org.springframework.samples.escalade.validator.UserValidator;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,9 +60,15 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "/users/registration";
         }
+        try {
+        	securityService.autologin(userForm.getUsername(), userForm.getPassword());
+		} catch (AuthenticationException  e) {
+			// TODO: handle exception
+			model.addAttribute("error", "Your authentifaction is not correct");
+			return "redirect:/users/login";
+		}
         
-        securityService.autologin(userForm.getUsername(), userForm.getPassword());
-
+        
         return "redirect:/welcome";
     }
 
@@ -84,7 +92,6 @@ public class UserController {
         model.put("user", user);
         return VIEWS_USER_CREATE_OR_UPDATE_FORM;
     }
-
     @PostMapping(value = "/users/new")
     public String processCreationForm(@Valid User user, BindingResult result) {
         if (result.hasErrors()) {
@@ -115,13 +122,13 @@ public class UserController {
 	public void setUserValidator(UserValidator userValidator) {
 		this.userValidator = userValidator;
 	}
-	
+	/*
 	 @GetMapping(value = "/users/logout")
 		public String logoutSuccessfulPage(Model model) {
 			model.addAttribute("title", "Logout");
 			return "/users/logout";
 		}
-
+	*/
 
 
 

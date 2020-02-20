@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
-<escalade:layout pageName="logoutSuccessfulPage">
+<escalade:layout pageName="oupsPage">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<link rel="stylesheet" href="/webapp/resources/css/escalade.css" />
@@ -14,9 +14,12 @@
 	<body>
 		<table class="table table-striped">
 			<tr>
-				<th><h1>Logout Successfull!</h1></th>
+				<th><h1>Oups!</h1></th>
 			</tr>			
 		</table>
+	<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="${contextPath}/resources/js/bootstrap.min.js"></script>	
 	</body>
 	</html>
 </escalade:layout>

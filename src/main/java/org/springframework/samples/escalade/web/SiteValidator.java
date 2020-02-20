@@ -22,48 +22,40 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 /**
- * <code>Validator</code> for <code>Topo</code> forms.
+ * <code>Validator</code> for <code>Site</code> forms.
  * <p>
  * We're not using Bean Validation annotations here because it is easier to define such validation rule in Java.
  * </p>
  *
  * @author Guillaume Nivet 
  */
-public class TopoValidator implements Validator {
+public class SiteValidator implements Validator {
 
     private static final String REQUIRED = "required";
 
     @Override
     public void validate(Object obj, Errors errors) {
-        Site Topo = (Site) obj;
-        String name = Topo.getName();
+        Site Site = (Site) obj;
+        String name = Site.getName();
         // name validation
         if (!StringUtils.hasLength(name)) {
             errors.rejectValue("name", REQUIRED, REQUIRED);
         }
 
         // type validation
-        if (Topo.isNew() && Topo.getType() == null) {
+        if (Site.isNew() && Site.getType() == null) {
             errors.rejectValue("type", REQUIRED, REQUIRED);
         }
 
         // birth date validation
-        if (Topo.getBirthDate() == null) {
+        if (Site.getBirthDate() == null) {
             errors.rejectValue("birthDate", REQUIRED, REQUIRED);
         }
-        /*
-        // Zone's name validation
-        Zone Zone = (Zone) obj;
-        String zoneName = Zone.getName();
-        // name validation
-        if (!StringUtils.hasLength(zoneName)) {
-            errors.rejectValue("name", REQUIRED, REQUIRED);
-        } 
-        */
+       
     }
 
     /**
-     * This Validator validates *just* Topo instances
+     * This Validator validates *just* Site instances
      */
     @Override
     public boolean supports(Class<?> clazz) {

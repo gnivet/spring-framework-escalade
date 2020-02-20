@@ -5,7 +5,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <escalade:layout pageName="home">
 	<div class="row">
 		<div class="col-md-12">
@@ -15,9 +14,6 @@
 		</div>
 	</div>
 	<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet"
-	href="/spring-framework-escalade/src/main/webapp/resources/css/escalade.css" />
 <title><c:out value="${title}" /></title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,12 +26,12 @@
 	<body>
 		<div class="form-group">
 
-			<form:form method="POST" modelAttribute="userForm"
+			<form:form method="POST" modelAttribute="user"
 				class="form-signin">
-				
+
 				<div class="row">
 					<div class="col-md-2 col-lg-push-5">
-					<h2 class="form-signin-heading">Create your account</h2>
+						<h2 class="form-signin-heading">Create your account</h2>
 						<spring:bind path="username">
 							<div class="form-group ${status.error ? 'has-error' : ''}">
 								<form:input type="text" path="username" class="form-control"
@@ -70,6 +66,9 @@
 				</div>
 			</form:form>
 		</div>
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 	</body>
 	</html>
 </escalade:layout>

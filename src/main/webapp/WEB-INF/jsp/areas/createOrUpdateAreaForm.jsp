@@ -17,6 +17,7 @@
             <escalade:inputField label="Postal code" name="postalcode"/>
             <escalade:inputField label="City" name="city"/>
             <escalade:inputField label="GPS Coordinate" name="gpscoordinate"/>
+            <escalade:inputField label="GPS Coordinate" name="gpscoordinate"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

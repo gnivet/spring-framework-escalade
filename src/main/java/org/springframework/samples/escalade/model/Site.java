@@ -48,7 +48,6 @@ public class Site extends NamedEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "type_id")
-
 	private SiteType type;
 
 	@ManyToOne
@@ -94,9 +93,10 @@ public class Site extends NamedEntity {
 	public LocalDate getBirthDate() {
 		return this.birthDate;
 	}
+	
 
 	public SiteType getType() {
-		return this.type;
+		return type;
 	}
 
 	public void setType(SiteType type) {

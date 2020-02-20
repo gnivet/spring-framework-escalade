@@ -2,7 +2,7 @@ package org.springframework.samples.escalade.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.samples.escalade.service.MyUserDetailsService;
+import org.springframework.samples.escalade.service.UserDetailsServiceImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,13 +28,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public UserDetailsService myUserDetailsService() {
-		return new MyUserDetailsService();
+	public UserDetailsService userDetailsService() {
+		return new UserDetailsServiceImpl();
 	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		UserDetailsService userDetailsService = myUserDetailsService();
+		UserDetailsService userDetailsService = userDetailsService();
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
    
@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/users/new" , "/users/registration" , "/areas/new" , "/areas", "/areas/find", "/areas/new", "/comments/find", "/comments/new" , "/comments" , "/zones/new")
 				.permitAll();
 		*/		
-		http.authorizeRequests().antMatchers("/", "/login", "/logout" , "/users/registration").permitAll();
+		http.authorizeRequests().antMatchers("/", "/login", "/logout" , "/users/registration", "/users/login" , "/welcome").permitAll();
 		// /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
 		// If no login, it will redirect to /login page.
 		http.authorizeRequests().antMatchers("/areas").hasAnyRole("USER", "ADMIN");
@@ -66,6 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/escalade/comments/find").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/users/userInfo").hasAnyRole("USER", "ADMIN");
 		//http.authorizeRequests().antMatchers("/users/registration").hasAnyRole("USER", "ADMIN");
+		http.logout().logoutUrl("/users/logout").logoutSuccessUrl("/welcome");
 
 		// For ADMIN only. /users/find
 		http.authorizeRequests().antMatchers("/admin").hasRole("ADMIN");

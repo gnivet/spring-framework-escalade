@@ -15,78 +15,54 @@
  */
 package org.springframework.samples.escalade.web;
 
-import java.util.Collection;
-import java.util.Map;
+import java.security.Principal;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Site;
-import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.User;
+import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * @author Juergen Hoeller
- * @author Ken Krebs
- * @author Arjen Poutsma
- */
+ * @author Guillaume Nivet
+  */
 @Controller
-@RequestMapping("/users/{userId}")
 public class SiteController {
 
-    private static final String VIEWS_SITES_CREATE_OR_UPDATE_FORM = "topos/createOrUpdateTopoForm";
+    private static final String VIEWS_SITES_CREATE_OR_UPDATE_FORM = "sites/createOrUpdateSiteForm";
     private final EscaladeService escaladeService;
-
+    @Autowired
+    private UserRepository userRepository;
+    
     @Autowired
     public SiteController(EscaladeService escaladeService) {
         this.escaladeService = escaladeService;
     }
-
-    @ModelAttribute("sitetype")
-    public Collection<SiteType> populateSiteTypes() {
-        return this.escaladeService.findSiteTypes();
-    }
-
-    @ModelAttribute("user")
-    public User finduser(@PathVariable("userId") int userId) {
-        return this.escaladeService.findUserByID(userId);
-    }
-
-    @InitBinder("user")
-    public void initUserBinder(WebDataBinder dataBinder) {
-        dataBinder.setDisallowedFields("id");
-    }
-    /*
-    @InitBinder("site")
-    public void initSiteBinder(WebDataBinder dataBinder) {
-        dataBinder.setValidator(new SiteValidator());
-    }
-	*/
-    @GetMapping(value = "/users/new")
-    public String initCreationForm(User user, ModelMap model) {
-        Site site = new Site();
-        user.addSite(site);
-        model.put("site",site);
-        return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
-    }
         
     
+    @GetMapping(value = "/sites/new")
+    public String initCreationForm(  ModelMap model) {
+        Site site = new Site();
+       
+        model.put("site",site);
+        model.put("sitetype",this.escaladeService.findSiteTypes());
+       
+        return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
+    }
+    // A se souvenir Principal    
+    
     @PostMapping(value = "/sites/new")
-    public String processCreationForm(User user, @Valid Site site, BindingResult result, ModelMap model) {
+    public String processCreationForm(Principal principal, @Valid Site site, BindingResult result, ModelMap model) {
+    	User user = userRepository.findByUsername(principal.getName());
         if (StringUtils.hasLength(site.getName()) && site.isNew() && user.getSite(site.getName(), true) != null){
             result.rejectValue("name", "duplicate", "already exists");
         }
@@ -119,33 +95,7 @@ public class SiteController {
         }
     }
     
-    //@SuppressWarnings("null")
-	@RequestMapping(value = "/areas", method = RequestMethod.GET)
-    public String processFindForm(Area area, BindingResult result, Map<String, Object> model) {
-
-        // allow parameterless GET request for /users to return all records
-       
-      
-		if (area.getPostalcode() == null) {
-            area.setPostalcode(""); // empty string signifies broadest possible search
-        }
- 
-    // find topos by postal code		
-    Collection<Area> results = this.escaladeService.findSiteByPostalCode(area.getPostalcode());
-    if (results.isEmpty()) {
-        // no users found
-        result.rejectValue("postalcode", "notFound", "not found");
-        return "areas/areas";    } else if (results.size() == 1) {
-        // 1 user found
-        area = results.iterator().next();
-        return "redirect:/areas/" + area.getId();
-    } else {
-        // multiple users found
-        model.put("selections", results);
-        return "areas/sitesList";
-    }
     
-    }
     
     
 }

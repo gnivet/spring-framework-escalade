@@ -30,6 +30,7 @@ import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.samples.escalade.repository.CommentRepository;
+import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.samples.escalade.repository.ZoneRepository;
 import org.springframework.stereotype.Service;
 
@@ -51,19 +52,24 @@ public class EscaladeServiceImpl implements EscaladeService {
 	
 	private ZoneRepository zoneRepository;
 	
+	private SiteRepository siteRepository;
+	
+	
 	@Autowired
 	public EscaladeServiceImpl
 	(
 			
 			 AreaRepository areaRepository,
 			 CommentRepository commentRepository,
-			 ZoneRepository zoneRepository
+			 ZoneRepository zoneRepository,
+			 SiteRepository siteRepository
 			
 	)
 	{
 		this.areaRepository = areaRepository;
 		this.commentRepository = commentRepository;
 		this.zoneRepository = zoneRepository;
+		this.siteRepository = siteRepository;
 		
 	}
 
@@ -135,7 +141,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 	
 	public Collection<SiteType> findSiteTypes() throws DataAccessException {
 		// TODO Auto-generated method stub
-		return null;
+		return siteRepository.findSiteTypes();
 	}
 
 	

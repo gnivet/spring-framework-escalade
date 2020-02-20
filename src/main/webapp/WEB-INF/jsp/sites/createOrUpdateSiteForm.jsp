@@ -26,7 +26,8 @@
         <div class="form-group has-feedback">
             			<escalade:inputField label="Name" name="name"/>
             			<escalade:inputField label="Birth Date" name="birthDate"/>           
-                                    
+                        <form:radiobutton path="sitetype" value="cliff"/>
+                        <form:radiobutton path="sitetype" value="bloc"/>            
                 		<input type="hidden" name="id" value="${zone.id}" />                	
                     	<div class="col-sm-10">                        
                         	<escalade:inputField label="Zone" name="zone.name" />							
