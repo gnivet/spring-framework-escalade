@@ -16,6 +16,7 @@
 package org.springframework.samples.escalade.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -31,6 +32,7 @@ import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.samples.escalade.repository.CommentRepository;
 import org.springframework.samples.escalade.repository.SiteRepository;
+import org.springframework.samples.escalade.repository.SiteTypeRepository;
 import org.springframework.samples.escalade.repository.ZoneRepository;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +55,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 	private ZoneRepository zoneRepository;
 	
 	private SiteRepository siteRepository;
-	
+	private SiteTypeRepository siteTypeRepository;
 	
 	@Autowired
 	public EscaladeServiceImpl
@@ -62,14 +64,15 @@ public class EscaladeServiceImpl implements EscaladeService {
 			 AreaRepository areaRepository,
 			 CommentRepository commentRepository,
 			 ZoneRepository zoneRepository,
-			 SiteRepository siteRepository
-			
+			 SiteRepository siteRepository,
+			 SiteTypeRepository siteTypeRepository
 	)
 	{
 		this.areaRepository = areaRepository;
 		this.commentRepository = commentRepository;
 		this.zoneRepository = zoneRepository;
 		this.siteRepository = siteRepository;
+		this.siteTypeRepository = siteTypeRepository;
 		
 	}
 
@@ -209,6 +212,69 @@ public class EscaladeServiceImpl implements EscaladeService {
 	public Collection<User> findUsers() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+
+
+	@Override
+	public Collection<SiteType> findSiteTypesCollection() throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+	@Override
+	public List<SiteType> findSiteTypesList() throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+	@Override
+	public void save(SiteType siteType) throws DataAccessException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public SiteType findById(int id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+	@Override
+	public Collection<SiteType> findSiteBySiteType(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+	@Override
+	public SiteType findSiteTypeById(int siteTypeId) {
+		// TODO Auto-generated method stub
+		return siteTypeRepository.findById(siteTypeId);
+	}
+
+
+
+
+	@Override
+	public SiteType saveSiteType(SiteType siteType) {
+		// TODO Auto-generated method stub
+		return this.siteTypeRepository.saveSiteType(siteType);
 	}
 
 	

@@ -16,7 +16,7 @@ public class Role {
     private Integer id;
     private String name;
     private Set<User> users;
-
+    
     @Id    
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getId() {
@@ -26,7 +26,7 @@ public class Role {
     public void setId(Integer id) {
         this.id = id;
     }
-
+	
     public String getName() {
         return name;
     }

@@ -11,7 +11,7 @@ public interface UserService {
 
 	void save(org.springframework.security.core.userdetails.User user);
 
-	;
+	
     
     
 }

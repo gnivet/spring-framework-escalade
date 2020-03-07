@@ -16,6 +16,7 @@
 package org.springframework.samples.escalade.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
@@ -33,79 +34,82 @@ import org.springframework.samples.escalade.model.Zone;
  */
 
 public interface EscaladeService {
-	
+
 	/*
 	 * User
 	 */
 
-	User findUserByID (Integer id)  throws DataAccessException;
-	
-	
+	User findUserByID(Integer id) throws DataAccessException;
+
+	String findLoggedInusername() throws DataAccessException;
+
+	void autoLogin(String username, String password) throws DataAccessException;
+
 	/*
 	 * Topo
 	 */
-	
+
 	Topo findTopoById(Integer id) throws DataAccessException;
+
 	void saveTopo(Topo topo) throws DataAccessException;
 
-	
 	/*
 	 * Area
 	 */
 
 	Area findAreaById(Integer id) throws DataAccessException;
-	
-	void saveArea(Area area)throws DataAccessException;
 
-	Collection<Area> findSiteByPostalCode(String postalcode)throws DataAccessException;
+	void saveArea(Area area) throws DataAccessException;
+
+	Collection<Area> findSiteByPostalCode(String postalcode) throws DataAccessException;
 
 	/*
 	 * Comment
 	 */
-	
-	Collection<org.springframework.boot.autoconfigure.security.SecurityProperties.User> findUsers() throws DataAccessException;
-	
-	void saveComment( Comment comment)throws DataAccessException;
 
-	Comment findCommentById(Integer id)throws DataAccessException;
+	Collection<org.springframework.boot.autoconfigure.security.SecurityProperties.User> findUsers()
+			throws DataAccessException;
+
+	void saveComment(Comment comment) throws DataAccessException;
+
+	Comment findCommentById(Integer id) throws DataAccessException;
 
 	Collection<Comment> findCommentByName(String name) throws DataAccessException;
-	
+
 	/*
 	 * Zone
 	 */
-	
-	void saveZone( Zone zone)throws DataAccessException;
 
-	Zone findZoneById(Integer id)throws DataAccessException;
+	void saveZone(Zone zone) throws DataAccessException;
+
+	Zone findZoneById(Integer id) throws DataAccessException;
 
 	Collection<Zone> findZoneByName(String name) throws DataAccessException;
-	
-	
-	
+
 	/*
 	 * Site
 	 */
-	
-	void saveSite(Site site)throws DataAccessException;
 
-	Site findSiteById(Integer id)throws DataAccessException;
-	
-	
+	void saveSite(Site site) throws DataAccessException;
+
+	Site findSiteById(Integer id) throws DataAccessException;
+
 	/*
 	 * SiteType
 	 */
-	
-	Collection<SiteType> findSiteTypes() throws DataAccessException;
-	
-	
-	String findLoggedInusername() throws DataAccessException;
 
-	void autoLogin(String username, String password) throws DataAccessException;
+	Collection<SiteType> findSiteTypesCollection() throws DataAccessException;
 
-	
-	
+	List<SiteType> findSiteTypesList() throws DataAccessException;
 
-	
+	void save(SiteType siteType) throws DataAccessException;
+
+	SiteType findById(int id) throws DataAccessException;
+
+	Collection<SiteType> findSiteBySiteType(String name);
+
+	SiteType findSiteTypeById(int siteTypeId);
+
+	SiteType saveSiteType(SiteType siteType);
 
 }

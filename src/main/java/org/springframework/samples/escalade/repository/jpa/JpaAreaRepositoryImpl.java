@@ -16,6 +16,7 @@
 package org.springframework.samples.escalade.repository.jpa;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -71,6 +72,14 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 	public Collection<Area> findSiteByPostalcode(String postalcode) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Area> findAll() {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT area FROM Area area");
+		
+		return  query.getResultList();
 	}
 
 	

@@ -50,7 +50,7 @@ public class AreaController {
 	public AreaController(EscaladeService escaladeService) {
 		this.escaladeService = escaladeService;
 	}
-
+	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");

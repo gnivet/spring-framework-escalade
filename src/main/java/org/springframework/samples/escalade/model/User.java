@@ -12,9 +12,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.springframework.core.style.ToStringCreator;
+
+
+
 @Entity
 @Table(name = "users")
-public class User {
+public class User  {
 
 	private Integer id;
 	private String username;
@@ -29,7 +33,8 @@ public class User {
 	private String telephone;
 	private String email;
 	private Boolean enabled;
-
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
@@ -154,17 +159,44 @@ public class User {
 		this.roles = roles;
 	}
 	@Transient
-	public String getusername() {
+	public User getusername() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", passwordConfirm="
-				+ passwordConfirm + ", roles=" + roles + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", address=" + address + ", postalCode=" + postalCode + ", city=" + city + ", telephone=" + telephone
-				+ ", email=" + email + ", enabled=" + enabled + "]";
+	/*
+	 public boolean isNew() {
+	        return this.id == null;
+	    }
+	
+	 
+	
+	public void setNew(boolean isNew) {
 	}
+ 	*/
+	 
+	@Override
+    public String toString() {
+        return new ToStringCreator(this)
+
+            .append("id", this.getId())
+            //.append("new", this.isNew())
+            .append("lastName", this.getLastName())
+            .append("firstName", this.getFirstName())
+            .append("address", this.address)
+            .append("city", this.city)
+            .append("telephone", this.telephone)
+            .toString();
+    }
+
+	/*
+	 * 
+	 */
+	public User getusername(User User ) {
+		return User.getusername();
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 	
 }

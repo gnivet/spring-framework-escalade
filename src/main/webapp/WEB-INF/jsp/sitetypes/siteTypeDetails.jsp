@@ -10,7 +10,7 @@
 	<table class="table table-striped">
 		<tr>
 			<th>Type</th>
-			<td><b><c:out value="${sitetype.name} " /></b></td>
+			<td><b><c:out value="${sitetypes.name} " /></b></td>
 		</tr>
 	</table>
 </escalade:layout>

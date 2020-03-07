@@ -42,13 +42,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Site extends NamedEntity {
 	
 	
+	
 	@Column(name = "birth_date")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate birthDate;
 
 	@ManyToOne
 	@JoinColumn(name = "type_id")
-	private SiteType type;
+	private SiteType sitetype;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = true)
@@ -58,10 +59,7 @@ public class Site extends NamedEntity {
 	@JoinColumn(name = "area_id", nullable = true)
 	private Area area;
 	
-	@Transient
-	@Column(name = "length_status")
-	@NotNull
-	private boolean length_status;
+	
 
 	@Column(name = "valid")
 	@NotNull
@@ -96,11 +94,11 @@ public class Site extends NamedEntity {
 	
 
 	public SiteType getType() {
-		return type;
+		return sitetype;
 	}
 
-	public void setType(SiteType type) {
-		this.type = type;
+	public void setType(SiteType sitetype) {
+		this.sitetype = sitetype;
 	}
 
 	public User getUser() {
@@ -111,13 +109,7 @@ public class Site extends NamedEntity {
 		this.user = user;
 	}
 
-	public boolean isLength_status() {
-		return length_status;
-	}
-
-	public void setLength_status(boolean length_status) {
-		this.length_status = length_status;
-	}
+	
 
 		public Set<Zone> getZone() {
 		return zone;
@@ -125,6 +117,14 @@ public class Site extends NamedEntity {
 
 	public void setZone(Set<Zone> zone) {
 		this.zone = zone;
+	}
+
+	public SiteType getSitetype() {
+		return sitetype;
+	}
+
+	public void setSitetype(SiteType sitetype) {
+		this.sitetype = sitetype;
 	}
 
 	
