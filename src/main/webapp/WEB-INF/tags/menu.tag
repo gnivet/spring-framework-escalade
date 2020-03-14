@@ -55,8 +55,13 @@
 
 
 				<escalade:menuItem active="${name eq 'areas'}" url="/areas/find"
-					title="topos">
+					title="sites">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					<span>Sites</span>
+				</escalade:menuItem>
+				<escalade:menuItem active="${name eq 'areas'}" url="/sitetypes/new"
+					title="sitetypes">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Sites</span>
 				</escalade:menuItem>
 				<!--  					

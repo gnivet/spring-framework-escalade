@@ -45,5 +45,11 @@ public class NamedEntity extends BaseEntity {
         return this.getName();
     }
 
+	/**
+	 * 
+	 */
+	public NamedEntity() {
+	}
+    
 
 }

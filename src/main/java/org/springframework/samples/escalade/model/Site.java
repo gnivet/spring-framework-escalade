@@ -26,7 +26,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -125,6 +124,29 @@ public class Site extends NamedEntity {
 
 	public void setSitetype(SiteType sitetype) {
 		this.sitetype = sitetype;
+	}
+
+	/**
+	 * 
+	 */
+	public Site() {
+	}
+
+	/**
+	 * @param birthDate
+	 * @param sitetype
+	 * @param user
+	 * @param area
+	 * @param valid
+	 * @param zone
+	 */
+	public Site(LocalDate birthDate, SiteType sitetype, User user, Area area, @NotNull boolean valid, Set<Zone> zone) {
+		this.birthDate = birthDate;
+		this.sitetype = sitetype;
+		this.user = user;
+		this.area = area;
+		this.valid = valid;
+		this.zone = zone;
 	}
 
 	

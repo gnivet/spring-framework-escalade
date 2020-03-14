@@ -4,14 +4,11 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity  
 @Table(name="zones")  
@@ -42,18 +39,45 @@ public class Zone extends NamedEntity{
 	public void setWays(Set<Way> ways) {
 		this.ways = ways;
 	}
-		
-	@Column(name = "name")
-    private String name;
+	
+	@Column(name = "zone")
+	@NotEmpty
+	private String zone;
+	
+	
+	
+	/**
+	 * 
+	 */
+	public Zone() {
+	}
 
-    public String getName() {
-        return this.name;
-    }
+	
 
-    public void setName(String name) {
-        this.name = name;
-    }
-				
+	/**
+	 * @param site
+	 * @param ways
+	 */
+	public Zone(Site site, Set<Way> ways) {
+		this.site = site;
+		this.ways = ways;
+	}
+
+	@Override
+	public String toString() {
+		return "Zone [site=" + site + ", ways=" + ways + "]";
+	}
+
+	public String getZone() {
+		return zone;
+	}
+
+	public void setZone(String zone) {
+		this.zone = zone;
+	}
+
+	
+	
 	
 }
 

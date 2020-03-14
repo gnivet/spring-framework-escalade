@@ -38,6 +38,18 @@ public class Way extends NamedEntity {
 	public void setLengths(Set<Length> lengths) {
 		this.lengths = lengths;
 	}
+
+	/**
+	 * 
+	 */
+	public Way() {
+	}
+
+	@Override
+	public String toString() {
+		return "Way [zone=" + zone + ", lengths=" + lengths + "]";
+	}
+	
 	
 	
 

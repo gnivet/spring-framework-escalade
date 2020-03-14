@@ -25,6 +25,7 @@ import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.User;
+import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 
 /**
@@ -80,7 +81,7 @@ public interface EscaladeService {
 	 * Zone
 	 */
 
-	void saveZone(Zone zone) throws DataAccessException;
+	Zone saveZone(Zone zone) throws DataAccessException;
 
 	Zone findZoneById(Integer id) throws DataAccessException;
 
@@ -90,7 +91,7 @@ public interface EscaladeService {
 	 * Site
 	 */
 
-	void saveSite(Site site) throws DataAccessException;
+	Site saveSite(Site site) throws DataAccessException;
 
 	Site findSiteById(Integer id) throws DataAccessException;
 
@@ -112,4 +113,15 @@ public interface EscaladeService {
 
 	SiteType saveSiteType(SiteType siteType);
 
+	/*
+	 * Way
+	 */
+	
+	Way saveway(Way way);
+
+	Collection<Way> findWayByName(String name);
+
+	Way findWayById(int id);
+
+	
 }

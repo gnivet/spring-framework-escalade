@@ -12,13 +12,12 @@
 	<form:form modelAttribute="zone" class="form-horizontal"
 		id="add-zone-form">
 		<div class="form-group has-feedback">			
-			<escalade:inputField label="Name" name="name" />
-			<!--<escalade:inputField label="Zone" name="zone" />-->
-            <spring:url value="/sites/{siteId}/edit" var="siteUrl">
-            		<spring:param name="siteId" value="${site.id}"/>
-            </spring:url>
-            <a href="${fn:escapeXml(siteUrl)}">Edit Site</a>
-			 <input type="hidden" name="siteId" value="${zone.site.id}" />  
+			<escalade:inputField label="Name" name="name" />			
+       			<spring:url value="/zones/{zoneId}/edit" var="zoneUrl">
+            		<spring:param name="zoneId" value="${zone.id}"/>
+            </spring:url> 
+            <!-- <a href="${fn:escapeXml(siteUrl)}">Edit Site</a>  -->
+			 <input type="hidden" name="zoneId" value="${zone.id}" />  
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">

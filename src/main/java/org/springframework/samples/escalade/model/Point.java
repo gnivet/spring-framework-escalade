@@ -24,6 +24,12 @@ public class Point extends NamedEntity {
 	public void setLength(Length length) {
 		this.length = length;
 	}
+
+	/**
+	 * 
+	 */
+	protected Point() {
+	}
 		
 	
 }

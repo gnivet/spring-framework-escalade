@@ -64,4 +64,12 @@ public class Topo extends NamedEntity {
 		return user;
 	}
 
+	/**
+	 * 
+	 */
+	
+	protected Topo() {
+	}
+
+	
 }

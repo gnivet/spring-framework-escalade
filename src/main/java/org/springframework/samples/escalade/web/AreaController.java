@@ -16,21 +16,20 @@
  */
 package org.springframework.samples.escalade.web;
 
-
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Area;
+import org.springframework.samples.escalade.model.User;
+import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,36 +39,44 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Guillaume Nivet 
  */
 @Controller
-@Transactional
 public class AreaController {
 
 	private static final String VIEWS_AREA_CREATE_OR_UPDATE_FORM = "areas/createOrUpdateAreaForm";
 	private final EscaladeService escaladeService;
-
+	private String postalcode;
+	private UserRepository userRepository;
+	
 	@Autowired
-	public AreaController(EscaladeService escaladeService) {
+	public AreaController(EscaladeService escaladeService , UserRepository userRepository) {
 		this.escaladeService = escaladeService;
+		this.userRepository = userRepository;
 	}
 	
+	/*
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
+	*/
 
 	@RequestMapping(value = "/areas/new", method = RequestMethod.GET)
 	public String initCreationForm(Map<String, Object> model) {
+		
 		Area area = new Area();
 		model.put("area", area);
 		return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 	}
 
 	@RequestMapping(value = "/areas/new", method = RequestMethod.POST)
-	public String processCreationForm(@Valid Area area, BindingResult result) {
+	public String processCreationForm(Principal principal,  @Valid Area area, BindingResult result) {
+		String userName = principal.getName();
+		User user = this.userRepository.findByUsername(userName);
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 		} else {
+			area.setUser(user);
 			this.escaladeService.saveArea(area);
-			return "redirect:/areas/" + area.getId();
+			return "redirect:/areas/" + area.getId() ;
 			
 		}
 	}
@@ -77,16 +84,16 @@ public class AreaController {
 	@RequestMapping(value = "/areas/find", method = RequestMethod.GET)
 	public String initFindForm(Map<String, Object> model) {
 		model.put("area", new Area());
-		return "areas/findSites";
-		// return "areas/{areaId}";
+		return "/areas/findSites";
+		//return "areas/{areaId}";
 	}
 
 //findTopos
 	@RequestMapping(value = "/areas", method = RequestMethod.GET)
-	public String processFindForm(Area area, BindingResult result, Map<String, Object> model) {
+	public String processFindForm(Area area, BindingResult result,  Map<String, Object> model) {
 
 		// allow parameterless GET request for /areas to return all records
-		if (area.getPostalcode() == null) {
+		if (area.getPostalcode() == null ) {
 			area.setPostalcode(""); // empty string signifies broadest possible search
 		}
 
@@ -95,26 +102,31 @@ public class AreaController {
 		if (results.isEmpty()) {
 			// no areas found
 			result.rejectValue("postalcode", "notFound", "not found");
-			return "areas/findSites";
-			/*
-			 * } else if (results.size() == 1) { // 1 area found area =
-			 * results.iterator().next(); return "redirect:/areas/" + area.getId();
-			 */
-		} else {
+			return "/areas/findSites";
+			
+			 }
+		/*
+		else if (results.size() == 1) 
+		{ 
+			  results.iterator().next();
+			  return "redirect:/areas/" + area.getId();
+			 
+		}*/ else {
 			// multiple areas found
 			model.put("selections", results);
-			return "areas/sitesList";
+			return "/areas/" + this.escaladeService.findSiteByPostalCode(postalcode);
 		}
 	}
 
-	@RequestMapping(value = "/areas/{areaId}/edit", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/areas/{areaId}", method = RequestMethod.GET)
 	public String initUpdateAreaForm(@PathVariable("areaId") int areaId, Model model) {
 		Area area = this.escaladeService.findAreaById(areaId);
 		model.addAttribute(area);
 		return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 	}
 
-	@RequestMapping(value = "/areas/{areaId}/edit", method = RequestMethod.POST)
+	@RequestMapping(value = "/areas/{areaId}", method = RequestMethod.POST)
 	public String processUpdateAreaForm(Area area, BindingResult result, @PathVariable("areaId") Integer areaId) {
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;

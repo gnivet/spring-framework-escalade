@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// If no login, it will redirect to /login page.
 		http.authorizeRequests().antMatchers("/areas").hasAnyRole("USER", "ADMIN");
 		//http.authorizeRequests().antMatchers("/users").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/areas*").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/areas/sitesList").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/areas/sitesList").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/users/find").hasAnyRole("USER", "ADMIN");
@@ -72,7 +72,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/escalade/sitetypes/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/sitetypes/find").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/siteTypes/siteTypeDetails").hasAnyRole("USER", "ADMIN");
-
+		http.authorizeRequests().antMatchers("/areas/findSites").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/areas/findSites").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/areas").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/areas?postalcode=?").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/areas?postalcode=?").hasAnyRole("USER", "ADMIN");
 		// For ADMIN only. /users/find
 		http.authorizeRequests().antMatchers("/admin").hasRole("ADMIN");
 

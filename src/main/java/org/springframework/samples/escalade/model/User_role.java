@@ -32,5 +32,12 @@ public class User_role {
 	public void setRole_id(Integer role_id) {
 		this.role_id = role_id;
 	}
+
+	/**
+	 * 
+	 */
+	protected User_role() {
+	}
+	
 	
 }

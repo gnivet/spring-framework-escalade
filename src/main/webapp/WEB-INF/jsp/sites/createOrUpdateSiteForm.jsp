@@ -41,8 +41,8 @@
              		</div> 
                    		
                          <div class="col-sm-10" class="form-horizontal">
-                   		 	<input type="hidden" name="id"
-								value="${sitetype.id}" />  
+                   		 <!--  	<input type="hidden" name="id"
+								value="${sitetype.id}" /> --> 
                    		 	
        							<p>Please choose your site's type:</p>
 								<br />

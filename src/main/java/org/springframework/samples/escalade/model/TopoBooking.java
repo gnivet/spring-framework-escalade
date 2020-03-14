@@ -42,6 +42,13 @@ public class TopoBooking extends NamedEntity{
 
 	public void setTopo(Topo topo) {
 		this.topo = topo;
+	}
+
+	/**
+	 * 
+	 */
+	protected TopoBooking() {
 	}	
+	
 	
 }

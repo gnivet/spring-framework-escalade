@@ -8,16 +8,16 @@
 
 <escalade:layout pageName="areas">
 
-<h2>Find sites</h2>
+<h2>Find site's type</h2>
     <!-- Research sites by areas -->
     <spring:url value="/areas" var="formUrl"/>
     <form:form modelAttribute="area" action="${fn:escapeXml(formUrl)}" method="get" class="form-horizontal"
                id="search-site-form">
         <div class="form-group">
-            <div class="control-group" id="postalcode">
-                <label class="col-sm-2 control-label">Code area </label>
+            <div class="control-group" id="name">
+                <label class="col-sm-2 control-label">Name </label>
                 <div class="col-sm-10">
-                    <form:input class="form-control" path="postalcode" size="5" maxlength="5"/>                    
+                    <form:input class="form-control" path="name" size="5" maxlength="5"/>                    
                     <span class="help-inline"><form:errors path="*"/></span>
                 </div>               
              
@@ -30,45 +30,29 @@
     </form:form>
     <h2>sites</h2>
 
-    <table id="areasTable" class="table table-striped">
+    <table id="sitetypesTable" class="table table-striped">
         <thead>
         <tr>
             <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Street</th>
-            <th style="width: 200px;">Postal code</th>
-            <th>City</th>
-            <th>Country</th>
-            <th style="width: 120px"></th>
-            <th>GPS Coordinate</th>
+           
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${selections}" var="area">
+        <c:forEach items="${selections}" var="sitetype">
             <tr>
                 <td>
-                    <spring:url value="/areas/{areaId}" var="areaUrl">
-                        <spring:param name="areaId" value="${area.id}"/>
+                    <spring:url value="/sitetypes/{sitetypeId}" var="sitetypeUrl">
+                        <spring:param name="sitetypeId" value="${sitetype.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(areaUrl)}"><c:out value="${area.name}"/></a>
+                    <a href="${fn:escapeXml(sitetypeUrl)}"><c:out value="${sitetype.name}"/></a>
                 </td>
                 <td>
-                    <c:out value="${area.street}"/>
+                    <c:out value="${sitetype.name}"/>
                 </td>
-                 <td>
-                    <c:out value="${area.postalcode}"/>
-                </td>
+                
                 <td>
-                    <c:out value="${area.city}"/>
-                </td>
-                 <td>
-                    <c:out value="${area.country}"/>
-                </td>
-                <td>
-                    <c:out value="${area.gpscoordinate}"/>
-                </td>
-                <td>
-                    <c:forEach var="site" items="${user.sites}">
-                        <c:out value="${site.name} "/>
+                    <c:forEach var="sitetype" items="${site.sitetypes}">
+                        <c:out value="${sitetype.name} "/>
                     </c:forEach>
                 </td>
             </tr>

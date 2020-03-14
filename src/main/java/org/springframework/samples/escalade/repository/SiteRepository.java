@@ -37,7 +37,9 @@ import org.springframework.samples.escalade.model.Zone;
 public interface SiteRepository {
 
    
-    List<SiteType> findSiteTypes() throws DataAccessException;
+ 
+
+	List<SiteType> findSiteTypes() throws DataAccessException;
 
     /**
      * Retrieve a <code>Topo</code> from the data store by id.
@@ -52,11 +54,12 @@ public interface SiteRepository {
      * Save a <code>Topo</code> to the data store, either inserting or updating it.
      *
      * @param Topo the <code>Topo</code> to save
+     * @return 
      * @see BaseEntity#isNew
      */
     
-    void saveSite(Site site)  throws DataAccessException;
-    
+    Site saveSite(Site site)  throws DataAccessException;
+   
     /**
      * Retrieve a <code>Zone</code> from the data store by id.
      *
@@ -87,9 +90,10 @@ public interface SiteRepository {
      * Save a <code>Way</code> to the data store, either inserting or updating it.
      *
      * @param Zone the <code>Way</code> to save
+     * @return 
      * @see BaseEntity#isNew
      */	
-    void saveWay(Way Way) throws DataAccessException;
+    Way saveWay(Way Way) throws DataAccessException;
     
    
     /**

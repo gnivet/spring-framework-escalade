@@ -99,6 +99,12 @@ public class Length extends NamedEntity {
 	public void setWay(Way way) {
 		this.way = way;
 	}
+
+	/**
+	 * 
+	 */
+	protected Length() {
+	}
 	
 	
 }

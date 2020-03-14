@@ -23,8 +23,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.samples.escalade.model.Area;
+import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * JPA implementation of the {@link AreaRepository} Integererface.
@@ -32,12 +34,16 @@ import org.springframework.stereotype.Repository;
  * @author Guillaume Nivet
  * @since 3.12.2019
  */
+@Transactional
 @Repository
 public class JpaAreaRepositoryImpl implements AreaRepository {
-
+	
+	
 	@PersistenceContext
 	private EntityManager em;
-
+	
+	
+    
 	@SuppressWarnings("unchecked")
 	public Collection<Area> findTopoByPostalcode(String postalcode) {
 		// TODO Auto-generated method stub
@@ -47,7 +53,7 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 		return query.getResultList();
 	}
 
-	@Override
+	
 	public Area findAreaById(Integer id) {
 		// using 'join fetch' because a single query should load both areas and topos
 		// using 'left join fetch' because it might happen that an owner does not have
@@ -58,29 +64,78 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 		return (Area) query.getSingleResult();
 	}
 
-	public void saveArea(Area area) {
+	public Area saveArea(Area area) {
+				
 		
 		if (area.getId() == null) {
 			this.em.persist(area);
 		} else {
 			this.em.merge(area);
 		}
+		return area ;
+	}
+
+	
+	
+	@SuppressWarnings("unchecked")
+	public Collection<Area> findSiteByPostalcode(String postalcode) {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT DISTINCT area from Area area WHERE area.postalcode LIKE :postalcode");
+		query.setParameter("postalcode", postalcode + "%");
+		return query.getResultList();
 		
 	}
 
-	@Override
-	public Collection<Area> findSiteByPostalcode(String postalcode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
+	
+	@SuppressWarnings("unchecked")
 	public List<Area> findAll() {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT area FROM Area area");
 		
 		return  query.getResultList();
 	}
+
+	
+	
+
+
+	@Override
+	public List<Area> findByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@SuppressWarnings("unchecked")
+	public List<Site> sitesList() {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT site FROM Site site");
+		
+		return  query.getResultList();
+			
+		
+	}
+
+
+	@Override
+	public Collection<Area> findSiteByPostalCode(String postalcode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	
+	 @Override
+	    public Area findById(int id) {
+	        // using 'join fetch' because a single query should load both areas and topos
+	        // using 'left join fetch' because it might happen that an owner does not have topos yet
+	    	
+	       
+	    	Query query = this.em.createQuery("SELECT area FROM Area area WHERE area.id =:id");
+	    	query.setParameter("id", id);
+	        return (Area) query.getSingleResult();
+	    }
 
 	
 

@@ -15,108 +15,111 @@
  */
 package org.springframework.samples.escalade.web;
 
-import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Site;
+import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.AreaRepository;
+import org.springframework.samples.escalade.repository.SiteTypeRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author Guillaume Nivet
  * @param <getUserId>
   */
+
+//@Transactional
+//@RequestMapping("/users")
+//@SessionAttributes("user")
 @Controller
-public class SiteController {
+public class SiteController implements ErrorController {
 
     private static final String VIEWS_SITES_CREATE_OR_UPDATE_FORM = "sites/createOrUpdateSiteForm";
+    private final static String PATH = "/error";
     private final EscaladeService escaladeService;
+    
+
     
     private AreaRepository areaRepository;
 	private UserRepository userRepository;
+	private SiteTypeRepository siteTypeRepository;
 	
 	
 	@Autowired
-    public SiteController(EscaladeService escaladeService, UserRepository userRepository, AreaRepository areaRepository) {
+    public SiteController(EscaladeService escaladeService, UserRepository userRepository, AreaRepository areaRepository, SiteTypeRepository syteTypeRepository) {
         this.escaladeService = escaladeService;
         this.userRepository = userRepository;
         this.areaRepository = areaRepository;
+        this.siteTypeRepository = syteTypeRepository;
         
     }
-	 
 	
-    @GetMapping(value = "/sites/{userId}/new")
-    public String initCreationForm(Map<String, Object> model, @PathVariable(value="userId") int userId 
-    		) {
-    	System.out.println(userId);
-        Site site = new Site();
+	/*
+	@InitBinder
+	public void setAllowedFields(WebDataBinder dataBinder) {
+		dataBinder.setDisallowedFields("id");
+	}
+	*/
+	
+	
+	@GetMapping(value = "/sites/new")
+	public String initCreationForm(  Map<String, Object> model) {
+		Site site = new Site();
+        model.put("site", site);
+        
+        // area's list
         List<Area> areas= this.areaRepository.findAll();
-       
-       
         model.put("areas",areas);
+        // 
+        List<SiteType> sitetypes= this.siteTypeRepository.findAll();
+        model.put("sitetype",sitetypes);
         
-        model.put("site",site);
         
         
-      
-		
-       
-		
-      //model.put("sitetype",this.escaladeService.findSiteTypesList());
-       
         return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
     }
-    // A se souvenir Principal    
+	/*
+	@RequestMapping(method = RequestMethod.POST)
+    public String processSubmit(@ModelAttribute("pet") Pet pet,
+        BindingResult result, Model model) { … }
+    */
+	
+	
+	
+	 @PostMapping(value = "/sites/new")
+	    public String processCreationForm(@ModelAttribute  Site site, SiteType siteType, Area area, BindingResult result, Model model){
+	        if (result.hasErrors()) {
+	            return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
+	        } else {
+	        	
+	        	site = this.escaladeService.saveSite(site);		
+	        	model.addAttribute("site",site);
+	            return "redirect:/sites/" + site.getId() ;
+	        }
+	    }
+	
     
-    
-    
-    @PostMapping(value = "/sites/{userId}/new")
-    public String processCreationForm(Principal principal,  Site site, Area  area ,BindingResult result, ModelMap model ,@PathVariable(value="userId") int userId ) {
-    	
-    	User user = userRepository.findByUsername(principal.getName());
-    	/*
-        if (StringUtils.hasLength(site.getName()) && site.isNew() && user.getSite(site.getName(), true) != null){
-            result.rejectValue("name", "duplicate", "already exists");
-        }
-        */
-        user.addSite(site);
-        //area.getCity();
-        this.escaladeService.saveSite(site);
-        return "redirect:/users/{userId}";
-    	
-    	
-       /* if (result.hasErrors()) {
-            model.put("site", site);
-            /*
-             * GNI BEG
-             * /
-            model.put("area",area);
-            //model.put("user", user);
-            /*
-             * GNI END
-             * / 
-            
-            return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
-        } else {
-        
-        } */
-    }
 
     @GetMapping(value = "/sites/{siteId}/edit")
     public String initUpdateForm(@PathVariable("siteId") int siteId, ModelMap model) {
@@ -136,6 +139,17 @@ public class SiteController {
             return "redirect:/users/{userId}";
         }
     }
+
+
+	
+	
+    @Override
+    @RequestMapping(PATH)
+    @ResponseBody
+	public String getErrorPath() {
+		// TODO Auto-generated method stub
+		return "No Mapping Found";
+	}
     
     
     

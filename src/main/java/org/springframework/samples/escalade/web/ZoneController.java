@@ -24,16 +24,18 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Zone;
-import org.springframework.samples.escalade.model.BaseEntity;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -50,32 +52,40 @@ public class ZoneController {
 		this.escaladeService = escaladeService;
 	}
 
+	
+	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
+	
+	
+	
+	
 
 	@RequestMapping(value = "/zones/new", method = RequestMethod.GET)
-	public String initCreationForm(Map<String, Object> model) {
+	public String initCreationForm(Map<String, Object> model   ) {
+		
 		Zone zone = new Zone();
 		model.put("zone", zone);
 		return VIEWS_ZONE_CREATE_OR_UPDATE_FORM;
 	}
 
 	@RequestMapping(value = "/zones/new", method = RequestMethod.POST)
-	public String processCreationForm(@Valid Zone zone, BindingResult result) {
+	public String processCreationForm(@Valid Zone zone, BindingResult result ) {
+		
 		if (result.hasErrors()) {
 			return VIEWS_ZONE_CREATE_OR_UPDATE_FORM;
 		} else {
-			this.escaladeService.saveZone(zone);
-			return "redirect:/zones/" + ((BaseEntity) zone).getId();
+			zone = this.escaladeService.saveZone(zone);
+			return "redirect:/zones/" +  zone.getId();
 		}
 	}
 
 	@RequestMapping(value = "/zones/find", method = RequestMethod.GET)
 	public String initFindForm(Map<String, Object> model) {
 		model.put("zone", new Zone());
-		return "zones/findTopos";
+		return "zones/findSites";
 		// return "zones/{zoneId}";
 	}
 
@@ -93,7 +103,7 @@ public class ZoneController {
 		if (results.isEmpty()) {
 			// no zones found
 			result.rejectValue("postalcode", "notFound", "not found");
-			return "zones/findTopos";
+			return "zones/findZones";
 			/*
 			 * } else if (results.size() == 1) { // 1 zone found zone =
 			 * results.iterator().next(); return "redirect:/zones/" + zone.getId();
@@ -105,7 +115,7 @@ public class ZoneController {
 		}
 	}
 
-	@RequestMapping(value = "/zones/{id}/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/zones/{zoneId}/edit", method = RequestMethod.GET)
 	public String initUpdatezoneForm(@PathVariable("id") int id, Model model) {
 		Zone zone = this.escaladeService.findZoneById(id);
 		model.addAttribute(zone);

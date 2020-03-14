@@ -5,31 +5,32 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags" %>
-<escalade:layout pageName="zones">
+<escalade:layout pageName="points">
     <h2>    
-        <c:if test="${zone['new']}">New </c:if> zone        
+        <c:if test="${point['new']}">New </c:if> point        
     </h2>
-    <form:form modelAttribute="zone" class="form-horizontal" id="add-zone-form">
+    <form:form modelAttribute="point" class="form-horizontal" id="add-point-form">
         <div class="form-group has-feedback">
             			<escalade:inputField label="Name" name="name"/> 
-                		<input type="hidden" name="id" value="${zone.id}" />                	
+                		<input type="hidden" name="id" value="${point.id}" />                	
                     	<div class="col-sm-10">                        
-                        	<escalade:inputField label="zone" name="zone.name" />							
+                        	<escalade:inputField label="point" name="point.name" />							
                    		 </div>                   		 
                    		 
-                    	<input type="hidden" name="id" value="${site.id}" />                	
+                    	<input type="hidden" name="id" value="${point.id}" />                	
                     	<div class="col-sm-10">
-                        	<escalade:inputField label="zone" name="site.name" />						
-                   		 </div>                   		 
+                        	<escalade:inputField label="point" name="point.name" />						
+                   		 </div>
+                   		 <input type="hidden" name="id" value="${length.id}" />   
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
-                    <c:when test="${zone['new']}">
-                        <button class="btn btn-default" type="submit">Add zone</button>
+                    <c:when test="${point['new']}">
+                        <button class="btn btn-default" type="submit">Add point</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Update zone</button>
+                        <button class="btn btn-default" type="submit">Update point</button>
                     </c:otherwise>
                 </c:choose>
             </div>

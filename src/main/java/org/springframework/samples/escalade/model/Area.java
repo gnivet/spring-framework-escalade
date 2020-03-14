@@ -102,16 +102,6 @@ public class Area extends NamedEntity {
 		this.site = site;
 	}
 	
-	@Column(name = "sites")	
-	private String sites;
-    public String getSites() {
-		return sites;
-	}
-
-	public void setSites(String sites) {
-		this.sites = sites;
-	}
-	
 	
 	
 	
@@ -126,4 +116,27 @@ public class Area extends NamedEntity {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	/**
+	 * 
+	 */
+	public Area() {
+	}
+
+	/**
+	 * @param street
+	 * @param postalcode
+	 * @param city
+	 * @param country
+	 * @param gpscoordinate
+	 */
+	public Area(String street, String postalcode, String city, String country, String gpscoordinate) {
+		this.street = street;
+		this.postalcode = postalcode;
+		this.city = city;
+		this.country = country;
+		this.gpscoordinate = gpscoordinate;
+	}
+	
+	
 }

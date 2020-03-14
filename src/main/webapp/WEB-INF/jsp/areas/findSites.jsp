@@ -7,8 +7,8 @@
 	
 <escalade:layout pageName="areas">
 
-    <h2>Find sites</h2>
-    <!-- Research sites by areas -->
+    <h2>Find Sites</h2>
+    <!-- Research topos by areas -->
     <spring:url value="/areas" var="formUrl"/>
     <form:form modelAttribute="area" action="${fn:escapeXml(formUrl)}" method="get" class="form-horizontal"
                id="search-site-form">
@@ -24,11 +24,12 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-default">Find site</button>
-            </div>
+            </div>            
         </div>
 
     </form:form>
 
-    <br/>
-    <!-- <a class="btn btn-default" href='<spring:url value="/areas/new" htmlEscape="true"/>'>Add area</a> -->
+    
+     <a class="btn btn-default" href='<spring:url value="/areas/new" htmlEscape="true"/>'>Add area</a> 
+    
 </escalade:layout>

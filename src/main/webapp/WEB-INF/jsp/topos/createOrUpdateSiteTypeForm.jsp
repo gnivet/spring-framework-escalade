@@ -5,7 +5,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags" %>
-<escalade:layout pageName="sitetypes">   
+<escalade:layout pageName="sitetypes"> 
+	<h2>
+		<c:if test="${sitetype['new']}">New </c:if>
+		Site's type
+	</h2>  
     <form:form modelAttribute="sitetype" class="form-horizontal" id="add-sitetype-form">
         <div class="form-group has-feedback">
             <escalade:inputField label="Name" name="name"/>            

@@ -28,11 +28,13 @@ import org.springframework.samples.escalade.model.Comment;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
+import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.samples.escalade.repository.CommentRepository;
 import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.samples.escalade.repository.SiteTypeRepository;
+import org.springframework.samples.escalade.repository.WayRepository;
 import org.springframework.samples.escalade.repository.ZoneRepository;
 import org.springframework.stereotype.Service;
 
@@ -47,17 +49,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class EscaladeServiceImpl implements EscaladeService {
 	
-	@Autowired
+	
 	private AreaRepository areaRepository;
-	@Autowired
+	
 	private CommentRepository commentRepository;
 	
 	private ZoneRepository zoneRepository;
 	
 	private SiteRepository siteRepository;
 	private SiteTypeRepository siteTypeRepository;
+
+	private WayRepository wayRepository;
 	
-	@Autowired
+	@Autowired(required = false)
 	public EscaladeServiceImpl
 	(
 			
@@ -65,14 +69,17 @@ public class EscaladeServiceImpl implements EscaladeService {
 			 CommentRepository commentRepository,
 			 ZoneRepository zoneRepository,
 			 SiteRepository siteRepository,
-			 SiteTypeRepository siteTypeRepository
+			 SiteTypeRepository siteTypeRepository,
+			 WayRepository wayRepository
 	)
+	
 	{
 		this.areaRepository = areaRepository;
 		this.commentRepository = commentRepository;
 		this.zoneRepository = zoneRepository;
 		this.siteRepository = siteRepository;
 		this.siteTypeRepository = siteTypeRepository;
+		this.wayRepository = wayRepository;
 		
 	}
 
@@ -155,12 +162,12 @@ public class EscaladeServiceImpl implements EscaladeService {
 	}
 
 	
-	public void saveZone(Zone zone) throws DataAccessException {
+	public Zone saveZone(Zone zone) throws DataAccessException {
 		// TODO Auto-generated method stub
-		zoneRepository.saveZone(zone);
+		return this.zoneRepository.saveZone(zone);
 		
 	}
-
+	
 	
 	public Zone findZoneById(Integer zoneId) throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -186,11 +193,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 	
 	
 
-	@Transactional
-	public void saveSite(Site site) throws DataAccessException {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Transactional
 	public Site findSiteById(Integer id) throws DataAccessException {
@@ -247,11 +250,16 @@ public class EscaladeServiceImpl implements EscaladeService {
 	@Override
 	public SiteType findById(int id) throws DataAccessException {
 		// TODO Auto-generated method stub
-		return null;
+		return siteTypeRepository.findById(id);
 	}
 
+	
+	public Way findWayById(int id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return wayRepository.findWayById(id);
+	}
 
-
+	
 
 	@Override
 	public Collection<SiteType> findSiteBySiteType(String name) {
@@ -279,6 +287,31 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 	
 	
+	public Site saveSite(Site site) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return this.siteRepository.saveSite(site);
+	}
 
+
+
+
+	
+	public Way saveway(Way way) {
+		// TODO Auto-generated method stub
+		return this.wayRepository.saveWay(way);
+	}
+
+
+
+
+
+	public Collection<Way> findWayByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public Way finWayById(int wayId) {
+		return wayRepository.findWayById(wayId);
+	}
 		
 }

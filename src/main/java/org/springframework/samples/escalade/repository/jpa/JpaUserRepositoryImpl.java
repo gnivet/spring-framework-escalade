@@ -55,7 +55,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
     public Collection<User> findByLastName(String userName) {
         // using 'join fetch' because a single query should load both users and sites
         // using 'left join fetch' because it might happen that an user does not have sites yet
-        Query query = this.em.createQuery("SELECT DISTINCT owner FROM User user left join fetch user.sites WHERE user.userName LIKE :userName");
+        Query query = this.em.createQuery("SELECT DISTINCT user FROM User user left join fetch user.sites WHERE user.userName LIKE :userName");
         query.setParameter("userName", userName + "%");
         return query.getResultList();
     }
@@ -230,6 +230,16 @@ public class JpaUserRepositoryImpl implements UserRepository {
 	public void deleteById(Long id) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+	@Override
+	public org.springframework.samples.escalade.model.User findById(int userId) {
+		// TODO Auto-generated method stub
+		 Query query = this.em.createQuery("SELECT DISTINCT owner FROM User user left join fetch user.sites WHERE user.userId LIKE :userId");
+	        query.setParameter("userId", userId + "%");
+	        return (org.springframework.samples.escalade.model.User) query.getResultList();
 	}
 
 	

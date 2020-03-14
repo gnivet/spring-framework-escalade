@@ -47,11 +47,11 @@ public class Comment extends NamedEntity {
 	}
 
 	
-	/*	
+	
 	public Comment() {
 		// TODO Auto-generated constructor stub
 	}
-	*/
+	
 	
 	
 	}

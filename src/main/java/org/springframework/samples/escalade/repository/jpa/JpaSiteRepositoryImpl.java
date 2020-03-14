@@ -45,16 +45,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 
 
 	
-	public void saveWay(Way way) throws DataAccessException {
-		// TODO Auto-generated method stub
-
-		if (way.getId() == null) {
-			this.em.persist(way);
-		} else {
-			this.em.merge(way);
-		}
-		
-	}
+	
 
 
 
@@ -106,21 +97,20 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 	}
 
 
-
-	public void saveSite(Site site) throws DataAccessException {
-		// TODO Auto-generated method stub
+	public Site saveSite(Site site) throws DataAccessException {
 		
-
-		
-			
-			if (site.getId() == null) {
-				this.em.persist(site);
-			} else {
-				this.em.merge(site);
-			}
-			
-		
-	}
+		if (site.getId() == null) {
+			this.em.persist(site);
+		} else {
+			this.em.merge(site);
+		}
+		return site;
+	
+}
+	
+	
+	
+	
 
 
 
@@ -179,6 +169,17 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		
 	}
 
+	public Way saveWay(Way way) throws DataAccessException {
+
+		if (way.getId() == null) {
+			this.em.persist(way);
+		} else {
+			this.em.merge(way);
+		}
+		return way;
+		
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	public Collection<Area> findSiteByPostalCode(String postalcode) throws DataAccessException {

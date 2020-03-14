@@ -19,4 +19,19 @@ public interface SiteTypeRepository {
 	SiteType findSiteTypeById(int siteTypeId);
 	
 	SiteType saveSiteType(SiteType siteType);
+
+
+
+	List<SiteType> findAll();
+
+
+
+	Collection<SiteType> getSiteType();
+
+
+
+	
+
+
+
 }

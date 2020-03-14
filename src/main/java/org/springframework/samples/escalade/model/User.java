@@ -1,5 +1,6 @@
 package org.springframework.samples.escalade.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -33,6 +34,7 @@ public class User  {
 	private String telephone;
 	private String email;
 	private Boolean enabled;
+	
 	
 	
 	@Id
@@ -195,8 +197,24 @@ public class User  {
 		return User.getusername();
 		// TODO Auto-generated method stub
 		
-	}
+	} 
 
+	/*
+	 * Ajout 9/3 2020
+	 *
+	 */
+	
+	@ManyToMany(mappedBy="user")
+    public List <Site> sites;
+	
+	
+	
+	
+	/**
+	 * 
+	 */
+	public User() {
+	}
 	
 	
 }

@@ -4,8 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@SpringBootApplication
+
 //@ComponentScan(basePackages = "org.springframework.samples.escalade")
+@SpringBootApplication
 public class SpringFrameworkEscaladeApplication {
 
 	public static void main(String[] args) {

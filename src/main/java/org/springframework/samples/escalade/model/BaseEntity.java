@@ -33,9 +33,7 @@ public class BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "base_entity_generator")
 	@SequenceGenerator(name = "base_entity_generator", sequenceName = "base_entity_sequence")
-	
-	
-	protected Integer id;
+	public Integer id;
 
 	public Integer getId() {
 		return id;
@@ -58,5 +56,15 @@ public class BaseEntity {
 	}
 	
 	*/
-
+	
+	/**
+	 * @param id
+	 */
+	/*
+	public BaseEntity(@NotNull Integer id) {
+		this.id = id;
+	}
+	*/
+	public BaseEntity() {}
+	
 }
