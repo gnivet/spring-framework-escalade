@@ -8,7 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 
 @Entity  
 @Table(name="zones")  
@@ -40,8 +39,7 @@ public class Zone extends NamedEntity{
 		this.ways = ways;
 	}
 	
-	@Column(name = "zone")
-	@NotEmpty
+	@Column(name = "zone")	
 	private String zone;
 	
 	
@@ -51,7 +49,8 @@ public class Zone extends NamedEntity{
 	 */
 	public Zone() {
 	}
-
+	
+	
 	
 
 	/**

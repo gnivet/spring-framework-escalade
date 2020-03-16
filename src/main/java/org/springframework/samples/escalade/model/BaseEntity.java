@@ -65,6 +65,13 @@ public class BaseEntity {
 		this.id = id;
 	}
 	*/
+	
+	
 	public BaseEntity() {}
+
+	@Override
+	public String toString() {
+		return "BaseEntity [id=" + id + "]";
+	}
 	
 }

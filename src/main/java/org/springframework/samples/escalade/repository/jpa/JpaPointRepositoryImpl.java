@@ -5,8 +5,13 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Point;
+import org.springframework.samples.escalade.repository.PointRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public class JpaPointRepositoryImpl {
+@Repository
+@Transactional
+public class JpaPointRepositoryImpl implements PointRepository{
 
 	
 
@@ -25,6 +30,12 @@ public class JpaPointRepositoryImpl {
 				this.em.merge(Point);
 			}
 
+		}
+
+		@Override
+		public Point findById(Integer id) throws DataAccessException {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	
 }

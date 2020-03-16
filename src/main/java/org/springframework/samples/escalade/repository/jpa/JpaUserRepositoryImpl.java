@@ -31,6 +31,7 @@ import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
 import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * JPA implementation of the {@link OwnerRepository} interface.
@@ -38,6 +39,7 @@ import org.springframework.stereotype.Repository;
  * @author Guillaume Nivet 
  */
 @Repository
+@Transactional
 public class JpaUserRepositoryImpl implements UserRepository {
 
     @PersistenceContext

@@ -5,7 +5,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.repository.WayRepository;
 import org.springframework.stereotype.Repository;

@@ -9,8 +9,10 @@ import javax.persistence.Query;
 import org.springframework.samples.escalade.model.Comment;
 import org.springframework.samples.escalade.repository.CommentRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class JpaCommentRepositoryImpl implements CommentRepository{
 
 	@PersistenceContext

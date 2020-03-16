@@ -61,7 +61,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 	private WayRepository wayRepository;
 	
-	@Autowired(required = false)
+	@Autowired
 	public EscaladeServiceImpl
 	(
 			

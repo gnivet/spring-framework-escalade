@@ -11,7 +11,7 @@
     </h2>
     <form:form modelAttribute="zone" class="form-horizontal" id="add-zone-form">
         <div class="form-group has-feedback">
-            			<escalade:inputField label="Name" name="name"/> 
+            			<!--<escalade:inputField label="Name" name="name"/> 
                 		<input type="hidden" name="id" value="${zone.id}" />                	
                     	<div class="col-sm-10">                        
                         	<escalade:inputField label="zone" name="zone.name" />							
@@ -19,8 +19,8 @@
                    		 
                     	<input type="hidden" name="id" value="${site.id}" />                	
                     	<div class="col-sm-10">
-                        	<escalade:inputField label="zone" name="site.name" />						
-                   		 </div>                   		 
+                        	<escalade:inputField label="site" name="site.name" />						
+                   		 </div>      --->             		 
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

@@ -17,6 +17,7 @@ import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * JPA implementation of the {@link AreaRepository} interface.
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Repository;
  * @since 3.12.2019
  */
 @Repository
+@Transactional
 public class JpaSiteRepositoryImpl implements SiteRepository {
 
 	@PersistenceContext

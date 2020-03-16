@@ -5,8 +5,13 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Length;
+import org.springframework.samples.escalade.repository.LengthRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public class JpaLengthRepositoryImpl {
+@Repository
+@Transactional
+public class JpaLengthRepositoryImpl implements LengthRepository{
 
 	
 		@PersistenceContext
@@ -24,6 +29,12 @@ public class JpaLengthRepositoryImpl {
 				this.em.merge(Length);
 			}
 
+		}
+
+		@Override
+		public Length findById(Integer id) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 

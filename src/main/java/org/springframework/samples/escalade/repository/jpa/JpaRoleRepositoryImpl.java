@@ -9,7 +9,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.samples.escalade.model.Role;
 import org.springframework.samples.escalade.repository.RoleRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+@Repository
+@Transactional
 public class JpaRoleRepositoryImpl implements RoleRepository {
 
 	@Override

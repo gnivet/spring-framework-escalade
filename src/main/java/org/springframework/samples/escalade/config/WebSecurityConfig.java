@@ -69,6 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.logout().logoutUrl("/users/logout").logoutSuccessUrl("/welcome");
 		http.authorizeRequests().antMatchers("/users/createOrUpdateUserForm").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/sites/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/zones/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/sitetypes/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/sitetypes/find").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/siteTypes/siteTypeDetails").hasAnyRole("USER", "ADMIN");

@@ -38,19 +38,17 @@
 								</option>
 							</c:forEach>
 						 </select> <br />                  		 
-             		</div> 
-                   		
-                         <div class="col-sm-10" class="form-horizontal">
-                   		 <!--  	<input type="hidden" name="id"
-								value="${sitetype.id}" /> --> 
-                   		 	
-       							<p>Please choose your site's type:</p>
-								<br />
-      							 <input type="radio" name="type.name" value="cliff"
-								id="cliff" checked /> <label for="cliff">cliff </label><br />
-      							 <input type="radio" name="type.name" value="block"
-								id="block" /> <label for="block">block</label><br />       
-   							</div> 
+             		</div>
+             		<div class="col-sm-10"> 
+                   		  <p>Choose your site's type</p>
+							<br />  			
+						<select name='sitetypes'>     
+							<c:forEach items="${sitetypes}" var="sitetype"> 
+							    <option value="${sitetype}">${sitetype.name}
+								</option>
+							</c:forEach>
+						 </select> <br />                  		 
+             		</div>                        
             <div class="col-sm-10"> 
                    		  <p>Below you can activate/cancel your site:</p>
 					<br />  

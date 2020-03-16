@@ -15,7 +15,6 @@
  */
 package org.springframework.samples.escalade.web;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -35,9 +34,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -93,7 +90,7 @@ public class SiteController implements ErrorController {
         model.put("areas",areas);
         // 
         List<SiteType> sitetypes= this.siteTypeRepository.findAll();
-        model.put("sitetype",sitetypes);
+        model.put("sitetypes",sitetypes);
         
         
         

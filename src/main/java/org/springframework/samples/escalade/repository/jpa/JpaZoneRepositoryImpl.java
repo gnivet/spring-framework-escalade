@@ -7,12 +7,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.ZoneRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class JpaZoneRepositoryImpl implements ZoneRepository{
 
 	@PersistenceContext
