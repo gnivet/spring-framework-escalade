@@ -21,16 +21,17 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.AreaRepository;
+import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.samples.escalade.repository.SiteTypeRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -38,8 +39,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author Guillaume Nivet
@@ -50,10 +49,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 //@RequestMapping("/users")
 //@SessionAttributes("user")
 @Controller
-public class SiteController implements ErrorController {
+@Transactional
+public class SiteController {
 
     private static final String VIEWS_SITES_CREATE_OR_UPDATE_FORM = "sites/createOrUpdateSiteForm";
-    private final static String PATH = "/error";
+  
     private final EscaladeService escaladeService;
     
 
@@ -61,10 +61,11 @@ public class SiteController implements ErrorController {
     private AreaRepository areaRepository;
 	private UserRepository userRepository;
 	private SiteTypeRepository siteTypeRepository;
+	private SiteRepository siteRepository;
 	
 	
 	@Autowired
-    public SiteController(EscaladeService escaladeService, UserRepository userRepository, AreaRepository areaRepository, SiteTypeRepository syteTypeRepository) {
+    public SiteController(EscaladeService escaladeService, UserRepository userRepository, AreaRepository areaRepository, SiteTypeRepository syteTypeRepository, SiteRepository siteRepository) {
         this.escaladeService = escaladeService;
         this.userRepository = userRepository;
         this.areaRepository = areaRepository;
@@ -140,13 +141,6 @@ public class SiteController implements ErrorController {
 
 	
 	
-    @Override
-    @RequestMapping(PATH)
-    @ResponseBody
-	public String getErrorPath() {
-		// TODO Auto-generated method stub
-		return "No Mapping Found";
-	}
     
     
     

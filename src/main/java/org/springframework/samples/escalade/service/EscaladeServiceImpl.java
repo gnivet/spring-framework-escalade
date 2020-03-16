@@ -62,17 +62,11 @@ public class EscaladeServiceImpl implements EscaladeService {
 	private WayRepository wayRepository;
 	
 	@Autowired
-	public EscaladeServiceImpl
-	(
-			
-			 AreaRepository areaRepository,
-			 CommentRepository commentRepository,
-			 ZoneRepository zoneRepository,
-			 SiteRepository siteRepository,
-			 SiteTypeRepository siteTypeRepository,
-			 WayRepository wayRepository
-	)
-	
+	public EscaladeServiceImpl(
+
+			AreaRepository areaRepository, CommentRepository commentRepository, ZoneRepository zoneRepository,
+			SiteRepository siteRepository, SiteTypeRepository siteTypeRepository, WayRepository wayRepository)
+
 	{
 		this.areaRepository = areaRepository;
 		this.commentRepository = commentRepository;
@@ -80,7 +74,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 		this.siteRepository = siteRepository;
 		this.siteTypeRepository = siteTypeRepository;
 		this.wayRepository = wayRepository;
-		
+
 	}
 
 	

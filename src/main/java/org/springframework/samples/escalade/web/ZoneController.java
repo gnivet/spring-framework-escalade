@@ -47,8 +47,6 @@ public class ZoneController {
 	private SiteRepository siteRepository;
 	private ZoneRepository zoneRepository;
 	
-	
-
 	@Autowired
 	public ZoneController(EscaladeService escaladeService, SiteRepository siteRepository, ZoneRepository zoneRepository) {
 		this.escaladeService = escaladeService;
@@ -96,7 +94,7 @@ public class ZoneController {
 	@RequestMapping(value = "/zones/find", method = RequestMethod.GET)
 	public String initFindForm(Map<String, Object> model) {
 		model.put("zone", new Zone());
-		return "zones/findSites";
+		return "zones/waysList";
 		// return "zones/{zoneId}";
 	}
 
@@ -122,7 +120,7 @@ public class ZoneController {
 		} else {
 			// multiple zones found
 			model.put("selections", results);
-			return "zones/sitesList";
+			return "zones/waysList";
 		}
 	}
 

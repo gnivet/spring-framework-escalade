@@ -25,9 +25,11 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.User;
+import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,17 +41,20 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Guillaume Nivet 
  */
 @Controller
+@Transactional
 public class AreaController {
 
 	private static final String VIEWS_AREA_CREATE_OR_UPDATE_FORM = "areas/createOrUpdateAreaForm";
 	private final EscaladeService escaladeService;
 	private String postalcode;
 	private UserRepository userRepository;
+	private AreaRepository areaRepository;
 	
 	@Autowired
-	public AreaController(EscaladeService escaladeService , UserRepository userRepository) {
+	public AreaController(EscaladeService escaladeService , UserRepository userRepository, AreaRepository areaRepository) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
+		this.areaRepository = areaRepository;
 	}
 	
 	/*

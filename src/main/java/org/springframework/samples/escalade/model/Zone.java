@@ -13,8 +13,6 @@ import javax.persistence.Table;
 @Table(name="zones")  
 public class Zone extends NamedEntity{
 	
-
-	
 								
 	@ManyToOne
 	@JoinColumn(name = "site_id", nullable = false)
@@ -54,6 +52,7 @@ public class Zone extends NamedEntity{
 	
 
 	/**
+	 * Constructor with parameters
 	 * @param site
 	 * @param ways
 	 */
