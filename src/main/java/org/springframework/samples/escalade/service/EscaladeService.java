@@ -18,9 +18,12 @@ package org.springframework.samples.escalade.service;
 import java.util.Collection;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Comment;
+import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
@@ -60,7 +63,7 @@ public interface EscaladeService {
 
 	Area findAreaById(Integer id) throws DataAccessException;
 
-	void saveArea(Area area) throws DataAccessException;
+	Area saveArea(Area area) throws DataAccessException;
 
 	Collection<Area> findSiteByPostalCode(String postalcode) throws DataAccessException;
 
@@ -122,6 +125,8 @@ public interface EscaladeService {
 	Collection<Way> findWayByName(String name);
 
 	Way findWayById(int id);
+
+	NamedEntity updateArea(Area area);
 
 	
 }

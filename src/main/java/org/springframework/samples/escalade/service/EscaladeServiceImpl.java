@@ -25,6 +25,7 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Comment;
+import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
@@ -79,24 +80,24 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 	
 
-	
+	@Transactional
 	public Area findAreaById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return areaRepository.findAreaById(id);
 	}
 
-	
+	@Transactional
 	public Comment findCommentById(Integer id) throws DataAccessException{
 		return commentRepository.findCommentById(id);
 	}
 //Comment findCommentById(Integer commentId)throws DataAccessException;
-	
+	@Transactional
 	public Collection<Comment> findCommentByName(String name) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return commentRepository.findCommentByName(name);
 	}
 	
-	
+	@Transactional
 	public void saveComment(Comment comment) throws DataAccessException {
 		
 		commentRepository.saveComment(comment);
@@ -114,13 +115,13 @@ public class EscaladeServiceImpl implements EscaladeService {
 	
 	
 	
-	
+	@Transactional
 	public Topo findTopoById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
-	
+	@Transactional
 	public void saveTopo(Topo topo) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
@@ -130,45 +131,51 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 	
 
-	
+	@Transactional
 	public String findLoggedInusername() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
+	@Transactional
 	public void autoLogin(String username, String password) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	
+	@Transactional
 	public Collection<SiteType> findSiteTypes() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return siteRepository.findSiteTypes();
 	}
 
 	
-	
-	public void saveArea(Area area) throws DataAccessException {
+	@Transactional
+	public Area saveArea(Area area) throws DataAccessException {
 		
-		areaRepository.saveArea(area);
+		return areaRepository.saveArea(area);
+	}
+	@Override
+	@Transactional
+	public NamedEntity updateArea(Area area) {
+		return areaRepository.updateArea(area);
+		
 	}
 
-	
+	@Transactional
 	public Zone saveZone(Zone zone) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return this.zoneRepository.saveZone(zone);
 		
 	}
 	
-	
+	@Transactional
 	public Zone findZoneById(Integer zoneId) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return zoneRepository.findZoneById(zoneId);
 	}
 
-	
+	@Transactional
 	public Collection<Zone> findZoneByName(String name) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return zoneRepository.findZoneByName(name);
@@ -177,13 +184,12 @@ public class EscaladeServiceImpl implements EscaladeService {
 	
 
 	
-
+	@Override
 	@Transactional
-	public Collection<Area> findSiteByPostalCode(String postalcode) {
+	public Collection<Area> findSiteByPostalCode(String postalcode) throws DataAccessException{
 		// TODO Auto-generated method stub
 		return areaRepository.findSiteByPostalcode(postalcode);
 	}
-	
 	
 	
 
@@ -224,6 +230,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 
 	@Override
+	@Transactional
 	public List<SiteType> findSiteTypesList() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
@@ -233,6 +240,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 
 	@Override
+	@Transactional
 	public void save(SiteType siteType) throws DataAccessException {
 		// TODO Auto-generated method stub
 		
@@ -242,12 +250,13 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 
 	@Override
+	@Transactional
 	public SiteType findById(int id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return siteTypeRepository.findById(id);
 	}
 
-	
+	@Transactional
 	public Way findWayById(int id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return wayRepository.findWayById(id);
@@ -256,6 +265,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 	
 
 	@Override
+	@Transactional
 	public Collection<SiteType> findSiteBySiteType(String name) {
 		// TODO Auto-generated method stub
 		return null;
@@ -265,6 +275,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 
 	@Override
+	@Transactional
 	public SiteType findSiteTypeById(int siteTypeId) {
 		// TODO Auto-generated method stub
 		return siteTypeRepository.findById(siteTypeId);
@@ -274,13 +285,14 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 
 	@Override
+	@Transactional
 	public SiteType saveSiteType(SiteType siteType) {
 		// TODO Auto-generated method stub
 		return this.siteTypeRepository.saveSiteType(siteType);
 	}
 
 	
-	
+	@Transactional
 	public Site saveSite(Site site) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return this.siteRepository.saveSite(site);
@@ -289,7 +301,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 
 
-	
+	@Transactional
 	public Way saveway(Way way) {
 		// TODO Auto-generated method stub
 		return this.wayRepository.saveWay(way);
@@ -298,12 +310,12 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 
 
-
+	@Transactional
 	public Collection<Way> findWayByName(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+	@Transactional
 	public Way finWayById(int wayId) {
 		return wayRepository.findWayById(wayId);
 	}

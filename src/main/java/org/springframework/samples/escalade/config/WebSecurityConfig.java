@@ -58,6 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
 		// If no login, it will redirect to /login page.
 		http.authorizeRequests().antMatchers("/areas*").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/way").hasAnyRole("USER", "ADMIN");
 		//http.authorizeRequests().antMatchers("/users").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/areas*").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/areas/sitesList").hasAnyRole("USER", "ADMIN");
@@ -75,6 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/escalade/siteTypes/siteTypeDetails").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/areas/findSites").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/areas/findSites").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/areas").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/areas?postalcode=?").hasAnyRole("USER", "ADMIN");
@@ -82,7 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// For ADMIN only. /users/find
 		http.authorizeRequests().antMatchers("/admin").hasRole("ADMIN");
 
-		// When the user has logged in as XX.
+		// When the user has logged in as XX. 
 		// But access a page that requires role YY,
 		// AccessDeniedException will be thrown.
 		//http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");

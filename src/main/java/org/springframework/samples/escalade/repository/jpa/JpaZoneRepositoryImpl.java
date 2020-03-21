@@ -41,8 +41,7 @@ public class JpaZoneRepositoryImpl implements ZoneRepository{
 	*/
 
 	@SuppressWarnings("unchecked")
-	@Override
-	public Collection<Zone> findZoneByName(String name) throws DataAccessException {
+		public Collection<Zone> findZoneByName(String name) throws DataAccessException {
 		// TODO Auto-generated method stub
 
     	Query query = this.em.createQuery("SELECT DISTINCT zone from Zone zone WHERE zone.name LIKE :name");

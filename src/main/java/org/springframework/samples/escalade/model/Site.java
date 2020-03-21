@@ -75,14 +75,10 @@ public class Site extends NamedEntity {
 		this.valid = valid;
 	}
 
-	public Area getArea() {
-		return area;
-	}
+	
 
-	public void setArea(Area area) {
-		this.area = area;
-	}
-
+	
+	
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
@@ -140,7 +136,7 @@ public class Site extends NamedEntity {
 	 * @param valid
 	 * @param zone
 	 */
-	public Site(LocalDate birthDate, SiteType sitetype, User user, Area area, @NotNull boolean valid, Set<Zone> zone) {
+public Site(LocalDate birthDate, SiteType sitetype, User user, Area area, @NotNull boolean valid, Set<Zone> zone) {
 		this.birthDate = birthDate;
 		this.sitetype = sitetype;
 		this.user = user;
@@ -148,7 +144,20 @@ public class Site extends NamedEntity {
 		this.valid = valid;
 		this.zone = zone;
 	}
+	/*
+	public void setSite(Site site) {
+		// TODO Auto-generated method stub
+		this.site = site;
+	}
+	*/
 
+	public Area getArea() {
+		return area;
+	}
+
+	public void setArea(Area area) {
+		this.area = area;
+	}
 	
 	
 	

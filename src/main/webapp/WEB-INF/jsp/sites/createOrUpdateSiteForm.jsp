@@ -50,10 +50,7 @@
 						 </select> <br />                  		 
              		</div>                        
             <div class="col-sm-10"> 
-                   		  <p>Below you can activate/cancel your site:</p>
-					<br />  
-        				<!--<form:radiobutton name="site.valid" path="valid"
-						value="false" label="Valid" class="form-horizontal" />	<br />	-->							
+                   		  <p>Below you can activate/cancel your site:</p><br/>					     									
         					<input type="radio" name="site.valid" value="false"
 						id="false" checked /><label for="false">Not valid</label><br />
         					 <input type="radio" name="site.valid" value="true"

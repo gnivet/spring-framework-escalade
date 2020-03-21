@@ -41,13 +41,8 @@ public class NamedEntity extends BaseEntity {
     }
 
     
-    public String toString() {
-        return this.getName();
-    }
-
-	/**
-	 * 
-	 */
+   	
+	
 	public NamedEntity() {
 	}
     

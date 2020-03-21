@@ -11,6 +11,10 @@
 		<tr>
 			<th>Site</th>
 			<td><b><c:out value="${sites.name} " /></b></td>
-		</tr>
+			<th>Site</th>			
+			<th> User</th>
+			<td><c:out value="${users.userId}" /></td>		
+			<td><b><c:out value="${users.username} " /></b></td>
+		</tr>		
 	</table>
 </escalade:layout>

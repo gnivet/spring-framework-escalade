@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Length;
+import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
@@ -152,11 +153,11 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 
 
 	
-	public Area findAreaById(Integer id) throws DataAccessException {
+	public NamedEntity findAreaById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT area FROM Area area WHERE area.id =:id");
 		query.setParameter("id", id);
-		return (Area) query.getSingleResult();
+		return (NamedEntity) query.getSingleResult();
 	}
 
 

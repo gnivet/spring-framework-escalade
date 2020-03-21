@@ -20,6 +20,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Simple business object representing a Area.
@@ -35,18 +36,19 @@ public class Area extends NamedEntity {
 	private String street;
 
 	@Column(name = "postalcode")
-	private String postalcode;	
+	@NotEmpty String postalcode;	
 	
-
+	
+	public void setPostalcode(String postalcode) {
+		this.postalcode = postalcode;
+	}
+	
 	public String getPostalcode() {
 		return postalcode;
 	}
 
-	public void setPostalcode(String postalcode) {
-		this.postalcode = postalcode;
-	}
-
 	@Column(name = "city")
+	@NotEmpty
 	private String city;
 
 	public String getCity() {
@@ -137,6 +139,10 @@ public class Area extends NamedEntity {
 		this.country = country;
 		this.gpscoordinate = gpscoordinate;
 	}
+
+	
+	
+	
 	
 	
 }

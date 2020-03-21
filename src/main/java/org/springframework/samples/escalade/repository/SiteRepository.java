@@ -22,6 +22,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.BaseEntity;
 import org.springframework.samples.escalade.model.Length;
+import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
@@ -42,18 +43,18 @@ public interface SiteRepository {
 	List<SiteType> findSiteTypes() throws DataAccessException;
 
     /**
-     * Retrieve a <code>Topo</code> from the data store by id.
+     * Retrieve a <code>Site</code> from the data store by id.
      *
      * @param id the id to search for
-     * @return the <code>Topo</code> if found
+     * @return the <code>Site</code> if found
      * @throws org.springframework.dao.DataRetrievalFailureException if not found
      */
     Site findSiteById(Integer id) throws DataAccessException;
 
     /**
-     * Save a <code>Topo</code> to the data store, either inserting or updating it.
+     * Save a <code>Site</code> to the data store, either inserting or updating it.
      *
-     * @param Topo the <code>Topo</code> to save
+     * @param Topo the <code>Site</code> to save
      * @return 
      * @see BaseEntity#isNew
      */
@@ -140,7 +141,7 @@ public interface SiteRepository {
      * @return the <code>Area</code> if found
      * @throws org.springframework.dao.DataRetrievalFailureException if not found
      */
-    Area findAreaById(Integer id)  throws DataAccessException;
+    NamedEntity findAreaById(Integer id)  throws DataAccessException;
     
     /**
      * Save a <code>Area</code> to the data store, either inserting or updating it.
@@ -151,4 +152,6 @@ public interface SiteRepository {
     void saveArea(Area area) throws DataAccessException;
 
 	Collection<Area> findSiteByPostalCode(String postalcode)  throws DataAccessException;
+
+	
 }

@@ -22,7 +22,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
+import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.stereotype.Repository;
@@ -69,7 +71,10 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 		
 		if (area.getId() == null) {
 			this.em.persist(area);
-		} else {
+		}
+		
+		else
+		{
 			this.em.merge(area);
 		}
 		return area ;
@@ -77,14 +82,6 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 
 	
 	
-	@SuppressWarnings("unchecked")
-	public Collection<Area> findSiteByPostalcode(String postalcode) {
-		// TODO Auto-generated method stub
-		Query query = this.em.createQuery("SELECT DISTINCT area from Area area WHERE area.postalcode LIKE :postalcode");
-		query.setParameter("postalcode", postalcode + "%");
-		return query.getResultList();
-		
-	}
 
 	
 	@SuppressWarnings("unchecked")
@@ -118,26 +115,31 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 	}
 
 
-	@Override
-	public Collection<Area> findSiteByPostalCode(String postalcode) {
-		// TODO Auto-generated method stub
-		return null;
+	
+
+	
+	
+
+	public NamedEntity updateArea(Area area) {
+		if(!this.em.contains(area))
+			this.em.merge(area);
+		return area;
 	}
 
 
 	
-	 @Override
-	    public Area findById(int id) {
-	        // using 'join fetch' because a single query should load both areas and topos
-	        // using 'left join fetch' because it might happen that an owner does not have topos yet
-	    	
-	       
-	    	Query query = this.em.createQuery("SELECT area FROM Area area WHERE area.id =:id");
-	    	query.setParameter("id", id);
-	        return (Area) query.getSingleResult();
-	    }
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<Area> findSiteByPostalcode(String postalcode) throws DataAccessException {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT DISTINCT area from Area area WHERE area.postalcode LIKE :postalcode");
+		query.setParameter("postalcode", postalcode + "%");
+		return query.getResultList();
+	}
 
 	
+	 
 
 	
 

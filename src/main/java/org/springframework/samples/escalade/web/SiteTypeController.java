@@ -60,8 +60,8 @@ public class SiteTypeController {
     @RequestMapping(value = "/sitetypes/find", method = RequestMethod.GET)
 	public String initFindForm(Map<String, Object> model) {
 		model.put("/sitetypes", new SiteType());
-		return "sitetypes/find/siteTypes";
-		// return "areas/{areaId}";
+		//return "sitetypes/find/siteTypes";
+		return "areas/{areaId}";
 	}
 
 //findSite

@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.escalade.web;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Area;
+import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.User;
@@ -94,30 +96,77 @@ public class SiteController {
         model.put("sitetypes",sitetypes);
         
         
+		
         
         return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
     }
-	/*
-	@RequestMapping(method = RequestMethod.POST)
-    public String processSubmit(@ModelAttribute("pet") Pet pet,
-        BindingResult result, Model model) { … }
-    */
 	
 	
 	
-	 @PostMapping(value = "/sites/new")
-	    public String processCreationForm(@ModelAttribute  Site site, SiteType siteType, Area area, BindingResult result, Model model){
+	 	@PostMapping(value = "/sites/new")
+	    public String processCreationForm(@ModelAttribute Site site, @ModelAttribute  Principal principal,  @ModelAttribute  NamedEntity area, SiteType siteType,  BindingResult result, Model model, Integer siteId, Integer areaId){
+				 
+		 String userName = principal.getName();
+			User user = this.userRepository.findByUsername(userName);
+			System.out.println(siteId); 
+			Site sites = this.siteRepository.findSiteById(siteId);
+			System.out.println(areaId); 
+			NamedEntity areas = this.areaRepository.findAreaById(areaId);
+		 
+		 
 	        if (result.hasErrors()) {
 	            return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
 	        } else {
 	        	
 	        	site = this.escaladeService.saveSite(site);		
-	        	model.addAttribute("site",site);
+	        	model.addAttribute("site",site.getName());
+	        	model.addAttribute("userId",site.getId());
+	        	
 	            return "redirect:/sites/" + site.getId() ;
 	        }
 	    }
 	
-    
+    /*
+	 
+	 private Map<Long, Employee> employeeMap = new HashMap<>();
+
+	    @RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
+	    public String submit(
+	      @ModelAttribute("employee") Employee employee,
+	      BindingResult result, ModelMap model) {
+	        if (result.hasErrors()) {
+	            return "error";
+	        }
+	        model.addAttribute("name", employee.getName());
+	        model.addAttribute("id", employee.getId());
+
+	        employeeMap.put(employee.getId(), employee);
+
+	        return "employeeView";
+	    }
+
+	    @ModelAttribute
+	    public void addAttributes(Model model) {
+	        model.addAttribute("msg", "Welcome to the Netherlands!");
+	    }
+	}
+	 
+	 */
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 
     @GetMapping(value = "/sites/{siteId}/edit")
     public String initUpdateForm(@PathVariable("siteId") int siteId, ModelMap model) {
@@ -127,7 +176,7 @@ public class SiteController {
     }
 
     @PostMapping(value = "/sites/{siteId}/edit")
-    public String processUpdateForm(@Valid Site site, BindingResult result, User user, ModelMap model) {
+    public String processUpdateForm(@PathVariable("siteId") int siteId, @Valid Site site, BindingResult result, User user, ModelMap model) {
         if (result.hasErrors()) {
             model.put("site", site);
             return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
