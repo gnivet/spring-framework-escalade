@@ -33,6 +33,7 @@ public class SiteType extends NamedEntity {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 
 	
 

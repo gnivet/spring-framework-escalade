@@ -27,11 +27,14 @@
 		</tr>
         <div class="form-group has-feedback">        				
             			<escalade:inputField label="Name" name="name" />
-            			<escalade:inputField label="Birth Date" name="birthDate" />      
+            			<escalade:inputField label="Birth Date" name="birthDate" />   
+            			<input type="hidden" name="id" value="${user.id}" />       
+            			<input type="hidden" name="id" value="${site.id}" />       
             		<h1>${user.username}</h1>	                 	 
 					<div class="col-sm-10"> 
                    		  <p>Choose your Area's site</p>
-							<br />  			
+							<br />  	
+							<input type="hidden" name="id" value="${area.id}" /> 	 	
 						<select name='area'>     
 							<c:forEach items="${areas}" var="area"> 
 							    <option value="${area}">${area.name}
@@ -41,7 +44,8 @@
              		</div>
              		<div class="col-sm-10"> 
                    		  <p>Choose your site's type</p>
-							<br />  			
+							<br />
+							<input type="hidden" name="id" value="${sitetype.id}" />   			
 						<select name='sitetypes'>     
 							<c:forEach items="${sitetypes}" var="sitetype"> 
 							    <option value="${sitetype}">${sitetype.name}

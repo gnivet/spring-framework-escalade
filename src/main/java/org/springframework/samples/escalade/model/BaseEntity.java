@@ -47,31 +47,6 @@ public class BaseEntity {
 		return this.id == null;
 	}
 	
-	
-	/*
-	@Override
-	public String toString() {
-		return "BaseEntity [id=" + id + ", getId()=" + getId() + ", isNew()=" + isNew() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
-	}
-	
-	*/
-	
-	/**
-	 * @param id
-	 */
-	/*
-	public BaseEntity(@NotNull Integer id) {
-		this.id = id;
-	}
-	*/
-	
-	
-	public BaseEntity() {}
-
-	@Override
-	public String toString() {
-		return "BaseEntity [id=" + id + "]";
-	}
+		
 	
 }

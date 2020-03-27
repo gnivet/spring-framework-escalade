@@ -50,8 +50,8 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 	public Collection<Area> findTopoByPostalcode(String postalcode) {
 		// TODO Auto-generated method stub
 
-		Query query = this.em.createQuery("SELECT DISTINCT area from Area area WHERE area.postalcode LIKE :postalcode");
-		query.setParameter("postalcode", postalcode + "%");
+		Query query = this.em.createQuery("SELECT DISTINCT area from Area area WHERE area.postalcode LIKE '%:postalcode%'");
+		query.setParameter("postalcode", "%" +postalcode + "%");
 		return query.getResultList();
 	}
 
@@ -131,10 +131,10 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<Area> findSiteByPostalcode(String postalcode) throws DataAccessException {
+	public List<Area> findSiteByPostalcode(String postalcode) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT DISTINCT area from Area area WHERE area.postalcode LIKE :postalcode");
-		query.setParameter("postalcode", postalcode + "%");
+		query.setParameter("postalcode", postalcode);
 		return query.getResultList();
 	}
 

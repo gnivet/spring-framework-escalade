@@ -34,6 +34,6 @@ public interface AreaRepository  {
 
 	public NamedEntity updateArea(Area area);
 
-	public Collection<Area> findSiteByPostalcode(String postalcode);
+	public List<Area> findSiteByPostalcode(String postalcode);
 
 }

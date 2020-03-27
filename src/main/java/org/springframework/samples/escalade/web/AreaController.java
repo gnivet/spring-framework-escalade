@@ -1,20 +1,19 @@
- /*
- * Copyright 2002-2013 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+/*
+* Copyright 2002-2013 the original author or authors.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 package org.springframework.samples.escalade.web;
-
 
 import java.security.Principal;
 import java.util.Collection;
@@ -41,10 +40,10 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
 /**
- * @author Guillaume Nivet 
+ * @author Guillaume Nivet
  */
 @Controller
 @Transactional
@@ -56,107 +55,118 @@ public class AreaController {
 	private UserRepository userRepository;
 	private AreaRepository areaRepository;
 	private SiteRepository siteRepository;
-	
+
 	@Autowired
-	public AreaController(EscaladeService escaladeService , UserRepository userRepository, AreaRepository areaRepository , SiteRepository siteRepository ) {
+	public AreaController(EscaladeService escaladeService, UserRepository userRepository, AreaRepository areaRepository,
+			SiteRepository siteRepository) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
 		this.areaRepository = areaRepository;
-		this.siteRepository= siteRepository;
+		this.siteRepository = siteRepository;
 	}
-	
-	
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
 
-	@GetMapping(value = "/sites/{id}/areas/new")
-	public String initCreationForm(Map<String, Object> model, @PathVariable("id") int siteId) {
-		
-		NamedEntity area = new Area();
+	@GetMapping(value = "/areas/new")
+	public String initCreationForm(Map<String, Object> model) {
+
+		Area area = new Area();
 		model.put("area", area);
 		return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/sites/{id}/areas/new")
-	public String processCreationForm(Principal principal,  @Valid Area area,  BindingResult result,  @PathVariable("id")  int siteId) {
+	@PostMapping(value = "/areas/new")
+	public String processCreationForm(Principal principal, @Valid Area area, Site site, BindingResult result) {
 		String userName = principal.getName();
-		
+
+		/**
+		 * Retrieve a <code>User</code> from the data store by id.
+		 *
+		 * @param userName the userName to search for
+		 * @return the <code>User</code> if found
+		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
+		 */
+
 		User user = this.userRepository.findByUsername(userName);
-		
-		Site site = this.siteRepository.findSiteById(siteId);
+
+		/**
+		 * Retrieve a <code>Site</code> from the data store by id.
+		 *
+		 * @param userName the userName to search for
+		 * @return the <code>Site</code> if found
+		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
+		 */
+		site = this.siteRepository.findSiteOwnedByUser(userName, site);
+
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 		} else {
 			area.setUser(user);
 			area.setSite(site);
-			 area= this.escaladeService.saveArea(area);
-			return "redirect:/areas/" + area.getId() ;
-			
+			site.setUser(user);
+			site.setArea(area);
+			area = this.escaladeService.saveArea(area);
+			return "redirect:/areas/" + area.getId();
+
 		}
 	}
 
-	@RequestMapping(value = "/areas/find", method = RequestMethod.GET)
+	@GetMapping(value = "/areas/find")
 	public String initFindForm(Map<String, Object> model) {
 		model.put("area", new Area());
-		return "/areas/findSites";
-		//return "areas/{areaId}";
+		return "/areas/findAreas";
+
 	}
 
-//findTopos
-	@RequestMapping(value = "/areas", method = RequestMethod.GET)
-	public String processFindForm(Area area, BindingResult result,  Map<String, Object> model) {
+	// findAreas
+	@GetMapping(value = "/areas")
+	public String processFindForm(Area area, BindingResult result, Map<String, Object> model) {
 
 		// allow parameterless GET request for /areas to return all records
-		if (area.getPostalcode() == null ) {
+		if (area.getPostalcode() == null) {
 			area.setPostalcode(""); // empty string signifies broadest possible search
 		}
 
 		// find areas by postal code
 		Collection<Area> results = this.escaladeService.findSiteByPostalCode(area.getPostalcode());
+
 		if (results.isEmpty()) {
 			// no areas found
 			result.rejectValue("postalcode", "notFound", "not found");
-			return "/areas/findSites";
-			
-			 }
-		
-		else if (results.size() == 1) 
-		{ 
-			  results.iterator().next();
-			  return "redirect:/areas/" + area.getId();
-			 
+			return "/areas/findAreas";			
+
 		} else {
 			// multiple areas found
-			model.put("selections", results);
-			return "/areas/" + this.escaladeService.findSiteByPostalCode(postalcode);
+			model.put("selections", results);			
+		 return "areas/areasList";
 		}
+
 	}
 
-
-	@RequestMapping(value = "/areas/{areaId}", method = RequestMethod.GET)
+	@GetMapping(value = "/areas/{areaId}")
 	public String initUpdateAreaForm(@PathVariable("areaId") int areaId, Model model) {
 		NamedEntity area = this.escaladeService.findAreaById(areaId);
 		model.addAttribute(area);
 		return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 	}
 
-	@RequestMapping(value = "/areas/{areaId}", method = RequestMethod.POST)
+	@PostMapping(value = "/areas/{areaId}")
 	public String processUpdateAreaForm(Area area, BindingResult result, @PathVariable("areaId") Integer areaId) {
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 		} else {
-			
-			Area areaToModify=this.escaladeService.findAreaById(areaId);
+
+			Area areaToModify = this.escaladeService.findAreaById(areaId);
 			areaToModify.setCity(area.getCity());
 			areaToModify.setCountry(area.getCountry());
 			areaToModify.setGpscoordinate(area.getGpscoordinate());
 			areaToModify.setPostalcode(area.getPostalcode());
 			areaToModify.setStreet(area.getStreet());
 			areaToModify.setName(area.getName());
-			
+
 			this.escaladeService.updateArea(areaToModify);
 			return "redirect:/areas/{areaId}";
 		}

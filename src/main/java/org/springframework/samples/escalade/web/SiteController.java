@@ -23,7 +23,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Area;
-import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.User;
@@ -37,19 +36,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author Guillaume Nivet
- * @param <getUserId>
-  */
-
-//@Transactional
-//@RequestMapping("/users")
-//@SessionAttributes("user")
+*/
 @Controller
 @Transactional
 public class SiteController {
@@ -64,6 +59,14 @@ public class SiteController {
 	private UserRepository userRepository;
 	private SiteTypeRepository siteTypeRepository;
 	private SiteRepository siteRepository;
+
+	private Integer siteId;
+
+	private Integer areaId;
+	
+	private Integer siteTypeId;
+
+	private String name;
 	
 	
 	@Autowired
@@ -75,12 +78,12 @@ public class SiteController {
         
     }
 	
-	/*
+	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	*/
+	
 	
 	
 	@GetMapping(value = "/sites/new")
@@ -91,7 +94,7 @@ public class SiteController {
         // area's list
         List<Area> areas= this.areaRepository.findAll();
         model.put("areas",areas);
-        // 
+        //  Site type's list
         List<SiteType> sitetypes= this.siteTypeRepository.findAll();
         model.put("sitetypes",sitetypes);
         
@@ -104,68 +107,44 @@ public class SiteController {
 	
 	
 	 	@PostMapping(value = "/sites/new")
-	    public String processCreationForm(@ModelAttribute Site site, @ModelAttribute  Principal principal,  @ModelAttribute  NamedEntity area, SiteType siteType,  BindingResult result, Model model, Integer siteId, Integer areaId){
+	    public String processCreationForm(  Principal principal,   Area area, Site site, BindingResult result){
 				 
-		 String userName = principal.getName();
+	 		String userName = principal.getName();
+	 		
 			User user = this.userRepository.findByUsername(userName);
-			System.out.println(siteId); 
-			Site sites = this.siteRepository.findSiteById(siteId);
-			System.out.println(areaId); 
-			NamedEntity areas = this.areaRepository.findAreaById(areaId);
-		 
-		 
-	        if (result.hasErrors()) {
+			 
+			site  = this.siteRepository.findSiteOwnedByUser(userName, site);
+			 
+			 area = this.areaRepository.findAreaById(areaId);
+			
+			SiteType sitetype = this.siteTypeRepository.findSiteTypeById(siteTypeId);
+			
+			
+	        if (result.hasErrors()) {	        	        	
 	            return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
-	        } else {
-	        	
-	        	site = this.escaladeService.saveSite(site);		
-	        	model.addAttribute("site",site.getName());
-	        	model.addAttribute("userId",site.getId());
+	        } else       
+	        {	        
+	        	site.setId(site.id); 
+	        	site.setUser(user);
+	        	site.setArea(area);
+	            site.setSitetype(sitetype);				
+	        	site = this.escaladeService.saveSite(site);
 	        	
 	            return "redirect:/sites/" + site.getId() ;
 	        }
 	    }
-	
-    /*
-	 
-	 private Map<Long, Employee> employeeMap = new HashMap<>();
-
-	    @RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
-	    public String submit(
-	      @ModelAttribute("employee") Employee employee,
-	      BindingResult result, ModelMap model) {
-	        if (result.hasErrors()) {
-	            return "error";
-	        }
-	        model.addAttribute("name", employee.getName());
-	        model.addAttribute("id", employee.getId());
-
-	        employeeMap.put(employee.getId(), employee);
-
-	        return "employeeView";
-	    }
-
-	    @ModelAttribute
-	    public void addAttributes(Model model) {
-	        model.addAttribute("msg", "Welcome to the Netherlands!");
-	    }
-	}
-	 
-	 */
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
+	 	
+	 	
+	 	
+	 		
+	 	@GetMapping(value = "/sites/find")
+		public String initFindForm(Map<String, Object> model) {
+			model.put("site", new Site());
+			return "/sites/findSites";
+			
+		}
+    
+	 	 
 	 
 
     @GetMapping(value = "/sites/{siteId}/edit")

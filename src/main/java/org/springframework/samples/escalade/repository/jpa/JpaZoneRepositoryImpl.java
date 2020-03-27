@@ -1,6 +1,7 @@
 package org.springframework.samples.escalade.repository.jpa;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -61,5 +62,11 @@ public class JpaZoneRepositoryImpl implements ZoneRepository{
 
 	}
 
-	
+	@SuppressWarnings("unchecked")
+	public List<Zone> findAll()
+	{
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT zone FROM Zone zone");
+		return  query.getResultList();
+	}
 }

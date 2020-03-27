@@ -15,8 +15,10 @@
  */
 package org.springframework.samples.escalade.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -39,8 +41,8 @@ public class Area extends NamedEntity {
 	@NotEmpty String postalcode;	
 	
 	
-	public void setPostalcode(String postalcode) {
-		this.postalcode = postalcode;
+	public String setPostalcode(String postalcode) {
+		return this.postalcode = postalcode;
 	}
 	
 	public String getPostalcode() {
@@ -83,7 +85,6 @@ public class Area extends NamedEntity {
 	}
 
 	
-	
 	public String getStreet() {
 		return street;
 	}
@@ -91,9 +92,15 @@ public class Area extends NamedEntity {
 	public void setStreet(String street) {
 		this.street = street;
 	}
+	/*
+	 * You should include cascade="all" (if using xml) or cascade=CascadeType.ALL (if using annotations) on your collection mapping.
 
-	@ManyToOne
-	@JoinColumn(name = "site_id", nullable = true)
+		This happens because you have a collection in your entity, and that collection has one or more items which are not present
+		 in the database. By specifying the above options you tell hibernate to save them to the database when saving their parent.
+	 */
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "site_id", nullable = true )
 	private Site site;
 
 	public Site getSite() {
@@ -104,10 +111,7 @@ public class Area extends NamedEntity {
 		this.site = site;
 	}
 	
-	
-	
-	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
 
@@ -140,9 +144,5 @@ public class Area extends NamedEntity {
 		this.gpscoordinate = gpscoordinate;
 	}
 
-	
-	
-	
-	
 	
 }

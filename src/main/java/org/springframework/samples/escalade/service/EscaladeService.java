@@ -18,8 +18,6 @@ package org.springframework.samples.escalade.service;
 import java.util.Collection;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Comment;
@@ -97,7 +95,8 @@ public interface EscaladeService {
 	Site saveSite(Site site) throws DataAccessException;
 
 	Site findSiteById(Integer id) throws DataAccessException;
-
+	
+	Site findSiteOwnedbyUser(String userName) throws DataAccessException;
 	/*
 	 * SiteType
 	 */
@@ -108,7 +107,7 @@ public interface EscaladeService {
 
 	void save(SiteType siteType) throws DataAccessException;
 
-	SiteType findById(int id) throws DataAccessException;
+	SiteType findById(Integer id) throws DataAccessException;
 
 	Collection<SiteType> findSiteBySiteType(String name);
 
@@ -128,5 +127,6 @@ public interface EscaladeService {
 
 	NamedEntity updateArea(Area area);
 
+	
 	
 }

@@ -50,10 +50,11 @@ public class Site extends NamedEntity {
 	@JoinColumn(name = "type_id")
 	private SiteType sitetype;
 
-	@ManyToOne
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
-
+	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "area_id", nullable = true)
 	private Area area;
@@ -121,7 +122,14 @@ public class Site extends NamedEntity {
 	public void setSitetype(SiteType sitetype) {
 		this.sitetype = sitetype;
 	}
+	
+	public Area getArea() {
+		return area;
+	}
 
+	public void setArea(Area area) {
+		this.area = area;
+	}
 	/**
 	 * 
 	 */
@@ -150,7 +158,7 @@ public Site(LocalDate birthDate, SiteType sitetype, User user, Area area, @NotNu
 		this.site = site;
 	}
 	*/
-
+	/*
 	public Area getArea() {
 		return area;
 	}
@@ -158,6 +166,8 @@ public Site(LocalDate birthDate, SiteType sitetype, User user, Area area, @NotNu
 	public void setArea(Area area) {
 		this.area = area;
 	}
+	*/
+
 	
 	
 	

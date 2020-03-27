@@ -38,7 +38,6 @@ import org.springframework.samples.escalade.repository.SiteTypeRepository;
 import org.springframework.samples.escalade.repository.WayRepository;
 import org.springframework.samples.escalade.repository.ZoneRepository;
 import org.springframework.stereotype.Service;
-
 /**
  * Mostly used as a facade for all escalade controllers Also a placeholder
  * for @Transactional and @Cacheable annotations
@@ -155,6 +154,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 		
 		return areaRepository.saveArea(area);
 	}
+	
 	@Override
 	@Transactional
 	public NamedEntity updateArea(Area area) {
@@ -184,10 +184,14 @@ public class EscaladeServiceImpl implements EscaladeService {
 	
 
 	
-	@Override
+	
 	@Transactional
 	public Collection<Area> findSiteByPostalCode(String postalcode) throws DataAccessException{
 		// TODO Auto-generated method stub
+		
+		
+		
+		
 		return areaRepository.findSiteByPostalcode(postalcode);
 	}
 	
@@ -251,7 +255,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 	@Override
 	@Transactional
-	public SiteType findById(int id) throws DataAccessException {
+	public SiteType findById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return siteTypeRepository.findById(id);
 	}
@@ -318,6 +322,15 @@ public class EscaladeServiceImpl implements EscaladeService {
 	@Transactional
 	public Way finWayById(int wayId) {
 		return wayRepository.findWayById(wayId);
+	}
+	
+	
+
+	@Override
+	public Site findSiteOwnedbyUser(String userName ) throws DataAccessException {
+		// TODO Auto-generated method stub
+		Integer id = null;
+		return siteRepository.findSiteById(id);
 	}
 		
 }

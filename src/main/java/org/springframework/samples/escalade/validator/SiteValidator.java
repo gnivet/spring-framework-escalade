@@ -43,10 +43,10 @@ public class SiteValidator implements Validator {
         }
 
         // type validation
-        if (Site.isNew() && Site.getType() == null) {
+        if (Site.isNew() && Site.getUser() == null) {
             errors.rejectValue("type", REQUIRED, REQUIRED);
         }
-
+        	
         // birth date validation
         if (Site.getBirthDate() == null) {
             errors.rejectValue("birthDate", REQUIRED, REQUIRED);

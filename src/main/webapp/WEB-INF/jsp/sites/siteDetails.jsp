@@ -15,6 +15,8 @@
 			<th> User</th>
 			<td><c:out value="${users.userId}" /></td>		
 			<td><b><c:out value="${users.username} " /></b></td>
+			<th>Birth date</th>	
+			<th><escalade:localDate date="${sites.birth_date}" pattern="yyyy/MM/dd"/></th>		
 		</tr>		
 	</table>
 </escalade:layout>

@@ -18,13 +18,11 @@ package org.springframework.samples.escalade.web;
 
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.escalade.model.Way;
+import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
@@ -40,7 +38,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -55,7 +52,7 @@ public class ZoneController {
 	private SiteRepository siteRepository;
 	private ZoneRepository zoneRepository;
 	private UserRepository userRepository;
-	private static List<Way> ways = new ArrayList<Way>();
+	
 	
 	@Autowired
 	public ZoneController(EscaladeService escaladeService, UserRepository userRepository, SiteRepository siteRepository, ZoneRepository zoneRepository) {
@@ -72,16 +69,9 @@ public class ZoneController {
 		dataBinder.setDisallowedFields("id");
 	}
 	
-	/*
-	@GetMapping("/sites/{id}")
-	@ResponseBody
-	public String getSite(@PathVariable("id") String siteId) {
-		return siteId;
-	}
-	*/
 	
 
-	@GetMapping(value = "/zones/{siteId}/new")
+	@GetMapping(value = "/zones/new")
 	public String  initCreationForm(Map<String, Object> model , @PathVariable  int siteId )  {
 	//public String  initCreationForm(Map<String, Object> model  )  {
 		Zone zone = new Zone();
@@ -89,50 +79,37 @@ public class ZoneController {
 		return VIEWS_ZONE_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/zones/{siteId}/new")
-	public String processCreationForm( Model model, Zone zone,  BindingResult result , @PathVariable("siteId") int siteId, Principal principal  ) {
-		/*
+	@PostMapping(value = "/zones/new")
+	public String processCreationForm( Model model, Zone zone,  BindingResult result , @PathVariable("id") int siteId, Principal principal  ) {
+		
 		String userName = principal.getName();
 		
-		@SuppressWarnings("unused")
-		User user = this.userRepository.findByUsername(userName);
-		/*
-				Site site = this.siteRepository.findSiteById(siteId );
-		*/
+		
+		
+		Site site = this.siteRepository.findSiteById(siteId );
+		
 		  
 		if (result.hasErrors()) {
 			return VIEWS_ZONE_CREATE_OR_UPDATE_FORM;
 		} else {
-			//zone.setSite(site);
-			this.escaladeService.saveZone(zone);
+			
+			zone.setSite(site);
+			zone= this.escaladeService.saveZone(zone);
 			return "redirect:/zones/" +  zone.getId();
 		}
 	}
 
-	
-	@RequestMapping(value = { "/way" }, method = RequestMethod.GET)
-    public String viewWList(Model model) {
- 
-        //model.addAttribute("ways", ways);
-        model.addAllAttributes(ways);
- 
-        return "waysList";
-    }
-	
-	
 		
 	
-	
-	
-	@RequestMapping(value = "/zones/find", method = RequestMethod.GET)
+	@GetMapping(value = "/zones/find")
 	public String initFindForm(Map<String, Object> model) {
 		model.put("zone", new Zone());
-		return "zones/waysList";
+		return "zones/zonesList";
 		// return "zones/{zoneId}";
 	}
 
-//findTopos
-	@RequestMapping(value = "/zones", method = RequestMethod.GET)
+//findZones
+	@GetMapping(value = "/zones")
 	public String processFindForm(Zone zone, BindingResult result, Map<String, Object> model) {
 
 		// allow parameterless GET request for /zones to return all records
@@ -144,27 +121,27 @@ public class ZoneController {
 		Collection<Zone> results = this.escaladeService.findZoneByName(zone.getName());
 		if (results.isEmpty()) {
 			// no zones found
-			result.rejectValue("postalcode", "notFound", "not found");
+			result.rejectValue("name", "notFound", "not found");
 			return "zones/findZones";
-			/*
-			 * } else if (results.size() == 1) { // 1 zone found zone =
-			 * results.iterator().next(); return "redirect:/zones/" + zone.getId();
-			 */
+			
+			 } else if (results.size() == 1) { // 1 zone found zone =
+			  results.iterator().next(); return "redirect:/zones/" + zone.getId();
+			 
 		} else {
 			// multiple zones found
 			model.put("selections", results);
-			return "zones/waysList";
+			return "zones/zonesList";
 		}
 	}
 
-	@RequestMapping(value = "/zones/{zoneId}/edit", method = RequestMethod.GET)
+	@GetMapping(value = "/zones/{zoneId}")
 	public String initUpdatezoneForm(@PathVariable("id") int id, Model model) {
 		Zone zone = this.escaladeService.findZoneById(id);
 		model.addAttribute(zone);
 		return VIEWS_ZONE_CREATE_OR_UPDATE_FORM;
 	}
 
-	@RequestMapping(value = "/zones/{zoneId}/edit", method = RequestMethod.POST)
+	@PostMapping(value = "/zones/{zoneId}")
 	public String processUpdatezoneForm(Zone zone, BindingResult result, @PathVariable("zoneId") Integer zoneId) {
 		if (result.hasErrors()) {
 			return VIEWS_ZONE_CREATE_OR_UPDATE_FORM;

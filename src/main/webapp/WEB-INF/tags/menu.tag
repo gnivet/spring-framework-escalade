@@ -38,13 +38,7 @@
 					<span>Login</span>
 				</escalade:menuItem>
 				</sec:authorize>
-				
-				<!--  
-                <escalade:menuItem active="${name eq 'users'}" url="/users/userInfo" title="user page">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                    <span>User</span>
-                </escalade:menuItem>
-               -->
+								
 				<sec:authorize access="isAuthenticated() == false">
 					<escalade:menuItem active="${name eq 'users'}"
 						url="/users/registration" title="register">
@@ -53,42 +47,99 @@
 					</escalade:menuItem>
 				</sec:authorize>
 
-
-				<escalade:menuItem active="${name eq 'areas'}" url="/areas/find"
+				<escalade:menuItem active="${name eq 'sites'}" url="/sites" title="sites">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Sites</span>
+                </escalade:menuItem>
+                <escalade:menuItem active="${name eq 'sites'}" url="/sites/new/"
+					title="sites">
+					<span class=".glyphicon-plus:before" aria-hidden="true"></span>
+					<span>Sites</span>
+				</escalade:menuItem>
+				<escalade:menuItem active="${name eq 'areas'}" url="/areas/new/"
+					title="areas">
+					<span class=".glyphicon-plus:before" aria-hidden="true"></span>
+					<span>Areas</span>
+				</escalade:menuItem>
+				<escalade:menuItem active="${name eq 'areas'}" url="/areas/find/"
 					title="sites">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 					<span>Sites</span>
 				</escalade:menuItem>
-				<escalade:menuItem active="${name eq 'areas'}" url="/sitetypes/new"
+				<escalade:menuItem active="${name eq 'sitetypes'}" url="/sitetypes/new/"
 					title="sitetypes">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Sites</span>
+					<span class=".glyphicon-plus:before" aria-hidden="true"></span>
+					<span>Sites Type</span>
 				</escalade:menuItem>
-				<!--  					
-                <escalade:menuItem active="${name eq 'users'}" url="/users/find" title="find users">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    <span>Find users</span>
+				<escalade:menuItem active="${name eq 'zones'}" url="/zones/find/"
+					title="zones">
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					<span>Zones</span>
+				</escalade:menuItem>
+				<escalade:menuItem active="${name eq 'zones'}" url="/sites/{id}/zones/new/"
+					title="zones">
+					<span class=".glyphicon-plus:before" aria-hidden="true"></span>
+					<span>Zones</span>
+				</escalade:menuItem>
+				<escalade:menuItem active="${name eq 'zones'}" url="/zones" title="zones">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Zones</span>
                 </escalade:menuItem>
-                -->
-				<!--  
+				<escalade:menuItem active="${name eq 'ways'}" url="/ways/find/"
+					title="ways">
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					<span>Ways</span>
+				</escalade:menuItem>
+				<escalade:menuItem active="${name eq 'ways'}" url="/sites/{id}/ways/new/"
+					title="ways">
+					<span class=".glyphicon-plus:before" aria-hidden="true"></span>
+					<span>Ways</span>
+				</escalade:menuItem>
+				<escalade:menuItem active="${name eq 'ways'}" url="/ways" title="ways">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>ways</span>
+                </escalade:menuItem>
+				<escalade:menuItem active="${name eq 'lengths'}" url="/lengths/find/"
+					title="lengths">
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					<span>Lengths</span>
+				</escalade:menuItem>
+				<escalade:menuItem active="${name eq 'lengths'}" url="/sites/{id}/lengths/new/"
+					title="lengths">
+					<span class=".glyphicon-plus:before" aria-hidden="true"></span>
+					<span>Lengths</span>
+				</escalade:menuItem>
+				<escalade:menuItem active="${name eq 'lengths'}" url="/lengths" title="lengths">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Lengths</span>
+                </escalade:menuItem>
+				<escalade:menuItem active="${name eq 'points'}" url="/points/find/"
+					title="points">
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					<span>Points</span>
+				</escalade:menuItem>
+				<escalade:menuItem active="${name eq 'points'}" url="/sites/{id}/points/new/"
+					title="points">
+					<span class=".glyphicon-plus:before" aria-hidden="true"></span>
+					<span>Points</span>
+				</escalade:menuItem>
+				<escalade:menuItem active="${name eq 'points'}" url="/points" title="points">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Points</span>
+                </escalade:menuItem>	
                 <escalade:menuItem active="${name eq 'comments'}" url="/comments/find" title="find comments">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     <span>Find comments</span>
                 </escalade:menuItem>
-                
+                <escalade:menuItem active="${name eq 'comments'}" url="/sites/{id}/comments/new/"
+					title="comments">
+					<span class=".glyphicon-plus:before" aria-hidden="true"></span>
+					<span>Comments</span>
+				</escalade:menuItem>  
                 <escalade:menuItem active="${name eq 'comments'}" url="/comments" title="comments">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Comments</span>
-                </escalade:menuItem>
-                -->
-
-				<!--  
-                <escalade:menuItem active="${name eq 'users'}" url="/users" title="users">
-                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Users</span>
-                </escalade:menuItem>
-				-->
-						
+                </escalade:menuItem>                
 				<!-- == true -->
 				<sec:authorize access="isAuthenticated()">
 				<escalade:menuItem active="${name eq 'logout'}" url="/users/logout"
@@ -97,7 +148,6 @@
 					<span>Logout</span>
 				</escalade:menuItem>
 				</sec:authorize>
-
 				<escalade:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>

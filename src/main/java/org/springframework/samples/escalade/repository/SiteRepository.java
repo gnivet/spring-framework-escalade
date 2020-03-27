@@ -37,7 +37,15 @@ import org.springframework.samples.escalade.model.Zone;
  */
 public interface SiteRepository {
 
-   
+	 /**
+     * Retrieve a <code>Site</code> from the data store by id.
+     *
+     * @param userName the userName to search for
+	 * @param site 
+     * @return the <code>Site</code> if found
+     * @throws org.springframework.dao.DataRetrievalFailureException if not found
+     */
+    Site findSiteOwnedByUser(String userName, Site site) throws DataAccessException;
  
 
 	List<SiteType> findSiteTypes() throws DataAccessException;
@@ -68,6 +76,7 @@ public interface SiteRepository {
      * @return the <code>Zone</code> if found
      * @throws org.springframework.dao.DataRetrievalFailureException if not found
      */
+    
     Zone findZoneById(Integer id)  throws DataAccessException;
     
     /**
@@ -152,6 +161,11 @@ public interface SiteRepository {
     void saveArea(Area area) throws DataAccessException;
 
 	Collection<Area> findSiteByPostalCode(String postalcode)  throws DataAccessException;
+
+
+
+
+	Site findSiteOwnedbyUsers(String userName);
 
 	
 }

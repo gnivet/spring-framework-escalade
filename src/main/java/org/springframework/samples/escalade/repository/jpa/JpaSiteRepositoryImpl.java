@@ -16,6 +16,7 @@ import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
+import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 
 	@PersistenceContext
 	private EntityManager em;
+	private Site Site;
 
 	
 	
@@ -99,6 +101,11 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		return (Site) query.getSingleResult();
 	}
 
+	
+	
+	
+	
+	
 
 	public Site saveSite(Site site) throws DataAccessException {
 		
@@ -193,7 +200,80 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		return query.getResultList();
 	}
 	
+	/*
+	public Site findSiteOwnedbyUser(Integer id) throws DataAccessException{
+		Query query = this.em.createQuery("SELECT site from Site site where user_id = :id ");
+				query.setParameter("id", id);
+		return (Site) query.getSingleResult();
+}
+*/
+
+	/*
+	@Override
+	public Site findSiteOwnedbyUser(String userName) throws DataAccessException {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT site.id FROM Site site  left join  User user on user.username like :userName");
+		query.setParameter("userName", userName + "%");
+		return (Site) query.getSingleResult();
+	}
+	*/
+
+
 	
+	public Site findSiteOwnedByUser(String userName, Site Site) throws DataAccessException {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT site FROM Site site  left join  User user on user.username like :userName");
+		query.setParameter("userName", userName + "%");
+		return Site;		
+		
+		
+	}
+
+
+
+
+
+
+
+	public Site findSiteOwnedbyUser(String userName) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+
+
+
+	public Site findSiteOwnedbyUsers(String userName, Site Site) {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT site FROM Site site  left join  User user on user.username like :userName");
+		query.setParameter("userName", userName + "%");
+		return Site;		
+	}
+
+
+
+
+
+
+
+	@Override
+	public Site findSiteOwnedbyUsers(String userName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+
+
+
+	
+
+
 	
 	
 }
