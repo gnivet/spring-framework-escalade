@@ -41,12 +41,13 @@ public interface SiteRepository {
      * Retrieve a <code>Site</code> from the data store by id.
      *
      * @param userName the userName to search for
-	 * @param site 
-     * @return the <code>Site</code> if found
+	 * @return the <code>Site</code> if found
      * @throws org.springframework.dao.DataRetrievalFailureException if not found
      */
-    Site findSiteOwnedByUser(String userName, Site site) throws DataAccessException;
+    Site findSiteOwnedbyUser(String userName) throws DataAccessException;
  
+    List<Site> findSite() throws DataAccessException;
+    
 
 	List<SiteType> findSiteTypes() throws DataAccessException;
 
@@ -162,10 +163,16 @@ public interface SiteRepository {
 
 	Collection<Area> findSiteByPostalCode(String postalcode)  throws DataAccessException;
 
+	List<Site> findAllSite();
+
+
+	
+
+	
 
 
 
-	Site findSiteOwnedbyUsers(String userName);
+	
 
 	
 }

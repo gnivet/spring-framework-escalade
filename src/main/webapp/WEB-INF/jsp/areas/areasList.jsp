@@ -47,7 +47,7 @@
             <tr>
                 <td>
                     <spring:url value="/areas/{areaId}" var="areaUrl">
-                        <spring:param name="areaId" value="${area.id}"/>
+                        <spring:param name="areaId" value="${area.id} "/>                       
                     </spring:url>
                     <a href="${fn:escapeXml(areaUrl)}"><c:out value="${area.name}"/></a>
                 </td>

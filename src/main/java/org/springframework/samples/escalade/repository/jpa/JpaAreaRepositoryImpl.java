@@ -105,7 +105,8 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 
 
 	@SuppressWarnings("unchecked")
-	public List<Site> sitesList() {
+	public List<Site> findAllSite()
+	{
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT site FROM Site site");
 		
@@ -127,17 +128,51 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 	}
 
 
+	@SuppressWarnings("unchecked")
+	public List<Area> findSiteByPostalcode(String postalcode) {
+		// TODO Auto-generated method stub
+			
+		Query query = this.em.createQuery("select area from Area area WHERE area.postalcode LIKE :postalcode" );
+		query.setParameter("postalcode", "%"+postalcode+"%");
+		return query.getResultList();		
+		
+		
+		
+	}
+
+	
+	
+	
 	
 
 	@SuppressWarnings("unchecked")
-	@Override
-	public List<Area> findSiteByPostalcode(String postalcode) throws DataAccessException {
+	public List<Area> findSiteByPostalcode1(String postalcode) throws DataAccessException {
 		// TODO Auto-generated method stub
-		Query query = this.em.createQuery("SELECT DISTINCT area from Area area WHERE area.postalcode LIKE :postalcode");
-		query.setParameter("postalcode", postalcode);
-		return query.getResultList();
+		Query query = this.em.createQuery("select area from Area area WHERE area.postalcode LIKE :postalcode" );
+		query.setParameter("postalcode", "%"+postalcode+"%");
+		return query.getResultList();		
+		
 	}
 
+
+	@Override
+	public List<Area> findSiteByPostalcodes(String postalcode) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Site> sitesList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	
+	
+	
 	
 	 
 

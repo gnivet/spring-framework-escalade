@@ -33,7 +33,6 @@ import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -98,6 +97,8 @@ public class SiteController {
         List<SiteType> sitetypes= this.siteTypeRepository.findAll();
         model.put("sitetypes",sitetypes);
         
+        //List<Site> sites= this.siteRepository.findSite();
+        //model.put("sites", sites);
         
 		
         
@@ -107,13 +108,13 @@ public class SiteController {
 	
 	
 	 	@PostMapping(value = "/sites/new")
-	    public String processCreationForm(  Principal principal,   Area area, Site site, BindingResult result){
+	    public String processCreationForm(  Principal principal,   Area area, BindingResult result){
 				 
 	 		String userName = principal.getName();
 	 		
 			User user = this.userRepository.findByUsername(userName);
 			 
-			site  = this.siteRepository.findSiteOwnedByUser(userName, site);
+			Site site  = this.siteRepository.findSiteOwnedbyUser(userName);
 			 
 			 area = this.areaRepository.findAreaById(areaId);
 			

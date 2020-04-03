@@ -52,7 +52,21 @@
 								</option>
 							</c:forEach>
 						 </select> <br />                  		 
-             		</div>                        
+             		</div>   
+             		<!-- Ajout 3/4/2020 GN -->
+             		<!--  
+             		<div class="col-sm-10"> 
+                   		  <p>Choose your site</p>
+							<br />
+							<input type="hidden" name="id" value="${site.id}" />   			
+						<select name='sites'>     
+							<c:forEach items="${sites}" var="site"> 
+							    <option value="${site}">${site.name}
+								</option>
+							</c:forEach>
+						 </select> <br />                  		 
+             		</div>        -->   
+             		<!-- Ajout 3/4/2020 GN -->
             <div class="col-sm-10"> 
                    		  <p>Below you can activate/cancel your site:</p><br/>					     									
         					<input type="radio" name="site.valid" value="false"

@@ -34,6 +34,7 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "areas")
 public class Area extends NamedEntity {
 
+		
 	@Column(name = "street")
 	private String street;
 
@@ -135,14 +136,25 @@ public class Area extends NamedEntity {
 	 * @param city
 	 * @param country
 	 * @param gpscoordinate
+	 * @param site
+	 * @param user
 	 */
-	public Area(String street, String postalcode, String city, String country, String gpscoordinate) {
+	public Area(String street, @NotEmpty String postalcode, @NotEmpty String city, String country, String gpscoordinate,
+			Site site, User user) {
 		this.street = street;
 		this.postalcode = postalcode;
 		this.city = city;
 		this.country = country;
 		this.gpscoordinate = gpscoordinate;
+		this.site = site;
+		this.user = user;
 	}
+
+	
+
+	
+
+	
 
 	
 }

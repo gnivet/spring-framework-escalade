@@ -30,6 +30,6 @@
     </form:form>
 
     
-     <a class="btn btn-default" href='<spring:url value="/sites/new" htmlEscape="true"/>'>Add site</a> 
+     <a class="btn btn-default" href='<spring:url value="/sites/new/" htmlEscape="true"/>'>Add site</a> 
     
 </escalade:layout>

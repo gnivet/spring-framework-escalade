@@ -102,21 +102,26 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 	}
 
 	
-	
-	
-	
-	
-
-	public Site saveSite(Site site) throws DataAccessException {
+public Site saveSite(Site site) throws DataAccessException {
+				
 		
 		if (site.getId() == null) {
 			this.em.persist(site);
-		} else {
+		}
+		
+		else
+		{
 			this.em.merge(site);
 		}
 		return site;
+	}
+
+
+
 	
-}
+	
+
+	
 	
 	
 	
@@ -195,63 +200,18 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 	public Collection<Area> findSiteByPostalCode(String postalcode) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery(
-				"SELECT DISTINCT area FROM Area area  left join fetch site.areas WHERE area.postalcode LIKE :postalcode");
+				"SELECT DISTINCT area FROM Area area WHERE area.postalcode LIKE :postalcode");
 		query.setParameter("postalcode", postalcode + "%");
 		return query.getResultList();
 	}
 	
-	/*
-	public Site findSiteOwnedbyUser(Integer id) throws DataAccessException{
-		Query query = this.em.createQuery("SELECT site from Site site where user_id = :id ");
-				query.setParameter("id", id);
-		return (Site) query.getSingleResult();
-}
-*/
-
-	/*
-	@Override
-	public Site findSiteOwnedbyUser(String userName) throws DataAccessException {
-		// TODO Auto-generated method stub
-		Query query = this.em.createQuery("SELECT site.id FROM Site site  left join  User user on user.username like :userName");
-		query.setParameter("userName", userName + "%");
-		return (Site) query.getSingleResult();
-	}
-	*/
+	
 
 
 	
-	public Site findSiteOwnedByUser(String userName, Site Site) throws DataAccessException {
-		// TODO Auto-generated method stub
-		Query query = this.em.createQuery("SELECT site FROM Site site  left join  User user on user.username like :userName");
-		query.setParameter("userName", userName + "%");
-		return Site;		
-		
-		
-	}
+	
 
 
-
-
-
-
-
-	public Site findSiteOwnedbyUser(String userName) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-
-
-
-
-	public Site findSiteOwnedbyUsers(String userName, Site Site) {
-		// TODO Auto-generated method stub
-		Query query = this.em.createQuery("SELECT site FROM Site site  left join  User user on user.username like :userName");
-		query.setParameter("userName", userName + "%");
-		return Site;		
-	}
 
 
 
@@ -260,10 +220,50 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 
 
 	@Override
-	public Site findSiteOwnedbyUsers(String userName) {
+	public Site findSiteOwnedbyUser(String userName)  throws DataAccessException {
 		// TODO Auto-generated method stub
-		return null;
+		Query query = this.em.createQuery("SELECT site FROM Site site  left join  User user on user.username like :userName", Site.class);
+		query.setParameter("userName", userName );
+		return Site;	
 	}
+
+
+	@SuppressWarnings("unchecked")
+	public List<Site> findAllSite() {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT site FROM Site site");
+		return query.getResultList();
+	}
+
+
+	
+
+
+
+
+	@Override
+	public List<Site> findSite() throws DataAccessException {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT site FROM Site site");
+		return query.getResultList();
+	}
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
 
 
 

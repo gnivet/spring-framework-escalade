@@ -1,14 +1,12 @@
 package org.springframework.samples.escalade.repository;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Site;
+
 
 //public interface AreaRepository extends CrudRepository<Area, Integer>{
 public interface AreaRepository  {
@@ -34,6 +32,8 @@ public interface AreaRepository  {
 
 	public NamedEntity updateArea(Area area);
 
-	public List<Area> findSiteByPostalcode(String postalcode);
+	public List<Area> findSiteByPostalcode(String postalcode)throws DataAccessException;
+
+	List<Area> findSiteByPostalcodes(String postalcode) throws DataAccessException;
 
 }

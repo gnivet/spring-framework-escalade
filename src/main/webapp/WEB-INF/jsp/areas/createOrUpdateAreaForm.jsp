@@ -24,7 +24,7 @@
 			<div class="col-sm-offset-2 col-sm-10">
 				<c:choose>
 					<c:when test="${area['new']}">
-						<button class="btn btn-default" type="submit">Add Area</button>
+						<button class="btn btn-default" type="submit">Add Area</button>						
 					</c:when>
 					<c:otherwise>
 						<button class="btn btn-default" type="submit">Update Area</button>
@@ -32,5 +32,10 @@
 				</c:choose>
 			</div>
 		</div>
+		<escalade:footer>
+		<div>
+		 <a class="btn btn-default" href='<spring:url value="/sites/new/" htmlEscape="true"/>'>Add site</a> 
+		</div>
+		</escalade:footer>
 	</form:form>
 </escalade:layout>

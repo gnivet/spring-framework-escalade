@@ -20,11 +20,10 @@ import java.util.Collection;
 import java.util.Map;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Area;
-import org.springframework.samples.escalade.model.NamedEntity;
-import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.samples.escalade.repository.SiteRepository;
@@ -42,6 +41,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+
+
 /**
  * @author Guillaume Nivet
  */
@@ -51,7 +52,7 @@ public class AreaController {
 
 	private static final String VIEWS_AREA_CREATE_OR_UPDATE_FORM = "areas/createOrUpdateAreaForm";
 	private final EscaladeService escaladeService;
-	private String postalcode;
+	
 	private UserRepository userRepository;
 	private AreaRepository areaRepository;
 	private SiteRepository siteRepository;
@@ -69,7 +70,7 @@ public class AreaController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-
+	
 	@GetMapping(value = "/areas/new")
 	public String initCreationForm(Map<String, Object> model) {
 
@@ -79,9 +80,11 @@ public class AreaController {
 	}
 
 	@PostMapping(value = "/areas/new")
-	public String processCreationForm(Principal principal, @Valid Area area, Site site, BindingResult result) {
+	public String processCreationForm(Principal principal, @Valid Area area,  Integer siteId, BindingResult result, Integer areaId, Map<String, Object> model) {
+		
 		String userName = principal.getName();
-
+		
+		
 		/**
 		 * Retrieve a <code>User</code> from the data store by id.
 		 *
@@ -90,8 +93,12 @@ public class AreaController {
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 
+	
+		
 		User user = this.userRepository.findByUsername(userName);
-
+		
+		
+			
 		/**
 		 * Retrieve a <code>Site</code> from the data store by id.
 		 *
@@ -99,20 +106,24 @@ public class AreaController {
 		 * @return the <code>Site</code> if found
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
-		site = this.siteRepository.findSiteOwnedByUser(userName, site);
-
+		
+		
+		
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 		} else {
+				
+			model.put("area", area);				
 			area.setUser(user);
-			area.setSite(site);
-			site.setUser(user);
-			site.setArea(area);
-			area = this.escaladeService.saveArea(area);
-			return "redirect:/areas/" + area.getId();
-
+			area = this.escaladeService.saveArea(area);			
+			return "redirect:/areas/" +  area.getId() ;
+			
 		}
 	}
+	
+
+	
+	
 
 	@GetMapping(value = "/areas/find")
 	public String initFindForm(Map<String, Object> model) {
@@ -120,8 +131,12 @@ public class AreaController {
 		return "/areas/findAreas";
 
 	}
+	
+	
 
-	// findAreas
+	
+
+	
 	@GetMapping(value = "/areas")
 	public String processFindForm(Area area, BindingResult result, Map<String, Object> model) {
 
@@ -146,28 +161,32 @@ public class AreaController {
 
 	}
 
+	
 	@GetMapping(value = "/areas/{areaId}")
-	public String initUpdateAreaForm(@PathVariable("areaId") int areaId, Model model) {
-		NamedEntity area = this.escaladeService.findAreaById(areaId);
+	public String initUpdateAreaForm(@NotNull @PathVariable("areaId") Integer   areaId, @NotNull Model model) {
+		Area area = this.escaladeService.findAreaById(areaId);
 		model.addAttribute(area);
+		
+		
+		
+		
 		return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping(value = "/areas/{areaId}")
-	public String processUpdateAreaForm(Area area, BindingResult result, @PathVariable("areaId") Integer areaId) {
+	public String processUpdateAreaForm(Area area, BindingResult result, @PathVariable("areaId")  Integer areaId  ) {
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 		} else {
 
-			Area areaToModify = this.escaladeService.findAreaById(areaId);
+			Area areaToModify = this.escaladeService.findAreaById(areaId);			
 			areaToModify.setCity(area.getCity());
 			areaToModify.setCountry(area.getCountry());
 			areaToModify.setGpscoordinate(area.getGpscoordinate());
 			areaToModify.setPostalcode(area.getPostalcode());
 			areaToModify.setStreet(area.getStreet());
-			areaToModify.setName(area.getName());
-
-			this.escaladeService.updateArea(areaToModify);
+			areaToModify.setName(area.getName());				
+			this.escaladeService.updateArea(areaToModify);			
 			return "redirect:/areas/{areaId}";
 		}
 	}
@@ -178,11 +197,12 @@ public class AreaController {
 	 * @param areaId the ID of the area to display
 	 * @return a ModelMap with the model attributes for the view
 	 */
-	@RequestMapping("/areas/{areaId}")
-	public ModelAndView showArea(@PathVariable("areaId") int areaId) {
+	
+	@RequestMapping("/areas/{areaId}/sites/{siteId}")
+	public ModelAndView showArea(@PathVariable("areaId") Integer areaId) {
 		ModelAndView mav = new ModelAndView("areas/areaDetails");
-		mav.addObject(this.escaladeService.findAreaById(areaId));
+		mav.addObject(this.escaladeService.findAreaById(areaId));		
 		return mav;
 	}
-
+	
 }

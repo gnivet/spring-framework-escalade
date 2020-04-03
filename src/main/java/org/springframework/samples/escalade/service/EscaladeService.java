@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.repository.query.Param;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Comment;
 import org.springframework.samples.escalade.model.NamedEntity;
@@ -111,7 +112,7 @@ public interface EscaladeService {
 
 	Collection<SiteType> findSiteBySiteType(String name);
 
-	SiteType findSiteTypeById(int siteTypeId);
+	SiteType findSiteTypeById(Integer siteTypeId);
 
 	SiteType saveSiteType(SiteType siteType);
 
@@ -123,9 +124,15 @@ public interface EscaladeService {
 
 	Collection<Way> findWayByName(String name);
 
-	Way findWayById(int id);
+	Way findWayById(Integer id);
 
 	NamedEntity updateArea(Area area);
+
+	
+
+	
+
+	
 
 	
 	
