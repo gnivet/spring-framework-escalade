@@ -16,7 +16,7 @@
             <div class="control-group" id="postalcode">
                 <label class="col-sm-2 control-label">Code site </label>
                 <div class="col-sm-10">
-                    <form:input class="form-control" path="postalcode" size="5" maxlength="5"/>                    
+                    <form:input class="form-control" path="name" size="5" maxlength="5"/>                    
                     <span class="help-inline"><form:errors path="*"/></span>
                 </div>               
              

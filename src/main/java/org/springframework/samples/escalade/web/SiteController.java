@@ -85,21 +85,16 @@ public class SiteController {
 	
 	
 	
-	@GetMapping(value = "/sites/new")
+	@GetMapping(value = "/areas/{areaId}/sites/new")
 	public String initCreationForm(  Map<String, Object> model) {
 		Site site = new Site();
         model.put("site", site);
         
-        // area's list
-        List<Area> areas= this.areaRepository.findAll();
-        model.put("areas",areas);
+        
         //  Site type's list
         List<SiteType> sitetypes= this.siteTypeRepository.findAll();
         model.put("sitetypes",sitetypes);
-        
-        //List<Site> sites= this.siteRepository.findSite();
-        //model.put("sites", sites);
-        
+                
 		
         
         return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
@@ -107,32 +102,36 @@ public class SiteController {
 	
 	
 	
-	 	@PostMapping(value = "/sites/new")
-	    public String processCreationForm(  Principal principal,   Area area, BindingResult result){
+	 	@PostMapping(value = "/areas/{areaId}/sites/new")
+	    public String processCreationForm(  Principal principal, @PathVariable Integer areaId, SiteType sitetype, Site site, BindingResult result, Map<String, Object> model){
 				 
 	 		String userName = principal.getName();
 	 		
 			User user = this.userRepository.findByUsername(userName);
 			 
-			Site site  = this.siteRepository.findSiteOwnedbyUser(userName);
+			
 			 
-			 area = this.areaRepository.findAreaById(areaId);
+			Area area = this.areaRepository.findAreaById(areaId);
 			
-			SiteType sitetype = this.siteTypeRepository.findSiteTypeById(siteTypeId);
+			System.out.println(model);
 			
+			//sitetype = this.siteTypeRepository.findById(sitetype.getId());
+			model.put("site",site);
+        	
+        	site.setUser(user);
+        	site.setArea(area);
+        	//site.setSitetype(sitetype);				
+        	site = this.escaladeService.saveSite(site);
+        	
+            return "redirect:/sites/" + site.getId() ;
 			
+			/*
 	        if (result.hasErrors()) {	        	        	
 	            return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
 	        } else       
 	        {	        
-	        	site.setId(site.id); 
-	        	site.setUser(user);
-	        	site.setArea(area);
-	            site.setSitetype(sitetype);				
-	        	site = this.escaladeService.saveSite(site);
 	        	
-	            return "redirect:/sites/" + site.getId() ;
-	        }
+	        } */
 	    }
 	 	
 	 	
@@ -148,14 +147,14 @@ public class SiteController {
 	 	 
 	 
 
-    @GetMapping(value = "/sites/{siteId}/edit")
+    @GetMapping(value = "/sites/{siteId}")
     public String initUpdateForm(@PathVariable("siteId") int siteId, ModelMap model) {
         Site site = this.escaladeService.findSiteById(siteId);
         model.put("site", site);
         return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
     }
 
-    @PostMapping(value = "/sites/{siteId}/edit")
+    @PostMapping(value = "/sites/{siteId}")
     public String processUpdateForm(@PathVariable("siteId") int siteId, @Valid Site site, BindingResult result, User user, ModelMap model) {
         if (result.hasErrors()) {
             model.put("site", site);

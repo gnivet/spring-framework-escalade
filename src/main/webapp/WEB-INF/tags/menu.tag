@@ -56,6 +56,11 @@
 					<span class=".glyphicon-plus:before" aria-hidden="true"></span>
 					<span>Sites</span>
 				</escalade:menuItem>
+				<escalade:menuItem active="${name eq 'areas'}" url="/sites/find/"
+					title="sites">
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					<span>Sites</span>
+				</escalade:menuItem>
 				<escalade:menuItem active="${name eq 'areas'}" url="/areas/new/"
 					title="areas">
 					<span class=".glyphicon-plus:before" aria-hidden="true"></span>

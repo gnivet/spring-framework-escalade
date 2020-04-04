@@ -27,15 +27,12 @@
 						<button class="btn btn-default" type="submit">Add Area</button>						
 					</c:when>
 					<c:otherwise>
-						<button class="btn btn-default" type="submit">Update Area</button>
+						<button class="btn btn-default" type="submit">Update Area</button>						
+						 <a class="btn btn-default" href='<spring:url value="/areas/${area.id}/sites/new/" htmlEscape="true"/>'>Add site</a>
 					</c:otherwise>
 				</c:choose>
 			</div>
-		</div>
-		<escalade:footer>
-		<div>
-		 <a class="btn btn-default" href='<spring:url value="/sites/new/" htmlEscape="true"/>'>Add site</a> 
-		</div>
-		</escalade:footer>
+		</div>		
+		
 	</form:form>
 </escalade:layout>

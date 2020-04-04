@@ -33,7 +33,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 
 	@PersistenceContext
 	private EntityManager em;
-	private Site Site;
+	
 
 	
 	
@@ -219,12 +219,12 @@ public Site saveSite(Site site) throws DataAccessException {
 
 
 
-	@Override
-	public Site findSiteOwnedbyUser(String userName)  throws DataAccessException {
+	public Integer findSiteOwnedbyUser(String userName, Integer siteId)  throws DataAccessException {
 		// TODO Auto-generated method stub
-		Query query = this.em.createQuery("SELECT site FROM Site site  left join  User user on user.username like :userName", Site.class);
+		Query query = this.em.createQuery("SELECT site FROM Site site  left join  User user on user.username like :userName");
 		query.setParameter("userName", userName );
-		return Site;	
+		query.setParameter("siteId", siteId );
+		return siteId;	
 	}
 
 

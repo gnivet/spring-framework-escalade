@@ -41,10 +41,11 @@ public interface SiteRepository {
      * Retrieve a <code>Site</code> from the data store by id.
      *
      * @param userName the userName to search for
+	 * @param siteId 
 	 * @return the <code>Site</code> if found
      * @throws org.springframework.dao.DataRetrievalFailureException if not found
      */
-    Site findSiteOwnedbyUser(String userName) throws DataAccessException;
+    Integer findSiteOwnedbyUser(String userName, Integer siteId) throws DataAccessException;
  
     List<Site> findSite() throws DataAccessException;
     
