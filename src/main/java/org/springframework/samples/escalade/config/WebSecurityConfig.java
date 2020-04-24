@@ -72,14 +72,38 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.logout().logoutUrl("/users/logout").logoutSuccessUrl("/welcome");
 		http.authorizeRequests().antMatchers("/users/createOrUpdateUserForm").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/sites/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/areas/*/sites/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sites/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sites/find").hasAnyRole("USER", "ADMIN");		
 		http.authorizeRequests().antMatchers("/zones/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/sitetypes/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/sitetypes/find").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sitetypes/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sitetypes/edit").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/areas/sitetypesList").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/siteTypes/siteTypeDetails").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/areas/findSites").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/areas/findAreas").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/areas/findSites").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/sites/findSites").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
-	//	http.authorizeRequests().antMatchers("/areas/").hasAnyRole("USER", "ADMIN");			
+		http.authorizeRequests().antMatchers("/lengths/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/lengths/").hasAnyRole("USER", "ADMIN");		
+		http.authorizeRequests().antMatchers("/lengths/find").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/lengths/lengthsList").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/ways/findLengths").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/points/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/points/find").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sites/*/comments/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/points/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/points/find").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/lengths/*/points/new").hasAnyRole("USER", "ADMIN");			
+		http.authorizeRequests().antMatchers("/points/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sites/*/zones/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/zones/find").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/dashboard").hasAnyRole("USER", "ADMIN");
+		
+		//	http.authorizeRequests().antMatchers("/areas/").hasAnyRole("USER", "ADMIN");			
 		// For ADMIN only. /users/find
 		http.authorizeRequests().antMatchers("/admin").hasRole("ADMIN");
 

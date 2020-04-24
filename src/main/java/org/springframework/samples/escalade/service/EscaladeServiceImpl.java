@@ -19,20 +19,26 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Comment;
+import org.springframework.samples.escalade.model.Length;
 import org.springframework.samples.escalade.model.NamedEntity;
+import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
+import org.springframework.samples.escalade.model.Visit;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.samples.escalade.repository.CommentRepository;
+import org.springframework.samples.escalade.repository.LengthRepository;
+import org.springframework.samples.escalade.repository.PointRepository;
 import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.samples.escalade.repository.SiteTypeRepository;
 import org.springframework.samples.escalade.repository.WayRepository;
@@ -60,12 +66,14 @@ public class EscaladeServiceImpl implements EscaladeService {
 	private SiteTypeRepository siteTypeRepository;
 
 	private WayRepository wayRepository;
+	private LengthRepository lengthRepository;
+	private PointRepository pointRepository;
 	
 	@Autowired
 	public EscaladeServiceImpl(
 
 			AreaRepository areaRepository, CommentRepository commentRepository, ZoneRepository zoneRepository,
-			SiteRepository siteRepository, SiteTypeRepository siteTypeRepository, WayRepository wayRepository)
+			SiteRepository siteRepository, SiteTypeRepository siteTypeRepository, WayRepository wayRepository, LengthRepository lengthRepository, PointRepository pointRepository)
 
 	{
 		this.areaRepository = areaRepository;
@@ -74,6 +82,8 @@ public class EscaladeServiceImpl implements EscaladeService {
 		this.siteRepository = siteRepository;
 		this.siteTypeRepository = siteTypeRepository;
 		this.wayRepository = wayRepository;
+		this.lengthRepository = lengthRepository;
+		this.pointRepository = pointRepository;
 
 	}
 
@@ -93,18 +103,11 @@ public class EscaladeServiceImpl implements EscaladeService {
 	}
 	
 	@Transactional
-	public void saveComment(Comment comment) throws DataAccessException {
+	public void saveComment(Comment comment, org.springframework.samples.escalade.model.User user, Site site) throws DataAccessException {
 		
 		commentRepository.saveComment(comment);
 		
 	}
-	
-	
-	
-
-	
-	
-	
 	
 	
 	
@@ -141,7 +144,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 	@Transactional
 	public Collection<SiteType> findSiteTypes() throws DataAccessException {
 		// TODO Auto-generated method stub
-		return siteRepository.findSiteTypes();
+		return siteTypeRepository.findSiteTypes();
 	}
 
 	
@@ -243,12 +246,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 	
 
 
-	@Override
-	@Transactional
-	public void save(SiteType siteType) throws DataAccessException {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 
 
@@ -257,7 +255,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 	@Transactional
 	public SiteType findById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
-		return siteTypeRepository.findById(id);
+		return siteTypeRepository.findSiteTypeById(id);
 	}
 
 	@Transactional
@@ -270,30 +268,29 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 	@Override
 	@Transactional
-	public Collection<SiteType> findSiteBySiteType(String name) {
+	public Collection<SiteType> findSiteTypeByName(String name) {
 		// TODO Auto-generated method stub
-		return null;
+		if (name.isEmpty() || (name.length()<2) ){
+			return this.siteTypeRepository.findAll();
+		}
+		return siteTypeRepository.findSiteTypeByName(name);
 	}
 
 
+	
+	
+	
 
 
 	@Override
 	@Transactional
 	public SiteType findSiteTypeById(Integer siteTypeId) {
 		// TODO Auto-generated method stub
-		return siteTypeRepository.findById(siteTypeId);
+		return siteTypeRepository.findSiteTypeById(siteTypeId);
 	}
 
 
 
-
-	@Override
-	@Transactional
-	public SiteType saveSiteType(SiteType siteType) {
-		// TODO Auto-generated method stub
-		return this.siteTypeRepository.saveSiteType(siteType);
-	}
 
 	
 	
@@ -310,8 +307,9 @@ public class EscaladeServiceImpl implements EscaladeService {
 	@Transactional
 	public Collection<Way> findWayByName(String name) {
 		// TODO Auto-generated method stub
-		return null;
+		return wayRepository.findWayByName(name);
 	}
+	
 	@Transactional
 	public Way finWayById(Integer wayId) {
 		return wayRepository.findWayById(wayId);
@@ -336,18 +334,212 @@ public class EscaladeServiceImpl implements EscaladeService {
 		return areaRepository.findSiteByPostalcode(postalcode);
 	}
 
+	
+
+
+
+	@Transactional
+	public Site saveSite(Site site) throws DataAccessException {
+		return siteRepository.saveSite(site);
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+	
 
 
 
 
 	@Override
-	public Site saveSite(Site site) throws DataAccessException {
+	public NamedEntity updateZone(Zone zone) {
 		// TODO Auto-generated method stub
-		return siteRepository.saveSite(site);
+		return zoneRepository.updateZone(zone);
 	}
 
 
 
+
+
+	@Override
+	public Length saveLength(Length length) throws DataAccessException {
+		
+		// TODO Auto-generated method stub
+		return this.lengthRepository.saveLength(length);
+	}
+
+	
+	@Override
+	public void savePoint(Point point) throws DataAccessException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+	
+
+
+
+
+	@Override
+	public Length findLengthById(Integer lengthId) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return lengthRepository.findLengthById(lengthId);
+	}
+
+
+
+
+
+	@Transactional
+	public Collection<Length> findLengthByName(String name) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return lengthRepository.findLengthByName(name);
+	}
+
+
+
+
+
+	@Override
+	public Point findPointById(Integer pointId) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return pointRepository.findPointById(pointId);
+	}
+
+
+
+
+
+	@Transactional
+	public Collection<Point> findPointByName(String name) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return pointRepository.findPointByName(name);
+	}
+
+
+
+
+
+	@Transactional
+	public Collection<Site> findSiteByName(String name) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return siteRepository.findSiteByName(name);
+	}
+
+
+
+
+
+	@Override
+	public Collection<Site> findSiteByName1(String name) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+
+	@Override
+	public void saveVisit(@Valid Visit visit) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+	@Override
+	public Long findCommentNumber(String username) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return commentRepository.findCommentNumber(username);
+	}
+
+
+
+
+
+	@Override
+	public Long findByUsername(String userName) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return commentRepository.findByUsername(userName);
+	}
+
+
+
+
+
+	@Override
+	public Long findSiteOwnedByUsername(String userName) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return siteRepository.findSiteOwnedByUsername(userName);
+	}
+
+	public Collection<Comment> findCommentByUsername(String userName)throws DataAccessException{
+		return commentRepository.findCommentByUsername(userName);
+		
+	}
+
+
+
+
+
+	@Override
+	public Comment saveComment(Comment comment) throws DataAccessException {
+		return this.commentRepository.saveComment(comment);
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+	@Override
+	public NamedEntity updateComment(Comment comment) {
+		// TODO Auto-generated method stub
+		return commentRepository.updateComment(comment);
+	}
+
+
+
+
+
+	@Override
+	public SiteType saveSiteType(SiteType siteType) {
+		return this.siteTypeRepository.saveSiteType(siteType);
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+	@Override
+	public void updateComment(SiteType siteTypeToModify) throws DataAccessException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	
+
+
+
+	
+
+	
 
 
 	

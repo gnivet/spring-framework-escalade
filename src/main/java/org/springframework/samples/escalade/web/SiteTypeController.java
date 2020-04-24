@@ -1,5 +1,21 @@
+/*
+* Copyright 2002-2013 the original author or authors.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 package org.springframework.samples.escalade.web;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Map;
 
@@ -7,8 +23,12 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.SiteType;
+import org.springframework.samples.escalade.model.User;
+import org.springframework.samples.escalade.repository.SiteTypeRepository;
+import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -16,19 +36,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+
 @Controller
+@Transactional
 public class SiteTypeController {
 
 	private static final String VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM = "sitetypes/createOrUpdateSiteTypeForm";
 	private final EscaladeService escaladeService;
+	
+	private UserRepository userRepository;
+	private SiteTypeRepository siteTypeRepository;
 
 	@Autowired
-	public SiteTypeController(EscaladeService escaladeService) {
+	public SiteTypeController(EscaladeService escaladeService , UserRepository userRepository, SiteTypeRepository siteTypeRepository) {
 		this.escaladeService = escaladeService;
+		this.userRepository = userRepository;
+		this.siteTypeRepository = siteTypeRepository;
 	}
 	
 	
@@ -41,31 +66,53 @@ public class SiteTypeController {
 	@GetMapping(value = "/sitetypes/new")
     public String initCreationForm(Map<String, Object> model) {
         SiteType siteType = new SiteType();
-        model.put("sitetype", siteType);
+        model.put("siteType", siteType);
         return VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM;
     }
     @PostMapping(value = "/sitetypes/new")
-    public String processCreationForm(@Valid SiteType siteType, BindingResult result) {
+    public String processCreationForm(Principal principal,  @PathVariable("siteTypeId")  Integer siteTypeId,  @Valid SiteType siteType, BindingResult result, Map<String, Object> model, String name, Integer SiteTypeId, Principal sitetype) {
+    	
+    	String userName = principal.getName();
+		
+		
+		/**
+		 * Retrieve a <code>User</code> from the data store by id.
+		 *
+		 * @param userName the userName to search for
+		 * @return the <code>User</code> if found
+		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
+		 */
+
+	
+		
+		User user = this.userRepository.findByUsername(userName);
+		
+    	
+    	
+    	siteType = this.siteTypeRepository.findSiteTypeById(SiteTypeId);
         if (result.hasErrors()) {
             return VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM;
         } else {
            
-			
+			model.put("siteType", siteType);
+			siteType.setName(name);
+			SiteType siteTypeToModify = this.escaladeService.findSiteTypeById(siteTypeId);
+			siteTypeToModify.setName(sitetype.getName());		
+			this.escaladeService.updateComment(siteTypeToModify);	
         	siteType = this.escaladeService.saveSiteType(siteType);
 			
             return "redirect:/sitetypes/" + siteType.getId();
         }
     }
        
-    @RequestMapping(value = "/sitetypes/find", method = RequestMethod.GET)
+    @GetMapping(value = "/sitetypes/find")
 	public String initFindForm(Map<String, Object> model) {
-		model.put("/sitetypes", new SiteType());
-		//return "sitetypes/find/siteTypes";
-		return "areas/{areaId}";
+		model.put("siteType", new SiteType());		
+		 return "/sitetypes/findSiteTypes";
 	}
 
 //findSite
-	@RequestMapping(value = "/sitetypes", method = RequestMethod.GET)
+	@GetMapping(value = "/sitetypes")
 	public String processFindForm(SiteType siteType, BindingResult result, Map<String, Object> model) {
 
 		if (siteType.getName() == null) {
@@ -75,50 +122,50 @@ public class SiteTypeController {
 		
 		
 		// find areas by postal code
-		Collection<SiteType> results = this.escaladeService.findSiteBySiteType(siteType.getName());
+		Collection<SiteType> results = this.escaladeService.findSiteTypeByName(siteType.getName());
+		
 		if (results.isEmpty()) {
 			// no areas found
-			result.rejectValue("siteType", "notFound", "not found");
-			return "siteTypes/findSiteTypes";
-			/*
-			 * } else if (results.size() == 1) { // 1 area found area =
-			 * results.iterator().next(); return "redirect:/areas/" + area.getId();
-			 */
+			result.rejectValue("name", "notFound", "not found");
+			return "sitetypes/findSiteTypes";
+			
 		} else {
 			// multiple areas found
 			model.put("selections", results);
-			return "sitetypes/sitesList";
+			return "sitetypes/siteTypesList";
 		}
 	}
 
-	@RequestMapping(value = "/sitetypes/{siteTypeId}/edit", method = RequestMethod.GET)
-	public String initUpdateSiteTypeForm(@PathVariable("siteTypeId") int siteTypeId, Model model) {
+	@GetMapping(value = "/sitetypes/{siteTypeId}/edit")
+	public String initUpdateSiteTypeForm(@PathVariable("siteTypeId") Integer siteTypeId, Model model) {
 		SiteType siteType = this.escaladeService.findSiteTypeById(siteTypeId);
 		model.addAttribute(siteType);
 		return VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM;
 	}
 
-	@RequestMapping(value = "/sitetypes/{siteTypeId}/edit", method = RequestMethod.POST)
-	public String processUpdateSiteTypeForm(SiteType siteType, BindingResult result, @PathVariable("siteTypeId") Integer siteTypeId) {
+	@PostMapping(value = "/sitetypes/{siteTypeId}/edit")
+	public String processUpdateSiteTypeForm(SiteType sitetype, BindingResult result, @PathVariable("siteTypeId") Integer siteTypeId) {
 		if (result.hasErrors()) {
 			return VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM;
 		} else {
-			siteType.setId(siteTypeId);
-			this.escaladeService.saveSiteType(siteType);
+			SiteType siteTypeToModify = this.escaladeService.findSiteTypeById(siteTypeId);
+			siteTypeToModify.setName(sitetype.getName());
+			sitetype.setId(siteTypeId);
+			this.escaladeService.saveSiteType(sitetype);
 			return "redirect:/siteTypes/{siteTypeId}";
 		}
 	}
 
 	/**
-	 * Custom handler for displaying an area.
+	 * Custom handler for displaying an site type.
 	 *
 	 * @param areaId the ID of the area to display
 	 * @return a ModelMap with the model attributes for the view
 	 */
 	@GetMapping("/sitetypes/{siteTypeId}")
-	public ModelAndView showSiteType(@PathVariable("siteTypeId") int siteTypeId) {
+	public ModelAndView showSiteType(@PathVariable("siteTypeId") Integer siteTypeId) {
 		ModelAndView mav = new ModelAndView("sitetypes/siteTypeDetails");
-		mav.addObject("sitetypes",this.escaladeService.findSiteTypeById(siteTypeId));
+		mav.addObject(this.escaladeService.findSiteTypeById(siteTypeId));
 		return mav;
 	}
 

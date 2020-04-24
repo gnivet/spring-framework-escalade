@@ -11,7 +11,7 @@
     <!-- Research topos by areas -->
     <spring:url value="/areas" var="formUrl"/>
     <form:form modelAttribute="area" action="${fn:escapeXml(formUrl)}" method="get" class="form-horizontal"
-               id="search-site-form">
+               id="search-area-form">
         <div class="form-group">
             <div class="control-group" id="postalcode">
                 <label class="col-sm-2 control-label">Code area </label>

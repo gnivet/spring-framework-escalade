@@ -1,3 +1,143 @@
+.forecast {
+    margin: 0;
+    padding: .3rem;
+    background-color: #eee;
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+.forecast > h1,
+.day-forecast {
+    margin: .5rem;
+    padding: .3rem;
+    font-size: 1.2rem;
+}
+
+
+.day-forecast > h2,
+.day-forecast > p {
+    margin: .2rem;
+    font-size: 1rem;
+}
+
+
+
+
+.mytable{
+	border-radius: 10px;	
+	border:2px solid red;
+	background-color: #2E2E2E;
+	 border:1px solid grey;
+	 color: white;
+}
+
+.myDashboard{
+	border-color: #FF0000;	
+}
+
+/*
+ * Rounded border
+ */
+
+.myRoundBorder{
+border-radius: 10px;
+border:1px solid red;
+background-color: #2E2E2E;
+}
+
+.myBlackBorder{
+	border:1px solid black;
+}
+/*
+ * White color
+ */
+.mysalutation{
+	color: white;
+	margin: 0 2px;
+	font-weight: bold;
+	 font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  display: block;
+}
+
+.mycolor{
+	color: solid red;
+}
+
+.myBlackcolor{
+	color: solid black;
+}
+
+
+.mylogout{
+	color: solid red;
+	margin: 0 2px;
+	font-weight: bold;
+	 font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  display: block;
+}
+
+
+.mycaption
+{
+color: 	solid black;
+}
+
+/*
+ * GN
+ */
+
+.form-control-primary {
+  margin: 10px;
+  opacity: 0.2;
+  border-radius: 2px;
+}
+
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 100;
+  padding: 70px 0 0 10px;
+  border-right: 1px solid #d3d3d3;
+}
+
+.left-sidebar {
+  position: sticky;
+  top:0;
+  height: calc(100vh  70px)
+}
+
+.sidebar-nav li .nav-link {
+  color: #333;
+  font-weight: 500;
+}
+
+main {
+  padding-top: 45px;
+}
+
+main .card {
+  margin-bottom: 20px;
+}
+/*
+ * GN
+ */
+
+
+
+
+
+
+	
+table,th,td {
+    border:1px solid grey;
+}
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -2894,12 +3034,7 @@ select[multiple].input-lg {
   margin-bottom: 10px;
   color: #786f68;
 }
-@media (min-width: 768px) {
-  .form-inline .form-group {
-    display: inline-block;
-    margin-bottom: 0;
-    vertical-align: middle;
-  }
+
   .form-inline .form-control {
     display: inline-block;
     width: auto;
@@ -7054,6 +7189,5 @@ table td.action-column {
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear;
 }
-hr {
-  border-top: 1px dotted #34302D;
-}
+
+

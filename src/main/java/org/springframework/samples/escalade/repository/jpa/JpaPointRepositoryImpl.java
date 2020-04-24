@@ -1,7 +1,10 @@
 package org.springframework.samples.escalade.repository.jpa;
 
+import java.util.Collection;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Point;
@@ -23,12 +26,13 @@ public class JpaPointRepositoryImpl implements PointRepository{
 		}
 
 		// Add Way to Site form
-		public void savePoint(Point Point) throws DataAccessException {
+		public Point savePoint(Point Point) throws DataAccessException {
 			if (Point.getId() == null) {
 				this.em.persist(Point);
 			} else {
 				this.em.merge(Point);
 			}
+			return Point;
 
 		}
 
@@ -37,5 +41,18 @@ public class JpaPointRepositoryImpl implements PointRepository{
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		@SuppressWarnings("unchecked")
+		@Transactional
+		public Collection<Point> findPointByName(String name) {
+			// TODO Auto-generated method stub
+
+			Query query = this.em.createQuery("SELECT point from Point point WHERE point.name like :name");
+			query.setParameter("name", "%" + name + "%");
+			return  query.getResultList();
+		}
 	
+		
+		
+		
 }

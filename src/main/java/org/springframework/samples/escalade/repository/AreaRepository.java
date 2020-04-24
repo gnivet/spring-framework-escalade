@@ -1,5 +1,6 @@
 package org.springframework.samples.escalade.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -32,8 +33,8 @@ public interface AreaRepository  {
 
 	public NamedEntity updateArea(Area area);
 
-	public List<Area> findSiteByPostalcode(String postalcode)throws DataAccessException;
+	public Collection<Area> findSiteByPostalcode(String postalcode)throws DataAccessException;
 
-	List<Area> findSiteByPostalcodes(String postalcode) throws DataAccessException;
+	
 
 }

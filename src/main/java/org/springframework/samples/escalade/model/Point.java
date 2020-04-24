@@ -28,7 +28,7 @@ public class Point extends NamedEntity {
 	/**
 	 * 
 	 */
-	protected Point() {
+	public Point() {
 	}
 		
 	

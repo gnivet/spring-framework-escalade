@@ -50,7 +50,6 @@ public interface SiteRepository {
     List<Site> findSite() throws DataAccessException;
     
 
-	List<SiteType> findSiteTypes() throws DataAccessException;
 
     /**
      * Retrieve a <code>Site</code> from the data store by id.
@@ -63,7 +62,7 @@ public interface SiteRepository {
 
     /**
      * Save a <code>Site</code> to the data store, either inserting or updating it.
-     *
+     * @param site TODO
      * @param Topo the <code>Site</code> to save
      * @return 
      * @see BaseEntity#isNew
@@ -166,10 +165,17 @@ public interface SiteRepository {
 
 	List<Site> findAllSite();
 
+	Collection<Site> findSiteByName1(String name);
 
+	
 	
 
 	
+	public Collection<Site> findSiteByName(String name)throws DataAccessException;
+
+	Long findSiteOwnedByUsername(String userName)throws DataAccessException;
+
+	Site findSiteByUsername(String userName)throws DataAccessException;;
 
 
 

@@ -18,15 +18,19 @@ package org.springframework.samples.escalade.service;
 import java.util.Collection;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.repository.query.Param;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Comment;
+import org.springframework.samples.escalade.model.Length;
 import org.springframework.samples.escalade.model.NamedEntity;
+import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.User;
+import org.springframework.samples.escalade.model.Visit;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 
@@ -65,6 +69,8 @@ public interface EscaladeService {
 	Area saveArea(Area area) throws DataAccessException;
 
 	Collection<Area> findSiteByPostalCode(String postalcode) throws DataAccessException;
+	
+	
 
 	/*
 	 * Comment
@@ -73,11 +79,13 @@ public interface EscaladeService {
 	Collection<org.springframework.boot.autoconfigure.security.SecurityProperties.User> findUsers()
 			throws DataAccessException;
 
-	void saveComment(Comment comment) throws DataAccessException;
+	@Valid Comment saveComment(Comment comment) throws DataAccessException;
 
 	Comment findCommentById(Integer id) throws DataAccessException;
 
 	Collection<Comment> findCommentByName(String name) throws DataAccessException;
+	
+	Long findCommentNumber(String username) throws DataAccessException;
 
 	/*
 	 * Zone
@@ -95,9 +103,12 @@ public interface EscaladeService {
 
 	Site saveSite(Site site) throws DataAccessException;
 
-	Site findSiteById(Integer id) throws DataAccessException;
+	 Site findSiteById(Integer id) throws DataAccessException;
 	
 	Site findSiteOwnedbyUser(String userName) throws DataAccessException;
+	
+	Collection<Site> findSiteByName(String name) throws DataAccessException;
+	
 	/*
 	 * SiteType
 	 */
@@ -106,32 +117,78 @@ public interface EscaladeService {
 
 	List<SiteType> findSiteTypesList() throws DataAccessException;
 
-	void save(SiteType siteType) throws DataAccessException;
+	
 
 	SiteType findById(Integer id) throws DataAccessException;
 
-	Collection<SiteType> findSiteBySiteType(String name);
+	Collection<SiteType> findSiteTypeByName(String name);
 
 	SiteType findSiteTypeById(Integer siteTypeId);
 
-	SiteType saveSiteType(SiteType siteType);
+
+	
+	Collection<SiteType> findSiteTypes()throws DataAccessException;
 
 	/*
 	 * Way
 	 */
 	
-	Way saveway(Way way);
+	Way saveway(Way way)throws DataAccessException;
 
-	Collection<Way> findWayByName(String name);
+	Collection<Way> findWayByName(String name)throws DataAccessException;
 
-	Way findWayById(Integer id);
+	Way findWayById(Integer id)throws DataAccessException;
 
-	NamedEntity updateArea(Area area);
+	NamedEntity updateArea(Area area)throws DataAccessException;
+
+	Collection<Site> findSiteByName1(String name)throws DataAccessException;
+
+	NamedEntity updateZone(Zone zone)throws DataAccessException;
 
 	
 
+	/*
+	 * Length
+	 */
 	
+	Length saveLength(Length length)throws DataAccessException;
 
+	Collection<Length> findLengthByName(String name)throws DataAccessException;
+	
+	
+	
+	Length findLengthById(Integer lengthId)throws DataAccessException;
+
+	
+	
+	
+	
+	/*
+	 * Point
+	 */
+	void savePoint(Point point) throws DataAccessException;
+
+	Collection<Point> findPointByName(String name)throws DataAccessException;
+	
+	Point findPointById(Integer pointId)throws DataAccessException;
+
+	void saveVisit(@Valid Visit visit)throws DataAccessException;;
+
+	Long findByUsername(String userName)throws DataAccessException;
+
+	Long findSiteOwnedByUsername(String userName)throws DataAccessException;
+
+	Collection<Comment> findCommentByUsername(String userName)throws DataAccessException;
+
+	NamedEntity updateComment(Comment comment)throws DataAccessException;
+
+
+	SiteType saveSiteType( SiteType siteType)throws DataAccessException;
+
+	void updateComment(SiteType siteTypeToModify)throws DataAccessException;
+
+	
+	//NamedEntity updateArea(Area area)throws DataAccessException;
 	
 
 	

@@ -1,7 +1,10 @@
 package org.springframework.samples.escalade.repository.jpa;
 
+import java.util.Collection;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Length;
@@ -22,19 +25,33 @@ public class JpaLengthRepositoryImpl implements LengthRepository{
 		}
 
 		// Add Way to Site form
-		public void saveLength(Length Length) throws DataAccessException {
+		public Length saveLength(Length Length) throws DataAccessException {
 			if (Length.getId() == null) {
 				this.em.persist(Length);
 			} else {
 				this.em.merge(Length);
 			}
-
+			return Length;
+		
 		}
-
-		@Override
 		public Length findById(Integer id) {
-			// TODO Auto-generated method stub
-			return null;
+		Query query = this.em.createQuery("SELECT length FROM Length length WHERE length.id =:id");
+		query.setParameter("id", id);
+		return (Length) query.getSingleResult();
 		}
+		
+		@SuppressWarnings("unchecked")
+		public Collection<Length> findLengthByName(String name) throws DataAccessException {
+			// TODO Auto-generated method stub
+			
+				Query query = this.em.createQuery("SELECT length FROM Length length WHERE length.name like :name");
+				query.setParameter("name", "%" + name + "%");
+				return  query.getResultList();
+		}
+		
+		
+		
+		
+		
 	}
 

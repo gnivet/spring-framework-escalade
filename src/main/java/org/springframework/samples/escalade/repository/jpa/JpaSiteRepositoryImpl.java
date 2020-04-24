@@ -33,10 +33,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 
 	@PersistenceContext
 	private EntityManager em;
-	
 
-	
-	
 	public void saveZone(Zone zone) throws DataAccessException {
 		// TODO Auto-generated method stub
 
@@ -45,89 +42,54 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		} else {
 			this.em.merge(zone);
 		}
-		
+
 	}
-
-
-	
-	
-
-
 
 	public void saveLength(Length length) throws DataAccessException {
 		// TODO Auto-generated method stub
-		
 
 		if (length.getId() == null) {
 			this.em.persist(length);
 		} else {
 			this.em.merge(length);
 		}
-		
+
 	}
 
-
-	
 	public void savePoint(Point point) throws DataAccessException {
 		// TODO Auto-generated method stub
-		
 
 		if (point.getId() == null) {
 			this.em.persist(point);
 		} else {
 			this.em.merge(point);
 		}
-		
+
 	}
-
-
-
-	@SuppressWarnings("unchecked")
-	public List<SiteType> findSiteTypes() throws DataAccessException {
-		// TODO Auto-generated method stub
-		//return (SiteType) query.getSingleResult();
-			
-		return this.em.createQuery("SELECT siteType FROM SiteType siteType ORDER BY siteType.name").getResultList();
-		   
-	}
-
 
 	
+	@Transactional
 	public Site findSiteById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
-		
+
 		Query query = this.em.createQuery("SELECT site FROM Site site WHERE site.id =:id");
 		query.setParameter("id", id);
 		return (Site) query.getSingleResult();
 	}
 
 	
-public Site saveSite(Site site) throws DataAccessException {
-				
-		
+	public Site saveSite(Site site) throws DataAccessException {
+
 		if (site.getId() == null) {
 			this.em.persist(site);
 		}
-		
-		else
-		{
+
+		else {
 			this.em.merge(site);
 		}
 		return site;
+
 	}
-
-
-
-	
-	
-
-	
-	
-	
-	
-	
-
-
 
 	public Zone findZoneById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -137,7 +99,6 @@ public Site saveSite(Site site) throws DataAccessException {
 		return (Zone) query.getSingleResult();
 	}
 
-
 	public Way findWayById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 
@@ -145,7 +106,6 @@ public Site saveSite(Site site) throws DataAccessException {
 		query.setParameter("id", id);
 		return (Way) query.getSingleResult();
 	}
-
 
 	public Length findLengthById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -155,7 +115,6 @@ public Site saveSite(Site site) throws DataAccessException {
 		return (Length) query.getSingleResult();
 	}
 
-
 	public Point findPointById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT point FROM Point point WHERE point.id =:id");
@@ -163,16 +122,12 @@ public Site saveSite(Site site) throws DataAccessException {
 		return (Point) query.getSingleResult();
 	}
 
-
-	
 	public NamedEntity findAreaById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT area FROM Area area WHERE area.id =:id");
 		query.setParameter("id", id);
 		return (NamedEntity) query.getSingleResult();
 	}
-
-
 
 	public void saveArea(Area area) throws DataAccessException {
 
@@ -181,7 +136,7 @@ public Site saveSite(Site site) throws DataAccessException {
 		} else {
 			this.em.merge(area);
 		}
-		
+
 	}
 
 	public Way saveWay(Way way) throws DataAccessException {
@@ -192,41 +147,25 @@ public Site saveSite(Site site) throws DataAccessException {
 			this.em.merge(way);
 		}
 		return way;
-		
+
 	}
-	
 
 	@SuppressWarnings("unchecked")
 	public Collection<Area> findSiteByPostalCode(String postalcode) throws DataAccessException {
 		// TODO Auto-generated method stub
-		Query query = this.em.createQuery(
-				"SELECT DISTINCT area FROM Area area WHERE area.postalcode LIKE :postalcode");
+		Query query = this.em.createQuery("SELECT DISTINCT area FROM Area area WHERE area.postalcode LIKE :postalcode");
 		query.setParameter("postalcode", postalcode + "%");
 		return query.getResultList();
 	}
-	
-	
 
-
-	
-	
-
-
-
-
-
-
-
-
-
-	public Integer findSiteOwnedbyUser(String userName, Integer siteId)  throws DataAccessException {
+	public Integer findSiteOwnedbyUser(String userName, Integer siteId) throws DataAccessException {
 		// TODO Auto-generated method stub
-		Query query = this.em.createQuery("SELECT site FROM Site site  left join  User user on user.username like :userName");
-		query.setParameter("userName", userName );
-		query.setParameter("siteId", siteId );
-		return siteId;	
+		Query query = this.em
+				.createQuery("SELECT site FROM Site site  left join  User user on user.username like :userName");
+		query.setParameter("userName", userName);
+		query.setParameter("siteId", siteId);
+		return siteId;
 	}
-
 
 	@SuppressWarnings("unchecked")
 	public List<Site> findAllSite() {
@@ -235,12 +174,6 @@ public Site saveSite(Site site) throws DataAccessException {
 		return query.getResultList();
 	}
 
-
-	
-
-
-
-
 	@Override
 	public List<Site> findSite() throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -248,32 +181,41 @@ public Site saveSite(Site site) throws DataAccessException {
 		return query.getResultList();
 	}
 
+	@Override
+	public Collection<Site> findSiteByName(String name) {
+		// TODO Auto-generated method stub
 
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
+		Query query = this.em.createQuery("SELECT DISTINCT site FROM Site site WHERE site.name LIKE :name");
+		query.setParameter("name", "%" + name + "%");
+		return query.getResultList();
+	}
 
 	
 
+	
+	
+	@Override
+	public Collection<Site> findSiteByName1(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	
-	
+	@Override
+	public Long findSiteOwnedByUsername(String userName) throws DataAccessException {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("select count(*) from Site site join User user on site.user.id = user.id where user.username like :userName");
+		query.setParameter("userName", userName);	
+		return   (Long) query.getSingleResult();
+	}
+
+	@Override
+	public Site findSiteByUsername(String userName) throws DataAccessException {
+		// TODO Auto-generated method stub
+				Query query = this.em
+						.createQuery("SELECT site FROM Site site  left join  User user on user.username like :userName");
+				query.setParameter("userName", userName);
+				return (Site) query.getSingleResult();
+				
+	}
+
 }

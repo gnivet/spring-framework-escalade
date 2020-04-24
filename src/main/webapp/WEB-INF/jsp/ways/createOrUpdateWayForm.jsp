@@ -8,29 +8,25 @@
 <escalade:layout pageName="ways">
 	<h2>
 		<c:if test="${way['new']}">New </c:if>
-		Way
+		way
 	</h2>
 	<form:form modelAttribute="way" class="form-horizontal"
 		id="add-way-form">
 		<div class="form-group has-feedback">
-			<escalade:inputField label="Name" name="name" />
-			<spring:url value="/ways/{wayId}/edit" var="wayUrl">
-				<spring:param name="wayId" value="${way.id}" />
-			</spring:url>
-			<a href="${fn:escapeXml(wayUrl)}">Edit Way</a> <input type="hidden"
-				name="wayId" value="${way.id}" />
+			<escalade:inputField label="Name" name="name" />			
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<c:choose>
 					<c:when test="${way['new']}">
-						<button class="btn btn-default" type="submit">Add Way</button>
+						<button class="btn btn-default" type="submit">Add way</button>						
 					</c:when>
 					<c:otherwise>
-						<button class="btn btn-default" type="submit">Update Way</button>
+						<button class="btn btn-default" type="submit">Update way</button>						
+						 <a class="btn btn-default" href='<spring:url value="/ways/${way.id}/lengths/new/" htmlEscape="true"/>'>Add length</a>
 					</c:otherwise>
 				</c:choose>
 			</div>
-		</div>
+		</div>		
 	</form:form>
 </escalade:layout>

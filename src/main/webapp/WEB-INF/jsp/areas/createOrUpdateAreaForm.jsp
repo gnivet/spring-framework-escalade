@@ -10,8 +10,7 @@
 		<c:if test="${area['new']}">New </c:if>
 		Area
 	</h2>
-	<form:form modelAttribute="area" class="form-horizontal"
-		id="add-area-form">
+	<form:form modelAttribute="area" class="form-horizontal" id="add-area-form">		
 		<div class="form-group has-feedback">
 			<escalade:inputField label="Name" name="name" />
 			<escalade:inputField label="Street" name="street" />
@@ -32,7 +31,6 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
-		</div>		
-		
+		</div>	
 	</form:form>
 </escalade:layout>

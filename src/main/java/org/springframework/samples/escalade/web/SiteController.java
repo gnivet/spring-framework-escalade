@@ -16,6 +16,7 @@
 package org.springframework.samples.escalade.web;
 
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,7 @@ import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -59,21 +61,17 @@ public class SiteController {
 	private SiteTypeRepository siteTypeRepository;
 	private SiteRepository siteRepository;
 
-	private Integer siteId;
-
-	private Integer areaId;
 	
-	private Integer siteTypeId;
-
-	private String name;
 	
 	
 	@Autowired
-    public SiteController(EscaladeService escaladeService, UserRepository userRepository, AreaRepository areaRepository, SiteTypeRepository syteTypeRepository, SiteRepository siteRepository) {
+    public SiteController(EscaladeService escaladeService, UserRepository userRepository, 
+    		AreaRepository areaRepository, SiteTypeRepository siteTypeRepository, SiteRepository siteRepository ) {
         this.escaladeService = escaladeService;
         this.userRepository = userRepository;
         this.areaRepository = areaRepository;
-        this.siteTypeRepository = syteTypeRepository;
+        this.siteTypeRepository = siteTypeRepository;
+        this.siteRepository = siteRepository;
         
     }
 	
@@ -86,16 +84,33 @@ public class SiteController {
 	
 	
 	@GetMapping(value = "/areas/{areaId}/sites/new")
-	public String initCreationForm(  Map<String, Object> model) {
+	public String initCreationForm(  ModelMap model, Principal principal, @PathVariable Integer areaId) {
+		
 		Site site = new Site();
-        model.put("site", site);
+		model.put("site", site);
+       
         
+       
         
-        //  Site type's list
-        List<SiteType> sitetypes= this.siteTypeRepository.findAll();
+		// Input Area  
+		 Area area = this.areaRepository.findAreaById(areaId);
+		 if (area == null || area.equals(" ") )
+	        {
+	        	System.out.println("area est null" + model + area);
+	        }
+		model.put("area", area);
+		
+		 //  Site type's list
+		List<SiteType> sitetypes= this.siteTypeRepository.findAll();
+        if (sitetypes == null || sitetypes.isEmpty())
+        {
+        	System.out.println("le type est null" + model + sitetypes);
+        }
+        
         model.put("sitetypes",sitetypes);
                 
-		
+		//List<Area> areas= this.areaRepository.findAll();
+		//model.put("areas",areas);
         
         return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
     }
@@ -103,40 +118,57 @@ public class SiteController {
 	
 	
 	 	@PostMapping(value = "/areas/{areaId}/sites/new")
-	    public String processCreationForm(  Principal principal, @PathVariable Integer areaId, SiteType sitetype, Site site, BindingResult result, Map<String, Object> model){
+	    public String processCreationForm( ModelMap model, Principal principal, @PathVariable Integer areaId,  SiteType siteType, Site site, BindingResult result){
 				 
-	 		String userName = principal.getName();
+	 		 if (siteType == null )
+	         {
+	         	System.out.println("le type est null" + model + siteType);
+	         }
 	 		
-			User user = this.userRepository.findByUsername(userName);
-			 
-			
+	 		
+
+	 		if (principal.getName() != null)
+	 		{
+	 			String userName = principal.getName();
+	 			User user = this.userRepository.findByUsername(userName);
+	 			site.setUser(user);
+	 			
+	 		}else
+	 		{	
+	 			 return "redirect:/users/login/";
+	 		}
+	 		
+	 		
+	 		
+	 	
+	        if (result.hasErrors()) {	        	        	
+	            return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
+	        } else  
+	        	
+	        {	        
+	        			
 			 
 			Area area = this.areaRepository.findAreaById(areaId);
 			
 			System.out.println(model);
 			
-			//sitetype = this.siteTypeRepository.findById(sitetype.getId());
-			model.put("site",site);
+			siteType = this.siteTypeRepository.findSiteTypeById(siteType.getId());
+			       	
         	
-        	site.setUser(user);
-        	site.setArea(area);
-        	//site.setSitetype(sitetype);				
+        	site.setArea(area);        	
+        	site.setType(siteType);
         	site = this.escaladeService.saveSite(site);
         	
             return "redirect:/sites/" + site.getId() ;
+	        } 
 			
-			/*
-	        if (result.hasErrors()) {	        	        	
-	            return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
-	        } else       
-	        {	        
-	        	
-	        } */
 	    }
 	 	
+			
+	    
 	 	
-	 	
-	 		
+	 		 
+		
 	 	@GetMapping(value = "/sites/find")
 		public String initFindForm(Map<String, Object> model) {
 			model.put("site", new Site());
@@ -145,7 +177,32 @@ public class SiteController {
 		}
     
 	 	 
-	 
+        
+	 	@GetMapping(value = "/sites")
+		public String processFindForm(Site site, BindingResult result, Map<String, Object> model) {
+
+			// allow parameterless GET request for /areas to return all records
+			if (site.getName() == null) {
+				site.setName(""); // empty string signifies broadest possible search
+			}
+
+			// find sites by name
+			Collection<Site> results = this.escaladeService.findSiteByName(site.getName());
+
+			if (results.isEmpty()) {
+				// no sites found
+				result.rejectValue("name", "notFound", "not found");
+				return "/sites/findSites";			
+
+			} else {
+				// multiple sites found
+				model.put("selections", results);			
+			 return "sites/sitesList";
+			}
+
+		}
+	 	
+	
 
     @GetMapping(value = "/sites/{siteId}")
     public String initUpdateForm(@PathVariable("siteId") int siteId, ModelMap model) {
@@ -162,14 +219,13 @@ public class SiteController {
         } else {
             user.addSite(site);
             this.escaladeService.saveSite(site);
-            return "redirect:/users/{userId}";
+            return "redirect:/sites/{siteId}";
         }
     }
 
 
+   
 	
-	
-    
     
     
     

@@ -40,11 +40,10 @@ public class NamedEntity extends BaseEntity {
         this.name = name;
     }
 
-    
-   	
-	
-	public NamedEntity() {
-	}
-    
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
 
 }

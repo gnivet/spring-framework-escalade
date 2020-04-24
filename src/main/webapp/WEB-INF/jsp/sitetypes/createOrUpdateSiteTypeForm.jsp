@@ -5,19 +5,24 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags" %>
-<escalade:layout pageName="sitetypes">   
-    <form:form modelAttribute="sitetype" class="form-horizontal" id="add-sitetype-form">
+<escalade:layout pageName="types"> 
+  	<h2>
+		<c:if test="${siteType['new']}">New </c:if>
+		Area
+	</h2>
+    <form:form modelAttribute="siteType" class="form-horizontal" id="add-sitetype-form">
         <div class="form-group has-feedback">
             <escalade:inputField label="Name" name="name"/>            
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
-                    <c:when test="${sitetype['new']}">
-                        <button class="btn btn-default" type="submit">Add Type</button>
+                    <c:when test="${siteType['new']}">
+                        <button class="btn btn-default" type="submit">Add Site Type</button>
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-default" type="submit">Update Type</button>
+                         <a class="btn btn-default" href='<spring:url value="/types/${siteType.id}/Site types/new/" htmlEscape="true"/>'>Add site type</a>
                     </c:otherwise>
                 </c:choose>
             </div>

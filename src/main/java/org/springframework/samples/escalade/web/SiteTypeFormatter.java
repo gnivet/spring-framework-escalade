@@ -16,6 +16,7 @@
 package org.springframework.samples.escalade.web;
 
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,21 +40,30 @@ import org.springframework.samples.escalade.service.EscaladeService;
  * 
  */
 public class SiteTypeFormatter implements Formatter<SiteType> {
+	
+	private  EscaladeService escaladeService ;
 
 	@Autowired
-	public SiteTypeFormatter(EscaladeService EscaladeService) {
+	public SiteTypeFormatter(EscaladeService EscaladeService, EscaladeService escaladeService) {
+		this.escaladeService = escaladeService;
 	}
 
 	@Override
-	public String print(SiteType object, Locale locale) {
+	public String print(SiteType siteType, Locale locale) {
 		// TODO Auto-generated method stub
-		return null;
+		return siteType.getName();
 	}
 
 	@Override
 	public SiteType parse(String text, Locale locale) throws ParseException {
 		// TODO Auto-generated method stub
-		return null;
+		Collection<SiteType> findSiteTypes= this.escaladeService.findSiteTypes();
+		for (SiteType type: findSiteTypes){
+			if(type.getName().equals(text)){
+				return type;
+			}
+		}
+		throw new ParseException("type not found: " + text, 0);
 	}
 
 	

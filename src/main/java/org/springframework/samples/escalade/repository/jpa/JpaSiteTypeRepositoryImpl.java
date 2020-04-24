@@ -25,14 +25,18 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 		// TODO Auto-generated method stub
 		// return (SiteType) query.getSingleResult();
 
-		return this.em.createQuery("SELECT siteType FROM SiteType siteType ORDER BY siteType.name").getResultList();
-
+		Query query = this.em.createQuery("SELECT siteType FROM SiteType siteType ORDER BY siteType.name");
+		return query.getResultList();
+				
+		
 	}
+	
+	 
 
-	public SiteType findById(Integer id) throws DataAccessException {
+	public SiteType findTypeById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 
-		Query query = this.em.createQuery("SELECT siteType FROM SiteType siteType WHERE site.id =:id");
+		Query query = this.em.createQuery("SELECT siteType FROM SiteType siteType WHERE siteType.id =:id");
 		query.setParameter("id", id);
 		return (SiteType) query.getSingleResult();
 	}
@@ -44,8 +48,7 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 		} else {
 			this.em.merge(siteType);
 		}
-		return siteType;
-
+		return siteType;		
 	}
 
 	public Collection<SiteType> findSiteBySiteType(String name) {
@@ -53,26 +56,41 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 		return null;
 	}
 
-	@Override
-	public SiteType findById(int id) throws DataAccessException {
+	
+
+	@Transactional
+	public SiteType findSiteTypeById(Integer id) {
 		// TODO Auto-generated method stub
-		return this.em.find(SiteType.class, id);
+		Query query = this.em.createQuery("SELECT siteType FROM SiteType siteType WHERE siteType.id =:id");
+		query.setParameter("id", id);
+		return (SiteType) query.getSingleResult();
 	}
 
-	@Override
-	public SiteType findSiteTypeById(int siteTypeId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+	
 	@SuppressWarnings("unchecked")
+	@Transactional
+	public Collection<SiteType> findSiteTypeByName(String name) {
+		// TODO Auto-generated method stub
+
+		Query query = this.em.createQuery("select siteType from SiteType siteType WHERE siteType.name LIKE :name");
+		query.setParameter("name", "%" + name + "%");
+		return  query.getResultList();
+	}
+	
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
 	public List<SiteType> findAll() {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT siteType FROM SiteType siteType");
 		return query.getResultList();
 	}
-
+	
 	@SuppressWarnings("unchecked")
+	@Transactional
 	public Collection<SiteType> getSiteType() {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT siteType FROM SiteType siteType");

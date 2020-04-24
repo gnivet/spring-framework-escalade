@@ -18,10 +18,8 @@ package org.springframework.samples.escalade.web;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Map;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.User;
@@ -40,7 +38,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
 
 
 /**
@@ -98,16 +95,9 @@ public class AreaController {
 		User user = this.userRepository.findByUsername(userName);
 		
 		
-			
-		/**
-		 * Retrieve a <code>Site</code> from the data store by id.
-		 *
-		 * @param userName the userName to search for
-		 * @return the <code>Site</code> if found
-		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
-		 */
 		
 		
+				
 		
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;

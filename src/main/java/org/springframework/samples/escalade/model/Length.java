@@ -2,8 +2,10 @@ package org.springframework.samples.escalade.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -36,17 +38,18 @@ public class Length extends NamedEntity {
 	@NotEmpty
 	private String comment;
 	
+	
 	@Column(name = "length_status")
 	@NotNull	
 	private boolean length_status;
 
 	
-
-	@ManyToOne
+	
+	@ManyToOne(targetEntity = Point.class,  cascade=CascadeType.ALL)
 	@JoinColumn(name = "way_id")
 	private Way way;
 	
-	@OneToMany(mappedBy="length")
+	@OneToMany(targetEntity = Point.class, cascade = CascadeType.ALL, mappedBy = "length" , fetch=FetchType.EAGER)
     private Set<Point> points;
 
 	
@@ -103,7 +106,7 @@ public class Length extends NamedEntity {
 	/**
 	 * 
 	 */
-	protected Length() {
+	public Length() {
 	}
 	
 	

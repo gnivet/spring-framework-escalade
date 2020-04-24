@@ -23,16 +23,10 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "sitetypes")
+@Table(name = "types")
 public class SiteType extends NamedEntity {
 
-	/**
-	 * 
-	 */
-	public SiteType() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
 	
 
 	

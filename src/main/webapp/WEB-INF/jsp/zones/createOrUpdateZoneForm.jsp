@@ -22,12 +22,11 @@
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-default" type="submit">Update zone</button>
+                        <a class="btn btn-default" href='<spring:url value="/zones/${zone.id}/ways/new/" htmlEscape="true"/>'>Add way</a>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
-        <script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-			<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+        
     </form:form>
 </escalade:layout>

@@ -16,6 +16,7 @@
 package org.springframework.samples.escalade.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -42,13 +43,13 @@ public class Site extends NamedEntity {
 	
 	
 	
-	@Column(name = "birth_date")
+	@Column(name = "birthDate")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate birthDate;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
 	@JoinColumn(name = "type_id")
-	private SiteType sitetype;
+	private SiteType type;
 
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
@@ -60,13 +61,16 @@ public class Site extends NamedEntity {
 	private Area area;
 	
 	
-
+	
 	@Column(name = "valid")
 	@NotNull
 	private boolean valid;
-
-	@OneToMany(mappedBy = "site")
-	private Set<Zone> zone;
+	
+	
+	@OneToMany(targetEntity = Zone.class,  fetch=FetchType.EAGER)
+	@JoinColumn(name = "zone_id", nullable = true)
+	private Set<Zone> zones = new HashSet<Zone>();
+	
 	
 	public boolean isValid() {
 		return valid;
@@ -88,13 +92,16 @@ public class Site extends NamedEntity {
 		return this.birthDate;
 	}
 	
+	
+	
+
 
 	public SiteType getType() {
-		return sitetype;
+		return type;
 	}
 
-	public void setType(SiteType sitetype) {
-		this.sitetype = sitetype;
+	public void setType(SiteType type) {
+		this.type = type;
 	}
 
 	public User getUser() {
@@ -107,21 +114,15 @@ public class Site extends NamedEntity {
 
 	
 
-		public Set<Zone> getZone() {
-		return zone;
+	public Set<Zone> getZones() {
+		return zones;
 	}
 
-	public void setZone(Set<Zone> zone) {
-		this.zone = zone;
+	public void setZones(Set<Zone> zones) {
+		this.zones = zones;
 	}
 
-	public SiteType getSitetype() {
-		return sitetype;
-	}
-
-	public void setSitetype(SiteType sitetype) {
-		this.sitetype = sitetype;
-	}
+	
 	
 	public Area getArea() {
 		return area;
@@ -136,37 +137,22 @@ public class Site extends NamedEntity {
 	public Site() {
 	}
 
-	/**
-	 * @param birthDate
-	 * @param sitetype
-	 * @param user
-	 * @param area
-	 * @param valid
-	 * @param zone
-	 */
-public Site(LocalDate birthDate, SiteType sitetype, User user, Area area, @NotNull boolean valid, Set<Zone> zone) {
-		this.birthDate = birthDate;
-		this.sitetype = sitetype;
-		this.user = user;
-		this.area = area;
-		this.valid = valid;
-		this.zone = zone;
-	}
-	/*
-	public void setSite(Site site) {
+	
+	
+
+	public void addVisit(Visit visit) {
 		// TODO Auto-generated method stub
-		this.site = site;
-	}
-	*/
-	/*
-	public Area getArea() {
-		return area;
+		
+		
 	}
 
-	public void setArea(Area area) {
-		this.area = area;
+	public Object getVisits() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	*/
+
+	
+	
 
 	
 	

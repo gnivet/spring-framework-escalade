@@ -21,31 +21,31 @@
     </h2>
     <form:form modelAttribute="site" class="form-horizontal"
 			id="add-site-form">		
+		<table>
 		<tr>
-			<th> User</th>
-			<td><c:out value="${user.userId}" /></td>
+			<th scope="col"> User</th>
+			
+			<td><input type= "text" name="name" value="${user.username}" disabled/></td>
 		</tr>
-        <div class="form-group has-feedback">        				
+		</table>
+		<br>
+        <div class="form-group has-feedback">
+        <br>      				
             			<escalade:inputField label="Name" name="name" />
-            			<escalade:inputField label="Birth Date" name="birthDate" />   
+            			<escalade:inputField label="Birth Date" name="birthDate" /> 
+            			  
             			<input type="hidden" name="id" value="${user.id}" />       
-            			<input type="hidden" name="id" value="${site.id}" />       
-            		<h1>${user.username}</h1>	                 	 
+            			<input type="hidden" name="id" value="${site.id}" />            			     
+            	            		  	                 	 
 					<div class="col-sm-10"> 
-                   		  <p>Choose your Area's site</p>
-							<br />  	
-						<!--  	<input type="hidden" name="id" value="${area.id}" /> 	 	
-						<select name='area'>     
-							<c:forEach items="${areas}" var="area"> 
-							    <option value="${area}">${area.name}
-								</option>
-							</c:forEach>
-						 </select> <br />      -->            		 
-             		</div>
+                   		  <p>Area's site</p>
+							<br />							 
+						 	<input type= "text"  name="name" value = "${area.name}" disabled/>
+             		</div> 
              		<div class="col-sm-10"> 
                    		  <p>Choose your site's type</p>
 							<br />
-							<input type="hidden" name="id" value="${sitetype.id}" />   			
+						<!--  <input type="hidden" name="id" value="${sitetype.id}" />   -->				
 						<select name='sitetype'>     
 							<c:forEach items="${sitetypes}" var="sitetype"> 
 							    <option value="${sitetype}">${sitetype.name}
@@ -54,7 +54,8 @@
 						 </select> <br />                  		 
              		</div>             		
             <div class="col-sm-10"> 
-                   		  <p>Below you can activate/cancel your site:</p><br/>					     									
+                   		  <p>Below you can activate/cancel your site:</p>
+					<br />					     									
         					<input type="radio" name="site.valid" value="false"
 						id="false" checked /><label for="false">Not valid</label><br />
         					 <input type="radio" name="site.valid" value="true"
@@ -70,6 +71,10 @@
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-default" type="submit">Update Site</button>
+                         <a class="btn btn-default"
+								href='<spring:url value="/sites/${site.id}/zones/new/" htmlEscape="true"/>'>Add zone</a>
+                          <a class="btn btn-default"
+								href='<spring:url value="/sites/${site.id}/comments/new/" htmlEscape="true"/>'>Add comment</a>
                     </c:otherwise>
                 </c:choose>
             </div>

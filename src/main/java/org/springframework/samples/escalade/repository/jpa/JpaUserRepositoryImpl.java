@@ -54,7 +54,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
      * - Turning on lazy-loading and using {@link OpenSessionInViewFilter}
      */
     @SuppressWarnings("unchecked")
-    public Collection<User> findByLastName(String userName) {
+    public Collection<User> findByUserName(String userName) {
         // using 'join fetch' because a single query should load both users and sites
         // using 'left join fetch' because it might happen that an user does not have sites yet
         Query query = this.em.createQuery("SELECT DISTINCT user FROM User user left join fetch user.sites WHERE user.userName LIKE :userName");

@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.escalade.web;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Map;
 
@@ -23,6 +24,10 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Comment;
+import org.springframework.samples.escalade.model.Site;
+import org.springframework.samples.escalade.model.User;
+import org.springframework.samples.escalade.repository.SiteRepository;
+import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,10 +40,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * @author Juergen Hoeller
- * @author Ken Krebs
- * @author Arjen Poutsma
- * @author Michael Isvy
+ * @author Guillaume Nivet 
  */
 @Controller
 @Transactional
@@ -46,39 +48,75 @@ public class CommentController {
 
 	private static final String VIEWS_COMMENT_CREATE_OR_UPDATE_FORM = "comments/createOrUpdateCommentForm";
 	private final EscaladeService escaladeService;
+	private UserRepository userRepository;
+	private SiteRepository siteRepository;
+	
+
 
 	@Autowired
-	public CommentController(EscaladeService escaladeService) {
+	public CommentController(EscaladeService escaladeService , UserRepository userRepository, SiteRepository siteRepository) {
 		this.escaladeService = escaladeService;
+		this.userRepository = userRepository;
+		this.siteRepository = siteRepository;
 	}
 
+	
+	
+	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-
-	@RequestMapping(value = "/comments/new", method = RequestMethod.GET)
-	public String initCreationForm(Map<String, Object> model) {
+	
+	
+	
+	
+	
+	@RequestMapping(value = "/sites/{siteId}/comments/new", method = RequestMethod.GET)
+	public String initCreationForm(Map<String, Object> model , Principal principal, @PathVariable("siteId") Integer siteId ) {
+		
+		String userName = principal.getName();
+		
+		User user = this.userRepository.findByUsername(userName);
+		 
+		//Site site = this.siteRepository.findSiteByUsername(userName);
+		Site site = this.siteRepository.findSiteById(siteId);
 		Comment comment = new Comment();
 		model.put("comment", comment);
 		return VIEWS_COMMENT_CREATE_OR_UPDATE_FORM;
 	}
 
-	@RequestMapping(value = "/comments/new", method = RequestMethod.POST)
-	public String processCreationForm(@Valid Comment comment, BindingResult result) {
+	@RequestMapping(value = "/sites/{siteId}/comments/new", method = RequestMethod.POST)
+	public String processCreationForm(Principal principal, @Valid Comment comment, Integer siteId, BindingResult result, Model model, Site site) {
+		
+				
 		if (result.hasErrors()) {
 			return VIEWS_COMMENT_CREATE_OR_UPDATE_FORM;
 		} else {
-			this.escaladeService.saveComment(comment);
-			return "redirect:/comments/" + comment.getId();
+			/*
+			model.put("comment", comment);				
+			comment.setUser(user);
+			comment.setSite(site);			
+			Comment commentToModify = this.escaladeService.findCommentById(commentId);
+			commentToModify.setComment(comment.getComment());		
+			commentToModify.setDate(comment.getDate());
+			commentToModify.setSite(comment.getSite());
+			commentToModify.setUser(comment.getUser());
+			this.escaladeService.updateComment(commentToModify);
+			*/
+			
+			//model.addAttribute("comment", site.getId());
+			model.addAttribute("comment", comment.getId());
+			
+			comment = this.escaladeService.saveComment(comment);
+			return "redirect:/sites/{siteId}/comments/new";
 		}
 	}
 
 	@RequestMapping(value = "/comments/find", method = RequestMethod.GET)
 	public String initFindForm(Map<String, Object> model) {
 		model.put("comment", new Comment());
-		return "comments/findSites";
-		// return "comments/{commentId}";
+		return "comments/findComments";
 	}
 
 //findSites
@@ -94,8 +132,8 @@ public class CommentController {
 		Collection<Comment> results = this.escaladeService.findCommentByName(comment.getName());
 		if (results.isEmpty()) {
 			// no comments found
-			result.rejectValue("postalcode", "notFound", "not found");
-			return "comments/findSites";
+			result.rejectValue("name", "notFound", "not found");
+			return "comments/findComments";
 			/*
 			 * } else if (results.size() == 1) { // 1 comment found comment =
 			 * results.iterator().next(); return "redirect:/comments/" + comment.getId();
@@ -103,18 +141,18 @@ public class CommentController {
 		} else {
 			// multiple comments found
 			model.put("selections", results);
-			return "comments/sitesList";
+			return "comments/commentsList";
 		}
 	}
 
-	@RequestMapping(value = "/comments/{commentId}/edit", method = RequestMethod.GET)
-	public String initUpdateCommentForm(@PathVariable("commentId") int commentId, Model model) {
+	@RequestMapping(value = "/comments/{commentId}", method = RequestMethod.GET)
+	public String initUpdateCommentForm(@PathVariable("commentId") Integer commentId, Model model) {
 		Comment comment = this.escaladeService.findCommentById(commentId);
 		model.addAttribute(comment);
 		return VIEWS_COMMENT_CREATE_OR_UPDATE_FORM;
 	}
 
-	@RequestMapping(value = "/comments/{commentId}/edit", method = RequestMethod.POST)
+	@RequestMapping(value = "/comments/{commentId}", method = RequestMethod.POST)
 	public String processUpdateCommentForm(@Valid Comment comment, BindingResult result, @PathVariable("commentId") Integer commentId) {
 		if (result.hasErrors()) {
 			return VIEWS_COMMENT_CREATE_OR_UPDATE_FORM;
@@ -132,7 +170,7 @@ public class CommentController {
 	 * @return a ModelMap with the model attributes for the view
 	 */
 	@RequestMapping("/comments/{commentId}")
-	public ModelAndView showComment(@PathVariable("commentId") int commentId) {
+	public ModelAndView showComment(@PathVariable("commentId") Integer commentId) {
 		ModelAndView mav = new ModelAndView("comments/commentDetails");
 		mav.addObject(this.escaladeService.findCommentById(commentId));
 		return mav;

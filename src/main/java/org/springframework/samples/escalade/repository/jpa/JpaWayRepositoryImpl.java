@@ -1,10 +1,13 @@
 package org.springframework.samples.escalade.repository.jpa;
 
+import java.util.Collection;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.repository.WayRepository;
 import org.springframework.stereotype.Repository;
@@ -47,8 +50,18 @@ public class JpaWayRepositoryImpl implements WayRepository{
 			return Way;
 
 		}
+
+
+		@SuppressWarnings("unchecked")
+		public Collection<Way> findWayByName(String name) throws DataAccessException{
+			// TODO Auto-generated method stub
+			Query query = this.em.createQuery("SELECT DISTINCT way from Way way WHERE way.name like :name");
+			query.setParameter("name", "%" + name + "%");
+			return  query.getResultList();
+		}
 		
 		
+
 		
 		
 		

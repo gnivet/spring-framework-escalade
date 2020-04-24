@@ -35,6 +35,7 @@ public class User  {
 	private String email;
 	private Boolean enabled;
 	
+		
 	
 	
 	@Id
@@ -56,7 +57,8 @@ public class User  {
 	}
 
 	
-
+	
+	
 	public void addSite(Site site) {
 		// TODO Auto-generated method stub
 
@@ -156,10 +158,20 @@ public class User  {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
-
+	
+	
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+
 	@Transient
 	public User getusername() {
 		// TODO Auto-generated method stub
@@ -210,11 +222,17 @@ public class User  {
 	
 	
 	
+	
 	/**
 	 * 
 	 */
 	public User() {
 	}
+
+	
+	
+
+	
 	
 	
 }

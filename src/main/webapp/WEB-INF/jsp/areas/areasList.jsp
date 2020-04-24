@@ -5,9 +5,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags" %>
-
 <escalade:layout pageName="areas">
-
 <h2>Find sites</h2>
     <!-- Research sites by areas -->
     <spring:url value="/areas" var="formUrl"/>
@@ -19,9 +17,9 @@
                 <div class="col-sm-10">
                     <form:input class="form-control" path="postalcode" size="5" maxlength="5"/>                    
                     <span class="help-inline"><form:errors path="*"/></span>
-                </div>               
-             
-        </div> </div>  
+                </div> 
+        	</div> 
+        </div>  
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-default">Find site</button>
@@ -29,7 +27,6 @@
         </div>
     </form:form>
     <h2>sites</h2>
-
     <table id="areasTable" class="table table-striped">
         <thead>
         <tr>
@@ -38,8 +35,7 @@
             <th style="width: 200px;">Postal code</th>
             <th>City</th>
             <th>Country</th>
-            <th style="width: 120px"></th>
-            <th>GPS Coordinate</th>
+            <th style="width: 120px;">GPS Coordinate</th>           
         </tr>
         </thead>
         <tbody>
@@ -66,11 +62,7 @@
                 <td>
                     <c:out value="${area.gpscoordinate}"/>
                 </td>
-                <td>
-                    <c:forEach var="site" items="${user.sites}">
-                        <c:out value="${site.name} "/>
-                    </c:forEach>
-                </td>
+               
             </tr>
         </c:forEach>
         </tbody>

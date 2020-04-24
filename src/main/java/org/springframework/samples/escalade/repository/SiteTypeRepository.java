@@ -12,11 +12,11 @@ public interface SiteTypeRepository {
 
 	
 
-	SiteType findById(int id) throws DataAccessException;
+	SiteType findSiteTypeById(Integer id) throws DataAccessException;
 
 	Collection<SiteType> findSiteBySiteType(String name);
 
-	SiteType findSiteTypeById(int siteTypeId);
+	
 	
 	SiteType saveSiteType(SiteType siteType);
 
@@ -27,6 +27,10 @@ public interface SiteTypeRepository {
 
 
 	Collection<SiteType> getSiteType();
+
+
+
+	Collection<SiteType> findSiteTypeByName(String name);
 
 
 

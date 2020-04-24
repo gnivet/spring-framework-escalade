@@ -2,8 +2,10 @@ package org.springframework.samples.escalade.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -14,11 +16,11 @@ import javax.persistence.Table;
 public class Zone extends NamedEntity{
 	
 								
-	@ManyToOne
+	@ManyToOne(targetEntity = Site.class, fetch=FetchType.EAGER)
 	@JoinColumn(name = "site_id", nullable = false)
 	private Site site;
 
-	@OneToMany(mappedBy="zone")
+	@OneToMany(targetEntity = Way.class, cascade = CascadeType.ALL, mappedBy = "zone" , fetch=FetchType.EAGER)
     private Set<Way> ways;		
 
 	public Site getSite() {
