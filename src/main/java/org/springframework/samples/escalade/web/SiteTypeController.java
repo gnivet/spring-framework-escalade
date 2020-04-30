@@ -136,6 +136,29 @@ public class SiteTypeController {
 		}
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@GetMapping(value = "/sitetypes/{siteTypeId}/edit")
 	public String initUpdateSiteTypeForm(@PathVariable("siteTypeId") Integer siteTypeId, Model model) {
 		SiteType siteType = this.escaladeService.findSiteTypeById(siteTypeId);

@@ -4,8 +4,10 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -19,18 +21,29 @@ public class Topo extends NamedEntity {
 	@NotEmpty
 	private String description;
 
-	@Column(name = "available")
-	@NotEmpty
+	@Column(name = "available")	
 	private boolean available;
 
 	@Column(name = "comment_date")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate commentDate;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
 
+	
+	public TopoBkg getTopo_booking() {
+		return topoBkg;
+	}
+
+	public void setTopo_booking(TopoBkg topoBkg) {
+		this.topoBkg = topoBkg;
+	}
+
+	@OneToOne(targetEntity = TopoBkg.class, mappedBy = "topo")
+	private TopoBkg topoBkg;
+	
 	public void setUser(User user) {
 		// TODO Auto-generated method stub
 
@@ -60,6 +73,8 @@ public class Topo extends NamedEntity {
 		this.commentDate = commentDate;
 	}
 
+	
+
 	public User getUser() {
 		return user;
 	}
@@ -67,9 +82,8 @@ public class Topo extends NamedEntity {
 	/**
 	 * 
 	 */
-	
-	protected Topo() {
+
+	public Topo() {
 	}
 
-	
 }

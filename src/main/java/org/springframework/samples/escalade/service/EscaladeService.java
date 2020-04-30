@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
@@ -29,6 +30,7 @@ import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
+import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.Visit;
 import org.springframework.samples.escalade.model.Way;
@@ -58,7 +60,7 @@ public interface EscaladeService {
 
 	Topo findTopoById(Integer id) throws DataAccessException;
 
-	void saveTopo(Topo topo) throws DataAccessException;
+	Topo saveTopo(Topo topo) throws DataAccessException;
 
 	/*
 	 * Area
@@ -120,7 +122,9 @@ public interface EscaladeService {
 	
 
 	SiteType findById(Integer id) throws DataAccessException;
-
+	/*
+	 * GN
+	 */
 	Collection<SiteType> findSiteTypeByName(String name);
 
 	SiteType findSiteTypeById(Integer siteTypeId);
@@ -186,6 +190,19 @@ public interface EscaladeService {
 	SiteType saveSiteType( SiteType siteType)throws DataAccessException;
 
 	void updateComment(SiteType siteTypeToModify)throws DataAccessException;
+
+	NamedEntity updateTopo(Topo topoToModify)throws DataAccessException;
+
+	Collection<TopoBkg> findTopoBkgByName(String name)throws DataAccessException;
+
+	TopoBkg findTopoBkgById(Integer topoBkgId)throws DataAccessException;
+
+	NamedEntity updateTopoBkg(TopoBkg topoBkgToModify)throws DataAccessException;
+
+	
+	TopoBkg saveTopoBkg(TopoBkg topoBkg) throws DataAccessException;
+
+	Collection<Topo> findTopoByName(String name) throws DataAccessException;
 
 	
 	//NamedEntity updateArea(Area area)throws DataAccessException;

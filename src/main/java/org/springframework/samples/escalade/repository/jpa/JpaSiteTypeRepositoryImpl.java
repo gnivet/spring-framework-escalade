@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.repository.SiteTypeRepository;
 import org.springframework.stereotype.Repository;
@@ -64,21 +65,29 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 		Query query = this.em.createQuery("SELECT siteType FROM SiteType siteType WHERE siteType.id =:id");
 		query.setParameter("id", id);
 		return (SiteType) query.getSingleResult();
-	}
+	}		
 
 	
 	
-	@SuppressWarnings("unchecked")
-	@Transactional
+	@SuppressWarnings("unchecked")	
 	public Collection<SiteType> findSiteTypeByName(String name) {
 		// TODO Auto-generated method stub
 
-		Query query = this.em.createQuery("select siteType from SiteType siteType WHERE siteType.name LIKE :name");
+		Query query = this.em.createQuery("select siteType from SiteType siteType where siteType.name LIKE :name");
 		query.setParameter("name", "%" + name + "%");
 		return  query.getResultList();
 	}
 	
-	
+	@SuppressWarnings("unchecked")
+	public Collection<Area> findSiteByPostalcode(String postalcode) {
+		// TODO Auto-generated method stub
+
+		Query query = this.em.createQuery("select area from Area area WHERE area.postalcode LIKE :postalcode");
+		query.setParameter("postalcode", "%" + postalcode + "%");
+		return query.getResultList();
+
+	}
+
 	
 	
 	@SuppressWarnings("unchecked")

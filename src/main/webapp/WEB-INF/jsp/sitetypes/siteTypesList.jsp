@@ -29,17 +29,24 @@
 	<table id="siteTypesTable"  class="table table-striped">
 		<thead>
 			<tr>
-				<th style="width: 20px;">Name</th>
+				<th style="width: 150px;">Name</th>
 			</tr>
 		</thead>
 		<tbody>			
 			<c:forEach items="${selections}" var="sitetype">
 				<tr>
-					<td class="myBlackcolor"><spring:url value="/siteTypes/{siteTypeId}"
+					<td><spring:url value="/sitetypes/{siteTypeId}"
 							var="sitetypeUrl">
 							<spring:param name="siteTypeId" value="${siteType.id} "/>
-						</spring:url> <a href="${fn:escapeXml(areaUrl)}" class="myBlackcolor" >
-						<c:out value="${siteType.name}"/></a></td>
+						</spring:url> <a href="${fn:escapeXml(areaUrl)}">
+						<c:out value="${siteType.name}"/></a>
+					</td>
+					<!--
+					 <td>
+                    <c:forEach var="sitetype" items="${site.siteTypes}">
+                        <c:out value="${siteType.name} "/>
+                    </c:forEach>
+                </td> -->
 				</tr>
 			</c:forEach>			
 		</tbody>

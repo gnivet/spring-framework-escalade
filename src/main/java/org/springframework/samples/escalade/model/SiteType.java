@@ -26,6 +26,12 @@ import javax.persistence.Table;
 @Table(name = "types")
 public class SiteType extends NamedEntity {
 
+	@Override
+	public String toString() {
+		return "SiteType [id=" + id + ", getName()=" + getName() + ", toString()=" + super.toString() + ", getId()="
+				+ getId() + ", isNew()=" + isNew() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + "]";
+	}
+
 	
 	
 

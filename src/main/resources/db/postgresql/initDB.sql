@@ -5,7 +5,7 @@ create table points (id int4 not null, name varchar(255), length_id int4, primar
 create table roles (id  serial not null, name varchar(255), primary key (id))
 create table sites (id int4 not null, name varchar(255), birth_date date, valid boolean not null, area_id int4, type_id int4, user_id int4, primary key (id))
 create table sitetypes (id int4 not null, name varchar(255), primary key (id))
-create table topo_bookings (id int4 not null, name varchar(255), accepted boolean, topo_id int4, user_id int4, primary key (id))
+create table topoBkgs (id int4 not null, name varchar(255), accepted boolean, topo_id int4, user_id int4, primary key (id))
 create table topos (id int4 not null, name varchar(255), available boolean, comment_date date, description varchar(255), user_id int4, primary key (id))
 create table users (id  serial not null, address varchar(255), city varchar(255), email varchar(255), enabled boolean, first_name varchar(255), last_name varchar(255), password varchar(255), password_confirm varchar(255), postal_code varchar(255), telephone varchar(255), username varchar(255), primary key (id))
 create table users_roles (user_id int4 not null, role_id int4, users_id  serial not null, roles_id int4 not null, primary key (users_id, roles_id))

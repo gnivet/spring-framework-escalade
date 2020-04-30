@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/users/new" , "/users/registration" , "/areas/new" , "/areas", "/areas/find", "/areas/new", "/comments/find", "/comments/new" , "/comments" , "/zones/new")
 				.permitAll();
 		*/		
-		http.authorizeRequests().antMatchers("/", "/login", "/logout" , "/users/registration", "/users/login" , "/welcome" ).permitAll();
+		http.authorizeRequests().antMatchers("/", "/login", "/logout" , "/users/registration", "/users/login" , "/welcome" ,"/error/error").permitAll();
 		// /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
 		// If no login, it will redirect to /login page.
 		http.authorizeRequests().antMatchers("/areas/").hasAnyRole("USER", "ADMIN");
@@ -102,6 +102,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/sites/*/zones/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/zones/find").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/dashboard").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topos/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topos/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topos/findTopos").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("topos/toposList").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topoBkgs/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topoBkgs/*").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topoBkgs/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topoBkgs/find").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topoBkgs/findTopoBkgs").hasAnyRole("USER", "ADMIN");
+		
 		
 		//	http.authorizeRequests().antMatchers("/areas/").hasAnyRole("USER", "ADMIN");			
 		// For ADMIN only. /users/find

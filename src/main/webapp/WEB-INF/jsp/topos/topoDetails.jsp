@@ -3,14 +3,20 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<escalade:layout pageName="SiteTypes">
+<escalade:layout pageName="topos">
 	<h2>Site details</h2>
 	<table class="table table-striped">
 		<tr>
-			<th>Type</th>
-			<td><b><c:out value="${sitetypes.name} " /></b></td>
+			<th>Name</th>
+			<td><b><c:out value="${topo.name} " /></b></td>
 		</tr>
-	</table>	
-      <a class="btn btn-default" href='<spring:url value="/zones/new" htmlEscape="true"/>'>Add zone</a> 
+		<tr>
+			<th>Available</th>
+			<td><c:out value="${topo.available}" /></td>
+		</tr>
+		<tr>
+			<th>Description</th>
+			<td><c:out value="${topo.description}" /></td>
+		</tr>
+	</table>
 </escalade:layout>

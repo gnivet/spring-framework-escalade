@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 /**
  * Controller used to showcase what happens when an exception is thrown
  *
- * @author Michael Isvy
+ * @author Guillaume Nivet
  *         <p/>
  *         Also see how the bean of type 'SimpleMappingExceptionResolver' has been declared inside
  *         /WEB-INF/mvc-core-config.xml
@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class CrashController {
 
-    @GetMapping(value = "/oups")
+    @GetMapping(value = "/error/error")
     public String triggerException() {
+    	    	
         throw new RuntimeException("Expected: controller used to showcase what " +
             "happens when an exception is thrown");
     }

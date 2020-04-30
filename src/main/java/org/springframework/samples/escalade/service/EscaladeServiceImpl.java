@@ -32,6 +32,7 @@ import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Topo;
+import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.Visit;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
@@ -41,6 +42,8 @@ import org.springframework.samples.escalade.repository.LengthRepository;
 import org.springframework.samples.escalade.repository.PointRepository;
 import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.samples.escalade.repository.SiteTypeRepository;
+import org.springframework.samples.escalade.repository.TopoBkgRepository;
+import org.springframework.samples.escalade.repository.TopoRepository;
 import org.springframework.samples.escalade.repository.WayRepository;
 import org.springframework.samples.escalade.repository.ZoneRepository;
 import org.springframework.stereotype.Service;
@@ -68,12 +71,16 @@ public class EscaladeServiceImpl implements EscaladeService {
 	private WayRepository wayRepository;
 	private LengthRepository lengthRepository;
 	private PointRepository pointRepository;
+	private TopoRepository topoRepository;
+	private TopoBkgRepository topoBkgRepository;
 	
 	@Autowired
 	public EscaladeServiceImpl(
 
 			AreaRepository areaRepository, CommentRepository commentRepository, ZoneRepository zoneRepository,
-			SiteRepository siteRepository, SiteTypeRepository siteTypeRepository, WayRepository wayRepository, LengthRepository lengthRepository, PointRepository pointRepository)
+			SiteRepository siteRepository, SiteTypeRepository siteTypeRepository, WayRepository wayRepository,
+			LengthRepository lengthRepository, PointRepository pointRepository, TopoRepository topoRepository,
+			TopoBkgRepository topoBkgRepository)
 
 	{
 		this.areaRepository = areaRepository;
@@ -84,6 +91,8 @@ public class EscaladeServiceImpl implements EscaladeService {
 		this.wayRepository = wayRepository;
 		this.lengthRepository = lengthRepository;
 		this.pointRepository = pointRepository;
+		this.topoRepository = topoRepository;
+		this.topoBkgRepository = topoBkgRepository;
 
 	}
 
@@ -116,12 +125,14 @@ public class EscaladeServiceImpl implements EscaladeService {
 	@Transactional
 	public Topo findTopoById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
-		return null;
+		return topoRepository.findTopoById(id);
 	}
 	
 	@Transactional
-	public void saveTopo(Topo topo) throws DataAccessException {
+	public Topo saveTopo(Topo topo) throws DataAccessException {
 		// TODO Auto-generated method stub
+		return this.topoRepository.saveTopo(topo);
+		
 		
 	}
 
@@ -266,17 +277,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 	
 
-	@Override
-	@Transactional
-	public Collection<SiteType> findSiteTypeByName(String name) {
-		// TODO Auto-generated method stub
-		if (name.isEmpty() || (name.length()<2) ){
-			return this.siteTypeRepository.findAll();
-		}
-		return siteTypeRepository.findSiteTypeByName(name);
-	}
-
-
+	
 	
 	
 	
@@ -424,7 +425,9 @@ public class EscaladeServiceImpl implements EscaladeService {
 	}
 
 
-
+	/*
+	 * GN
+	 */
 
 
 	@Transactional
@@ -435,7 +438,14 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 
 
-
+	@Transactional
+	public Collection<SiteType> findSiteTypeByName(String name) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return siteTypeRepository.findSiteTypeByName(name);
+	}
+	
+	
+	
 
 	@Override
 	public Collection<Site> findSiteByName1(String name) throws DataAccessException {
@@ -533,18 +543,56 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 
 
+
+	@Override
+	public NamedEntity updateTopo(Topo topo) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return topoRepository.updateTopo(topo);
+	}
+
+
+
+
+
+	@Override
+	public Collection<Topo> findTopoByName(String name) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return topoRepository.findTopoByName(name);
+				
+		
+	}
+
+    public Collection<TopoBkg> findTopoBkgByName(String name) throws DataAccessException{
+    	return topoBkgRepository.findTopoBkgByName(name);
+    }
+
+
+
+	@Override
+	public TopoBkg findTopoBkgById(Integer topoBkgId)throws DataAccessException {
+		// TODO Auto-generated method stub
+		return topoBkgRepository.findTopoBkgById(topoBkgId);
+	}
+
+
+
+
+
 	
+	public NamedEntity updateTopoBkg(TopoBkg topoBkg) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return topoBkgRepository.updateTopoBkg(topoBkg);
+	}
 
 
 
-	
-
-	
 
 
-	
-
-
+	@Override
+	public TopoBkg saveTopoBkg(TopoBkg topoBkg) {
+		// TODO Auto-generated method stub
+		return topoBkgRepository.saveTopoBkg(topoBkg);
+	}
 
 
 	

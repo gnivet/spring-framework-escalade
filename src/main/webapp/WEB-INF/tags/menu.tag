@@ -47,7 +47,7 @@
 					</escalade:menuItem>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated() == true">
-				<escalade:menuItem active="${name eq 'dashboard'}" url="/dashboard/" title="dashboard">
+				<escalade:menuItem active="${name eq 'dashboard'}" url="/dashboards/dashboard/" title="dashboard">
                     <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
                     <span>Dashboard</span>
                 </escalade:menuItem>
@@ -163,7 +163,33 @@
                 <escalade:menuItem active="${name eq 'comments'}" url="/comments" title="comments">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Comments</span>
-                </escalade:menuItem>                
+                </escalade:menuItem> 
+                <escalade:menuItem active="${name eq 'topos'}" url="/topos/find/" title="find topos">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    <span>Find topos</span>
+                </escalade:menuItem>
+                <escalade:menuItem active="${name eq 'topos'}" url="/topos/new/"
+					title="topos">
+					<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+					<span>Topos</span>
+				</escalade:menuItem>  
+                <escalade:menuItem active="${name eq 'topos'}" url="/topos" title="topos">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Topos</span>
+                </escalade:menuItem>
+                <escalade:menuItem active="${name eq 'topoBkgs'}" url="/topoBkgs/find/" title="find topoBkgs">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    <span>Find topo Booking</span>
+                </escalade:menuItem>
+                <escalade:menuItem active="${name eq 'topoBkgs'}" url="/topoBkgs/new/"
+					title="topoBkgs">
+					<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+					<span>Topo Bookings</span>
+				</escalade:menuItem>  
+                <escalade:menuItem active="${name eq 'topoBkgs'}" url="/topoBkgs" title="topoBkgs">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Topo Bookings</span>
+                </escalade:menuItem>                                                        
 				<!-- == true -->
 				<sec:authorize access="isAuthenticated()">
 				<escalade:menuItem active="${name eq 'logout'}" url="/users/logout"
@@ -172,7 +198,7 @@
 					<span>Logout</span>
 				</escalade:menuItem>
 				</sec:authorize>
-				<escalade:menuItem active="${name eq 'error'}" url="/oups"
+				<escalade:menuItem active="${name eq 'error'}" url="/error/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
 					<span>Error</span>

@@ -46,7 +46,8 @@
                     <spring:url value="/sites/{siteId}" var="siteUrl">
                         <spring:param name="siteId" value="${site.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(siteUrl)}"><c:out value="${site.name}"/></a>
+                    <a href="${fn:escapeXml(siteUrl)}">
+                    <c:out value="${site.name}"/></a>
                 </td>
                 <td>
                     <c:out value="${site.birthDate}"/>

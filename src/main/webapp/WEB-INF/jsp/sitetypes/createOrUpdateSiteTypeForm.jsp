@@ -22,7 +22,7 @@
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-default" type="submit">Update Type</button>
-                         <a class="btn btn-default" href='<spring:url value="/types/${siteType.id}/Site types/new/" htmlEscape="true"/>'>Add site type</a>
+                         <a class="btn btn-default" href='<spring:url value="/types/${siteType.id}/Sitetypes/new/" htmlEscape="true"/>'>Add site type</a>
                     </c:otherwise>
                 </c:choose>
             </div>

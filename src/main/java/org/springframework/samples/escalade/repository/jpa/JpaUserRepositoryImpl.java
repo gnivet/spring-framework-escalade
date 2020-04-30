@@ -242,6 +242,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		 Query query = this.em.createQuery("SELECT DISTINCT owner FROM User user left join fetch user.sites WHERE user.userId LIKE :userId");
 	        query.setParameter("userId", userId + "%");
 	        return (org.springframework.samples.escalade.model.User) query.getResultList();
+	        
 	}
 
 	

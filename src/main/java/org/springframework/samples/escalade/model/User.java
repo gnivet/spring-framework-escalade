@@ -3,23 +3,24 @@ package org.springframework.samples.escalade.model;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.core.style.ToStringCreator;
 
-
-
 @Entity
 @Table(name = "users")
-public class User  {
+public class User {
 
 	private Integer id;
 	private String username;
@@ -34,13 +35,10 @@ public class User  {
 	private String telephone;
 	private String email;
 	private Boolean enabled;
-	
-		
-	
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -48,7 +46,6 @@ public class User  {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
 
 	@ManyToMany
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
@@ -56,9 +53,12 @@ public class User  {
 		return roles;
 	}
 
-	
-	
-	
+	@OneToMany(targetEntity = Topo.class, cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+	private Set<Topo> topos;
+
+	@OneToMany(targetEntity = TopoBkg.class, cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+	private Set<TopoBkg> topoBkgs;
+
 	public void addSite(Site site) {
 		// TODO Auto-generated method stub
 
@@ -68,8 +68,6 @@ public class User  {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 
 	public String getUsername() {
 		return username;
@@ -158,81 +156,126 @@ public class User  {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
-	
-	
+
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Transient
 	public User getusername() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	/*
-	 public boolean isNew() {
-	        return this.id == null;
-	    }
-	
-	 
-	
-	public void setNew(boolean isNew) {
-	}
- 	*/
-	 
-	@Override
-    public String toString() {
-        return new ToStringCreator(this)
+	 * public boolean isNew() { return this.id == null; }
+	 * 
+	 * 
+	 * 
+	 * public void setNew(boolean isNew) { }
+	 */
 
-            .append("id", this.getId())
-            //.append("new", this.isNew())
-            .append("lastName", this.getLastName())
-            .append("firstName", this.getFirstName())
-            .append("address", this.address)
-            .append("city", this.city)
-            .append("telephone", this.telephone)
-            .toString();
-    }
+	@Override
+	public String toString() {
+		return new ToStringCreator(this)
+
+				.append("id", this.getId())
+				// .append("new", this.isNew())
+				.append("lastName", this.getLastName()).append("firstName", this.getFirstName())
+				.append("address", this.address).append("city", this.city).append("telephone", this.telephone)
+				.toString();
+	}
 
 	/*
 	 * 
 	 */
-	public User getusername(User User ) {
+	public User getusername(User User) {
 		return User.getusername();
 		// TODO Auto-generated method stub
-		
-	} 
+
+	}
 
 	/*
 	 * Ajout 9/3 2020
 	 *
 	 */
-	
-	@ManyToMany(mappedBy="user")
-    public List <Site> sites;
-	
-	
-	
-	
-	
+
+	@ManyToMany(mappedBy = "user")
+	public List<Site> sites;
+
 	/**
 	 * 
 	 */
-	public User() {
+	public User()
+	{
+		
 	}
 
-	
+		
 	
 
+	/**
+	 * @param id
+	 * @param username
+	 * @param password
+	 * @param passwordConfirm
+	 * @param roles
+	 * @param firstName
+	 * @param lastName
+	 * @param address
+	 * @param postalCode
+	 * @param city
+	 * @param telephone
+	 * @param email
+	 * @param enabled
+	 */
+	public User(String username, String password, String passwordConfirm, Set<Role> roles, String firstName,
+			String lastName, String address, String postalCode, String city, String telephone, String email,
+			Boolean enabled) {
+		
+		this.username = username;
+		this.password = password;
+		this.passwordConfirm = passwordConfirm;
+		this.roles = roles;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.postalCode = postalCode;
+		this.city = city;
+		this.telephone = telephone;
+		this.email = email;
+		this.enabled = enabled;
+	}
+
+		
 	
+	/**
+	 * @param username
+	 * @param password
+	 * @param passwordConfirm
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 */
+	public User(String username, String password, String passwordConfirm, String firstName, String lastName,
+			String email) {
+		this.username = username;
+		this.password = password;
+		this.passwordConfirm = passwordConfirm;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+	}
+
 	
 	
 }

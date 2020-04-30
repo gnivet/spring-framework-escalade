@@ -1,13 +1,10 @@
 package org.springframework.samples.escalade.web;
 
-import java.security.Principal;
-import java.util.Collection;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.escalade.model.Comment;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.samples.escalade.service.SecurityService;
@@ -50,22 +47,28 @@ public class UserController {
 
     @PostMapping(value = "/users/registration")
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-      //  userValidator.validate(userForm, bindingResult);
-    	/*
+        userValidator.validate(userForm, bindingResult);
+    	
         if (bindingResult.hasErrors()) {
+        	 
             return "/users/registration";
         }
-		*/
+		
         userService.save(userForm);
+        
+        
+        
+        
 
         //securityService.autologin(userForm.getUsername(), userForm.getPassword());
         
         return "redirect:/welcome";
     }
-    
+   
     @PostMapping(value="/users/login")
     public String loginUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-       // userValidator.validate(userForm, bindingResult);
+    	
+        //userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "/users/registration";
@@ -75,6 +78,7 @@ public class UserController {
 		} catch (AuthenticationException  e) {
 			// TODO: handle exception
 			model.addAttribute("error", "Your authentifaction is not correct");
+			
 			return "redirect:/users/login";
 		}
         
@@ -114,12 +118,13 @@ public class UserController {
        
     
     
-    
+    /*
     @GetMapping(value = {"/", "/welcome"})
     public String welcome(Model model) {
         return "/welcome";
     }
-
+    
+	*/
 	public UserValidator getUserValidator() {
 		return userValidator;
 	}
@@ -138,44 +143,7 @@ public class UserController {
 	 * Dashboard
 	 */
 	
-	
-	@GetMapping(value= "/dashboard")
-	public String Dashboard( Model model, Comment comment, String commentaryNb, String userName, BindingResult result, Principal principal) {
-		//model.put("comment", new Comment());
-		//if (result.hasErrors()) {
-        //    return VIEWS_USER_CREATE_OR_UPDATE_FORM;
-        //} else {
-        	userName = principal.getName();
-        	/*
-        	 * Comment's user number
-        	 */
-        	Long cNb = this.escaladeService.findByUsername(userName);
-        	String strcNb = cNb.toString();
-        	model.addAttribute("strcNb", strcNb);
-        	
-        	/*
-        	 * Number Site's owner:
-        	 */
-        	Long sNb = this.escaladeService.findSiteOwnedByUsername(userName);
-        	String strsNb = sNb.toString();
-        	model.addAttribute("strsNb", strsNb);
-        	
-        	/*
-        	 * Number of borrowed topos:
-        	 */
-        	
-        	/*
-        	 * My last commentaries:Collection<Area> results = this.escaladeService.findSiteByPostalCode(area.getPostalcode());
-        	 */
-        	Collection<Comment> results = this.escaladeService.findCommentByUsername(userName);
-        	//String strResults = results.toString();
-        	model.addAttribute("results", results);
-        	//model.addAttribute("userName" , userName )   ;     	        	
-        	//Long cNb = this.escaladeService.findCommentNumber(userName);
-        	return "dashboard" ;
-       // }
-		
-	}
+
 	
 	
 

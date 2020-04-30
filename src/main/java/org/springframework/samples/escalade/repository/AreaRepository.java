@@ -26,7 +26,7 @@ public interface AreaRepository  {
 
 	
 	public List<Area> findAll();
-
+	
 	public List<Area> findByName(String name);
 
 	public List<Site> sitesList();

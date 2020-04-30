@@ -60,8 +60,52 @@
 									class="form-control" placeholder="Confirm your password"></form:input>
 								<form:errors path="passwordConfirm"></form:errors>
 							</div>
+						</spring:bind>						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2 col-lg-push-5">
+						<spring:bind path="email">
+							<div class="form-group ${status.error ? 'has-error' : ''}">
+								<form:input type="email" path="email"
+									placeholder="Email" autofocus="true"></form:input>
+								<form:errors path="email"></form:errors>
+							</div>
+						</spring:bind>						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2 col-lg-push-5">
+						<spring:bind path="firstName">
+							<div class="form-group ${status.error ? 'has-error' : ''}">
+								<form:input type="firstName" path="firstName"
+									placeholder="FirstName" autofocus="true"></form:input>
+								<form:errors path="firstName"></form:errors>
+							</div>
+						</spring:bind>						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2 col-lg-push-5">
+						<spring:bind path="lastName">
+							<div class="form-group ${status.error ? 'has-error' : ''}">
+								<form:input type="lastName" path="lastName"
+									placeholder="LastName" autofocus="true"></form:input>
+								<form:errors path="lastName"></form:errors>
+							</div>
+						</spring:bind>						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2 col-lg-push-5">
+						<spring:bind path="telephone">
+							<div class="form-group ${status.error ? 'has-error' : ''}">
+								<form:input type="telephone" path="telephone"
+									placeholder="Telephone" autofocus="true"></form:input>
+								<form:errors path="telephone"></form:errors>
+							</div>
 						</spring:bind>
-						<button class="btn btn-default" type="submit">Submit</button>
+						<button class="btn btn-default" type="submit">Submit</button>						
 					</div>
 				</div>
 			</form:form>
