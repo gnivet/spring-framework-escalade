@@ -27,25 +27,29 @@
 				<a class="navbar-brand" href="/">Escalade</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li><escalade:menuItem active="${name eq 'home'}" url="/"
-						title="home page">
+				<li class="active"><escalade:menuItem
+						active="${name eq 'home'}" url="/" title="home page">
 						<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 						<span>Home Info</span>
 					</escalade:menuItem></li>
-				<sec:authorize access="isAuthenticated() == false">
-					<li><escalade:menuItem active="${name eq 'login'}"
-							url="/users/login" title="login page">
-							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-							<span>Login</span>
-						</escalade:menuItem></li>
-				</sec:authorize>
-				<sec:authorize access="isAuthenticated() == false">
-					<escalade:menuItem active="${name eq 'users'}"
-						url="/users/registration" title="register">
-						<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-						<span>Register</span>
-					</escalade:menuItem>
-				</sec:authorize>
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Login <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<sec:authorize access="isAuthenticated() == false">
+							<li><escalade:menuItem active="${name eq 'login'}"
+									url="/users/login" title="login page">
+									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+									<span>Login</span>
+								</escalade:menuItem></li>
+						</sec:authorize>
+						<sec:authorize access="isAuthenticated() == false">
+							<escalade:menuItem active="${name eq 'users'}"
+								url="/users/registration" title="register">
+								<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+								<span>Register</span>
+							</escalade:menuItem>
+						</sec:authorize>
+					</ul></li>
 				<sec:authorize access="isAuthenticated() == true">
 					<li class="active"></li>
 					<li><escalade:menuItem active="${name eq 'dashboard'}"
@@ -53,6 +57,11 @@
 							<span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
 							<span>Dashboard</span>
 						</escalade:menuItem></li>
+
+
+					<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Site <span class="caret"></span></a>
+					<ul class="dropdown-menu">
 					<li><escalade:menuItem active="${name eq 'sites'}"
 							url="/sites" title="sites">
 							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
@@ -68,6 +77,13 @@
 							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 							<span>Sites</span>
 						</escalade:menuItem></li>
+						</ul></li>
+						
+						
+					
+					<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Area <span class="caret"></span></a>
+					<ul class="dropdown-menu">	
 					<escalade:menuItem active="${name eq 'areas'}" url="/areas/new/"
 						title="areas">
 						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
@@ -83,21 +99,35 @@
 							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 							<span>Areas</span>
 						</escalade:menuItem></li>
+					</ul>
+					</li>
+					
+					
+					<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Site type <span class="caret"></span></a>
+					<ul class="dropdown-menu">
 					<li><escalade:menuItem active="${name eq 'sitetypes'}"
 							url="/sitetypes/new/" title="sitetypes">
 							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 							<span>Sites Type</span>
 						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'areas'}"
+					<li><escalade:menuItem active="${name eq 'sitetypes'}"
 							url="/sitetypes/find/" title="sitetypes">
 							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 							<span>Site types</span>
 						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'zones'}"
+					<li><escalade:menuItem active="${name eq 'sitetypes'}"
 							url="/sitetypes" title="sitetypes">
 							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 							<span>Site's type</span>
 						</escalade:menuItem></li>
+					</ul>
+					</li>	
+					
+					
+					<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Zone <span class="caret"></span></a>
+					<ul class="dropdown-menu">
 					<li><escalade:menuItem active="${name eq 'zones'}"
 							url="/zones/find/" title="zones">
 							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -113,6 +143,12 @@
 							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 							<span>Zones</span>
 						</escalade:menuItem></li>
+					</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Way <span class="caret"></span></a>
+					<ul class="dropdown-menu">
 					<li><escalade:menuItem active="${name eq 'ways'}"
 							url="/ways/find/" title="ways">
 							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -128,6 +164,12 @@
 							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 							<span>ways</span>
 						</escalade:menuItem></li>
+					</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Length <span class="caret"></span></a>
+					<ul class="dropdown-menu">	
 					<li><escalade:menuItem active="${name eq 'lengths'}"
 							url="/ways/{wayId}/lengths/new/" title="lengths">
 							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
@@ -143,6 +185,12 @@
 							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 							<span>Lengths</span>
 						</escalade:menuItem></li>
+					</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Point <span class="caret"></span></a>
+					<ul class="dropdown-menu">
 					<li><escalade:menuItem active="${name eq 'points'}"
 							url="/lengths/{lengthId}/points/new/" title="points">
 							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
@@ -158,6 +206,12 @@
 							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 							<span>Points</span>
 						</escalade:menuItem></li>
+					</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Comment <span class="caret"></span></a>
+					<ul class="dropdown-menu">
 					<li><escalade:menuItem active="${name eq 'comments'}"
 							url="/comments/find/" title="find comments">
 							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -173,6 +227,12 @@
 							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 							<span>Comments</span>
 						</escalade:menuItem></li>
+					</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Topo <span class="caret"></span></a>
+					<ul class="dropdown-menu">
 					<li><escalade:menuItem active="${name eq 'topos'}"
 							url="/topos/find/" title="find topos">
 							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -188,6 +248,12 @@
 							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 							<span>Topos</span>
 						</escalade:menuItem></li>
+					</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Topo booking<span class="caret"></span></a>
+					<ul class="dropdown-menu">
 					<li><escalade:menuItem active="${name eq 'topoBkgs'}"
 							url="/topoBkgs/find/" title="find topoBkgs">
 							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -203,6 +269,10 @@
 							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 							<span>Topo Bookings</span>
 						</escalade:menuItem></li>
+					</ul>
+					</li>
+					
+					
 					<li><sec:authorize access="isAuthenticated()">
 							<escalade:menuItem active="${name eq 'logout'}"
 								url="/users/logout" title="logoutSuccessfulPage page">
@@ -216,7 +286,7 @@
 							<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
 							<span>Error</span>
 						</escalade:menuItem></li>
-						</sec:authorize>
+				</sec:authorize>
 			</ul>
 			<!-- fin  container-fluid -->
 		</div>
