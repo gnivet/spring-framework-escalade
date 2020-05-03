@@ -1,7 +1,6 @@
 package org.springframework.samples.escalade.repository;
 
 import java.util.Collection;
-import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Comment;

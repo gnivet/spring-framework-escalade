@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.TopoBkgRepository;
@@ -173,9 +174,27 @@ public class TopoBkgController {
 				return mav;
 			}
 			
+			@GetMapping(value="/topos/" )
+			public String findAvailableTopo(Topo topo, BindingResult result, Map<String, Object> model) {
+				Collection<Topo> results = this.escaladeService.findTopoAvailableByName(topo.getName()) ;
+				
+				
+				if (results.isEmpty()) {
+					// no topos found
+					result.rejectValue("name", "notFound", "not found");
+					return "/topos/findTopos";			
+
+				} else {
+					// multiple topos found
+					model.put("selections", results);			
+				 return "topos/topoBkgsList";
+				}
+				
+			}
+				
+
 			
-			
-			
+
 			
 }
 

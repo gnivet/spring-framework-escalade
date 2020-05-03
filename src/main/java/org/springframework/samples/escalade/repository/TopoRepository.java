@@ -31,6 +31,8 @@ public interface TopoRepository {
 
 	Collection<Topo> findTopoByName(String name)throws DataAccessException;
 
+	Collection<Topo> findTopoAvailableByName(String name)throws DataAccessException;
+
    
     
     /**

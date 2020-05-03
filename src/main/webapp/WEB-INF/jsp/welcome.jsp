@@ -8,7 +8,6 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <escalade:layout pageName="home">
-
 	<div class="row">
 		<div class="glyphicon">
 			<spring:url value="/resources/images/sites.png" htmlEscape="true"
@@ -16,16 +15,15 @@
 			<img class="img-responsive" src="${sitesImage}" />
 		</div>
 	</div>
-	<head>
+	<head>	
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="/webapp/resources/css/escalade.css" />
 <title><c:out value="${title}" /></title>
-	</head>	
+	</head>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 	<body>
 		<div class="form-group mb-2">
 			<div class="col-sm-10">
-
 				<h2>Welcome ${pageContext.request.userPrincipal.name}</h2>
 				<c:if test="${pageContext.request.userPrincipal.name != null}">
 					<form id="logoutForm" method="POST">

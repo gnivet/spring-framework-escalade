@@ -56,6 +56,16 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 		query.setParameter("name", "%" + name + "%");
 		return query.getResultList();
 	}
+
+	@Override
+	public Collection<Topo> findTopoAvailableByName(String name) throws DataAccessException {
+		// TODO Auto-generated method stub
+		Query query = this.em
+				.createQuery("SELECT DISTINCT topo from Topo topo WHERE topo.name LIKE :name and topo.available = true");
+		query.setParameter("name", "%" + name + "%");
+		
+		return query.getResultList();
+	}
 	
 	
 }

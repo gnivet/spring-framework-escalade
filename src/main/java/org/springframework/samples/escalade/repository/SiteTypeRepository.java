@@ -8,29 +8,29 @@ import org.springframework.samples.escalade.model.SiteType;
 
 public interface SiteTypeRepository {
 
-	List<SiteType> findSiteTypes() throws DataAccessException;
+	public List<SiteType> findSiteTypes() throws DataAccessException;
 
 	
 
-	SiteType findSiteTypeById(Integer id) throws DataAccessException;
+	public SiteType findSiteTypeById(Integer id) throws DataAccessException;
 
-	Collection<SiteType> findSiteBySiteType(String name);
+	public Collection<SiteType> findSiteBySiteType(String name)throws DataAccessException;
 
 	
 	
-	SiteType saveSiteType(SiteType siteType);
+	public SiteType saveSiteType(SiteType siteType)throws DataAccessException;
 
 
 
-	List<SiteType> findAll();
+	public List<SiteType> findAll()throws DataAccessException;
 
 
 
-	Collection<SiteType> getSiteType();
+	public Collection<SiteType> getSiteType()throws DataAccessException;
 
 
 
-	Collection<SiteType> findSiteTypeByName(String name);
+	public Collection<SiteType> findSiteTypeByName(String name)throws DataAccessException;
 
 
 

@@ -7,41 +7,54 @@
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-<escalade:layout pageName="dashboard">	
+<escalade:layout pageName="dashboard">
 	<head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="/webapp/resources/css/escalade.css" />
 <title><c:out value="${title}" /></title>
 	</head>
-	<h3 class="mycolor">Dashboard</h3>
-		<hr>
-		<div class="container-fluid">
-			<div class="row">
-				<div>
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th scope="col">#</th>
-								<th scope="col">Caption</th>
-								<th scope="col">My topos:</th>
-							</tr>
-						</thead>
+	<h2>Dashboard</h2>
+	<h3 class="mycolor">Topos & Sites</h3>
+	<hr>
+	<div class="container-fluid">
+		<div class="table-responsive">
+			<div>
+				<table class="table table-dark">
+					<thead>
 						<tr>
-							<th scope="row">1</th>
-							<td>My topos:</td>
-							<td><a href="/topos/new/"><button class="btn-link"></button>Create
-									a new topo</a></td>
+							<th scope="col">#</th>
+							<th scope="col">Caption</th>
+							<th scope="col">My topos & sites:</th>
 						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>My topo list:</td>
-							<td><a href="/topos"><button class="btn-link"></button>Topo
-									list</a></td>
-						</tr>
-					</table>
-				</div>
+					</thead>
+					<tr>
+						<th scope="row">1</th>
+						<td>My topos:</td>
+						<td><a href="/topos/new/"><button class="btn-link"></button>Create
+								a new topo</a></td>
+					</tr>
+					<tr>
+						<th scope="row">2</th>
+						<td>My topo list:</td>
+						<td><a href="/topos"><button class="btn-link"></button>Topo
+								list</a></td>
+					</tr>
+					<tr>
+						<th scope="row">3</th>
+						<td>My sites:</td>
+						<td><a href="/areas/new/"><button class="btn-link"></button>Create
+								a new site</a></td>
+					</tr>
+					<tr>
+						<th scope="row">4</th>
+						<td>My site list:</td>
+						<td><a href="/sites"><button class="btn-link"></button>Site
+								list</a></td>
+					</tr>
+				</table>
 			</div>
 		</div>
+
 		<!--  -->
 		<h3 class="mycolor">Activities</h3>
 		<hr>
@@ -83,8 +96,9 @@
 				</tbody>
 			</table>
 		</div>
-		<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+	</div>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 	</body>
 </escalade:layout>

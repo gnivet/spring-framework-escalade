@@ -83,7 +83,7 @@ public class SiteController {
 	
 	
 	@GetMapping(value = "/areas/{areaId}/sites/new")
-	public String initCreationForm(  ModelMap model, Principal principal, @PathVariable Integer areaId) {
+	public String initCreationForm(  ModelMap model, Principal principal, @PathVariable Integer areaId , @PathVariable Integer siteTypeId) {
 		
 		Site site = new Site();
 		model.put("site", site);
@@ -117,7 +117,7 @@ public class SiteController {
 	
 	
 	 	@PostMapping(value = "/areas/{areaId}/sites/new")
-	    public String processCreationForm( ModelMap model, Principal principal, @PathVariable Integer areaId,  SiteType siteType, Site site, BindingResult result){
+	    public String processCreationForm( ModelMap model, Principal principal, @PathVariable Integer areaId,   @PathVariable Integer siteTypeId,                        SiteType siteType, Site site, BindingResult result){
 				 
 	 		 if (siteType == null )
 	         {
@@ -152,7 +152,7 @@ public class SiteController {
 			System.out.println(model);
 			
 			siteType = this.siteTypeRepository.findSiteTypeById(siteType.getId());
-			       	
+			
         	
         	site.setArea(area);        	
         	site.setType(siteType);
