@@ -14,14 +14,16 @@
 
 	
 	
-	
-	
+	<!--  
     <spring:url value="/resources/images/favicon.png" var="favicon"/>
     <link rel="shortcut icon" type="image/x-icon" href="${favicon}">
+   	-->
+	
 
     <title>escalade :: a Spring Framework demonstration</title>
-	<!--  
+	  
     <%-- CSS generated from LESS --%>
+    <!--  
     <spring:url value="/resources/css/escalade.css" var="escaladeCss"/>
     <link href="${escaladeCss}" rel="stylesheet"/>
 	  

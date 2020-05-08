@@ -24,7 +24,8 @@
 	<body>
 		<div class="form-group mb-2">
 			<div class="col-sm-10">
-				<h2>Welcome ${pageContext.request.userPrincipal.name}</h2>
+				<!--  <h2>Welcome ${pageContext.request.userPrincipal.name}</h2> -->
+				<h2>Welcome ${firsName}</h2>
 				<c:if test="${pageContext.request.userPrincipal.name != null}">
 					<form id="logoutForm" method="POST">
 						<sec:authorize access="isAuthenticated()">

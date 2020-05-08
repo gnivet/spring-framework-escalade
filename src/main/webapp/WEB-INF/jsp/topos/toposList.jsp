@@ -6,11 +6,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
 <escalade:layout pageName="topos">
-	<h2>Find sites</h2>
-	<!-- Research sites by topos -->
+	<h2>Find topos</h2>
+	<!-- Research topos -->
 	<spring:url value="/topos" var="formUrl" />
 	<form:form modelAttribute="topo" action="${fn:escapeXml(formUrl)}"
-		method="get" class="form-horizontal" id="search-site-form">
+		method="get" class="form-horizontal" id="search-topo-form">
 		<div class="form-group">
 			<div class="control-group" id="name">
 				<label class="col-sm-2 control-label">Code topo </label>
@@ -23,11 +23,11 @@
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
-				<button type="submit" class="btn btn-default">Find site</button>
+				<button type="submit" class="btn btn-default">Find topo</button>
 			</div>
 		</div>
 	</form:form>
-	<h2>sites</h2>
+	<h2>topos</h2>
 	<table id="toposTable" class="table table-striped">
 		<thead>
 			<tr>
@@ -45,7 +45,7 @@
 						</spring:url>
 						<td><a href="${fn:escapeXml(topoUrl)}"><c:out value="${topo.name}"/></a> </td>
 						
-					<td><spring:url value="/topoBkgs/{topoId}" var="topoUrl">
+					<td><spring:url value="/topos/{topoId}" var="topoUrl">
 							<spring:param name="topoId" value="${topo.id} " />
 						</spring:url>							
 						<c:if test="${topo.available == true}"><a href="${fn:escapeXml(topoUrl)}"><c:out value="${topo.available}" /></a></c:if>

@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags" %>
 <escalade:layout pageName="topos">
-	<h2>Site details</h2>
+	<h2>Topo details</h2>
 	<table class="table table-striped">
 		<tr>
 			<th>Name</th>

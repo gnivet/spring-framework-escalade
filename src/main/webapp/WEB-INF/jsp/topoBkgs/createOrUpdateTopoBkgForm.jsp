@@ -25,7 +25,7 @@
     </jsp:attribute>
 	<jsp:body>
     <h2>    
-        <c:if test="${topoBkg['new']}">New </c:if> topoBkg
+        <c:if test="${topoBkg['new']}">New </c:if> Topo booking
     </h2>
     <form:form modelAttribute="topoBkg" class="form-horizontal"
 			id="add-topoBkg-form">
@@ -51,10 +51,10 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${topoBkg['new']}">
-                        <button class="btn btn-default" type="submit">Add topoBkg</button>
+                        <button class="btn btn-default" type="submit">Add topo booking</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Update topoBkg</button>
+                        <button class="btn btn-default" type="submit">Update topo booking</button>
                     </c:otherwise>
                 </c:choose>
             </div>

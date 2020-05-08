@@ -133,7 +133,7 @@ public class TopoBkgController {
 			
 			
 				
-			@GetMapping(value = "/topoBkgs/{topoBkgId}")
+			@GetMapping(value = "/topoBkgs/{topoBkgId}/")
 			public String initUpdatetopoBkgForm(@NotNull @PathVariable("topoBkgId") Integer topoBkgId, @NotNull Model model) {
 				TopoBkg topoBkg = this.escaladeService.findTopoBkgById(topoBkgId);
 				model.addAttribute(topoBkg);
@@ -145,7 +145,7 @@ public class TopoBkgController {
 			}
 
 			
-			@PostMapping(value = "/topoBkgs/{topoBkgId}")
+			@PostMapping(value = "/topoBkgs/{topoBkgId}/")
 			public String processUpdatetopoBkgForm(TopoBkg topoBkg, BindingResult result, @PathVariable("topoBkgId")  Integer topoBkgId  ) {
 				if (result.hasErrors()) {
 					return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
@@ -156,7 +156,7 @@ public class TopoBkgController {
 					topoBkgToModify.setAccepted(topoBkg.getAccepted());
 								
 					this.escaladeService.updateTopoBkg(topoBkgToModify);			
-					return "redirect:/topoBkgs/{topoBkgId}";
+					return "redirect:/topoBkgs/{topoBkgId}/";
 				}
 			}
 
@@ -167,13 +167,13 @@ public class TopoBkgController {
 			 * @return a ModelMap with the model attributes for the view
 			 */
 			
-			@RequestMapping("/topoBkgs/{topoBkgId}/sites/{siteId}")
+			@RequestMapping("/topoBkgs/{topoBkgId}")
 			public ModelAndView showtopo(@PathVariable("topoBkgId") Integer topoBkgId) {
-				ModelAndView mav = new ModelAndView("topoBkgs/topoDetails");
+				ModelAndView mav = new ModelAndView("topoBkgs/topoBkgDetails");
 				mav.addObject(this.escaladeService.findTopoBkgById(topoBkgId));		
 				return mav;
 			}
-			
+			/*
 			@GetMapping(value="/topos/" )
 			public String findAvailableTopo(Topo topo, BindingResult result, Map<String, Object> model) {
 				Collection<Topo> results = this.escaladeService.findTopoAvailableByName(topo.getName()) ;
@@ -187,11 +187,11 @@ public class TopoBkgController {
 				} else {
 					// multiple topos found
 					model.put("selections", results);			
-				 return "topos/topoBkgsList";
+				 return "topos/toposList";
 				}
 				
 			}
-				
+				*/
 
 			
 

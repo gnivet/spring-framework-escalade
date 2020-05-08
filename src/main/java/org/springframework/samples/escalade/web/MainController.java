@@ -5,6 +5,8 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Comment;
+import org.springframework.samples.escalade.model.User;
+import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,22 +19,32 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 	
 	private EscaladeService escaladeService;
+	private UserRepository userRepository;
 
 
 	@Autowired
-	public MainController(EscaladeService escaladeService) {
+	public MainController(EscaladeService escaladeService , UserRepository userRepository) {
 		
 		this.escaladeService = escaladeService;
+		this.userRepository = userRepository;
 	}	
 
 
 		@GetMapping(value = {"/", "/welcome"})
-	    public String welcome(Model model)
-	   
+	    public String welcome(Model model, Principal principal)
+	  
    	 	    
 	    {
-	    	
-	    	 return "/welcome" ;
+			
+			 if (principal != null)
+			 {
+			 String username = principal.getName();
+			 
+			 User user = this.userRepository.findByUsername(username);
+			 model.addAttribute("firsName" , user.getFirstName());
+	    	 
+			 }
+			 return "/welcome" ;
 	    }
 	    
 		
