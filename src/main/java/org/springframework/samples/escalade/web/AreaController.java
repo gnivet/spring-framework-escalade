@@ -90,14 +90,9 @@ public class AreaController {
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 
-	
 		
 		User user = this.userRepository.findByUsername(userName);
-		
-		
-		
-		
-				
+						
 		
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;

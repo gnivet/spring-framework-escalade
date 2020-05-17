@@ -105,14 +105,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/topos/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/findTopos").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("topos/toposList").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("topos/toposList").hasAnyRole("USER", "ADMIN");		
+		http.authorizeRequests().antMatchers("/toposAvailable/toposAvailableList").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/*").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/find").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/topoBkgsList").hasAnyRole("USER", "ADMIN");												
 		http.authorizeRequests().antMatchers("/topoBkgs/findTopoBkgs").hasAnyRole("USER", "ADMIN");
-				
+		http.authorizeRequests().antMatchers("/topos/*/topoBkgs/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topos/*/topoBkgs/response/*").hasAnyRole("USER", "ADMIN");
+		// Avec l'autre compte je recherche le topo et je clique sur le lien réserver.
+		http.authorizeRequests().antMatchers("/topos/*/topoBkg/topoBkgs/*").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topoBkgs/*").hasAnyRole("USER", "ADMIN");
 		//	http.authorizeRequests().antMatchers("/areas/").hasAnyRole("USER", "ADMIN");			
 		// For ADMIN only. /users/find
 		http.authorizeRequests().antMatchers("/admin").hasRole("ADMIN");

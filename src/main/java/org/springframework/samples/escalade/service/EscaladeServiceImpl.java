@@ -561,6 +561,12 @@ public class EscaladeServiceImpl implements EscaladeService {
 				
 		
 	}
+	
+	
+	
+	
+	
+	
 
     public Collection<TopoBkg> findTopoBkgByName(String name) throws DataAccessException{
     	return topoBkgRepository.findTopoBkgByName(name);

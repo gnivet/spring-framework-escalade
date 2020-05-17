@@ -4,19 +4,23 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.escalade.model.Area;
+import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.User;
+import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.samples.escalade.repository.TopoBkgRepository;
+import org.springframework.samples.escalade.repository.TopoRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,15 +40,19 @@ public class TopoBkgController {
 	private EscaladeService escaladeService;
 	private UserRepository userRepository;	
 	private TopoBkgRepository topoBkgRepository;
+	private TopoRepository topoRepository;
+	private SiteRepository siteRepository;
 	
 	
 	
 	@Autowired
 	public TopoBkgController(EscaladeService escaladeService, UserRepository userRepository
-			,TopoBkgRepository topoBkgRepository) {
+			,TopoBkgRepository topoBkgRepository , TopoRepository topoRepository, SiteRepository siteRepository) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;		
 		this.topoBkgRepository = topoBkgRepository;
+		this.topoRepository = topoRepository;
+		this.siteRepository = siteRepository;
 		
 	}
 	
@@ -54,21 +62,55 @@ public class TopoBkgController {
 		dataBinder.setDisallowedFields("id");
 	}
 	
-	// Publish a topo
 	
-			@GetMapping(value = "/topoBkgs/new")
-			public String initCreationForma(Map<String, Object> model ) {
+			@GetMapping(value = "/topos/{topoId}/topoBkgs/new")
+			public String initCreationForma(ModelMap model, Principal principal, @PathVariable Integer topoId  ) {
 			
+				if (principal != null)
+				 {
+				 String username = principal.getName();
+				 
+				 User user = this.userRepository.findByUsername(username);
+				 model.addAttribute("firstName" , user.getFirstName() );
+				 
+				 }
+				
 				TopoBkg topoBkg = new TopoBkg();
 				model.put("topoBkg", topoBkg);
+				
+				//Input topo
+				
+				Topo topo = this.topoRepository.findTopoById(topoId);
+				if (topo == null || topo.equals(" ") )
+		        {
+		        	System.out.println("topo est null" + model + topo);
+		        }
+			model.put("topo", topo);
+				
+				
 				return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
 			}
 
-			@PostMapping(value = "/topoBkgs/new")
-			public String processCreationForm(Principal principal, @Valid TopoBkg topoBkg,  Integer userId, BindingResult result, Integer topoBkgId, Map<String, Object> model) {
+			/**************************************************************************************
+			 * Choose your Topo booking
+			 * @param Boolean 
+			 **************************************************************************************/
+			
+			
+			@PostMapping(value = "/topos/{topoId}/topoBkgs/new")
+			public String processCreationForm( ModelMap model, Principal principal, @PathVariable Integer topoId,  TopoBkg topoBkg, Site site, BindingResult result, Boolean bool_flag) {
 				
-				String userName = principal.getName();
-				
+
+		 		if (principal.getName() != null)
+		 		{
+		 			String userName = principal.getName();
+		 			User user = this.userRepository.findByUsername(userName);
+		 			site.setUser(user);
+		 			
+		 		}else
+		 		{	
+		 			 return "redirect:/users/login/";
+		 		}
 				
 				/**
 				 * Retrieve a <code>User</code> from the data store by id.
@@ -78,21 +120,28 @@ public class TopoBkgController {
 				 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 				 */
 			
-				User user = this.userRepository.findByUsername(userName);
+			
+		 		Topo topo = this.topoRepository.findTopoById(topoId);
+		 		
 				
-					
 				
 				if (result.hasErrors()) {
 					return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
 				} else {
 						
-							
-								
-					//topo.setUser(user);
-					model.put("topoBkg", topoBkg);
+					System.out.println(topo.getId());	
+					
+					this.topoBkgRepository.checkToposBookedByID(topo.getId(), bool_flag);
+					
+					
+					
+					topoBkg.setTopo(topo);	
+					
+					
 					topoBkg = this.escaladeService.saveTopoBkg(topoBkg);
 					return "redirect:/topoBkgs/" +  topoBkg.getId() ;
 				}
+				
 			}
 			
 			
@@ -129,34 +178,38 @@ public class TopoBkgController {
 			}
 
 			
-			
-			
-			
 				
-			@GetMapping(value = "/topoBkgs/{topoBkgId}/")
-			public String initUpdatetopoBkgForm(@NotNull @PathVariable("topoBkgId") Integer topoBkgId, @NotNull Model model) {
+			@GetMapping(value = "/topoBkgs/{topoBkgId}")
+			public String initUpdatetopoBkgForm(@NotNull @PathVariable("topoBkgId") Integer topoBkgId, @NotNull ModelMap model) {
 				TopoBkg topoBkg = this.escaladeService.findTopoBkgById(topoBkgId);
-				model.addAttribute(topoBkg);
-				
-				
-				
-				
+				model.put("topoBkg" , topoBkg);
 				return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
 			}
 
 			
-			@PostMapping(value = "/topoBkgs/{topoBkgId}/")
-			public String processUpdatetopoBkgForm(TopoBkg topoBkg, BindingResult result, @PathVariable("topoBkgId")  Integer topoBkgId  ) {
+			@PostMapping(value = "/topoBkgs/{topoBkgId}")
+			public String processUpdatetopoBkgForm(TopoBkg topoBkg, BindingResult result, @PathVariable("topoBkgId")  Integer topoBkgId, ModelMap model, User user ) {
 				if (result.hasErrors()) {
+					model.put("topoBkg", topoBkg);
 					return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
 				} else {
 
-					TopoBkg topoBkgToModify = this.escaladeService.findTopoBkgById(topoBkgId);			
-					topoBkgToModify.setName(topoBkg.getName());
-					topoBkgToModify.setAccepted(topoBkg.getAccepted());
+					/*
+					 * user.addSite(site);
+            			this.escaladeService.saveSite(site);
+            	return "redirect:/sites/{siteId}";
+					 */
+					
+					user.addTopoBkg(topoBkg);
+					this.escaladeService.saveTopoBkg(topoBkg);
+					
+					
+					//TopoBkg topoBkgToModify = this.escaladeService.findTopoBkgById(topoBkgId);			
+					//topoBkgToModify.setName(topoBkg.getName());
+					//topoBkgToModify.setAccepted(topoBkg.getAccepted());
 								
-					this.escaladeService.updateTopoBkg(topoBkgToModify);			
-					return "redirect:/topoBkgs/{topoBkgId}/";
+					//this.escaladeService.updateTopoBkg(topoBkgToModify);			
+					return "redirect:/topoBkgs/{topoBkgId}";
 				}
 			}
 
@@ -168,31 +221,37 @@ public class TopoBkgController {
 			 */
 			
 			@RequestMapping("/topoBkgs/{topoBkgId}")
-			public ModelAndView showtopo(@PathVariable("topoBkgId") Integer topoBkgId) {
+			public ModelAndView showtopoBkg(@PathVariable("topoBkgId") Integer topoBkgId) {
 				ModelAndView mav = new ModelAndView("topoBkgs/topoBkgDetails");
 				mav.addObject(this.escaladeService.findTopoBkgById(topoBkgId));		
 				return mav;
 			}
-			/*
-			@GetMapping(value="/topos/" )
-			public String findAvailableTopo(Topo topo, BindingResult result, Map<String, Object> model) {
-				Collection<Topo> results = this.escaladeService.findTopoAvailableByName(topo.getName()) ;
-				
-				
-				if (results.isEmpty()) {
-					// no topos found
-					result.rejectValue("name", "notFound", "not found");
-					return "/topos/findTopos";			
+			
+			
+					
+			@GetMapping(value = "/topos/{topoId}/topoBkgs")
+			public String initUpdatetopoForm(@NotNull @PathVariable("topoId") Integer topoId, @NotNull Model model) {
+				Topo topo = this.escaladeService.findTopoById(topoId);
+				model.addAttribute(topo);
 
-				} else {
-					// multiple topos found
-					model.put("selections", results);			
-				 return "topos/toposList";
-				}
-				
+				return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
 			}
-				*/
+			
+			
+			@PostMapping(value = "/topos/{topoId}/topoBkgs")
+			public String processUpdatetopoForm(Topo topo, BindingResult result, @PathVariable("topoId") Integer topoId) {
+				if (result.hasErrors()) {
+					return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
+				} else {
 
+					Topo topoToModify = this.escaladeService.findTopoById(topoId);
+					topoToModify.setName(topo.getName());
+					topoToModify.setAvailable(topo.isAvailable());
+					topoToModify.setDescription(topo.getDescription());
+					this.escaladeService.updateTopo(topoToModify);
+					return "redirect:/topos/{topoId}";
+				}
+			}
 			
 
 			

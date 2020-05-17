@@ -27,12 +27,14 @@
 			</div>
 		</div>
 	</form:form>
-	<h2>topos</h2>
+	<h2>topo list: </h2>
+	<h3>A topo with the mention true is available</h3>
 	<table id="toposTable" class="table table-striped">
 		<thead>
 			<tr>
-				<th style="width: 150px;">Name</th>
-				<th style="width: 200px;">Available</th>
+				<th style="width: 150px;">#</th>
+				<th style="width: 200px;">Name</th>
+				<th style="width: 200px;">True / False</th>
 				<th style="width: 200px;">Description</th>
 			</tr>
 		</thead>
@@ -40,12 +42,12 @@
 			<c:forEach items="${selections}" var="topo">
 				<tr>
 					
-					<td><spring:url value="/topos/{topoId}" var="topoUrl">
+					<td><spring:url value="/topos/{topoId}/topoBkgs" var="topoUrl">
 							<spring:param name="topoId" value="${topo.id} " />
 						</spring:url>
 						<td><a href="${fn:escapeXml(topoUrl)}"><c:out value="${topo.name}"/></a> </td>
 						
-					<td><spring:url value="/topos/{topoId}" var="topoUrl">
+					<td><spring:url value="/topos/{topoId}/topoBkgs/new/" var="topoUrl">
 							<spring:param name="topoId" value="${topo.id} " />
 						</spring:url>							
 						<c:if test="${topo.available == true}"><a href="${fn:escapeXml(topoUrl)}"><c:out value="${topo.available}" /></a></c:if>

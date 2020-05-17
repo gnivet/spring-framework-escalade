@@ -17,33 +17,29 @@
     </jsp:attribute>
 	<jsp:body>
     <h2>    
-        <c:if test="${site['new']}">New </c:if> Site        
-    </h2>
+        <c:if test="${site['new']}">New </c:if> Site                       
+   </h2>
     <form:form modelAttribute="site" class="form-horizontal"
-			id="add-site-form">		
-		<table>
-		<tr>
-			<th scope="col"> User</th>
-			
-			<td><input type= "text" name="name" value="${user.username}" disabled/></td>
-		</tr>
-		</table>
+			id="add-site-form">	
 		<br>
         <div class="form-group has-feedback">
-        <br>      				
+        <br>      		<!-- Site's name -->		
             			<escalade:inputField label="Name" name="name" />
             			<escalade:inputField label="Birth Date" name="birthDate" /> 
             			  
             			<input type="hidden" name="id" value="${user.id}" />       
             			<input type="hidden" name="id" value="${site.id}" />            			     
             	            		  	                 	 
-					<div class="col-sm-10"> 
+					<div class="col-sm-10" id="c"> 
                    		  <p>Area's site</p>
-							<br />							 
-						 	<input type= "text"  name="name" value = "${area.name}" disabled/>
-             		</div> 
-             		<div class="col-sm-10"> 
-                   		  <p>Choose your site's type</p>
+							<br />														 
+						 	<input type="text" name="name" value="${area.name}" disabled />
+             		</div>
+             		<br />
+							 
+             		<div class="col-sm-10">
+             			  <br />	 
+                   		  <p>Choose your site's type</p>							
 							<br />
 						<!--  <input type="hidden" name="id" value="${sitetype.id}" />   -->				
 						<select name='sitetype'>     
@@ -53,7 +49,8 @@
 							</c:forEach>
 						 </select> <br />                  		 
              		</div>             		
-            <div class="col-sm-10"> 
+            <div class="col-sm-10">
+                          <br /> 
                    		  <p>Below you can activate/cancel your site:</p>
 					<br />					     									
         					<input type="radio" name="site.valid" value="false"

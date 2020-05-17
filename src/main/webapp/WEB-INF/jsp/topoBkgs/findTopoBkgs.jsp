@@ -27,6 +27,6 @@
 		</div>
 	</form:form>
 	<a class="btn btn-default"
-		href='<spring:url value="/topoBkgs/new/" htmlEscape="true"/>'>Add
-		topoBkg</a>
+		href='<spring:url value="/topoBkgs/{topoBkgId}/topoBkgs/new" htmlEscape="true"/>'>Add
+		topo Booking</a>
 </escalade:layout>

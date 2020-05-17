@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 			 String username = principal.getName();
 			 
 			 User user = this.userRepository.findByUsername(username);
-			 model.addAttribute("firsName" , user.getFirstName());
+			 model.addAttribute("firstName" , user.getFirstName());
 	    	 
 			 }
 			 return "/welcome" ;

@@ -82,13 +82,22 @@ public class SiteController {
 	
 	
 	
+	
+	
 	@GetMapping(value = "/areas/{areaId}/sites/new")
-	public String initCreationForm(  ModelMap model, Principal principal, @PathVariable Integer areaId , @PathVariable Integer siteTypeId) {
+	public String initCreationForm(  ModelMap model, Principal principal, @PathVariable Integer areaId ) {
+
+		if (principal != null)
+		 {
+		 String username = principal.getName();
+		 
+		 User user = this.userRepository.findByUsername(username);
+		 model.addAttribute("firstName" , user.getFirstName() );
+		 
+		 }
 		
 		Site site = new Site();
 		model.put("site", site);
-       
-        
        
         
 		// Input Area  
@@ -117,7 +126,7 @@ public class SiteController {
 	
 	
 	 	@PostMapping(value = "/areas/{areaId}/sites/new")
-	    public String processCreationForm( ModelMap model, Principal principal, @PathVariable Integer areaId,   @PathVariable Integer siteTypeId,                        SiteType siteType, Site site, BindingResult result){
+	    public String processCreationForm( ModelMap model, Principal principal, @PathVariable Integer areaId, SiteType siteType, Site site, BindingResult result){
 				 
 	 		 if (siteType == null )
 	         {

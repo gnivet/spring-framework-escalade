@@ -96,4 +96,9 @@ public class TopoBkg extends NamedEntity {
 	public TopoBkg() {
 	}
 
+	public void setTopoBkg(TopoBkg topoBkg) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

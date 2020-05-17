@@ -86,6 +86,45 @@ color: 	solid black;
 }
 
 /*
+ * text center
+ */
+#c{
+  text-align: justify; /* For Edge */
+  -moz-text-align-last: center; /* For Firefox prior 58.0 */
+  text-align-last: center;
+}
+
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+}
+th {
+  text-align: left;
+}
+
+
+
+
+
+
+#myTableLeft-align
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+}
+th {
+  text-align: left;
+}
+
+
+/*
  * GN
  */
 

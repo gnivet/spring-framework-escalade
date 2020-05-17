@@ -9,13 +9,16 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Topo;
+import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.User;
+import org.springframework.samples.escalade.repository.TopoBkgRepository;
 import org.springframework.samples.escalade.repository.TopoRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,151 +32,207 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class TopoController {
 
-	
-
 	private static final String VIEWS_TOPO_CREATE_OR_UPDATE_FORM = "topos/createOrUpdateTopoForm";
 	private EscaladeService escaladeService;
 	private UserRepository userRepository;
 	private TopoRepository topoRepository;
-	
-	
+	private TopoBkgRepository topoBkgRepository;
+
 	@Autowired
-	public TopoController(EscaladeService escaladeService, UserRepository userRepository, TopoRepository topoRepository
-			) {
+	public TopoController(EscaladeService escaladeService, UserRepository userRepository, TopoRepository topoRepository,
+			TopoBkgRepository topoBkgR
+
+	) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
 		this.topoRepository = topoRepository;
-		
+		this.topoBkgRepository = topoBkgRepository;
+
 	}
-	
-	
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
+
 	// Publish a topo
+
+	@GetMapping(value = "/topos/new")
+	public String initCreationForma(Map<String, Object> model) {
+
+		Topo topo = new Topo();
+		model.put("topo", topo);
+		return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
+	}
+
+	@PostMapping(value = "/topos/new")	
+public String processCreationForm(Principal principal, @Valid Topo topo,  Integer topoBkgId, BindingResult result, Integer topoId, Map<String, Object> model) 
+	{
+		
+		String userName = principal.getName();
+		
+		/**
+		 * Retrieve a <code>User</code> from the data store by id.
+		 *
+		 * @param userName the userName to search for
+		 * @return the <code>User</code> if found
+		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
+		 */
+
+		User user = this.userRepository.findByUsername(userName);
+
+		if (result.hasErrors()) {
+			return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
+		} else {
+
+			// topo.setUser(user);
+			model.put("topos", topo);
+			topo = this.escaladeService.saveTopo(topo);
+			return "redirect:/topos/" + topo.getId();
+		}
+	}
+
 	
-			@GetMapping(value = "/topos/new")
-			public String initCreationForma(Map<String, Object> model ) {
-			
-				Topo topo = new Topo();
-				model.put("topo", topo);
-				return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
-			}
 
-			@PostMapping(value = "/topos/new")
-			public String processCreationForm(Principal principal, @Valid Topo topo,  Integer userId, BindingResult result, Integer topoId, Map<String, Object> model) {
-				
-				String userName = principal.getName();
-				
-				
-				/**
-				 * Retrieve a <code>User</code> from the data store by id.
-				 *
-				 * @param userName the userName to search for
-				 * @return the <code>User</code> if found
-				 * @throws org.springframework.dao.DataRetrievalFailureException if not found
-				 */
+	@PostMapping(value = "/topos/{topoId}")
+	public String processCreationForm(Principal principal, TopoBkg topoBkg, Integer userId,
+			BindingResult result, Integer topoId, ModelMap model ) {
+
+		String userName = principal.getName();
+
+		/**
+		 * Retrieve a <code>User</code> from the data store by id.
+		 *
+		 * @param userName the userName to search for
+		 * @return the <code>User</code> if found
+		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
+		 */
+
+		User user = this.userRepository.findByUsername(userName);
+
+		if (result.hasErrors()) {
+			return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
+		} else {
+
+			topoBkg.setTopoBkg(topoBkg);
 			
-				User user = this.userRepository.findByUsername(userName);
-				
-					
-				
-				if (result.hasErrors()) {
-					return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
-				} else {
+			// topo.setUser(user);
+			model.addAttribute("topoBkgs", topoBkg);
+			topoBkg = this.escaladeService.saveTopoBkg(topoBkg);
 						
-							
-								
-					//topo.setUser(user);
-					model.put("topos", topo);
-					topo = this.escaladeService.saveTopo(topo);
-					return "redirect:/topos/" +  topo.getId() ;
-				}
-			}
 			
-			
-			@GetMapping(value = "/topos/find")
-			public String initFindForm(Map<String, Object> model) {
-				model.put("topo", new Topo());
-				return "/topos/findTopos";
+			return "redirect:/topoBkgs/" + topoBkg.getId();
+		}
+	}
+  
 
-			}
-			
+	@GetMapping(value = "/topos/find")
+	public String initFindForm(Map<String, Object> model) {
+		model.put("topo", new Topo());
+		return "/topos/findTopos";
 
-			@GetMapping(value = "/topos")
-			public String processFindForm(Topo topo, BindingResult result, Map<String, Object> model) {
+	}
 
-				// allow parameterless GET request for /areas to return all records
-				if (topo.getName() == null) {
-					topo.setName(""); // empty string signifies broadest possible search
-				}
+	@GetMapping(value = "/topos")
+	public String processFindForm(Topo topo, BindingResult result, Map<String, Object> model) {
 
-				// find areas by name
-				Collection<Topo> results = this.escaladeService.findTopoByName(topo.getName());
+		// allow parameterless GET request for /areas to return all records
+		if (topo.getName() == null) {
+			topo.setName(""); // empty string signifies broadest possible search
+		}
 
-				if (results.isEmpty()) {
-					// no areas found
-					result.rejectValue("name", "notFound", "not found");
-					return "/topos/findTopos";			
+		// find areas by name
+		Collection<Topo> results = this.escaladeService.findTopoByName(topo.getName());
 
-				} else {
-					// multiple topos found
-					model.put("selections", results);			
-				 return "topos/toposList";
-				}
+		if (results.isEmpty()) {
+			// no areas found
+			result.rejectValue("name", "notFound", "not found");
+			return "/topos/findTopos";
 
-			}
+		} else {
+			// multiple topos found
+			model.put("selections", results);
+			return "topos/toposList";
+		}
 
-			
-			
-			
-			
-				
-			@GetMapping(value = "/topos/{topoId}")
-			public String initUpdatetopoForm(@NotNull @PathVariable("topoId") Integer   topoId, @NotNull Model model) {
-				Topo topo = this.escaladeService.findTopoById(topoId);
-				model.addAttribute(topo);
-				
-				
-				
-				
-				return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
-			}
+	}
 
-			
-			@PostMapping(value = "/topos/{topoId}")
-			public String processUpdatetopoForm(Topo topo, BindingResult result, @PathVariable("topoId")  Integer topoId  ) {
-				if (result.hasErrors()) {
-					return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
-				} else {
+	@GetMapping(value = "/toposAvailable")
+	public String processFindToposAvailable(Topo topo, BindingResult result, Map<String, Object> model) {
 
-					Topo topoToModify = this.escaladeService.findTopoById(topoId);			
-					topoToModify.setName(topo.getName());
-					topoToModify.setAvailable(topo.isAvailable());
-					topoToModify.setDescription(topo.getDescription());				
-					this.escaladeService.updateTopo(topoToModify);			
-					return "redirect:/topos/{topoId}";
-				}
-			}
+		// allow parameterless GET request for /areas to return all records
+		if (topo.getName() == null) {
+			topo.setName(""); // empty string signifies broadest possible search
+		}
 
-			/**
-			 * Custom handler for displaying an topo.
-			 *
-			 * @param topoId the ID of the topo to display
-			 * @return a ModelMap with the model attributes for the view
-			 */
-			
-			@RequestMapping("/topos/{topoId}/sites/{siteId}")
-			public ModelAndView showtopo(@PathVariable("topoId") Integer topoId) {
-				ModelAndView mav = new ModelAndView("topos/topoDetails");
-				mav.addObject(this.escaladeService.findTopoById(topoId));		
-				return mav;
-			}
-			
-			
-			
-			
-			
+		Collection<Topo> results = this.escaladeService.findTopoAvailableByName(topo.getName());
+		if (results.isEmpty()) {
+			// no areas found
+			result.rejectValue("name", "notFound", "not found");
+			return "/topos/findTopos";
+
+		} else {
+			// multiple topos found
+			model.put("selections", results);
+			return "topos/toposList";
+		}
+	}
+	/*
+	 * 
+	 * 
+	 */
+	
+	@GetMapping(value = "/topos/{topoId}/topoBkgs")
+	public String initUpdatetopoForm(@NotNull @PathVariable("topoId") Integer topoId, @NotNull Model model) {
+		Topo topo = this.escaladeService.findTopoById(topoId);
+		model.addAttribute(topo);
+
+		return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
+	}
+	
+	
+	@PostMapping(value = "/topos/{topoId}/topoBkgs")
+	public String processUpdatetopoForm(Topo topo, BindingResult result, @PathVariable("topoId") Integer topoId) {
+		if (result.hasErrors()) {
+			return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
+		} else {
+
+			Topo topoToModify = this.escaladeService.findTopoById(topoId);
+			topoToModify.setName(topo.getName());
+			topoToModify.setAvailable(topo.isAvailable());
+			topoToModify.setDescription(topo.getDescription());
+			this.escaladeService.updateTopo(topoToModify);
+			return "redirect:/topos/{topoId}";
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+	/**
+	 * Custom handler for displaying an topo.
+	 *
+	 * @param topoId the ID of the topo to display
+	 * @return a ModelMap with the model attributes for the view
+	 */
+
+	@RequestMapping("/topos/{topoId}/topoBkgs/{topoBkgId}")
+	public ModelAndView showtopo(@PathVariable("topoId") Integer topoId, @PathVariable("topoBkgId") Integer topoBkgId) {
+		ModelAndView mav = new ModelAndView("topos/topoDetails");
+		mav.addObject(this.escaladeService.findTopoById(topoId));
+		return mav;
+	}
+	
+	
+
 }

@@ -23,11 +23,11 @@
     <title>escalade :: a Spring Framework demonstration</title>
 	  
     <%-- CSS generated from LESS --%>
-    <!--  
-    <spring:url value="/resources/css/escalade.css" var="escaladeCss"/>
+   
+    <spring:url value="/webapp/resources/css/escalade.css" var="escaladeCss"/>
     <link href="${escaladeCss}" rel="stylesheet"/>
 	  
-	-->
+
 	
 	
 	

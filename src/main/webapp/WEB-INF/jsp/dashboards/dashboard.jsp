@@ -8,36 +8,38 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <escalade:layout pageName="dashboard">
-	<head>
+	<head >	
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="/webapp/resources/css/escalade.css" />
 <title><c:out value="${title}" /></title>
 	</head>
 	<h2>Dashboard</h2>
 	<h3 class="mycolor">Topos & Sites</h3>
-	<hr>
+	<div><img src="/resources/images/sites.png" class="rounded float-left" class="rounded mx-auto d-block" alt="cascadeDuRougetLandscape" width="152" height="118"></div>
 	<div class="container-fluid">
 		<div class="table-responsive">
 			<div>
-				<table class="table table-dark">
-					<thead>
+				<table class="table table-sm table-dark">
+					<thead >
 						<tr>
 							<th scope="col">#</th>
 							<th scope="col">Caption</th>
-							<th scope="col">My topos & sites:</th>
+							<th scope="col"></th>
+							<th scope="col">All Topos borrowed:</th>							
+							<th scope="col">My borrowed topo list:</th>
 						</tr>
 					</thead>
 					<tr>
 						<th scope="row">1</th>
 						<td>My topos:</td>
-						<td><a href="/topos/new/"><button class="btn-link"></button>Create
-								a new topo</a></td>
+						<td><a href="/topos"><button class="btn-link"></button>topo list available
+								</a></td>
 					</tr>
 					<tr>
 						<th scope="row">2</th>
-						<td>My topo list:</td>
-						<td><a href="/topos"><button class="btn-link"></button>Topo
-								list</a></td>
+						<td>My borrowed topo list:</td>
+						<td><a href="/topoBkgs"><button class="btn-link"></button>borrowed topo list
+								</a></td>
 					</tr>
 					<tr>
 						<th scope="row">3</th>
@@ -60,6 +62,8 @@
 				</table>
 			</div>
 		</div>
+		
+		
 		<!--  -->
 		<h3 class="mycolor">Activities</h3>
 		<hr>

@@ -276,6 +276,11 @@ public class User {
 		this.email = email;
 	}
 
+	public void addTopoBkg(TopoBkg topoBkg) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }
