@@ -15,12 +15,12 @@
 									});
 								</script>
 		<script>
-									$(function() {
-										$("#borrowEndDate").datepicker({
-											dateFormat : 'yy/mm/dd'
-										});
-									});
-								</script>						
+			$(function() {
+				$("#borrowEndDate").datepicker({
+					dateFormat : 'yy/mm/dd'
+				});
+			});
+		</script>						
 								
     </jsp:attribute>
 	<jsp:body>
@@ -28,17 +28,19 @@
         <c:if test="${topoBkg['new']}">New </c:if> Topo booking
     </h2>
     <form:form modelAttribute="topoBkg" class="form-horizontal"
-			id="add-topoBkg-form">
+			id="add-topoBkg-form">	
+			<div class="col-sm-10" > 
+                   		  <p>Topo's name</p>
+							<br />														 
+						 	<input type="text" name="name" value="${topo.name}" disabled />
+             		</div>          				
         	<div class="form-group has-feedback">
-            			<escalade:inputField label="Name" name="name" />   
-            		 	                 		
-                   		 <escalade:inputField label="Borrow Date"
-					name="borrowDate" /> 	
-                   		 <escalade:inputField label="Borrow End Date"
-					name="borrowEndDate" /> 
-                   		 <escalade:inputField label="In Progress"
-					name="inProgress" />      
-					
+            		 	  <!--<escalade:inputField label="Name" name="name"  /> -->
+            		 	  <br />
+            		 	  <br />
+                   		  <escalade:inputField label="Borrow Date" name="borrowDate" />
+                   		 <escalade:inputField label="Borrow End Date" name="borrowEndDate" />
+                   		 <escalade:inputField label="In Progress" name="inProgress" /> 
                    		  <p>Below you can enabled/disabled accepted status:</p>
 							<br />
         					<input type="radio" name="accepted" value="false"
@@ -46,7 +48,8 @@
 							<label for="false">disabled</label><br />
         					<input type="radio" name="accepted" value="true" id="true" />
         					<label for="true">enabled</label><br />								
-        	</div>           		
+        	</div>
+        		
         	<div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>

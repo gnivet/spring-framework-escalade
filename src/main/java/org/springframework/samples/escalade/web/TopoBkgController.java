@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoBkg;
@@ -19,7 +18,6 @@ import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -179,16 +177,16 @@ public class TopoBkgController {
 
 			
 				
-			@GetMapping(value = "/topoBkgs/{topoBkgId}")
-			public String initUpdatetopoBkgForm(@NotNull @PathVariable("topoBkgId") Integer topoBkgId, @NotNull ModelMap model) {
+			@GetMapping(value = "/topos/{topoId}/topoBkgs/{topoBkgId}")
+			public String initUpdatetopoBkgForm(@NotNull @PathVariable("topoBkgId") Integer topoBkgId, @PathVariable("topoId") Integer topoId,  @NotNull ModelMap model) {
 				TopoBkg topoBkg = this.escaladeService.findTopoBkgById(topoBkgId);
 				model.put("topoBkg" , topoBkg);
 				return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
 			}
 
 			
-			@PostMapping(value = "/topoBkgs/{topoBkgId}")
-			public String processUpdatetopoBkgForm(TopoBkg topoBkg, BindingResult result, @PathVariable("topoBkgId")  Integer topoBkgId, ModelMap model, User user ) {
+			@PostMapping(value = "/topos/{topoId}/topoBkgs/{topoBkgId}")
+			public String processUpdatetopoBkgForm(TopoBkg topoBkg, BindingResult result, @PathVariable("topoBkgId")  Integer topoBkgId, @PathVariable("topoId") Integer topoId, ModelMap model, User user ) {
 				if (result.hasErrors()) {
 					model.put("topoBkg", topoBkg);
 					return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
@@ -229,29 +227,7 @@ public class TopoBkgController {
 			
 			
 					
-			@GetMapping(value = "/topos/{topoId}/topoBkgs")
-			public String initUpdatetopoForm(@NotNull @PathVariable("topoId") Integer topoId, @NotNull Model model) {
-				Topo topo = this.escaladeService.findTopoById(topoId);
-				model.addAttribute(topo);
-
-				return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
-			}
 			
-			
-			@PostMapping(value = "/topos/{topoId}/topoBkgs")
-			public String processUpdatetopoForm(Topo topo, BindingResult result, @PathVariable("topoId") Integer topoId) {
-				if (result.hasErrors()) {
-					return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
-				} else {
-
-					Topo topoToModify = this.escaladeService.findTopoById(topoId);
-					topoToModify.setName(topo.getName());
-					topoToModify.setAvailable(topo.isAvailable());
-					topoToModify.setDescription(topo.getDescription());
-					this.escaladeService.updateTopo(topoToModify);
-					return "redirect:/topos/{topoId}";
-				}
-			}
 			
 
 			

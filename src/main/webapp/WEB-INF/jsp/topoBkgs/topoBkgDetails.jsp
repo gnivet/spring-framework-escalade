@@ -29,7 +29,7 @@
 			<td><c:out value="${topoBkg.in_progress}" /></td>
 		</tr>					
 	</table>
-	<spring:url value="/topos/{topoId}" var="editUrl">
+	<spring:url value="/topos/{topoId}/topoBkgs" var="editUrl">
         <spring:param name="topoId" value="${topo.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit topo booking</a>
