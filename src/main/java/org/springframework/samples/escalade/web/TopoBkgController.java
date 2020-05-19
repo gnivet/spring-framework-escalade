@@ -129,7 +129,7 @@ public class TopoBkgController {
 						
 					System.out.println(topo.getId());	
 					
-					this.topoBkgRepository.checkToposBookedByID(topo.getId(), bool_flag);
+					//this.topoBkgRepository.checkToposBookedByID(topo.getId(), bool_flag);
 					
 					
 					
