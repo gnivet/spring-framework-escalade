@@ -9,7 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,14 +21,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Topo extends NamedEntity {
 
 	@Column(name = "description")
-	@NotEmpty
+	@NotEmpty(message ="Please add a description")
+	@Size(min = 2)
 	private String description;
 
 	@Column(name = "available")	
+	@AssertTrue
 	private boolean available;
 
 	@Column(name = "comment_date")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@Past
 	private LocalDate commentDate;
 
 	@ManyToOne(fetch = FetchType.LAZY)

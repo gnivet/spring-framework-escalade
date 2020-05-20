@@ -70,6 +70,7 @@ public class TopoBkgController {
 				 
 				 User user = this.userRepository.findByUsername(username);
 				 model.addAttribute("firstName" , user.getFirstName() );
+				 model.addAttribute("user", user.getClass());
 				 
 				 }
 				
@@ -83,7 +84,7 @@ public class TopoBkgController {
 		        {
 		        	System.out.println("topo est null" + model + topo);
 		        }
-			model.put("topo", topo);
+				model.put("topo", topo);
 				
 				
 				return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
@@ -104,7 +105,7 @@ public class TopoBkgController {
 		 			String userName = principal.getName();
 		 			User user = this.userRepository.findByUsername(userName);
 		 			site.setUser(user);
-		 			
+		 			topoBkg.setUser(user);
 		 		}else
 		 		{	
 		 			 return "redirect:/users/login/";
@@ -129,14 +130,17 @@ public class TopoBkgController {
 						
 					System.out.println(topo.getId());	
 					
-					//this.topoBkgRepository.checkToposBookedByID(topo.getId(), bool_flag);
-					
+					String req = "";
+					 req = this.topoBkgRepository.checkToposBookedByID(topo.getId(), bool_flag);
+					 if (req.isEmpty())
+					 {	 
 					
 					
 					topoBkg.setTopo(topo);	
 					
 					
 					topoBkg = this.escaladeService.saveTopoBkg(topoBkg);
+					 }
 					return "redirect:/topoBkgs/" +  topoBkg.getId() ;
 				}
 				

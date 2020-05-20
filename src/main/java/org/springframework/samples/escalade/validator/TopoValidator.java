@@ -16,50 +16,56 @@
 package org.springframework.samples.escalade.validator;
 
 
-import org.springframework.samples.escalade.model.Site;
+import org.springframework.samples.escalade.model.Topo;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 /**
- * <code>Validator</code> for <code>Site</code> forms.
+ * <code>Validator</code> for <code>Topo</code> forms.
  * <p>
  * We're not using Bean Validation annotations here because it is easier to define such validation rule in Java.
  * </p>
  *
  * @author Guillaume Nivet 
  */
-public class SiteValidator implements Validator {
+public class TopoValidator implements Validator {
 
     private static final String REQUIRED = "required";
 
     @Override
     public void validate(Object obj, Errors errors) {
-        Site site = (Site) obj;
-        String name = site.getName();
+        Topo topo = (Topo) obj;
+        String name = topo.getName();
         // name validation
         if (!StringUtils.hasLength(name)) {
             errors.rejectValue("name", REQUIRED, REQUIRED);
         }
-
+        
+        // description validation
+        String description = topo.getDescription();
+        if (!StringUtils.hasLength(description)) {
+            errors.rejectValue("description", REQUIRED, REQUIRED);
+        }
+       
         // type validation
-        if (site.isNew() && site.getUser() == null) {
+        if (topo.isNew() && topo.getUser() == null) {
             errors.rejectValue("type", REQUIRED, REQUIRED);
         }
         	
         // birth date validation
-        if (site.getBirthDate() == null) {
-            errors.rejectValue("birthDate", REQUIRED, REQUIRED);
+        if (topo.getDescription() == null) {
+            errors.rejectValue("description", REQUIRED, REQUIRED);
         }
        
     }
 
     /**
-     * This Validator validates *just* Site instances
+     * This Validator validates *just* Topo instances
      */
     @Override
     public boolean supports(Class<?> clazz) {
-        return Site.class.isAssignableFrom(clazz);
+        return Topo.class.isAssignableFrom(clazz);
     }
 
 

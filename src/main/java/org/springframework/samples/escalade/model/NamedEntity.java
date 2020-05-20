@@ -17,6 +17,8 @@ package org.springframework.samples.escalade.model;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  * Simple JavaBean domain object adds a name property to
@@ -30,7 +32,9 @@ import javax.persistence.MappedSuperclass;
 public class NamedEntity extends BaseEntity {
 
 	@Column(name = "name")
-    private String name;
+	@NotEmpty(message ="Please add a name")
+	@Size(min = 2)
+	private String name;
 
     public String getName() {
         return this.name;

@@ -16,6 +16,6 @@ public interface TopoBkgRepository {
 
 	Collection<TopoBkg> findTopoBkgByName(String name);
 
-	TopoBkg checkToposBookedByID(Integer id, Boolean bool_flag);
+	String checkToposBookedByID(Integer id, Boolean bool_flag);
 
 }

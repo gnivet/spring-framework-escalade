@@ -118,6 +118,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Avec l'autre compte je recherche le topo et je clique sur le lien réserver.
 		http.authorizeRequests().antMatchers("/topos/*/topoBkg/topoBkgs/*").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/*").hasAnyRole("USER", "ADMIN");
+		
 		//	http.authorizeRequests().antMatchers("/areas/").hasAnyRole("USER", "ADMIN");			
 		// For ADMIN only. /users/find
 		http.authorizeRequests().antMatchers("/admin").hasRole("ADMIN");

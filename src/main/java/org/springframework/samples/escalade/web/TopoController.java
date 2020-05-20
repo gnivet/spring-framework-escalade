@@ -9,20 +9,18 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Topo;
-import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.User;
-import org.springframework.samples.escalade.repository.TopoBkgRepository;
 import org.springframework.samples.escalade.repository.TopoRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,19 +33,16 @@ public class TopoController {
 	private static final String VIEWS_TOPO_CREATE_OR_UPDATE_FORM = "topos/createOrUpdateTopoForm";
 	private EscaladeService escaladeService;
 	private UserRepository userRepository;
+	
 	private TopoRepository topoRepository;
-	private TopoBkgRepository topoBkgRepository;
 
 	@Autowired
-	public TopoController(EscaladeService escaladeService, UserRepository userRepository, TopoRepository topoRepository,
-			TopoBkgRepository topoBkgR
-
-	) {
+	public TopoController(EscaladeService escaladeService, UserRepository userRepository, TopoRepository topoRepository)
+	 {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
 		this.topoRepository = topoRepository;
-		this.topoBkgRepository = topoBkgRepository;
-
+		
 	}
 
 	@InitBinder
@@ -66,7 +61,7 @@ public class TopoController {
 	}
 
 	@PostMapping(value = "/topos/new")	
-public String processCreationForm(Principal principal, @Valid Topo topo,  Integer topoBkgId, BindingResult result, Integer topoId, Map<String, Object> model) 
+public String processCreationForm( @ModelAttribute("topo") @Valid Topo topo,  BindingResult result, Integer topoId, Model model, Principal principal) 
 	{
 		
 		String userName = principal.getName();
@@ -79,52 +74,23 @@ public String processCreationForm(Principal principal, @Valid Topo topo,  Intege
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 
+	
+		
 		User user = this.userRepository.findByUsername(userName);
-
+					topo.setUser(user);					
+					model.addAttribute("users", user);
+					model.addAttribute("topos", topo);
 		if (result.hasErrors()) {
 			return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
 		} else {
-
-			// topo.setUser(user);
-			model.put("topos", topo);
-			topo = this.escaladeService.saveTopo(topo);
+			
+			topo = this.escaladeService.saveTopo(topo);		
+			//return "/topos/success";
 			return "redirect:/topos/" + topo.getId();
 		}
 	}
 
 	
-
-	@PostMapping(value = "/topos/{topoId}")
-	public String processCreationForm(Principal principal, TopoBkg topoBkg, Integer userId,
-			BindingResult result, Integer topoId, ModelMap model ) {
-
-		String userName = principal.getName();
-
-		/**
-		 * Retrieve a <code>User</code> from the data store by id.
-		 *
-		 * @param userName the userName to search for
-		 * @return the <code>User</code> if found
-		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
-		 */
-
-		User user = this.userRepository.findByUsername(userName);
-
-		if (result.hasErrors()) {
-			return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
-		} else {
-
-			topoBkg.setTopoBkg(topoBkg);
-			
-			// topo.setUser(user);
-			model.addAttribute("topoBkgs", topoBkg);
-			topoBkg = this.escaladeService.saveTopoBkg(topoBkg);
-						
-			
-			return "redirect:/topoBkgs/" + topoBkg.getId();
-		}
-	}
-  
 
 	@GetMapping(value = "/topos/find")
 	public String initFindForm(Map<String, Object> model) {
@@ -178,26 +144,38 @@ public String processCreationForm(Principal principal, @Valid Topo topo,  Intege
 		}
 	}
 	/*
-	 * 
+	 *  Topo update 
 	 * 
 	 */
 	
-	@GetMapping(value = "/topos/{topoId}/topoBkgs")
-	public String initUpdatetopoForm(@NotNull @PathVariable("topoId") Integer topoId, @NotNull Model model) {
+	@GetMapping(value = "/topos/{topoId}")
+	public String initUpdatetopoForm(@NotNull @PathVariable("topoId") Integer topoId, @NotNull Model model, User user , Principal principal) {
 		Topo topo = this.escaladeService.findTopoById(topoId);
 		model.addAttribute(topo);
+		String userName = principal.getName();
+		user = this.userRepository.findByUsername(userName);
+	
+		//User user = this.userRepository.findByUsername(userName);
+		//topo.setUser(user.);
+				model.addAttribute("users", user);
+		
 
 		return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
 	}
 	
 	
-	@PostMapping(value = "/topos/{topoId}/topoBkgs")
-	public String processUpdatetopoForm(Topo topo, BindingResult result, @PathVariable("topoId") Integer topoId) {
+	@PostMapping(value = "/topos/{topoId}")
+	public String processUpdatetopoForm(Topo topo, BindingResult result, @PathVariable("topoId") Integer topoId ,User user, Principal principal) {
+		
+		
 		if (result.hasErrors()) {
 			return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
 		} else {
 
-			Topo topoToModify = this.escaladeService.findTopoById(topoId);
+			Topo topoToModify = this.escaladeService.findTopoById(topoId);				
+			String userName = principal.getName();
+			user = this.userRepository.findByUsername(userName);
+			topoToModify.setUser(topo.getUser());
 			topoToModify.setName(topo.getName());
 			topoToModify.setAvailable(topo.isAvailable());
 			topoToModify.setDescription(topo.getDescription());
@@ -207,17 +185,6 @@ public String processCreationForm(Principal principal, @Valid Topo topo,  Intege
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 
 	/**
 	 * Custom handler for displaying an topo.

@@ -42,7 +42,7 @@
 			<c:forEach items="${selections}" var="topo">
 				<tr>
 					
-					<td><spring:url value="/topos/{topoId}/topoBkgs" var="topoUrl">
+					<td><spring:url value="/topos/{topoId}/" var="topoUrl">
 							<spring:param name="topoId" value="${topo.id} " />
 						</spring:url>
 						<td><a href="${fn:escapeXml(topoUrl)}"><c:out value="${topo.name}"/></a> </td>
