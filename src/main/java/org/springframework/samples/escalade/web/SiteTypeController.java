@@ -70,7 +70,7 @@ public class SiteTypeController {
         return VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM;
     }
     @PostMapping(value = "/sitetypes/new")
-    public String processCreationForm(Principal principal,  @PathVariable("siteTypeId")  Integer siteTypeId,  @Valid SiteType siteType, BindingResult result, Map<String, Object> model, String name, Integer SiteTypeId, Principal sitetype) {
+    public String processCreationForm(   @Valid SiteType siteType, BindingResult result, Map<String, Object> model, String name, Integer SiteTypeId, Integer siteTypeId, Principal principal) {
     	
     	String userName = principal.getName();
 		
@@ -97,7 +97,7 @@ public class SiteTypeController {
 			model.put("siteType", siteType);
 			siteType.setName(name);
 			SiteType siteTypeToModify = this.escaladeService.findSiteTypeById(siteTypeId);
-			siteTypeToModify.setName(sitetype.getName());		
+			siteTypeToModify.setName(siteType.getName());		
 			this.escaladeService.updateComment(siteTypeToModify);	
         	siteType = this.escaladeService.saveSiteType(siteType);
 			
@@ -137,28 +137,7 @@ public class SiteTypeController {
 	}
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	@GetMapping(value = "/sitetypes/{siteTypeId}/edit")
 	public String initUpdateSiteTypeForm(@PathVariable("siteTypeId") Integer siteTypeId, Model model) {
 		SiteType siteType = this.escaladeService.findSiteTypeById(siteTypeId);

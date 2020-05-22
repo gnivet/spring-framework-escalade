@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Area;
+import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.samples.escalade.repository.SiteRepository;
@@ -34,6 +35,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,7 +79,13 @@ public class AreaController {
 	}
 
 	@PostMapping(value = "/areas/new")
-	public String processCreationForm(Principal principal, @Valid Area area,  Integer siteId, BindingResult result, Integer areaId, Map<String, Object> model) {
+	public String processCreationForm( @ModelAttribute("area") @Valid Area area,  BindingResult result, Integer areaId, Map<String, Object> model ,Principal principal,  Integer siteId) {
+		
+		
+		//public String processCreationForm(@ModelAttribute("topoBkg") @Valid TopoBkg topoBkg, BindingResult result,
+		//		Model model, Principal principal, @PathVariable Integer topoId) {	
+		
+		
 		
 		String userName = principal.getName();
 		

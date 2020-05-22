@@ -22,7 +22,7 @@ public class Topo extends NamedEntity {
 
 	@Column(name = "description")
 	@NotEmpty(message ="Please add a description")
-	@Size(min = 2)
+	//@Size(min = 2)
 	private String description;
 
 	@Column(name = "available")	

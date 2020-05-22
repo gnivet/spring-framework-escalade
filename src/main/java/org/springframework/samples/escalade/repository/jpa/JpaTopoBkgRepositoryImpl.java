@@ -74,5 +74,16 @@ public class JpaTopoBkgRepositoryImpl implements TopoBkgRepository {
 		query.setParameter("name", "%" + name + "%");
 		return query.getResultList();
 	}
+
+	@Override
+	public String checkToposBookedByID(Integer topoId) {
+		Query query = this.em.createQuery("select topo from Topo topo left join fetch TopoBkg.topos where topo.topoId like :topoId");
+		//Query query = this.em.createQuery("with req1 as (select * ,  ROW_NUMBER() OVER (order by id) as RN from topo_bkgs tb where  exists (select count(*) AS nb_topo from  topos t where tb.topo_id = t.id))\n" + 
+		//		"select WHEN RN < 1 case then '1' WHEN RN >= 1 then '0' from req1;)");
+		//Query query = this.em.createQuery("SELECT DISTINCT owner FROM User user left join fetch user.sites WHERE user.userId LIKE :userId");
+		query.setParameter("topoId", topoId);
+		return (String) query.getSingleResult();	
+		
+	}
 	
 }

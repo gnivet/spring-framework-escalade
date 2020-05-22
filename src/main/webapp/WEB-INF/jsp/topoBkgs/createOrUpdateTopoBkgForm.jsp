@@ -1,3 +1,4 @@
+
 <%@ page session="false" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -29,15 +30,15 @@
     </h2>
     <form:form modelAttribute="topoBkg" class="form-horizontal"
 			id="add-topoBkg-form">	
+			<!--  
 			<div class="col-sm-10" > 
                    		  <p>Topo's name</p>
 							<br />														 
 						 	<input type="text" name="name" value="${topo.name}" disabled />
-             		</div>          				
+             		</div>  
+             -->		        				
         	<div class="form-group has-feedback">
-            		 	  <!--<escalade:inputField label="Name" name="name"  /> -->
-            		 	  <br />
-            		 	  <br />
+            		 	  <escalade:inputField label="Name" name="name"  />             		 	 
                    		  <escalade:inputField label="Borrow Date" name="borrowDate" />
                    		 <escalade:inputField label="Borrow End Date" name="borrowEndDate" />
                    		 <escalade:inputField label="In Progress" name="inProgress" /> 

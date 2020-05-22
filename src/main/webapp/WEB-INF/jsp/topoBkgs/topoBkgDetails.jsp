@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags" %>
-<escalade:layout pageName="topoBkgs">
+<escalade:layout pageName="topo_bkgs">
 	<h2>Topo booking details</h2>
 	<table class="table table-striped">
 		<tr>

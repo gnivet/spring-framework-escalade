@@ -36,6 +36,7 @@ public class Area extends NamedEntity {
 
 		
 	@Column(name = "street")
+	@NotEmpty
 	private String street;
 
 	@Column(name = "postalcode")
@@ -63,6 +64,7 @@ public class Area extends NamedEntity {
 	}
 
 	@Column(name = "country")
+	@NotEmpty
 	private String country;
 
 	public String getCountry() {
@@ -74,6 +76,7 @@ public class Area extends NamedEntity {
 	}
 
 	@Column(name = "gpscoordinate")
+	@NotEmpty
 	private String gpscoordinate;
 
 	public String getGpscoordinate() {
