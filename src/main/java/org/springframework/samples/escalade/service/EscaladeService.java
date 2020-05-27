@@ -208,6 +208,8 @@ public interface EscaladeService {
 	//NamedEntity updateArea(Area area)throws DataAccessException;
 	
     Collection <Topo> findTopoAvailableByName(String name) throws DataAccessException;
+
+	Topo findTopoBookedBytopoBkgId(@NotNull Integer topoBkgId)throws DataAccessException;
 	
 	
 }

@@ -33,16 +33,16 @@ public class TopoController {
 	private static final String VIEWS_TOPO_CREATE_OR_UPDATE_FORM = "topos/createOrUpdateTopoForm";
 	private EscaladeService escaladeService;
 	private UserRepository userRepository;
-	
+
 	private TopoRepository topoRepository;
 
 	@Autowired
-	public TopoController(EscaladeService escaladeService, UserRepository userRepository, TopoRepository topoRepository)
-	 {
+	public TopoController(EscaladeService escaladeService, UserRepository userRepository,
+			TopoRepository topoRepository) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
 		this.topoRepository = topoRepository;
-		
+
 	}
 
 	@InitBinder
@@ -53,19 +53,26 @@ public class TopoController {
 	// Publish a topo
 
 	@GetMapping(value = "/topos/new")
-	public String initCreationForma(Map<String, Object> model) {
+	public String initCreationForma(Map<String, Object> model, Principal principal) {
 
-		Topo topo = new Topo();
-		model.put("topo", topo);
+		if (principal != null) {
+			Topo topo = new Topo();
+			model.put("topo", topo);
+			return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
+		}
 		return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/topos/new")	
-public String processCreationForm( @ModelAttribute("topo") @Valid Topo topo,  BindingResult result, Integer topoId, Model model, Principal principal) 
-	{
-		
-		String userName = principal.getName();
-		
+	@PostMapping(value = "/topos/new")
+	public String processCreationForm(@ModelAttribute("topo") @Valid Topo topo, BindingResult result, Integer topoId,
+			Model model, Principal principal) {
+		if (principal.getName() != null) {
+			String userName = principal.getName();
+			User user = this.userRepository.findByUsername(userName);
+			topo.setUser(user);
+		} else {
+			return "redirect:/users/login/";
+		}
 		/**
 		 * Retrieve a <code>User</code> from the data store by id.
 		 *
@@ -74,23 +81,17 @@ public String processCreationForm( @ModelAttribute("topo") @Valid Topo topo,  Bi
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 
-	
-		
-		User user = this.userRepository.findByUsername(userName);
-					topo.setUser(user);					
-					model.addAttribute("users", user);
-					model.addAttribute("topos", topo);
 		if (result.hasErrors()) {
 			return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
 		} else {
-			
-			topo = this.escaladeService.saveTopo(topo);		
-			//return "/topos/success";
-			return "redirect:/topos/" + topo.getId();
-		}
-	}
+			topo = this.escaladeService.saveTopo(topo);
+			if (topo == null) {
+				return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
+			}
 
-	
+		}
+		return "redirect:/topos/" + topo.getId();
+	}
 
 	@GetMapping(value = "/topos/find")
 	public String initFindForm(Map<String, Object> model) {
@@ -144,35 +145,34 @@ public String processCreationForm( @ModelAttribute("topo") @Valid Topo topo,  Bi
 		}
 	}
 	/*
-	 *  Topo update 
+	 * Topo update
 	 * 
 	 */
-	
+
 	@GetMapping(value = "/topos/{topoId}")
-	public String initUpdatetopoForm(@NotNull @PathVariable("topoId") Integer topoId, @NotNull Model model, User user , Principal principal) {
+	public String initUpdatetopoForm(@NotNull @PathVariable("topoId") Integer topoId, @NotNull Model model, User user,
+			Principal principal) {
 		Topo topo = this.escaladeService.findTopoById(topoId);
 		model.addAttribute(topo);
 		String userName = principal.getName();
 		user = this.userRepository.findByUsername(userName);
-	
-		//User user = this.userRepository.findByUsername(userName);
-		//topo.setUser(user.);
-				model.addAttribute("users", user);
-		
+
+		// User user = this.userRepository.findByUsername(userName);
+		// topo.setUser(user.);
+		model.addAttribute("users", user);
 
 		return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
 	}
-	
-	
+
 	@PostMapping(value = "/topos/{topoId}")
-	public String processUpdatetopoForm(Topo topo, BindingResult result, @PathVariable("topoId") Integer topoId ,User user, Principal principal) {
-		
-		
+	public String processUpdatetopoForm(Topo topo, BindingResult result, @PathVariable("topoId") Integer topoId,
+			User user, Principal principal) {
+
 		if (result.hasErrors()) {
 			return VIEWS_TOPO_CREATE_OR_UPDATE_FORM;
 		} else {
 
-			Topo topoToModify = this.escaladeService.findTopoById(topoId);				
+			Topo topoToModify = this.escaladeService.findTopoById(topoId);
 			String userName = principal.getName();
 			user = this.userRepository.findByUsername(userName);
 			topoToModify.setUser(topo.getUser());
@@ -183,8 +183,6 @@ public String processCreationForm( @ModelAttribute("topo") @Valid Topo topo,  Bi
 			return "redirect:/topos/{topoId}";
 		}
 	}
-	
-	
 
 	/**
 	 * Custom handler for displaying an topo.
@@ -193,13 +191,11 @@ public String processCreationForm( @ModelAttribute("topo") @Valid Topo topo,  Bi
 	 * @return a ModelMap with the model attributes for the view
 	 */
 
-	@RequestMapping("/topos/{topoId}/topoBkgs/{topoBkgId}")
+	@RequestMapping("/topos/{topoId}/topoBkgs/{topoBkgId}/topoDetails")
 	public ModelAndView showtopo(@PathVariable("topoId") Integer topoId, @PathVariable("topoBkgId") Integer topoBkgId) {
 		ModelAndView mav = new ModelAndView("topos/topoDetails");
 		mav.addObject(this.escaladeService.findTopoById(topoId));
 		return mav;
 	}
-	
-	
 
 }

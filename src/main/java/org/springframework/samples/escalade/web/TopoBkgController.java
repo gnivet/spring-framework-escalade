@@ -58,14 +58,21 @@ public class TopoBkgController {
 	}
 
 	@GetMapping(value = "/topos/{topoId}/topoBkgs/new")
-	public String initCreationForma(Map<String, Object> model, Principal principal) {
+	public String initCreationForma(Map<String, Object> model, Principal principal, @PathVariable Integer topoId) {
 
-		if (principal != null) {
-
+		if (principal != null ) {
+			
+			Topo topo = new Topo();
+			if (topoId != null) {
+			topo = this.escaladeService.findTopoById(topoId);			
+			
 			TopoBkg topoBkg = new TopoBkg();
-
+			topoBkg.setName(topo.getDescription());
 			model.put("topoBkg", topoBkg);
-
+			}else
+			{				
+				return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
+			}
 		}
 
 		return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
@@ -87,7 +94,6 @@ public class TopoBkgController {
 		if (principal.getName() != null) {
 			String userName = principal.getName();
 			User user = this.userRepository.findByUsername(userName);
-			// site.setUser(user);
 			topoBkg.setUser(user);
 		} else {
 			return "redirect:/users/login/";
@@ -103,14 +109,19 @@ public class TopoBkgController {
 
 		Topo topo = this.topoRepository.findTopoById(topoId);
 		topoBkg.setTopo(topo);
-
+		System.out.println("--------------------------" + topo.getName()+ "--------------------------");
+		topoBkg.setName(topo.getName());
+		topo.setAvailable(false);
 		if (result.hasErrors()) {
 			return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
 		} else {
 
 			topoBkg = this.escaladeService.saveTopoBkg(topoBkg);
-
-			return "redirect:/topos/{topoId}/topoBkgs/" + topoBkg.getId();
+			if(topoBkg == null)
+			{
+				return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
+			}
+			return "redirect:/topoBkgs/" + topoBkg.getId();
 		}
 
 	}
@@ -130,58 +141,56 @@ public class TopoBkgController {
 			topoBkg.setName(""); // empty string signifies broadest possible search
 		}
 
-		// find areas by name
+		// find topoBkgs by name
 		Collection<TopoBkg> results = this.escaladeService.findTopoBkgByName(topoBkg.getName());
 
 		if (results.isEmpty()) {
-			// no areas found
+			// no topoBkgs found
 			result.rejectValue("name", "notFound", "not found");
 			return "/topoBkgs/findTopoBkgs";
 
 		} else {
-			// multiple topos found
+			// multiple topoBkgs found
 			model.put("selections", results);
 			return "topoBkgs/topoBkgsList";
 		}
 
 	}
 
-	@GetMapping(value = "/topos/{topoId}/topoBkgs/{topoBkgId}")
-	public String initUpdatetopoBkgForm(@NotNull @PathVariable("topoBkgId") Integer topoBkgId,
-			@PathVariable("topoId") Integer topoId, @NotNull Model model) {
+	@GetMapping(value = "/topoBkgs/{topoBkgId}/edit")
+	public String initUpdateTopoBkgForm(@NotNull  @PathVariable("topoBkgId") Integer topoBkgId,
+			  @NotNull Model model) {
 		TopoBkg topoBkg = this.escaladeService.findTopoBkgById(topoBkgId);
+		
 		model.addAttribute("topoBkg", new TopoBkg());
 		return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/topos/{topoId}/topoBkgs/{topoBkgId}")
-	public String processUpdatetopoBkgForm(TopoBkg topoBkg, BindingResult result,
-			@PathVariable("topoBkgId") Integer topoBkgId, @PathVariable("topoId") Integer topoId, ModelMap model,
+	@PostMapping(value = "/topoBkgs/{topoBkgId}/edit")
+	public String processUpdateTopoBkgForm(TopoBkg topoBkg, BindingResult result, 
+			@PathVariable("topoBkgId") Integer topoBkgId,  ModelMap model,
 			User user) {
 		if (result.hasErrors()) {
-			model.put("topoBkg", topoBkg);
+			model.put("topoBkg", topoBkg);			
 			return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
 		} else {
-
-			/*
-			 * user.addSite(site); this.escaladeService.saveSite(site); return
-			 * "redirect:/sites/{siteId}";
-			 */
-
-			user.addTopoBkg(topoBkg);
-			this.escaladeService.saveTopoBkg(topoBkg);
-
-			// TopoBkg topoBkgToModify = this.escaladeService.findTopoBkgById(topoBkgId);
-			// topoBkgToModify.setName(topoBkg.getName());
-			// topoBkgToModify.setAccepted(topoBkg.getAccepted());
-
-			// this.escaladeService.updateTopoBkg(topoBkgToModify);
+			TopoBkg topoBkgToModify  = this.escaladeService.findTopoBkgById(topoBkgId);
+			topoBkgToModify.setName(topoBkg.getName());
+			topoBkgToModify.setAccepted(topoBkg.getAccepted());
+			topoBkgToModify.setBorrowDate(topoBkg.getBorrowDate());
+			topoBkgToModify.setBorrowEndDate(topoBkg.getBorrowEndDate());
+			topoBkgToModify.setInProgress(topoBkg.isInProgress());
+			this.escaladeService.updateTopoBkg(topoBkgToModify);
+			//user.addTopoBkg(topoBkg);
+			//this.escaladeService.saveTopoBkg(topoBkg);
+			
 			return "redirect:/topoBkgs/{topoBkgId}";
 		}
 	}
 
+	
 	/**
-	 * Custom handler for displaying an topo.
+	 * Custom handler for displaying an topo booking.
 	 *
 	 * @param topoId the ID of the topo to display
 	 * @return a ModelMap with the model attributes for the view

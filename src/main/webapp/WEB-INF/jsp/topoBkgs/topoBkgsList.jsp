@@ -41,11 +41,13 @@
 				<tr>
 					
 					<td><spring:url value="/topoBkgs/{topoBkgId}/" var="topoBkgUrl">
+							<spring:param name="topoId" value="${topo.id} " />
 							<spring:param name="topoBkgId" value="${topoBkg.id} " />
 						</spring:url>
 						<td><a href="${fn:escapeXml(topoBkgUrl)}"><c:out value="${topoBkg.name}"/></a> </td>
 						
-					<td><spring:url value="/topoBkgs/{topoBkgId}" var="topoBkgUrl">
+					<td><spring:url value="/topoBkgs/{topoBkgId}/" var="topoBkgUrl">
+							<spring:param name="topoId" value="${topo.id} " />
 							<spring:param name="topoBkgId" value="${topoBkg.id} " />
 						</spring:url>							
 						<c:if test="${topoBkg.accepted == true}"><a href="${fn:escapeXml(topoBkgUrl)}"><c:out value="${topoBkg.accepted}" /></a></c:if>

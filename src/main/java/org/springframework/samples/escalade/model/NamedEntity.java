@@ -32,7 +32,7 @@ import javax.validation.constraints.Size;
 public class NamedEntity extends BaseEntity {
 
 	@Column(name = "name")
-	@NotEmpty(message ="Please add a name")
+	//@NotEmpty(message ="Please add a name")
 	//@Size(min = 2)
 	private String name;
 

@@ -21,12 +21,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Topo extends NamedEntity {
 
 	@Column(name = "description")
-	@NotEmpty(message ="Please add a description")
+	//@NotEmpty(message ="Please add a description")
 	//@Size(min = 2)
 	private String description;
 
 	@Column(name = "available")	
-	@AssertTrue
+	//@AssertTrue
 	private boolean available;
 
 	@Column(name = "comment_date")
@@ -90,6 +90,11 @@ public class Topo extends NamedEntity {
 	 */
 
 	public Topo() {
+	}
+
+	public void setTopo(Topo topo) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,7 +1,8 @@
 package org.springframework.samples.escalade.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.samples.escalade.model.User;
+//import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.samples.escalade.service.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -28,10 +29,10 @@ public class UserValidator implements Validator {
 		User user = (User) obj;
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
-		if (user.getName().length() < 6 || user.getName().length() > 32) {
+		if (user.getUsername().length() < 6 || user.getUsername().length() > 32) {
 			errors.rejectValue("username", "Size.userForm.username");
 		}
-		if (userService.findByUsername(user.getName()) != null) {
+		if (userService.findByUsername(user.getUsername()) != null) {
 			errors.rejectValue("username", "Duplicate.userForm.username");
 		}
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
@@ -42,7 +43,7 @@ public class UserValidator implements Validator {
 		if (!user.getPassword().equals(user.getPassword())) {
 			errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
 
-			String name = user.getName();
+			String name = user.getUsername();
 			// name validation
 			if (!StringUtils.hasLength(name)) {
 				errors.rejectValue("name", REQUIRED, REQUIRED);

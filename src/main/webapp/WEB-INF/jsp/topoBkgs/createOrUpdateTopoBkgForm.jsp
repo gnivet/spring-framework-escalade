@@ -27,21 +27,18 @@
 	<jsp:body>
     <h2>    
         <c:if test="${topoBkg['new']}">New </c:if> Topo booking
-    </h2>
+    </h2>   
     <form:form modelAttribute="topoBkg" class="form-horizontal"
 			id="add-topoBkg-form">	
-			<!--  
-			<div class="col-sm-10" > 
-                   		  <p>Topo's name</p>
-							<br />														 
-						 	<input type="text" name="name" value="${topo.name}" disabled />
-             		</div>  
-             -->		        				
+			      				
         	<div class="form-group has-feedback">
-            		 	  <escalade:inputField label="Name" name="name"  />             		 	 
-                   		  <escalade:inputField label="Borrow Date" name="borrowDate" />
-                   		 <escalade:inputField label="Borrow End Date" name="borrowEndDate" />
-                   		 <escalade:inputField label="In Progress" name="inProgress" /> 
+            		 	  <escalade:inputField label="Name" name="name" />            		 	 
+                   		  <escalade:inputField label="Borrow Date"
+					name="borrowDate" />
+                   		 <escalade:inputField label="Borrow End Date"
+					name="borrowEndDate" />
+                   		 <escalade:inputField label="In Progress"
+					name="inProgress" /> 
                    		  <p>Below you can enabled/disabled accepted status:</p>
 							<br />
         					<input type="radio" name="accepted" value="false"
@@ -55,7 +52,7 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${topoBkg['new']}">
-                        <button class="btn btn-default" type="submit">Add topo booking</button>
+                        <button class="btn btn-default" type="submit">Valid</button>
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-default" type="submit">Update topo booking</button>

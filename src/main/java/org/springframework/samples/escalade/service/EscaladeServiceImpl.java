@@ -20,6 +20,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
@@ -608,6 +609,16 @@ public class EscaladeServiceImpl implements EscaladeService {
 	public Collection<Topo> findTopoAvailableByName(String name) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return topoRepository.findTopoAvailableByName(name);
+	}
+
+
+
+
+
+	@Override
+	public Topo findTopoBookedBytopoBkgId(@NotNull Integer topoBkgId) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return topoBkgRepository.findTopoBookedBytopoBkgId(topoBkgId);
 	}
 
 

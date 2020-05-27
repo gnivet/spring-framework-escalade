@@ -118,13 +118,7 @@ public class UserController {
        
     
     
-    /*
-    @GetMapping(value = {"/", "/welcome"})
-    public String welcome(Model model) {
-        return "/welcome";
-    }
-    
-	*/
+   
 	public UserValidator getUserValidator() {
 		return userValidator;
 	}
@@ -132,19 +126,7 @@ public class UserController {
 	public void setUserValidator(UserValidator userValidator) {
 		this.userValidator = userValidator;
 	}
-	/*
-	 @GetMapping(value = "/users/logout")
-		public String logoutSuccessfulPage(Model model) {
-			model.addAttribute("title", "Logout");
-			return "/users/logout";
-		}
-	*/
-	/*
-	 * Dashboard
-	 */
-	
-
-	
+		
 	
 
 }

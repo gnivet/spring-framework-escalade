@@ -17,7 +17,7 @@
 		</div>
 		<div class="col"></div>
 		<h2>TP6 DA Java</h2>
-		<p>This site was made by Guillaume Nivet</p>
+		<p>©2020  Guillaume Nivet, tous droits réservés</p>		
 		<img src="/resources/images/cascadeDuRougetLandscape.JPG" class="img-rounded"
 			alt="cascade Du Rouget" width="304" height="236">
 	</div>

@@ -34,7 +34,7 @@
 			<tr>
 				<th style="width: 150px;">#</th>
 				<th style="width: 200px;">Name</th>
-				<th style="width: 200px;">True / False</th>
+				<th style="width: 200px;">Click on true to book </th>
 				<th style="width: 200px;">Description</th>
 			</tr>
 		</thead>

@@ -16,6 +16,8 @@
 package org.springframework.samples.escalade.validator;
 
 
+import java.util.Date;
+
 import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
@@ -36,23 +38,32 @@ public class TopoBkgValidator implements Validator {
     @Override
     public void validate(Object obj, Errors errors) {
         TopoBkg topoBkg = (TopoBkg) obj;
-        String name = topoBkg.getName();
-        // name validation
         
+        String name = topoBkg.getName();              
         if (!StringUtils.hasLength(name)) {
             errors.rejectValue("name", REQUIRED, REQUIRED);
         }
-        /*
-        // type validation
-        if (topoBkg.isNew() && topoBkg.getUser() == null) {
-            errors.rejectValue("type", REQUIRED, REQUIRED);
+        
+        
+                
+        Date borrowDate = topoBkg.getBorrowDate();
+        if (!StringUtils.hasLength((CharSequence) borrowDate)) {
+            errors.rejectValue("borrowDate", REQUIRED, REQUIRED);
         }
-        	
-        // birth date validation
+        
+        Date borrowEndDate = topoBkg.getBorrowEndDate();
+        if (!StringUtils.hasLength((CharSequence) borrowEndDate)) {
+            errors.rejectValue("borrowEndDate", REQUIRED, REQUIRED);
+        }
+        
+           
+               	
+        @SuppressWarnings("unused")
+		Boolean accepted = topoBkg.getAccepted();
         if (topoBkg.getAccepted() == null) {
-            errors.rejectValue("description", REQUIRED, REQUIRED);
+            errors.rejectValue("accepted", REQUIRED, REQUIRED);
         }
-      */
+      
     }
 
     /**
