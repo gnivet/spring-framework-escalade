@@ -19,13 +19,11 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.User;
-import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
@@ -67,21 +65,29 @@ public class ZoneController {
 		this.zoneRepository = zoneRepository;
 		
 	}
-
+	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}		
-
+	
+	
 	@GetMapping(value = "/sites/{siteId}/zones/new")
 	public String  initCreationForm(Map<String, Object> model, @PathVariable("siteId") Integer siteId )  {
+		
+		
 		Zone zone = new Zone();
+		
+				
+		
+		
 		model.put("zone", zone);
 		return VIEWS_ZONE_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/sites{siteId}/zones/new")
-	public String processCreationForm( Principal principal, @Valid Zone zone,  Way way,  Integer wayId, BindingResult result ,  Integer zoneId,  @PathVariable("siteId") Integer siteId, Map<String, Object> model) {
+	@PostMapping(value = "/sites/{siteId}/zones/new")
+	public String processCreationForm( Zone zone,  BindingResult result ,   @PathVariable("siteId") Integer siteId, Map<String, Object> model ,Principal principal) {
+		
 		
 		String userName = principal.getName();
 		
@@ -103,13 +109,15 @@ public class ZoneController {
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 		
-		Site site = this.siteRepository.findSiteById(siteId );
-		//	Way way = this.wayRepository.findWayByID(wayId);	  
+				  
 		if (result.hasErrors()) {
 			return VIEWS_ZONE_CREATE_OR_UPDATE_FORM;
 		} else {
+			
+			
 			model.put("zone", zone);
 			
+			Site site = this.escaladeService.findSiteById(siteId);
 			
 			zone.setSite(site);
 			
@@ -123,6 +131,7 @@ public class ZoneController {
 	@GetMapping(value = "/zones/find")
 	public String initFindForm(Map<String, Object> model) {
 		model.put("zone", new Zone());
+		//return "zones/findZones";
 		return "zones/zonesList";
 		// return "zones/{zoneId}";
 	}
@@ -136,8 +145,9 @@ public class ZoneController {
 			zone.setName(""); // empty string signifies broadest possible search
 		}
 
-		// find zones by postal code
-		Collection<Zone> results = this.escaladeService.findZoneByName(zone.getName());
+		// find zones by zone name
+		
+		Collection<Zone> results = this.escaladeService.findZones();
 		if (results.isEmpty()) {
 			// no zones found
 			result.rejectValue("name", "notFound", "not found");
@@ -161,17 +171,14 @@ public class ZoneController {
 	}
 
 	
-	
-	
 	@PostMapping(value = "/sites/{siteId}/zones/{zoneId}")
 	public String processUpdatezoneForm( @PathVariable("siteId") Integer siteId,  @PathVariable("zoneId") Integer zoneId,	Zone zone, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_ZONE_CREATE_OR_UPDATE_FORM;
 		} else {
-			//zone.setId(zoneId);
+			zone.setId(zoneId);
 			Zone zoneToModify = this.escaladeService.findZoneById(zoneId);
-			zoneToModify.setName(zone.getName());
-			zoneToModify.setZone(zone.getZone());
+			zoneToModify.setName(zone.getName());			
 			zoneToModify.setSite(zone.getSite());
 			this.escaladeService.saveZone(zoneToModify);
 			return "redirect:/sites{siteId}/zones/{zoneId}";
@@ -184,11 +191,43 @@ public class ZoneController {
 	 * @param zoneId the ID of the zone to display
 	 * @return a ModelMap with the model attributes for the view
 	 */
-	@RequestMapping("/zones/{zoneId}")
-	public ModelAndView showzone(@PathVariable("zoneId") Integer zoneId) {
+	@RequestMapping("/sites/{siteId}/zones/{zoneId}")
+	//@RequestMapping("/sites/zones/{zoneId}")
+	public ModelAndView showzone(@PathVariable("zoneId") Integer zoneId) throws Exception{
 		ModelAndView mav = new ModelAndView("zones/zoneDetails");
 		mav.addObject("zone", this.escaladeService.findZoneById(zoneId));
 		return mav;
 	}
 
+	
+	@GetMapping(value = "/sites/zones/{zoneId}")
+	public String initUpdatezoneForm( @NotNull @PathVariable("zoneId") Integer zoneId, @NotNull Model model) {
+		Zone zone = this.escaladeService.findZoneById(zoneId);
+		model.addAttribute(zone);
+		return VIEWS_ZONE_CREATE_OR_UPDATE_FORM;
+	}
+
+	
+	@PostMapping(value = "/sites/zones/{zoneId}")
+	public String processUpdatezoneForm( @PathVariable("zoneId") Integer zoneId,	Zone zone, BindingResult result) {
+		if (result.hasErrors()) {
+			return VIEWS_ZONE_CREATE_OR_UPDATE_FORM;
+		} else {
+			zone.setId(zoneId);
+			Zone zoneToModify = this.escaladeService.findZoneById(zoneId);
+			zoneToModify.setName(zone.getName());			
+			zoneToModify.setSite(zone.getSite());
+			this.escaladeService.saveZone(zoneToModify);
+			//this.escaladeService.updateZone(zoneToModify);
+			return "redirect:/sites/zones/{zoneId}";
+		}
+	}
+
+	
+	
+	
+	
+	
+	
+	
 }

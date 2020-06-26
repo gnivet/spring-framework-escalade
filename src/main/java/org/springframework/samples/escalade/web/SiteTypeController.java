@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -44,8 +45,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class SiteTypeController {
 
 	private static final String VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM = "sitetypes/createOrUpdateSiteTypeForm";
-	private final EscaladeService escaladeService;
-	
+	private final EscaladeService escaladeService;	
 	private UserRepository userRepository;
 	private SiteTypeRepository siteTypeRepository;
 
@@ -61,7 +61,8 @@ public class SiteTypeController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-		
+	
+	 
 	
 	@GetMapping(value = "/sitetypes/new")
     public String initCreationForm(Map<String, Object> model) {
@@ -69,8 +70,10 @@ public class SiteTypeController {
         model.put("siteType", siteType);
         return VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM;
     }
+	
+	
     @PostMapping(value = "/sitetypes/new")
-    public String processCreationForm(   @Valid SiteType siteType, BindingResult result, Map<String, Object> model, String name, Integer SiteTypeId, Integer siteTypeId, Principal principal) {
+    public String processCreationForm( @Valid SiteType siteType, BindingResult result,  Principal principal) {
     	
     	String userName = principal.getName();
 		
@@ -83,22 +86,18 @@ public class SiteTypeController {
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 
-	
 		
 		User user = this.userRepository.findByUsername(userName);
 		
-    	
-    	
-    	siteType = this.siteTypeRepository.findSiteTypeById(SiteTypeId);
+    			     	
+    	//siteType = this.siteTypeRepository.findSiteTypeById(siteTypeId);
         if (result.hasErrors()) {
             return VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM;
         } else {
            
-			model.put("siteType", siteType);
-			siteType.setName(name);
-			SiteType siteTypeToModify = this.escaladeService.findSiteTypeById(siteTypeId);
-			siteTypeToModify.setName(siteType.getName());		
-			this.escaladeService.updateComment(siteTypeToModify);	
+        	
+			
+		
         	siteType = this.escaladeService.saveSiteType(siteType);
 			
             return "redirect:/sitetypes/" + siteType.getId();
@@ -111,6 +110,7 @@ public class SiteTypeController {
 		 return "/sitetypes/findSiteTypes";
 	}
 
+      
 //findSite
 	@GetMapping(value = "/sitetypes")
 	public String processFindForm(SiteType siteType, BindingResult result, Map<String, Object> model) {
@@ -122,7 +122,8 @@ public class SiteTypeController {
 		
 		
 		// find areas by postal code
-		Collection<SiteType> results = this.escaladeService.findSiteTypeByName(siteType.getName());
+		//Collection<SiteType> results = this.escaladeService.findSiteTypeByName(siteType.getName());
+		Collection<SiteType> results = this.escaladeService.findSiteTypes();
 		
 		if (results.isEmpty()) {
 			// no areas found
@@ -136,16 +137,14 @@ public class SiteTypeController {
 		}
 	}
 
-	
-		
-	@GetMapping(value = "/sitetypes/{siteTypeId}/edit")
+	@GetMapping(value = "/sitetypes/{siteTypeId}")
 	public String initUpdateSiteTypeForm(@PathVariable("siteTypeId") Integer siteTypeId, Model model) {
 		SiteType siteType = this.escaladeService.findSiteTypeById(siteTypeId);
 		model.addAttribute(siteType);
 		return VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/sitetypes/{siteTypeId}/edit")
+	@PostMapping(value = "/sitetypes/{siteTypeId}")
 	public String processUpdateSiteTypeForm(SiteType sitetype, BindingResult result, @PathVariable("siteTypeId") Integer siteTypeId) {
 		if (result.hasErrors()) {
 			return VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM;
@@ -157,14 +156,14 @@ public class SiteTypeController {
 			return "redirect:/siteTypes/{siteTypeId}";
 		}
 	}
-
+	
 	/**
 	 * Custom handler for displaying an site type.
 	 *
 	 * @param areaId the ID of the area to display
 	 * @return a ModelMap with the model attributes for the view
 	 */
-	@GetMapping("/sitetypes/{siteTypeId}")
+	@RequestMapping("/sitetypes/{siteTypeId}")
 	public ModelAndView showSiteType(@PathVariable("siteTypeId") Integer siteTypeId) {
 		ModelAndView mav = new ModelAndView("sitetypes/siteTypeDetails");
 		mav.addObject(this.escaladeService.findSiteTypeById(siteTypeId));

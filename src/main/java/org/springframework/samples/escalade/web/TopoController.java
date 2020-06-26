@@ -2,6 +2,7 @@ package org.springframework.samples.escalade.web;
 
 import java.security.Principal;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -197,5 +198,27 @@ public class TopoController {
 		mav.addObject(this.escaladeService.findTopoById(topoId));
 		return mav;
 	}
+	
+	@GetMapping(value = "/FindtoposByUserName")
+	public String processtoposByUserName(Topo topo, BindingResult result, Map<String, Object> model, User user, Principal principal) {
 
+		// allow parameterless GET request for /areas to return all records
+		if (topo.getName() == null) {
+			topo.setName(""); // empty string signifies broadest possible search
+		}
+		String userName = principal.getName();
+		List<Topo> results = this.escaladeService.findTopoByUserName(userName);
+		
+		if (results.isEmpty()) {
+			// no areas found
+			result.rejectValue("name", "notFound", "not found");
+			return "/topos/findTopos";
+
+		} else {
+			// multiple topos found
+			model.put("selections", results);
+			return "topos/toposList";
+		}
+	}
+	
 }

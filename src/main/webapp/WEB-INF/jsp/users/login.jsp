@@ -23,7 +23,7 @@
 	<body>
 	<c:out value="${error}" />  
 		<div class="form-group">
-			<form:form method="POST" modelAttribute="userForm"
+			<form:form method="POST" modelAttribute="user"
 				class="form-signin">
 
 				<div class="row">

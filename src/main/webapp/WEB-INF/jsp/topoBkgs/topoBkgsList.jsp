@@ -8,6 +8,7 @@
 <escalade:layout pageName="topoBkgs">
 	<h2>Find topo booking</h2>
 	<!-- Research sites by topoBkgs -->
+	<!--  
 	<spring:url value="/topoBkgs" var="formUrl" />
 	<form:form modelAttribute="topoBkg" action="${fn:escapeXml(formUrl)}"
 		method="get" class="form-horizontal" id="search-topoBkg-form">
@@ -26,7 +27,7 @@
 				<button type="submit" class="btn btn-default">Find site</button>
 			</div>
 		</div>
-	</form:form>
+	</form:form> -->
 	<h2>topo bookings</h2>
 	<table id="topoBkgsTable" class="table table-striped">
 		<thead>
@@ -44,7 +45,7 @@
 							<spring:param name="topoId" value="${topo.id} " />
 							<spring:param name="topoBkgId" value="${topoBkg.id} " />
 						</spring:url>
-						<td><a href="${fn:escapeXml(topoBkgUrl)}"><c:out value="${topoBkg.name}"/></a> </td>
+						<td><a href="${fn:escapeXml(topoBkgUrl)}"><c:out value="${topoBkg.topo_id}"/></a> </td>
 						
 					<td><spring:url value="/topoBkgs/{topoBkgId}/" var="topoBkgUrl">
 							<spring:param name="topoId" value="${topo.id} " />

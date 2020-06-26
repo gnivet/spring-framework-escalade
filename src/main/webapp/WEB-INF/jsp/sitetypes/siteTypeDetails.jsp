@@ -10,9 +10,11 @@
 			<th>Name</th>
 			<td><b><c:out value="${siteType.name} " /></b></td>
 		</tr>		
-	</table>
-	 <spring:url value="{siteTypeId}/edit" var="editUrl">
+	</table>             
+     <td>               
+	 <spring:url value="sitetypes/{siteTypeId}" var="editUrl">
         <spring:param name="siteTypeId" value="${siteType.id}"/>
     </spring:url>
-    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit Site Type</a>    
+    <a href="${fn:escapeXml(editUrl)}"> <c:out value="${siteType.id}"/></a>
+	</td>    
 </escalade:layout>

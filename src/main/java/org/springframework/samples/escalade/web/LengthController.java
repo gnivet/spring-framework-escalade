@@ -61,15 +61,10 @@ public class LengthController {
 	}
 
 	
-	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
-	
-	
-	
 	
 
 	@RequestMapping(value = "/ways/{wayId}/lengths/new", method = RequestMethod.GET)
@@ -151,6 +146,27 @@ public class LengthController {
 		}
 	}
 
+	/*
+	@GetMapping(value = "/lengths/{lengthId}/points/new")
+	public String initUpdatelengthForm2(@PathVariable("lengthId") Integer lengthId, Model model) {
+		Length length = this.escaladeService.findLengthById(lengthId);
+		model.addAttribute(length);
+		return VIEWS_LENGTH_CREATE_OR_UPDATE_FORM;
+	}
+	
+	@PostMapping(value = "/lengths/{lengthId}/points/new")
+	public String processUpdatelengthForm2(Length length, BindingResult result, @PathVariable("lengthId") Integer lengthId) {
+		if (result.hasErrors()) {
+			return VIEWS_LENGTH_CREATE_OR_UPDATE_FORM;
+		} else {			
+			length.setId(lengthId);
+			this.escaladeService.saveLength(length);
+			return "redirect:/lengths/{lengthId}/points";
+		}
+	}
+	*/
+	
+	
 	/**
 	 * Custom handler for displaying an length.
 	 *

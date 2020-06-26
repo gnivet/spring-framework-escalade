@@ -11,8 +11,9 @@ public interface SiteTypeRepository {
 	public List<SiteType> findSiteTypes() throws DataAccessException;
 
 	
-
 	public SiteType findSiteTypeById(Integer id) throws DataAccessException;
+
+
 
 	public Collection<SiteType> findSiteBySiteType(String name)throws DataAccessException;
 

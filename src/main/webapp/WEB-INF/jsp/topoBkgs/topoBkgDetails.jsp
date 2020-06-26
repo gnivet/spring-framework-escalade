@@ -7,10 +7,6 @@
 	<h2>Topo booking details</h2>
 	<table class="table table-striped">
 		<tr>
-			<th>Name</th>
-			<td><b><c:out value="${topoBkg.name} " /></b></td>
-		</tr>
-		<tr>
 			<th>Accepted</th>
 			<td><c:out value="${topoBkg.accepted}" /></td>
 		</tr>
@@ -28,9 +24,14 @@
 			<th>In progress</th>
 			<td><c:out value="${topoBkg.inProgress}" /></td>
 		</tr>
+		<tr>
+		<th>Accepted</th>
+			<td><c:out value="${strAccepted}" /></td>
+		</tr>
+				
 	</table>
 	
-	<spring:url value="/topoBkgs/{topoBkgId}/edit" var="editUrl">	
+	<spring:url value="/topoBkgs/{topoBkgId}/topos/" var="editUrl">	
 		<spring:param name="topoBkgId" value="${topoBkg.id}" />
 	</spring:url>
 	<a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit

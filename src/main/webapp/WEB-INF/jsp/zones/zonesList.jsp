@@ -6,7 +6,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags" %>
 <escalade:layout pageName="zones">
-<h2>Find sites</h2>
+<h2>Find zones</h2>
     <!-- Research sites by zones -->
     <spring:url value="/zones" var="formUrl"/>
     <form:form modelAttribute="zone" action="${fn:escapeXml(formUrl)}" method="get" class="form-horizontal"
@@ -41,14 +41,7 @@
                         <spring:param name="zoneId" value="${zone.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(zoneUrl)}"><c:out value="${zone.name} "/></a>
-                </td>  
-                <!--                             
-                <td>
-                    <c:forEach var="way" items="${zone.ways}">
-                        <c:out value="${way.name} "/>
-                    </c:forEach>
                 </td>
-                -->  
             </tr>
         </c:forEach>
         </tbody>

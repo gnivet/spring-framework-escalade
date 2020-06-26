@@ -16,10 +16,13 @@
 			<img class="img-responsive" src="${sitesImage}" />
 		</div>
 		<div class="col"></div>
+		<h1>
+			<spring:message code="greeting" text="default" />
+		</h1>
 		<h2>TP6 DA Java</h2>
-		<p>©2020  Guillaume Nivet, tous droits réservés</p>		
-		<img src="/resources/images/cascadeDuRougetLandscape.JPG" class="img-rounded"
-			alt="cascade Du Rouget" width="304" height="236">
+		<p>©2020 Guillaume Nivet, tous droits réservés</p>
+		<img src="/resources/images/cascadeDuRougetLandscape.JPG"
+			class="img-rounded" alt="cascade Du Rouget" width="304" height="236">
 	</div>
 	<div class="w-100"></div>
 	<div class="col">
@@ -33,7 +36,7 @@
 <title><c:out value="${title}" /></title>
 	</head>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-	<body>
+	<body>		
 		<div class="d-flex justify-content-start">
 			<div class="form-group mb-2">
 				<div class="col-sm-10">
@@ -60,7 +63,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>		
 		<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="${contextPath}/resources/js/bootstrap.min.js"></script>

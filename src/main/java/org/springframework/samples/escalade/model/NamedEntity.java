@@ -17,8 +17,6 @@ package org.springframework.samples.escalade.model;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 /**
  * Simple JavaBean domain object adds a name property to

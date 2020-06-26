@@ -87,7 +87,7 @@ public class PointController {
 			return VIEWS_POINT_CREATE_OR_UPDATE_FORM;
 		} else {
 			model.addAttribute("point",length.getId())		;
-			this.escaladeService.savePoint(point);
+			this.escaladeService.savePoints(point);
 			return "redirect:/lengths/{lengthId}/points/new" ;
 		}
 	}
@@ -138,11 +138,14 @@ public class PointController {
 			return VIEWS_POINT_CREATE_OR_UPDATE_FORM;
 		} else {			
 			point.setId(pointId);
-			this.escaladeService.savePoint(point);
+			this.escaladeService.savePoints(point);
 			return "redirect:/points/{pointId}";
 		}
 	}
 
+	
+	
+	
 	/**
 	 * Custom handler for displaying an point.
 	 *

@@ -26,11 +26,12 @@
 	<body>
 		<div class="form-group">
 
-			<form:form method="POST" modelAttribute="userForm"
+			<form:form method="POST" modelAttribute="user"
 				class="form-signin">
 
 				<div class="row">
 					<div class="col-md-2 col-lg-push-5">
+						<!-- <h1><spring:message code="greeting" text="default"/></h1> -->
 						<h2 class="form-signin-heading">Create your account</h2>
 						<spring:bind path="username">
 							<div class="form-group ${status.error ? 'has-error' : ''}">

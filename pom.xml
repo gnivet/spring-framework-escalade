@@ -20,10 +20,10 @@
 		<start-class>org.springframework.samples.escalade.SpringFrameworkEscaladeApplication
 		</start-class>
 		<!-- Web dependencies -->
-		 <webjars-bootstrap.version>3.3.6</webjars-bootstrap.version> 
-		<!--  <webjars-bootstrap.version>4.4.1</webjars-bootstrap.version> -->
+		<webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>
+		<!-- <webjars-bootstrap.version>4.4.1</webjars-bootstrap.version> -->
 		<webjars-jquery-ui.version>1.11.4</webjars-jquery-ui.version>
-		 <webjars-jquery.version>2.2.4</webjars-jquery.version> 
+		<webjars-jquery.version>2.2.4</webjars-jquery.version>
 		<!-- <webjars-jquery.version>3.4.1</webjars-jquery.version> -->
 		<wro4j.version>1.8.0</wro4j.version>
 		<jacoco.version>0.8.5</jacoco.version>
@@ -34,6 +34,12 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<!--  
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		-->
 		<!-- bootstrap -->
 		<!-- webjars -->
 		<dependency>
@@ -61,7 +67,6 @@
 			<artifactId>catalina</artifactId>
 			<version>5.5.23</version>
 		</dependency>
-
 		<!-- end of webjars -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -94,12 +99,10 @@
 			<artifactId>jetty-server</artifactId>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org. hibernate.validator/hibernate-validator -->
-
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>

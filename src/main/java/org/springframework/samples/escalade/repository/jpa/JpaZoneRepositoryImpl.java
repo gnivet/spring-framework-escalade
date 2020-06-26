@@ -45,12 +45,24 @@ public class JpaZoneRepositoryImpl implements ZoneRepository{
 
 	}
 
+	
+	
+	
+	
+	
+	
+	
 	public NamedEntity updateZone(Zone zone) {
 		if(!this.em.contains(zone))
 			this.em.merge(zone);
 		return zone;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Collection<Zone> findZones() throws DataAccessException {
+		Query query = this.em.createQuery("SELECT zone FROM Zone zone ORDER BY zone.name");
+		return query.getResultList();	
+	}
 	
 
 	@SuppressWarnings("unchecked")

@@ -1,4 +1,3 @@
-
 <%@ page session="false" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -31,23 +30,16 @@
     <form:form modelAttribute="topoBkg" class="form-horizontal"
 			id="add-topoBkg-form">	
 			      				
-        	<div class="form-group has-feedback">
-            		 	  <escalade:inputField label="Name" name="name" />            		 	 
+        	<div class="form-group has-feedback">            		 	          		 	 
                    		  <escalade:inputField label="Borrow Date"
 					name="borrowDate" />
                    		 <escalade:inputField label="Borrow End Date"
 					name="borrowEndDate" />
                    		 <escalade:inputField label="In Progress"
-					name="inProgress" /> 
-                   		  <p>Below you can enabled/disabled accepted status:</p>
-							<br />
-        					<input type="radio" name="accepted" value="false"
-					id="false" checked />
-							<label for="false">disabled</label><br />
-        					<input type="radio" name="accepted" value="true" id="true" />
-        					<label for="true">enabled</label><br />								
-        	</div>
-        		
+					name="inProgress" />
+					 <escalade:inputField label="Accepted"
+					name="accepted" />	                   		 
+        	</div>        		
         	<div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>

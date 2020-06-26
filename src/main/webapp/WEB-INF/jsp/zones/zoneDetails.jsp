@@ -7,7 +7,7 @@
 	<h2>Zone details</h2>
 	<table class="table table-striped">
 		<tr>
-			<th>Name</th>
+			<th>Name:</th>
 			<td><b><c:out value="${zone.name} " /></b></td>
 		</tr>		
 	</table>

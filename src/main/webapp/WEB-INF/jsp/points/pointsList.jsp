@@ -5,9 +5,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags" %>
-
 <escalade:layout pageName="points">
-
 <h2>Find sites</h2>
     <!-- Research sites by points -->
     <spring:url value="/points" var="formUrl"/>
@@ -28,7 +26,6 @@
         </div>
     </form:form>
     <h2>sites</h2>
-
     <table id="pointsTable" class="table table-striped">
         <thead>
         <tr>
@@ -39,18 +36,18 @@
         <c:forEach items="${selections}" var="point">
             <tr>
                 <td>
-                    <spring:url value="/lengths/{lengthId}/points/{pointId}" var="pointUrl">
+                    <spring:url value="/points/{pointId}" var="pointUrl">
                         <spring:param name="pointId" value="${point.id} "/>                       
                     </spring:url>
                     <a href="${fn:escapeXml(pointUrl)}"><c:out value="${point.name}"/></a>
                 </td>                
-                 <td>
-                    <c:forEach var="point" items="${point.lengths}">
+                 <td>            
+                    <c:forEach var="point" items="${point.length}">
                         <c:out value="${length.name} "/>
                     </c:forEach>
                 </td>
             </tr>
-        </c:forEach>
+        </c:forEach>        
         </tbody>
     </table>
 </escalade:layout>

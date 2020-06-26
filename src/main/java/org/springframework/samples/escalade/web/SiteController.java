@@ -85,7 +85,7 @@ public class SiteController {
 	
 	
 	@GetMapping(value = "/areas/{areaId}/sites/new")
-	public String initCreationForm(  ModelMap model, Principal principal, @PathVariable Integer areaId ) {
+	public String initCreationForm(  ModelMap model, Principal principal, @PathVariable("areaId") Integer areaId ) {
 
 		if (principal != null)
 		 {

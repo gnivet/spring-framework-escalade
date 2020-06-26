@@ -25,7 +25,6 @@ import org.springframework.samples.escalade.model.Length;
 import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.model.Site;
-import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 

@@ -1,18 +1,20 @@
 package org.springframework.samples.escalade.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -21,12 +23,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Topo extends NamedEntity {
 
 	@Column(name = "description")
-	//@NotEmpty(message ="Please add a description")
-	//@Size(min = 2)
+	@NotEmpty(message = "Please add a description")
+	// @Size(min = 2)
 	private String description;
 
-	@Column(name = "available")	
-	//@AssertTrue
+	@Column(name = "available")
+	// @AssertTrue
 	private boolean available;
 
 	@Column(name = "comment_date")
@@ -38,7 +40,6 @@ public class Topo extends NamedEntity {
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
 
-	
 	public TopoBkg getTopo_booking() {
 		return topoBkg;
 	}
@@ -49,11 +50,6 @@ public class Topo extends NamedEntity {
 
 	@OneToOne(targetEntity = TopoBkg.class, mappedBy = "topo")
 	private TopoBkg topoBkg;
-	
-	public void setUser(User user) {
-		// TODO Auto-generated method stub
-
-	}
 
 	public String getDescription() {
 		return description;
@@ -79,14 +75,17 @@ public class Topo extends NamedEntity {
 		this.commentDate = commentDate;
 	}
 
-	
-
 	public User getUser() {
 		return user;
 	}
 
+	public void setUser(User user) {
+		// TODO Auto-generated method stub
+		this.user = user;
+	}
+
 	/**
-	 * 
+	 * Builder
 	 */
 
 	public Topo() {
@@ -97,4 +96,14 @@ public class Topo extends NamedEntity {
 		
 	}
 
+	/*
+	 * @OneToMany(targetEntity = User.class, cascade = CascadeType.ALL, mappedBy =
+	 * "topo", fetch = FetchType.EAGER) private List<User> userList;
+	 */
+
+	 /*
+	 * R Bi-directionelle
+	 */
+	@OneToMany(cascade = {CascadeType.ALL}, mappedBy="topo" )	
+	private List<TopoBkg> topoBkgList= new ArrayList<>();
 }

@@ -7,7 +7,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.repository.WayRepository;
 import org.springframework.stereotype.Repository;
@@ -41,13 +40,13 @@ public class JpaWayRepositoryImpl implements WayRepository{
 		
 		
 		// Add Way to Site form
-		public Way saveWay(Way Way) throws DataAccessException {
-			if (Way.getId() == null) {
-				this.em.persist(Way);
+		public Way saveWay(Way way) throws DataAccessException {
+			if (way.getId() == null) {
+				this.em.persist(way);
 			} else {
-				this.em.merge(Way);
+				this.em.merge(way);
 			}
-			return Way;
+			return way;
 
 		}
 

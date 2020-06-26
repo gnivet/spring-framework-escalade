@@ -4,11 +4,11 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.repository.SiteTypeRepository;
 import org.springframework.stereotype.Repository;
@@ -20,6 +20,7 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 
 	@PersistenceContext
 	private EntityManager em;
+	
 
 	@SuppressWarnings("unchecked")
 	public List<SiteType> findSiteTypes() throws DataAccessException {
@@ -27,9 +28,7 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 		// return (SiteType) query.getSingleResult();
 
 		Query query = this.em.createQuery("SELECT siteType FROM SiteType siteType ORDER BY siteType.name");
-		return query.getResultList();
-				
-		
+		return query.getResultList();	
 	}
 	
 	 
@@ -52,20 +51,13 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 		return siteType;		
 	}
 
+	
+	
+	
 	public Collection<SiteType> findSiteBySiteType(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
-
-	@Transactional
-	public SiteType findSiteTypeById(Integer id) {
-		// TODO Auto-generated method stub
-		Query query = this.em.createQuery("SELECT siteType FROM SiteType siteType WHERE siteType.id =:id");
-		query.setParameter("id", id);
-		return (SiteType) query.getSingleResult();
-	}		
 
 	
 	
@@ -78,16 +70,7 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 		return  query.getResultList();
 	}
 	
-	@SuppressWarnings("unchecked")
-	public Collection<Area> findSiteByPostalcode(String postalcode) {
-		// TODO Auto-generated method stub
-
-		Query query = this.em.createQuery("select area from Area area WHERE area.postalcode LIKE :postalcode");
-		query.setParameter("postalcode", "%" + postalcode + "%");
-		return query.getResultList();
-
-	}
-
+	
 	
 	
 	@SuppressWarnings("unchecked")
@@ -106,4 +89,27 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 		return query.getResultList();
 	}
 
-}
+	/*
+	public Area findAreaById(Integer id) {
+		// using 'join fetch' because a single query should load both areas and topos
+		// using 'left join fetch' because it might happen that an owner does not have
+		// topos yet
+
+		Query query = this.em.createQuery("SELECT area FROM Area area WHERE area.id =:id");
+		query.setParameter("id", id);
+		return (Area) query.getSingleResult();
+	}
+
+	*/
+
+	@Override
+	public SiteType findSiteTypeById(Integer id) throws NoResultException {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT siteType FROM SiteType siteType WHERE siteType.id =:id");
+		query.setParameter("id", id);		
+		try {
+	        return (SiteType) (query).getSingleResult();
+	    } catch (NoResultException nre) {
+	        return null;
+	    }
+}}

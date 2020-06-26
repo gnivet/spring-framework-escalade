@@ -18,11 +18,12 @@ package org.springframework.samples.escalade.web;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Map;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Area;
-import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.samples.escalade.repository.SiteRepository;
@@ -105,7 +106,7 @@ public class AreaController {
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 		} else {
-				
+			
 			model.put("area", area);				
 			area.setUser(user);
 			area = this.escaladeService.saveArea(area);			

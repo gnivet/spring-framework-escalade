@@ -1,6 +1,7 @@
 package org.springframework.samples.escalade.repository.jpa;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoBkg;
+import org.springframework.samples.escalade.model.escaladeException;
 import org.springframework.samples.escalade.repository.TopoBkgRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,38 +23,25 @@ public class JpaTopoBkgRepositoryImpl implements TopoBkgRepository {
 
 	@PersistenceContext
 	private EntityManager em;
+	
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public TopoBkg findTopoBkgById(Integer id) throws DataAccessException {
+	public List<TopoBkg> findTopoBkgById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
-		Query query = this.em.createQuery("SELECT topoBkg FROM TopoBkg topoBkg WHERE topoBkg.id =:id");
+		Query query = this.em.createQuery("SELECT topoBkg FROM TopoBkg topoBkg WHERE topoBkg.id = :id");
 		query.setParameter("id", id);
-		return (TopoBkg) query.getSingleResult();
-	}
+		return query.getResultList();
+					
+		}
+	
 
-	/*
-	 * 
-	 */
-
-	public String checkToposBookedByID(Integer topoId, Boolean boolean_flag) {
-		Query query = this.em
-				.createQuery("select topo from Topo topo left join fetch TopoBkg.topos where topo.topoId like :topoId");
-		// Query query = this.em.createQuery("with req1 as (select * , ROW_NUMBER() OVER
-		// (order by id) as RN from topo_bkgs tb where exists (select count(*) AS
-		// nb_topo from topos t where tb.topo_id = t.id))\n" +
-		// "select WHEN RN < 1 case then '1' WHEN RN >= 1 then '0' from req1;)");
-		// Query query = this.em.createQuery("SELECT DISTINCT owner FROM User user left
-		// join fetch user.sites WHERE user.userId LIKE :userId");
-		query.setParameter("topoId", topoId);
-		return (String) query.getSingleResult();
-
-	}
 
 	@Override
 	public TopoBkg saveTopoBkg(TopoBkg topoBkg) throws DataAccessException {
 		// TODO Auto-generated method stub
 		try {
-			if (topoBkg.getId() == null) {
+			if (topoBkg.getId() == null ) {
 				this.em.persist(topoBkg);
 		    } else {
 				this.em.merge(topoBkg);
@@ -63,15 +52,26 @@ public class JpaTopoBkgRepositoryImpl implements TopoBkgRepository {
 		return topoBkg;
 	}
 
-	@Override
-	public TopoBkg updateTopoBkg(TopoBkg topoBkg) {
+	public TopoBkg updateTopoBkg(TopoBkg topoBkg) throws escaladeException{
 		// TODO Auto-generated method stub
-		if (!this.em.contains(topoBkg))
-			this.em.merge(topoBkg);
-
+		
+		try {
+			if (topoBkg.getId() == null ) {
+				this.em.persist(topoBkg);
+		    } else {
+				this.em.merge(topoBkg);
+		}
+		}catch(RuntimeException e) {
+			throw new escaladeException(e.getMessage(), e);
+		}
 		return topoBkg;
 	}
+	
 
+	
+	
+	
+	/*
 	@SuppressWarnings("unchecked")
 	public Collection<TopoBkg> findTopoBkgByName(String name) {
 		// TODO Auto-generated method stub
@@ -80,29 +80,94 @@ public class JpaTopoBkgRepositoryImpl implements TopoBkgRepository {
 		query.setParameter("name", "%" + name + "%");
 		return query.getResultList();
 	}
-
-	@Override
-	public String checkToposBookedByID(Integer topoId) {
-		Query query = this.em
-				.createQuery("select topo from Topo topo left join fetch TopoBkg.topos where topo.topoId like :topoId");
-		// Query query = this.em.createQuery("with req1 as (select * , ROW_NUMBER() OVER
-		// (order by id) as RN from topo_bkgs tb where exists (select count(*) AS
-		// nb_topo from topos t where tb.topo_id = t.id))\n" +
-		// "select WHEN RN < 1 case then '1' WHEN RN >= 1 then '0' from req1;)");
-		// Query query = this.em.createQuery("SELECT DISTINCT owner FROM User user left
-		// join fetch user.sites WHERE user.userId LIKE :userId");
-		query.setParameter("topoId", topoId);
-		return (String) query.getSingleResult();
-
-	}
+	*/
+	
 
 	@Override
 	public Topo findTopoBookedBytopoBkgId(@NotNull Integer topoBkgId) {
 		// TODO Auto-generated method stub
 		Query query = this.em
-				.createQuery("select topoBkg from TopoBkg topoBkg where topoBkg.topoBkgId like :topoBkgId");		
+				.createQuery("select topoBkg from TopoBkg topoBkg where topoBkg.topoBkgId = :topoBkgId");		
 		query.setParameter("topoBkgId", topoBkgId);
 		return (Topo) query.getSingleResult();
 	}
 
+
+
+	@Override
+	public TopoBkg findSingleTopoBkgById(Integer topoBkgId) {
+		// TODO Auto-generated method stub
+		
+		Query query = this.em
+				.createQuery("select topoBkg from TopoBkg topoBkg where topoBkg.topoBkgId = :topoBkgId");		
+		query.setParameter("topoBkgId", topoBkgId);
+		
+		return null;
+		
+	}
+
+	/*
+	 *  If boolean_flag = true ==> topoBkg record can be created
+	 */
+	@SuppressWarnings("unused")
+	private boolean boolean_flag;
+	@Override
+	public Boolean checkToposBookedByID(Integer topoId ) {
+		
+		Query query = this.em
+				.createQuery("select topoBkg from  TopoBkg topoBkg where topoBkg.topoId = :topoId");
+		
+		
+		query.setParameter("topoId", topoId );
+		boolean_flag = false;
+		
+		if (query.getSingleResult() == null)
+		{	
+			 boolean_flag = true;
+		}else
+		{
+			 boolean_flag = false;
+		}
+		return (Boolean) query.getSingleResult();
+	}
+
+
+
+	@Override
+	public List<TopoBkg> findByIdinIgnoreCaseIn(List<String> topo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<TopoBkg> findByIdinIgnoreCaseIn(Topo topo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<TopoBkg> findToposBkgs(Integer topo_id) {
+		// TODO Auto-generated method stub
+		Query query = this.em
+				.createQuery("select topoBkg from  TopoBkg topoBkg where topoBkg.topo_id = :topo_id");
+		
+		
+		query.setParameter("topoId", topo_id);
+		
+		return query.getResultList();
+	}
+
+	/*
+	long result = (Long) this.em
+            .createNativeQuery("select count(1) from topo")
+            .getSingleResult();
+	*/
+	
+	
+	
 }

@@ -23,7 +23,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "types")
+@Table(name = "site_types")
 public class SiteType extends NamedEntity {
 
 	@Override
@@ -33,8 +33,6 @@ public class SiteType extends NamedEntity {
 	}
 
 	
-	
-
 	
 
 }

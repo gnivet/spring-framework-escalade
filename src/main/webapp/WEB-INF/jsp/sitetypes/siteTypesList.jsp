@@ -33,20 +33,14 @@
 			</tr>
 		</thead>
 		<tbody>			
-			<c:forEach items="${selections}" var="sitetype">
+			<c:forEach items="${selections}" var="siteType">
 				<tr>
 					<td><spring:url value="/sitetypes/{siteTypeId}"
-							var="sitetypeUrl">
+							var="siteTypeUrl">
 							<spring:param name="siteTypeId" value="${siteType.id} "/>
-						</spring:url> <a href="${fn:escapeXml(areaUrl)}">
+						</spring:url> <a href="${fn:escapeXml(siteTypeUrl)}">
 						<c:out value="${siteType.name}"/></a>
-					</td>
-					<!--
-					 <td>
-                    <c:forEach var="sitetype" items="${site.siteTypes}">
-                        <c:out value="${siteType.name} "/>
-                    </c:forEach>
-                </td> -->
+					</td>					
 				</tr>
 			</c:forEach>			
 		</tbody>

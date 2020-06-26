@@ -39,10 +39,6 @@ public class TopoBkgValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         TopoBkg topoBkg = (TopoBkg) obj;
         
-        String name = topoBkg.getName();              
-        if (!StringUtils.hasLength(name)) {
-            errors.rejectValue("name", REQUIRED, REQUIRED);
-        }
         
         
                 

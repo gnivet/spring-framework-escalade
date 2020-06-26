@@ -29,7 +29,7 @@
     <bean id="callMonitor" class="org.springframework.samples.escalade.util.CallMonitoringAspect"/>
 
     
-    <context:mbean-export/>
+    <context:mbean-export/>	
 
     <!-- Enables scanning for @Cacheable annotation -->
     <cache:annotation-driven/>

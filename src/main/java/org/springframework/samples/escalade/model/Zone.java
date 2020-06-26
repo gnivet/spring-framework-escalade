@@ -17,7 +17,7 @@ public class Zone extends NamedEntity{
 	
 								
 	@ManyToOne(targetEntity = Site.class, fetch=FetchType.EAGER)
-	@JoinColumn(name = "site_id", nullable = false)
+	@JoinColumn(name = "site_id")
 	private Site site;
 
 	@OneToMany(targetEntity = Way.class, cascade = CascadeType.ALL, mappedBy = "zone" , fetch=FetchType.EAGER)
@@ -38,11 +38,7 @@ public class Zone extends NamedEntity{
 	public void setWays(Set<Way> ways) {
 		this.ways = ways;
 	}
-	
-	@Column(name = "zone")	
-	private String zone;
-	
-	
+		
 	
 	/**
 	 * 
@@ -68,16 +64,7 @@ public class Zone extends NamedEntity{
 		return "Zone [site=" + site + ", ways=" + ways + "]";
 	}
 
-	public String getZone() {
-		return zone;
-	}
-
-	public void setZone(String zone) {
-		this.zone = zone;
-	}
-
-	
-	
+		
 	
 }
 

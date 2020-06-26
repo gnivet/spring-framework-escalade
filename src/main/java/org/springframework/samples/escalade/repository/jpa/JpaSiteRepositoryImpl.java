@@ -13,7 +13,6 @@ import org.springframework.samples.escalade.model.Length;
 import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.model.Site;
-import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.AreaRepository;
@@ -72,7 +71,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 	public Site findSiteById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 
-		Query query = this.em.createQuery("SELECT site FROM Site site WHERE site.id =:id");
+		Query query = this.em.createQuery("SELECT site FROM Site site WHERE site.id = :id");
 		query.setParameter("id", id);
 		return (Site) query.getSingleResult();
 	}
@@ -175,6 +174,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<Site> findSite() throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT site FROM Site site");
@@ -182,6 +182,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public Collection<Site> findSiteByName(String name) {
 		// TODO Auto-generated method stub
 

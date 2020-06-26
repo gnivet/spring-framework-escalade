@@ -20,7 +20,7 @@ public class ServletInitializer extends SpringBootServletInitializer {
 	    protected WebApplicationContext createRootApplicationContext() {
 	        XmlWebApplicationContext rootAppContext = new XmlWebApplicationContext();
 	        rootAppContext.setConfigLocations("classpath:spring/business-config.xml", "classpath:spring/tools-config.xml");
-	        rootAppContext.getEnvironment().setDefaultProfiles(SPRING_PROFILE);
+	        rootAppContext.getEnvironment().setDefaultProfiles(SPRING_PROFILE);	        
 	        return rootAppContext;
 	    }
 
@@ -39,5 +39,5 @@ public class ServletInitializer extends SpringBootServletInitializer {
 	        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter("UTF-8", true);
 	        return new Filter[]{characterEncodingFilter};
 	    }
-
+	    
 }

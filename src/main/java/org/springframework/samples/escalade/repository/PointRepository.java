@@ -8,7 +8,7 @@ import org.springframework.samples.escalade.model.Point;
 public interface PointRepository {
 
 	Point findById(Integer id) throws DataAccessException;
-	Point savePoint(Point point)throws DataAccessException;
+	Point savePoints(Point point)throws DataAccessException;
 	Point findPointById(Integer pointId)throws DataAccessException;
 	Collection<Point> findPointByName(String name);
 }

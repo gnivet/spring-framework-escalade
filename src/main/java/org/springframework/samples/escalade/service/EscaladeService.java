@@ -35,6 +35,7 @@ import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.Visit;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
+import org.springframework.samples.escalade.model.escaladeException;
 
 /**
  * Mostly used as a facade so all controllers have a single point of entry
@@ -96,9 +97,12 @@ public interface EscaladeService {
 	Zone saveZone(Zone zone) throws DataAccessException;
 
 	Zone findZoneById(Integer id) throws DataAccessException;
-
+	
+	
 	Collection<Zone> findZoneByName(String name) throws DataAccessException;
 
+	Collection<Zone> findZones() throws DataAccessException; 
+	
 	/*
 	 * Site
 	 */
@@ -170,7 +174,7 @@ public interface EscaladeService {
 	/*
 	 * Point
 	 */
-	void savePoint(Point point) throws DataAccessException;
+	Point savePoints(Point point) throws DataAccessException;
 
 	Collection<Point> findPointByName(String name)throws DataAccessException;
 	
@@ -193,11 +197,11 @@ public interface EscaladeService {
 
 	NamedEntity updateTopo(Topo topoToModify)throws DataAccessException;
 
-	Collection<TopoBkg> findTopoBkgByName(String name)throws DataAccessException;
+	//Collection<TopoBkg> findTopoBkgByName(String name)throws DataAccessException;
 
-	TopoBkg findTopoBkgById(Integer topoBkgId)throws DataAccessException;
+	
 
-	NamedEntity updateTopoBkg(TopoBkg topoBkgToModify)throws DataAccessException;
+	TopoBkg updateTopoBkg(TopoBkg topoBkgToModify)throws  escaladeException;
 
 	
 	TopoBkg saveTopoBkg(TopoBkg topoBkg) throws DataAccessException;
@@ -211,5 +215,19 @@ public interface EscaladeService {
 
 	Topo findTopoBookedBytopoBkgId(@NotNull Integer topoBkgId)throws DataAccessException;
 	
+	//TopoBkg findOne(Integer id)throws DataAccessException;
 	
+	List<Topo> findTopoByUserName(String userName)throws DataAccessException;
+
+	User findUserIdByUserName(String userName);
+
+	List<Topo> findTopoByUserId(Integer id);
+	
+	TopoBkg findSingleTopoBkgById(Integer topoBkgId)throws DataAccessException;
+
+	List<TopoBkg> findTopoBkgById(Integer topoBkgId) throws DataAccessException;
+
+	Topo findTopoByNames(String name);
+
+	Collection<TopoBkg> findToposBkgs(Integer id)throws DataAccessException;
 }

@@ -8,62 +8,61 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <escalade:layout pageName="dashboard">
-	<head >	
+	<head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="/webapp/resources/css/escalade.css" />
 <title><c:out value="${title}" /></title>
 	</head>
-	<h2>Dashboard</h2>
+	<h2>Dashboard</h2>	
 	<h3 class="mycolor">Topos & Sites</h3>
-	<div><img src="/resources/images/sites.png" class="rounded float-left" class="rounded mx-auto d-block" alt="cascadeDuRougetLandscape" width="152" height="118"></div>
+	<div>
+		<img src="/resources/images/sites.png" class="rounded float-left"
+			class="rounded mx-auto d-block" alt="cascadeDuRougetLandscape"
+			width="152" height="118">
+	</div>
 	<div class="container-fluid">
 		<div class="table-responsive">
 			<div>
 				<table class="table table-sm table-dark">
-					<thead >
+					<thead>
 						<tr>
 							<th scope="col">#</th>
 							<th scope="col">Caption</th>
-							<th scope="col"></th>
-							<th scope="col">All Topos borrowed:</th>							
-							<th scope="col">My borrowed topo list:</th>
+							<!-- <th scope="col"></th>-->
+							<th scope="col">All Topos borrowed:</th>
 						</tr>
 					</thead>
-					<tr>
-						<th scope="row">1</th>
-						<td>My topos:</td>
-						<td><a href="/topos"><button class="btn-link"></button>topo list available
-								</a></td>
-					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>My borrowed topo list:</td>
-						<td><a href="/topoBkgs"><button class="btn-link"></button>borrowed topo list
-								</a></td>
-					</tr>
-					<tr>
-						<th scope="row">3</th>
-						<td>My sites:</td>
-						<td><a href="/areas/new/"><button class="btn-link"></button>Create
-								a new site</a></td>
-					</tr>
-					<tr>
-						<th scope="row">4</th>
-						<td>My site list:</td>
-						<td><a href="/sites"><button class="btn-link"></button>Site
-								list</a></td>
-					</tr>
-					<tr>
-						<th scope="row">5</th>
-						<td>My borrowed topo list:</td>
-						<td><a href="/topoBkgs"><button class="btn-link"></button>borrowed topo list
-								</a></td>
-					</tr>
+					<tbody>
+						<tr>
+							<th scope="row">1</th>
+							<td>My topos:</td>
+							<td><a href="/topos"><button class="btn-link"></button>topo
+									list available </a></td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>My borrowed topo list:</td>
+							<td><a href="/topoBkgs"><button class="btn-link"></button>borrowed
+									topo list </a></td>
+						</tr>
+						<tr>
+							<th scope="row">3</th>
+							<td>My sites:</td>
+							<td><a href="/areas/new/"><button class="btn-link"></button>Create
+									a new site</a></td>
+						</tr>
+						<tr>
+							<th scope="row">4</th>
+							<td>My site list:</td>
+							<td><a href="/sites"><button class="btn-link"></button>Site
+									list</a></td>
+						</tr>						
+					</tbody>
 				</table>
 			</div>
 		</div>
-		
-		
+
+
 		<!--  -->
 		<h3 class="mycolor">Activities</h3>
 		<hr>
@@ -73,7 +72,7 @@
 					<tr>
 						<th scope="col">#</th>
 						<th scope="col">Caption</th>
-						<th scope="col">My results</th>
+						<th scope="col">My results</th>						
 					</tr>
 				</thead>
 				<tbody>
@@ -102,7 +101,43 @@
 						<td>My last commentaries:</td>
 						<td><c:out value="${results}" /></td>
 					</tr>
+		
+					<tr>
+						<th scope="row">5</th>
+						<td>Topo user's list</td>
+						<td><c:out value="${topoListByUserName}" /></td>
+						<c:if test="${not empty topoListByUserName}">
+							<ul>
+								<c:forEach var="listValue" items="${topoListByUserName}">
+									<li>${listValue}</li>
+								</c:forEach>
+							</ul>
+
+						</c:if>
+					</tr>
+					<tr>
+						<th scope="row">6</th>
+						<td>Booking user's list:</td>
+						<td><c:out value="${topoBkgList}" /></td>
+					</tr>
+					<tr>
+						<th scope="row">5</th>
+						<td>Topo booking user's list</td>
+						<td><c:out value="${topoBkgList}" /></td>
+						<c:if test="${not empty topoBkgList}">
+							<ul>
+								<c:forEach var="listValue" items="${topoBkgList}">
+									<li>${listValue}</li>
+								</c:forEach>
+							</ul>
+
+						</c:if>
+					</tr>
 				</tbody>
+
+
+
+
 			</table>
 		</div>
 	</div>

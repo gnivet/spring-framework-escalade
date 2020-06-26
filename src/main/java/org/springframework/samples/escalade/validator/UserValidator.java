@@ -27,21 +27,22 @@ public class UserValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 
 		User user = (User) obj;
-
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
+				
+		
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "NotEmpty");
 		if (user.getUsername().length() < 6 || user.getUsername().length() > 32) {
-			errors.rejectValue("username", "Size.userForm.username");
+			errors.rejectValue("userName", "Size.user.userName");
 		}
 		if (userService.findByUsername(user.getUsername()) != null) {
-			errors.rejectValue("username", "Duplicate.userForm.username");
+			errors.rejectValue("userName", "Duplicate.user.userName");
 		}
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
 		if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
-			errors.rejectValue("password", "Size.userForm.password");
+			errors.rejectValue("password", "Size.user.password");
 		}
 
 		if (!user.getPassword().equals(user.getPassword())) {
-			errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
+			errors.rejectValue("passwordConfirm", "Diff.user.passwordConfirm");
 
 			String name = user.getUsername();
 			// name validation
@@ -54,7 +55,53 @@ public class UserValidator implements Validator {
 					errors.rejectValue("password", REQUIRED, REQUIRED);
 
 				}
+				
+				
+				
 			}
+			
+			
+			
+			String firstName = user.getFirstName();
+			if (StringUtils.hasLength(firstName)) {
+				errors.rejectValue("firstName", REQUIRED, REQUIRED);
+
+			}
+			String lastName = user.getLastName();
+			if (!StringUtils.hasLength(lastName)) {
+				errors.rejectValue("lastName", REQUIRED, REQUIRED);
+
+			}
+			
+			String address = user.getAddress();
+			if (!StringUtils.hasLength(address)) {
+				errors.rejectValue("address", REQUIRED, REQUIRED);
+
+			}
+			
+			String postalCode = user.getPostalCode();
+			if (!StringUtils.hasLength(postalCode)) {
+				errors.rejectValue("postalCode", REQUIRED, REQUIRED);
+
+			}
+			String city = user.getCity();
+			if (!StringUtils.hasLength(city)) {
+				errors.rejectValue("city", REQUIRED, REQUIRED);
+
+			}
+			
+			String email = user.getEmail();
+			if (!StringUtils.hasLength(email)) {
+				errors.rejectValue("email", REQUIRED, REQUIRED);
+
+			}
+			
+			String telephone  = user.getTelephone();
+			if (!StringUtils.hasLength(telephone)) {
+				errors.rejectValue("telephone", REQUIRED, REQUIRED);
+
+			}
+			
 		}
 	}
 }

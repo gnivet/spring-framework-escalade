@@ -26,7 +26,7 @@ public class JpaPointRepositoryImpl implements PointRepository{
 		}
 
 		// Add Way to Site form
-		public Point savePoint(Point Point) throws DataAccessException {
+		public Point savePoints(Point Point) throws DataAccessException {
 			if (Point.getId() == null) {
 				this.em.persist(Point);
 			} else {

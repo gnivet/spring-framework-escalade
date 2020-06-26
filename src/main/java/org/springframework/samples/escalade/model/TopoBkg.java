@@ -15,10 +15,9 @@ import javax.validation.constraints.Past;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
-
 @Entity
 @Table(name = "topoBkgs")
-public class TopoBkg extends NamedEntity {
+public class TopoBkg  extends NamedEntity  {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = true)
@@ -100,9 +99,10 @@ public class TopoBkg extends NamedEntity {
 	public TopoBkg() {
 	}
 
-	public void setTopoBkg(TopoBkg topoBkg) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+
+
+
+	
 
 }
