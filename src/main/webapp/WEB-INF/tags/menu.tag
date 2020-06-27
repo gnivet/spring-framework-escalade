@@ -174,15 +174,15 @@
 							url="/ways/{wayId}/lengths/new/" title="lengths">
 							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 							<span>Lengths</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'lengths'}"
-							url="/lengths" title="lengths">
-							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-							<span>Lengths</span>
-						</escalade:menuItem></li>
+						</escalade:menuItem></li>					
 					<li><escalade:menuItem active="${name eq 'lengths'}"
 							url="/lengths/find/" title="lengths">
 							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							<span>Lengths</span>
+						</escalade:menuItem></li>
+						<li><escalade:menuItem active="${name eq 'lengths'}"
+							url="/lengths" title="lengths">
+							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 							<span>Lengths</span>
 						</escalade:menuItem></li>
 					</ul>

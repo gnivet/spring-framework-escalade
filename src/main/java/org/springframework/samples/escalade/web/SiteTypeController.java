@@ -153,7 +153,7 @@ public class SiteTypeController {
 			siteTypeToModify.setName(sitetype.getName());
 			sitetype.setId(siteTypeId);
 			this.escaladeService.saveSiteType(sitetype);
-			return "redirect:/siteTypes/{siteTypeId}";
+			return "redirect:/sitetypes/{siteTypeId}";
 		}
 	}
 	

@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags" %>
-<escalade:layout pageName="site_types"> 
+<escalade:layout pageName="sitetypes"> 
   	<h2>
 		<c:if test="${siteType['new']}">New </c:if>
 		site's type
@@ -22,7 +22,7 @@
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-default" type="submit">Update Type</button>
-                         <a class="btn btn-default" href='<spring:url value="/site_types/${siteType.id}/Site_types/new/" htmlEscape="true"/>'>Add site type</a>
+                         <a class="btn btn-default" href='<spring:url value="/sitetypes/new" htmlEscape="true"/>'>Add site type</a>
                     </c:otherwise>
                 </c:choose>
             </div>

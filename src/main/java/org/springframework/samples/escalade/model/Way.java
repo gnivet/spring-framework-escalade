@@ -75,7 +75,7 @@ public class Way extends NamedEntity {
 	  */
 	 
 	
-	 public List<Length> getPetLengths() {
+	 public List<Length> getListLengths() {
 	        List<Length> sortedLengths = new ArrayList<>(getLengthsInternal());
 	        PropertyComparator.sort(sortedLengths , new MutableSortDefinition("name", true, true));
 	        return Collections.unmodifiableList(sortedLengths );
