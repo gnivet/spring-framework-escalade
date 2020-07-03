@@ -89,15 +89,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests().antMatchers("/sites/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/sites/find").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/sites/*/comments/new/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sites/*/comments/new").hasAnyRole("USER", "ADMIN");
 	
 		
-		http.authorizeRequests().antMatchers("/sitetypes/new/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sitetypes/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/sitetypes/find").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/sitetypes/*/sitetypes/new").hasAnyRole("USER", "ADMIN");
 	
 		//http.authorizeRequests().antMatchers("/sitetypes/*/siteTypes/new").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/sitetypes/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sitetypes").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/sitetypes/sitetypes/").hasAnyRole("USER", "ADMIN");
 		//http.authorizeRequests().antMatchers("/sitetypes/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/sitetypes/*/").hasAnyRole("USER", "ADMIN");	

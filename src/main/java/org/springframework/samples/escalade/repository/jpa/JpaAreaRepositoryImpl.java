@@ -120,4 +120,13 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<Area> listAreas() {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT area FROM Area area");
+
+		return query.getResultList();
+	}
+
 }

@@ -34,31 +34,46 @@
                    		  <p>Area's site</p>
 							<br />														 
 						 	<input type="text" name="name" value="${area.name}" disabled />
-             		</div>
+             		</div>             		
              		<br />
-							 
+             		<br />
+             		<div class="col-sm-10" id="c"> 
+                   		  <p>Site type</p>																				 
+						 	<input type="text" name="name" value="${siteType.name}" disabled />
+             		</div>
+             		<br />             		             		
+					<!-- 						 
              		<div class="col-sm-10">
              			  <br />	 
                    		  <p>Choose your site's type</p>							
 							<br />
-						<!--  <input type="hidden" name="id" value="${sitetype.id}" />   -->				
+						<!--  <input type="hidden" name="id" value="${sitetype.id}" />   			
 						<select name='sitetype'>     
 							<c:forEach items="${sitetypes}" var="sitetype"> 
 							    <option value="${sitetype}">${sitetype.name}
 								</option>
 							</c:forEach>
 						 </select> <br />                  		 
-             		</div>             		
+             		</div>   
+             		 -->	          		
             <div class="col-sm-10">
                           <br /> 
                    		  <p>Below you can activate/cancel your site:</p>
-					<br />					     									
+					<br />
+						<c:if test="${site.valid eq 'false'}">					     									
         					<input type="radio" name="site.valid" value="false"
-						id="false" checked /><label for="false">Not valid</label><br />
+							id="false" checked />
+						<label for="false">Not valid</label>
+						<br />
+						</c:if>
+						<c:if test="${site.valid eq 'true'}">
+							 
         					 <input type="radio" name="site.valid" value="true"
-						id="true" />		  <label for="true">Valid</label><br />	
+							id="true" checked />		  <label for="true">Valid</label>
+						<br />	
+						</c:if>
 			</div>				
-			 <br />
+			 <br />	
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
@@ -69,9 +84,9 @@
                     <c:otherwise>
                         <button class="btn btn-default" type="submit">Update Site</button>
                          <a class="btn btn-default"
-								href='<spring:url value="/sites/${site.id}/zones/new/" htmlEscape="true"/>'>Add zone</a>
+								href='<spring:url value="/sites/${site.id}/zones/new" htmlEscape="true"/>'>Add zone</a>
                           <a class="btn btn-default"
-								href='<spring:url value="/sites/${site.id}/comments/new/" htmlEscape="true"/>'>Add comment</a>
+								href='<spring:url value="/sites/${site.id}/comments/new" htmlEscape="true"/>'>Add comment</a>
                     </c:otherwise>
                 </c:choose>
             </div>

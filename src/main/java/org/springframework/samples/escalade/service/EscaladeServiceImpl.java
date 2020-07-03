@@ -710,6 +710,27 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 
 
+	@Override
+	public Collection<Area> listAreas() throws DataAccessException {
+		// TODO Auto-generated method stub
+		return areaRepository.listAreas();
+	}
+
+
+
+
+
+	@Override
+	public Site updateSite(Site siteToModify) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return siteRepository.updateSite(siteToModify);
+		
+	}
+
+
+
+
+
 	
 
 

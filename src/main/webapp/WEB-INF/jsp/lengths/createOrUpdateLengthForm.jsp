@@ -25,7 +25,7 @@
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-default" type="submit">Update length</button>
-                        <a class="btn btn-default" href='<spring:url value="/lengths/${length.id}/points/new/" htmlEscape="true"/>'>Add point</a>
+                        <a class="btn btn-default" href='<spring:url value="/lengths/${length.id}/points/new" htmlEscape="true"/>'>Add point</a>
                     </c:otherwise>
                 </c:choose>
             </div>

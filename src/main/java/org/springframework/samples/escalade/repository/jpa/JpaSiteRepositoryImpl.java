@@ -219,4 +219,15 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 				
 	}
 
+	
+	
+	@Override
+	public Site updateSite(Site site) throws DataAccessException {
+		// TODO Auto-generated method stub
+		if (!this.em.contains(site))
+			this.em.merge(site);
+		
+		return site;
+	}
+
 }

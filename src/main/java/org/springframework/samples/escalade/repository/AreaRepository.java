@@ -28,6 +28,8 @@ public interface AreaRepository  {
 
 	public Collection<Area> findSiteByPostalcode(String postalcode)throws DataAccessException;
 
+	public Collection<Area> listAreas();
+
 	
 
 }

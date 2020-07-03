@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.SiteTypeRepository;
@@ -110,6 +111,8 @@ public class SiteTypeController {
 		 return "/sitetypes/findSiteTypes";
 	}
 
+    
+   	
       
 //findSite
 	@GetMapping(value = "/sitetypes")

@@ -29,7 +29,7 @@
 					<c:otherwise>
 						<button class="btn btn-default" type="submit">Update
 							Comment</button>
-							<a class="btn btn-default" href='<spring:url value="/sites/${site.id}/comments/new/" htmlEscape="true"/>'>Add comment</a>
+							<a class="btn btn-default" href='<spring:url value="/sites/{siteId}/comments/new" htmlEscape="true"/>'>Add comment</a>
 					</c:otherwise>
 				</c:choose>
 			</div>

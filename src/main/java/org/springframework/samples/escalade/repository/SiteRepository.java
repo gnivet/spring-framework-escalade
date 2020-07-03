@@ -174,7 +174,9 @@ public interface SiteRepository {
 
 	Long findSiteOwnedByUsername(String userName)throws DataAccessException;
 
-	Site findSiteByUsername(String userName)throws DataAccessException;;
+	Site findSiteByUsername(String userName)throws DataAccessException;
+
+	Site updateSite(Site site)throws DataAccessException;
 
 
 

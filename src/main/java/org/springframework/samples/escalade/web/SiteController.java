@@ -214,8 +214,21 @@ public class SiteController {
 
     @GetMapping(value = "/sites/{siteId}")
     public String initUpdateForm(@PathVariable("siteId") int siteId, ModelMap model) {
-        Site site = this.escaladeService.findSiteById(siteId);
+        
+    	Site site = this.escaladeService.findSiteById(siteId);
+    	Area area = site.getArea();
+    	model.put("area", area);
+    	if (site.isValid() == true)
+    	{	
+        site.isValid();
+    	}
         model.put("site", site);
+        
+        SiteType siteType = site.getType();
+        model.put("siteType", siteType);
+      
+        
+        
         return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
     }
 
@@ -225,8 +238,15 @@ public class SiteController {
             model.put("site", site);
             return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
         } else {
-            user.addSite(site);
-            this.escaladeService.saveSite(site);
+            //user.addSite(site);
+        	
+        	
+        	Site siteToModify = this.escaladeService.findSiteById(siteId); 
+        	siteToModify.setType(site.getType());
+        	siteToModify.setUser(user.getusername());
+        	siteToModify.setName(site.getName());  
+        	siteToModify.setBirthDate(site.getBirthDate());
+            this.escaladeService.updateSite(siteToModify);
             return "redirect:/sites/{siteId}";
         }
     }

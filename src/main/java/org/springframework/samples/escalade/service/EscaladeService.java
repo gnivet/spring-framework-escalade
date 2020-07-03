@@ -230,4 +230,8 @@ public interface EscaladeService {
 	Topo findTopoByNames(String name);
 
 	Collection<TopoBkg> findToposBkgs(Integer id)throws DataAccessException;
+
+	Collection<Area> listAreas()throws DataAccessException;
+
+	Site updateSite( Site siteToModify)throws DataAccessException;
 }

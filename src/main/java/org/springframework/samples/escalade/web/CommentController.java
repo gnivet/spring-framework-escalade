@@ -51,64 +51,74 @@ public class CommentController {
 	private UserRepository userRepository;
 	private SiteRepository siteRepository;
 	
-
-
 	@Autowired
 	public CommentController(EscaladeService escaladeService , UserRepository userRepository, SiteRepository siteRepository) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
 		this.siteRepository = siteRepository;
 	}
-
-	
-	
 	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
-	
-	
-	
-	
+		
 	@RequestMapping(value = "/sites/{siteId}/comments/new", method = RequestMethod.GET)
-	public String initCreationForm(Map<String, Object> model , Principal principal, @PathVariable("siteId") Integer siteId ) {
-		
-		String userName = principal.getName();
-		
-		User user = this.userRepository.findByUsername(userName);
-		 
-		//Site site = this.siteRepository.findSiteByUsername(userName);
-		Site site = this.siteRepository.findSiteById(siteId);
-		Comment comment = new Comment();
+	public String initCreationForm(Map<String, Object> model , @PathVariable("siteId") Integer site, Principal principal ) {
+				
+		Comment comment = new Comment();		
+		String userName = principal.getName();		
+		User user = this.userRepository.findByUsername(userName);	
 		model.put("comment", comment);
 		return VIEWS_COMMENT_CREATE_OR_UPDATE_FORM;
 	}
 
 	@RequestMapping(value = "/sites/{siteId}/comments/new", method = RequestMethod.POST)
-	public String processCreationForm(Principal principal, @Valid Comment comment, Integer siteId, BindingResult result, Model model, Site site) {
+	public String processCreationForm(Comment comment, BindingResult result, @PathVariable("siteId") Integer siteId,   Map<String, Object> model, Principal principal) {
 		
+		String userName = principal.getName();
+
+		/**
+		 * Retrieve a <code>User</code> from the data store by id.
+		 *
+		 * @param userName the userName to search for
+		 * @return the <code>User</code> if found
+		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
+		 */
+
+		User user = this.userRepository.findByUsername(userName);
+
+		/**
+		 * Retrieve a <code>Site</code> from the data store by id.
+		 *
+		 * @param userName the userName to search for
+		 * @return the <code>Site</code> if found
+		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
+		 */
+
 				
 		if (result.hasErrors()) {
 			return VIEWS_COMMENT_CREATE_OR_UPDATE_FORM;
 		} else {
-			/*
-			model.put("comment", comment);				
+			
+			model.put("comment", comment);	
+			
+			
+			/**
+			 * Retrieve a <code>User</code> from the data store by id.
+			 *
+			 * @param userName the userName to search for
+			 * @return the <code>User</code> if found
+			 * @throws org.springframework.dao.DataRetrievalFailureException if not found
+			 */
+
+			//Site site = this.escaladeService.findSiteById(siteId);
 			comment.setUser(user);
-			comment.setSite(site);			
-			Comment commentToModify = this.escaladeService.findCommentById(commentId);
-			commentToModify.setComment(comment.getComment());		
-			commentToModify.setDate(comment.getDate());
-			commentToModify.setSite(comment.getSite());
-			commentToModify.setUser(comment.getUser());
-			this.escaladeService.updateComment(commentToModify);
-			*/
-			
-			//model.addAttribute("comment", site.getId());
-			model.addAttribute("comment", comment.getId());
-			
-			comment = this.escaladeService.saveComment(comment);
+			if (siteId != null)
+			{	
+				comment.setId(siteId);	
+			}
+			 this.escaladeService.updateComment(comment);
 			return "redirect:/sites/{siteId}/comments/new";
 		}
 	}
@@ -157,8 +167,20 @@ public class CommentController {
 		if (result.hasErrors()) {
 			return VIEWS_COMMENT_CREATE_OR_UPDATE_FORM;
 		} else {
-			comment.setId(commentId);
-			this.escaladeService.saveComment(comment);
+			
+			Comment commentToModify = this.escaladeService.findCommentById(commentId);
+			if (comment.getComment() != null) {
+				commentToModify.setComment(comment.getComment());
+			}
+			commentToModify.setName(comment.getName());
+			if (comment.getSite()!= null)
+			{
+				commentToModify.setSite(comment.getSite());
+			}
+			if(comment.getDate() != null) {
+				commentToModify.setDate(comment.getDate());
+			}
+			this.escaladeService.saveComment(commentToModify);
 			return "redirect:/comments/{commentId}";
 		}
 	}
