@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TopoRepository {
 	
-	@Query("Select topo, user from Topo topo join fetch User user on topo.user_id = user.user.id where user.username like :userName ")
+	@Query("Select topo, user from Topo topo join fetch User user on topo.user_id = user.user.id where user.userName like :userName ")
 	//List<Topo> findTopoByUserName();
 	
 

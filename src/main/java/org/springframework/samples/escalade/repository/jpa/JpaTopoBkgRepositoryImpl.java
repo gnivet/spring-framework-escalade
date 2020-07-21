@@ -162,12 +162,56 @@ public class JpaTopoBkgRepositoryImpl implements TopoBkgRepository {
 		return query.getResultList();
 	}
 
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<TopoBkg> findTopoBkgByName(String name) {
+		//Query query = this.em.createQuery("SELECT DISTINCT topoBkg, user FROM User user left join fetch user.topoBkgs WHERE user.userName like :userName");
+		Query query = this.em.createQuery("SELECT DISTINCT topoBkg from TopoBkg topoBkg WHERE topoBkg.name LIKE :name");
+		query.setParameter("name", name + "%" );				
+		return query.getResultList();
+	}
+
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<TopoBkg> findTopoBkgByUserId(Integer userId) {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT DISTINCT topoBkg, user FROM User user left join fetch user.topoBkgs WHERE user.id = :userId");
+		query.setParameter("userId", userId);				
+		return query.getResultList();
+	}
+
+
 	/*
 	long result = (Long) this.em
             .createNativeQuery("select count(1) from topo")
             .getSingleResult();
 	*/
 	
+	
+	@SuppressWarnings("unchecked")
+	public Collection<TopoBkg> findTopoBkgs() {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT DISTINCT topoBkg, user FROM User user left join fetch user.topoBkgs");
+		return query.getResultList();
+					
+	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<TopoBkg> findTopoBkgByUserName(String userName) throws DataAccessException {
+		// TODO Auto-generated method stub user left join fetch user.topoBkgs
+		Query query = this.em.createQuery("(SELECT topoBkg FROM TopoBkg topoBkg WHERE topoBkg.user.userName = :userName , TopoBkg.class");
+		query.setParameter("userName", "%" + userName + "%");
+		return query.getResultList();
+	}
+
+
+
 	
 	
 }

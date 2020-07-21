@@ -29,10 +29,11 @@
 	</form:form>
 	<h2>topo list: </h2>
 	<h3>A topo with the mention true is available</h3>
+	<h4>Owner</h4>
 	<table id="toposTable" class="table table-striped">
 		<thead>
 			<tr>
-				<th style="width: 150px;">#</th>
+				<th style="width: 1px;">#</th>				
 				<th style="width: 200px;">Name</th>
 				<th style="width: 200px;">Click on true to book </th>
 				<th style="width: 200px;">Description</th>
@@ -45,8 +46,8 @@
 					<td><spring:url value="/topos/{topoId}/" var="topoUrl">
 							<spring:param name="topoId" value="${topo.id} " />
 						</spring:url>
-						<td><a href="${fn:escapeXml(topoUrl)}"><c:out value="${topo.name}"/></a> </td>
-						
+						<input type="hidden" name="id" value="${user.id}" />     
+					<td><a href="${fn:escapeXml(topoUrl)}"><c:out value="${topo.name}"/></a> </td>						
 					<td><spring:url value="/topos/{topoId}/topoBkgs/new/" var="topoUrl">
 							<spring:param name="topoId" value="${topo.id} " />
 						</spring:url>							

@@ -30,7 +30,7 @@
                 <td><c:out value="${visit.site.name}"/></td>
                 <td><escalade:localDate date="${visit.site.birthDate}" pattern="yyyy/MM/dd"/></td>
                 <td><c:out value="${visit.site.type.name}"/></td>
-                <td><c:out value="${visit.site.user.username} "/></td>
+                <td><c:out value="${visit.site.user.userName} "/></td>
             </tr>
         </table>
 

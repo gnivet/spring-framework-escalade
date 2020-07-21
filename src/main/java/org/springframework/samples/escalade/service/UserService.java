@@ -5,7 +5,7 @@ import org.springframework.samples.escalade.model.User;
 public interface UserService {
     
 
-    User findByUsername(String username);
+    User findByUserName(String username);
 
 	void save(User user);
 

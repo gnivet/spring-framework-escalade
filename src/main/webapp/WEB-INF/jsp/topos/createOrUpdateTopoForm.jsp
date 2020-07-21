@@ -18,7 +18,8 @@
 	<jsp:body>
     <h2>    
         <c:if test="${topo['new']}">New </c:if> Topo
-    </h2>  
+    </h2>
+    <p>Current User: ${firstName} ${blanck}  ${lastName}</p>  
     <form:form modelAttribute="topo" class="form-horizontal"
 			id="add-topo-form">			 
         <div class="form-group has-feedback">
@@ -29,12 +30,13 @@
                    		<div class="col-sm-10" class="form-horizontal"> 
                    		  <p>Below you can enabled/disabled available status:</p>
 					<br />
+						
         					<input type="radio" name="available" value="false"
 						id="false" checked /><label for="false">disabled</label><br />
         					<input type="radio" name="available" value="true" id="true" /><label
 						for="true">enabled</label><br />
                    		 </div>
-          <div class="col-sm-10" class="form-horizontal">
+          <div class="col-sm-10" class="form-horizontal" type="hidden">
        							<p>Please choose your topo type:</p>
 					<br />
       							 <input type="radio" name="type.name" value="cliff"

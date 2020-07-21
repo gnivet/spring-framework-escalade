@@ -66,7 +66,7 @@ public class UserController {
 			return "/users/registration";
 		}
 		try {
-			securityService.autologin(user.getUsername(), user.getPassword());
+			securityService.autologin(user.getUserName(), user.getPassword());
 		} catch (AuthenticationException e) {
 			// TODO: handle exception
 			model.addAttribute("error", "Your authentifaction is not correct");

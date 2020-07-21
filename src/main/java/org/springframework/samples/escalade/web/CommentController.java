@@ -68,7 +68,7 @@ public class CommentController {
 				
 		Comment comment = new Comment();		
 		String userName = principal.getName();		
-		User user = this.userRepository.findByUsername(userName);	
+		User user = this.userRepository.findByUserName(userName);	
 		model.put("comment", comment);
 		return VIEWS_COMMENT_CREATE_OR_UPDATE_FORM;
 	}
@@ -86,7 +86,7 @@ public class CommentController {
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 
-		User user = this.userRepository.findByUsername(userName);
+		User user = this.userRepository.findByUserName(userName);
 
 		/**
 		 * Retrieve a <code>Site</code> from the data store by id.

@@ -32,7 +32,7 @@
 					<td><c:out value="${user.postalcode}" /></td>
 					<td><c:out value="${user.city}" /></td>
 					<td><c:out value="${user.telephone}" /></td>
-					<td><c:out value="${user.firstUsername}" /></td>
+					<td><c:out value="${user.firstuserName}" /></td>
 					<td><c:out value="${user.firstPassword}" /></td>					
 				</tr>
 			</c:forEach>

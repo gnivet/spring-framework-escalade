@@ -76,7 +76,7 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 	public List<Topo> findTopoByUserName(String userName) {
 		// TODO Auto-generated method stub	
 		
-		Query query = this.em.createQuery("SELECT topo FROM Topo topo WHERE topo.user.username like :userName");
+		Query query = this.em.createQuery("SELECT topo FROM Topo topo WHERE topo.user.userName like :userName");
 		
 		query.setParameter("userName", "%" + userName + "%");		 
 		return  query.getResultList();
@@ -93,7 +93,7 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 	public List<Topo> getJoinInformation(String userName) {
 		// TODO Auto-generated method stub
 		
-		Query query = this.em.createQuery("SELECT new TopoResponse(t.name, t.available, t.comment_date, t.description, u.first_name, u.last_name ) FROM Topo t JOIN u.username User u where u.username like: userName");
+		Query query = this.em.createQuery("SELECT new TopoResponse(t.name, t.available, t.comment_date, t.description, u.first_name, u.last_name ) FROM Topo t JOIN u.userName User u where u.userName like: userName");
 		{
 				query.setParameter("userName", "%" + userName + "%");		 
 		//return  query.getResultList();

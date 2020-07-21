@@ -92,13 +92,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/sites/*/comments/new").hasAnyRole("USER", "ADMIN");
 	
 		
-		http.authorizeRequests().antMatchers("/sitetypes/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sitetypes/new/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/sitetypes/find").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/sitetypes/*/sitetypes/new").hasAnyRole("USER", "ADMIN");
+		//http.authorizeRequests().antMatchers("/sitetypes/*/sitetypes/new").hasAnyRole("USER", "ADMIN");
 	
 		//http.authorizeRequests().antMatchers("/sitetypes/*/siteTypes/new").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/sitetypes").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/sitetypes/sitetypes/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sitetypes/").hasAnyRole("USER", "ADMIN");
+		//http.authorizeRequests().antMatchers("/sitetypes/sitetypes/").hasAnyRole("USER", "ADMIN");
 		//http.authorizeRequests().antMatchers("/sitetypes/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/sitetypes/*/").hasAnyRole("USER", "ADMIN");	
 		http.authorizeRequests().antMatchers("/sitetypes/siteTypeDetails").hasAnyRole("USER", "ADMIN");
@@ -131,7 +131,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/topos/*/topoBkgs/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/*/topoBkgs/response/*").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/*/topoBkgs/*/topoBkgDetails").hasAnyRole("USER", "ADMIN");
-		
+		http.authorizeRequests().antMatchers("/topobookings/").hasAnyRole("USER", "ADMIN");
 		
 		http.authorizeRequests().antMatchers("/topoBkgs/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/*").hasAnyRole("USER", "ADMIN");
@@ -139,12 +139,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/topoBkgs/find").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/topoBkgsList").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/findTopoBkgs").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("topoBkgs/topoBkgs").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/*/topoBkgs/*/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/*/edit/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/*/topos/*").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/*/topos").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/*/topos/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/*").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topoBkgs/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/findTopoBkgsByUserName/").hasAnyRole("USER", "ADMIN");
 		
 		
 		http.authorizeRequests().antMatchers("topos/*").hasAnyRole("USER", "ADMIN");

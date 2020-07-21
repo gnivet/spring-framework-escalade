@@ -69,7 +69,7 @@ public class TopoController {
 			Model model, Principal principal) {
 		if (principal.getName() != null) {
 			String userName = principal.getName();
-			User user = this.userRepository.findByUsername(userName);
+			User user = this.userRepository.findByUserName(userName);
 			topo.setUser(user);
 		} else {
 			return "redirect:/users/login/";
@@ -156,7 +156,7 @@ public class TopoController {
 		Topo topo = this.escaladeService.findTopoById(topoId);
 		model.addAttribute(topo);
 		String userName = principal.getName();
-		user = this.userRepository.findByUsername(userName);
+		user = this.userRepository.findByUserName(userName);
 
 		// User user = this.userRepository.findByUsername(userName);
 		// topo.setUser(user.);
@@ -175,7 +175,7 @@ public class TopoController {
 
 			Topo topoToModify = this.escaladeService.findTopoById(topoId);
 			String userName = principal.getName();
-			user = this.userRepository.findByUsername(userName);
+			user = this.userRepository.findByUserName(userName);
 			topoToModify.setUser(topo.getUser());
 			topoToModify.setName(topo.getName());
 			topoToModify.setAvailable(topo.isAvailable());

@@ -160,7 +160,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 	public Integer findSiteOwnedbyUser(String userName, Integer siteId) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em
-				.createQuery("SELECT site FROM Site site  left join  User user on user.username like :userName");
+				.createQuery("SELECT site FROM Site site  left join  User user on user.userName like :userName");
 		query.setParameter("userName", userName);
 		query.setParameter("siteId", siteId);
 		return siteId;
@@ -204,7 +204,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 	@Override
 	public Long findSiteOwnedByUsername(String userName) throws DataAccessException {
 		// TODO Auto-generated method stub
-		Query query = this.em.createQuery("select count(*) from Site site join User user on site.user.id = user.id where user.username like :userName");
+		Query query = this.em.createQuery("select count(*) from Site site join User user on site.user.id = user.id where user.userName like :userName");
 		query.setParameter("userName", userName);	
 		return   (Long) query.getSingleResult();
 	}
@@ -213,7 +213,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 	public Site findSiteByUsername(String userName) throws DataAccessException {
 		// TODO Auto-generated method stub
 				Query query = this.em
-						.createQuery("SELECT site FROM Site site  left join  User user on user.username like :userName");
+						.createQuery("SELECT site FROM Site site  left join  User user on user.userName like :userName");
 				query.setParameter("userName", userName);
 				return (Site) query.getSingleResult();
 				

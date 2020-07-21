@@ -28,8 +28,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
+import org.springframework.samples.escalade.model.TopoBkg;
+import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.UserRepository;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Guillaume Nivet 
  */
+
 @Repository
 @Transactional
 public class JpaUserRepositoryImpl implements UserRepository {
@@ -53,14 +55,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
      * - creating a Ligtweight class (example here: https://community.jboss.org/wiki/LightweightClass)
      * - Turning on lazy-loading and using {@link OpenSessionInViewFilter}
      */
-    @SuppressWarnings("unchecked")
-    public Collection<User> findByUserName(String userName) {
-        // using 'join fetch' because a single query should load both users and sites
-        // using 'left join fetch' because it might happen that an user does not have sites yet
-        Query query = this.em.createQuery("SELECT DISTINCT user FROM User user left join fetch user.sites WHERE user.userName LIKE :userName");
-        query.setParameter("userName", userName + "%");
-        return query.getResultList();
-    }
+   
 
    
 
@@ -188,12 +183,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		return false;
 	}
 
-	@Override
-	public org.springframework.samples.escalade.model.User findByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 
 
 	@Override
@@ -237,7 +227,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 
 
 	@Override
-	public org.springframework.samples.escalade.model.User findById(int userId) {
+	public org.springframework.samples.escalade.model.User findById(Integer userId) {
 		// TODO Auto-generated method stub
 		 Query query = this.em.createQuery("SELECT DISTINCT owner FROM User user left join fetch user.sites WHERE user.userId LIKE :userId");
 	        query.setParameter("userId", userId + "%");
@@ -245,6 +235,83 @@ public class JpaUserRepositoryImpl implements UserRepository {
 	        
 	}
 
+
+
+
+	
+
+	 @SuppressWarnings("unchecked")
+	    public Collection<User> findByUserNames(String userName) {
+	        // using 'join fetch' because a single query should load both users and sites
+	        // using 'left join fetch' because it might happen that an user does not have sites yet
+	        Query query = this.em.createQuery("SELECT DISTINCT user FROM User user left join fetch user.sites WHERE user.userName LIKE :userName");
+	        query.setParameter("userName", userName + "%");
+	        return query.getResultList();
+	    }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	/*
+	 * Update to solve getUserName ;
+	 */
+
+	@Override
+	public User findByUserName(String userName) {
+		return this.em.createQuery("select u from User u where u.userName = :userName", User.class)
+                .setParameter("userName", userName)
+                .getSingleResult();
+		
+	}
+
+	@Override
+	public long countByEmail(String email) {
+		// TODO Auto-generated method stub
+		return (Long) this.em.createQuery("select count(u) from User u where u.email = :email")
+                .setParameter("email", email)
+                .getSingleResult();
+	}
+
+	@Override
+	public List<User> findByLastNameAndEmail(String lastName, String email) {
+		return this.em.createQuery("select u from User u where u.lastName = :lastName and u.email = :email", User.class)
+                .setParameter("lastName", lastName)
+                .setParameter("email", email)
+                .getResultList();
+	}
+
+	@Override
+	public List<User> findByLastNameOrEmail(String lastName, String email) {
+		// TODO Auto-generated method stub
+		return this.em.createQuery("select u from User u where u.lastName = :lastName or u.email = :email", User.class)
+                .setParameter("lastName", lastName)
+                .setParameter("email", email)
+                .getResultList();
+	}
+
+	@Override
+	public List<User> findByLastNameAndFirstName(String lastName, String firstName) {
+		// TODO Auto-generated method stub
+		return this.em.createQuery("select u from User u where u.lastName = :lastName and u.firstName = :firstName", User.class)
+                .setParameter("lastName", lastName)
+                .setParameter("firstName", firstName)
+                .getResultList();
+         
+	}
+
+	@Override
+	public List<TopoBkg> getAllTopoBkgsUserName(String userName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	
+	
 
 	
 	

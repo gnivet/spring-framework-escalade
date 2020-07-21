@@ -8,7 +8,7 @@
 	<h2>Find topo bookings</h2>
 	<!-- Research topoBkgs by topoBkgs -->
 	<spring:url value="/topoBkgs" var="formUrl" />
-	<form:form modelAttribute="topo" action="${fn:escapeXml(formUrl)}"
+	<form:form modelAttribute="topoBkg" action="${fn:escapeXml(formUrl)}"
 		method="get" class="form-horizontal" id="search-topoBkg-form">
 		<div class="form-group">
 			<div class="control-group" id="id">

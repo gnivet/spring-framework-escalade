@@ -100,7 +100,7 @@ public class AreaController {
 		 */
 
 		
-		User user = this.userRepository.findByUsername(userName);
+		User user = this.userRepository.findByUserName(userName);
 						
 		
 		if (result.hasErrors()) {

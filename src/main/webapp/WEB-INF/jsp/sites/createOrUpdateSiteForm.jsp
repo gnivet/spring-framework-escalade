@@ -42,12 +42,12 @@
 						 	<input type="text" name="name" value="${siteType.name}" disabled />
              		</div>
              		<br />             		             		
-					<!-- 						 
+										 
              		<div class="col-sm-10">
              			  <br />	 
                    		  <p>Choose your site's type</p>							
 							<br />
-						<!--  <input type="hidden" name="id" value="${sitetype.id}" />   			
+						 <input type="hidden" name="id" value="${sitetype.id}" />   			
 						<select name='sitetype'>     
 							<c:forEach items="${sitetypes}" var="sitetype"> 
 							    <option value="${sitetype}">${sitetype.name}
@@ -55,14 +55,14 @@
 							</c:forEach>
 						 </select> <br />                  		 
              		</div>   
-             		 -->	          		
+             		          		
             <div class="col-sm-10">
                           <br /> 
                    		  <p>Below you can activate/cancel your site:</p>
 					<br />
 						<c:if test="${site.valid eq 'false'}">					     									
         					<input type="radio" name="site.valid" value="false"
-							id="false" checked />
+							id="true" checked />
 						<label for="false">Not valid</label>
 						<br />
 						</c:if>
@@ -82,11 +82,11 @@
                         <button class="btn btn-default" type="submit">Add Site</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Update Site</button>
+                        <!-- <button class="btn btn-default" type="submit">Update Site</button> -->
                          <a class="btn btn-default"
-								href='<spring:url value="/sites/${site.id}/zones/new" htmlEscape="true"/>'>Add zone</a>
+								href='<spring:url value="/sites/${site.id}/zones/new/" htmlEscape="true"/>'>Add zone</a>
                           <a class="btn btn-default"
-								href='<spring:url value="/sites/${site.id}/comments/new" htmlEscape="true"/>'>Add comment</a>
+								href='<spring:url value="/sites/${site.id}/comments/new/" htmlEscape="true"/>'>Add comment</a>
                     </c:otherwise>
                 </c:choose>
             </div>

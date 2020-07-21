@@ -72,7 +72,7 @@ public class PointController {
 		
 		String userName = principal.getName();
 		
-		User user = this.userRepository.findByUsername(userName);
+		User user = this.userRepository.findByUserName(userName);
 		
 		
 		Point point = new Point();

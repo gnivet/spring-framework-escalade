@@ -30,10 +30,10 @@ public class UserValidator implements Validator {
 				
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "NotEmpty");
-		if (user.getUsername().length() < 6 || user.getUsername().length() > 32) {
+		if (user.getUserName().length() < 6 || user.getUserName().length() > 32) {
 			errors.rejectValue("userName", "Size.user.userName");
 		}
-		if (userService.findByUsername(user.getUsername()) != null) {
+		if (userService.findByUserName(user.getUserName()) != null) {
 			errors.rejectValue("userName", "Duplicate.user.userName");
 		}
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
@@ -44,7 +44,7 @@ public class UserValidator implements Validator {
 		if (!user.getPassword().equals(user.getPassword())) {
 			errors.rejectValue("passwordConfirm", "Diff.user.passwordConfirm");
 
-			String name = user.getUsername();
+			String name = user.getUserName();
 			// name validation
 			if (!StringUtils.hasLength(name)) {
 				errors.rejectValue("name", REQUIRED, REQUIRED);

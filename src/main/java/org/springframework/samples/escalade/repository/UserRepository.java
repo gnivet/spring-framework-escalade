@@ -1,26 +1,28 @@
 package org.springframework.samples.escalade.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-	
-	/**
-     * Retrieve a <code>User</code> from the data store by id.
-     *
-     * @param userName the userName to search for
-	 * @param userId 
-     * @return the <code>userId</code> if found
-     * @throws org.springframework.dao.DataRetrievalFailureException if not found
-     */
-	
-    User findByUsername(String username);
 
-	User findById(int userId);
+	User findByUserName(String userName);
 
-	//User findUserIdByUserName(String username);
+	User findById(Integer userId);
+
+	long countByEmail(String email);
+
+	List<User> findByLastNameAndEmail(String lastName, String email);
+
+	List<User> findByLastNameOrEmail(String lastName, String email);
+
+	List<User> findByLastNameAndFirstName(String lastName, String firstName);
+		
 	
-	
+	@Query("SELECT t FROM TopoBkg t WHERE t.user.userName LIKE :userName")
+	List<TopoBkg> getAllTopoBkgsUserName(@Param("userName") String userName);
 }
-
-

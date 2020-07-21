@@ -234,4 +234,14 @@ public interface EscaladeService {
 	Collection<Area> listAreas()throws DataAccessException;
 
 	Site updateSite( Site siteToModify)throws DataAccessException;
+	
+	Collection<TopoBkg> findTopoBkgByUserName(String userName);
+
+	Collection<TopoBkg> findTopoBkgByName(String name);
+
+	Collection<TopoBkg> findTopoBkgByUserId(Integer userId);
+
+	Collection<TopoBkg> findTopoBkgByUserId(User userId);
+	
+	Collection<TopoBkg> findTopoBkgs();
 }

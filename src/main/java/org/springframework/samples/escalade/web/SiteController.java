@@ -28,7 +28,6 @@ import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.AreaRepository;
-import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.samples.escalade.repository.SiteTypeRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
@@ -55,22 +54,23 @@ public class SiteController {
     
 
     
-    private AreaRepository areaRepository;
-	private UserRepository userRepository;
+    private AreaRepository areaRepository;	
 	private SiteTypeRepository siteTypeRepository;
-	private SiteRepository siteRepository;
+
+	private UserRepository userRepository;
+
 
 	
 	
 	
 	@Autowired
-    public SiteController(EscaladeService escaladeService, UserRepository userRepository, 
-    		AreaRepository areaRepository, SiteTypeRepository siteTypeRepository, SiteRepository siteRepository ) {
+    public SiteController(EscaladeService escaladeService,
+    		AreaRepository areaRepository, SiteTypeRepository siteTypeRepository ) {
         this.escaladeService = escaladeService;
         this.userRepository = userRepository;
         this.areaRepository = areaRepository;
         this.siteTypeRepository = siteTypeRepository;
-        this.siteRepository = siteRepository;
+       
         
     }
 	
@@ -89,9 +89,9 @@ public class SiteController {
 
 		if (principal != null)
 		 {
-		 String username = principal.getName();
+		 String userName = principal.getName();
 		 
-		 User user = this.userRepository.findByUsername(username);
+		 User user = this.userRepository.findByUserName(userName);
 		 model.addAttribute("firstName" , user.getFirstName() );
 		 
 		 }
@@ -138,12 +138,12 @@ public class SiteController {
 	 		if (principal.getName() != null)
 	 		{
 	 			String userName = principal.getName();
-	 			User user = this.userRepository.findByUsername(userName);
+	 			User user = this.userRepository.findByUserName(userName);
 	 			site.setUser(user);
 	 			
 	 		}else
 	 		{	
-	 			 return "redirect:/users/login/";
+	 			 return "redirect:welcome";
 	 		}
 	 		
 	 		
@@ -218,10 +218,24 @@ public class SiteController {
     	Site site = this.escaladeService.findSiteById(siteId);
     	Area area = site.getArea();
     	model.put("area", area);
+    	
+    	/*
+    	 * Site Valid
+    	 */
     	if (site.isValid() == true)
     	{	
         site.isValid();
+        
+        /*
+         * Not valid
+         */
+    	}else {if (site.isValid() == false)
+    	{
+    		site.isValid();
     	}
+    	}
+    	
+    	
         model.put("site", site);
         
         SiteType siteType = site.getType();
@@ -238,12 +252,12 @@ public class SiteController {
             model.put("site", site);
             return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
         } else {
-            //user.addSite(site);
+            user.addSite(site);
         	
         	
         	Site siteToModify = this.escaladeService.findSiteById(siteId); 
         	siteToModify.setType(site.getType());
-        	siteToModify.setUser(user.getusername());
+        	//siteToModify.setUser(user.getuserName());
         	siteToModify.setName(site.getName());  
         	siteToModify.setBirthDate(site.getBirthDate());
             this.escaladeService.updateSite(siteToModify);

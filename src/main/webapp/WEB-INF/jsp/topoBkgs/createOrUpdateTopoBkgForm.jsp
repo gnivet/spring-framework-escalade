@@ -24,7 +24,7 @@
 								
     </jsp:attribute>
 	<jsp:body>
-    <h2>    
+    <h2>    	 
         <c:if test="${topoBkg['new']}">New </c:if> Topo booking
     </h2>   
     <form:form modelAttribute="topoBkg" class="form-horizontal"
@@ -37,8 +37,9 @@
 					name="borrowEndDate" />
                    		 <escalade:inputField label="In Progress"
 					name="inProgress" />
-					 <escalade:inputField label="Accepted"
-					name="accepted" />	                   		 
+					<!--  
+					 <escalade:inputField label="Accepted"  
+					name="accepted" />	-->                   		 
         	</div>        		
         	<div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

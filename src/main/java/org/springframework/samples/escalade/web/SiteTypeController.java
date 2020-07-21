@@ -22,11 +22,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.SiteType;
-import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.SiteTypeRepository;
-import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,14 +44,13 @@ public class SiteTypeController {
 
 	private static final String VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM = "sitetypes/createOrUpdateSiteTypeForm";
 	private final EscaladeService escaladeService;	
-	private UserRepository userRepository;
-	private SiteTypeRepository siteTypeRepository;
+	
+	
 
 	@Autowired
-	public SiteTypeController(EscaladeService escaladeService , UserRepository userRepository, SiteTypeRepository siteTypeRepository) {
+	public SiteTypeController(EscaladeService escaladeService , SiteTypeRepository siteTypeRepository) {
 		this.escaladeService = escaladeService;
-		this.userRepository = userRepository;
-		this.siteTypeRepository = siteTypeRepository;
+		
 	}
 	
 	
@@ -76,8 +72,7 @@ public class SiteTypeController {
     @PostMapping(value = "/sitetypes/new")
     public String processCreationForm( @Valid SiteType siteType, BindingResult result,  Principal principal) {
     	
-    	String userName = principal.getName();
-		
+    	
 		
 		/**
 		 * Retrieve a <code>User</code> from the data store by id.
@@ -88,7 +83,7 @@ public class SiteTypeController {
 		 */
 
 		
-		User user = this.userRepository.findByUsername(userName);
+		
 		
     			     	
     	//siteType = this.siteTypeRepository.findSiteTypeById(siteTypeId);

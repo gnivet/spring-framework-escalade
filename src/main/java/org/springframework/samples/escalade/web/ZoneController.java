@@ -95,7 +95,7 @@ public class ZoneController {
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 
-		User user = this.userRepository.findByUsername(userName);
+		User user = this.userRepository.findByUserName(userName);
 
 		/**
 		 * Retrieve a <code>Site</code> from the data store by id.

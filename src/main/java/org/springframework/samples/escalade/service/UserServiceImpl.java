@@ -60,8 +60,8 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findByUserName(String userName) {
+        return userRepository.findByUserName(userName);
     }
     public List<Role> findByRolename(String role) {
     	return roleRepository.findAll();

@@ -33,11 +33,11 @@
 					<div class="col-md-2 col-lg-push-5">
 						<!-- <h1><spring:message code="greeting" text="default"/></h1> -->
 						<h2 class="form-signin-heading">Create your account</h2>
-						<spring:bind path="username">
+						<spring:bind path="userName">
 							<div class="form-group ${status.error ? 'has-error' : ''}">
-								<form:input type="text" path="username" class="form-control"
-									placeholder="Username" autofocus="true"></form:input>
-								<form:errors path="username"></form:errors>
+								<form:input type="text" path="userName" class="form-control"
+									placeholder="userName" autofocus="true"></form:input>
+								<form:errors path="userName"></form:errors>
 							</div>
 						</spring:bind>
 					</div>

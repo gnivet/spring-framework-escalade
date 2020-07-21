@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		User user = userRepository.findByUsername(username);
+		User user = userRepository.findByUserName(username);
 		if (user == null) {
 
 			return new org.springframework.security.core.userdetails.User(" ", " ", true, true, true, true,
@@ -43,7 +43,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		roleList= user.getRoles();
 		List<String> privileges = roleList.stream().map(x -> x.getName()).collect(Collectors.toList());
 		
-		return new org.springframework.security.core.userdetails.User(user.getUsername() , user.getPassword() , true, true, true, true,
+		return new org.springframework.security.core.userdetails.User(user.getUserName() , user.getPassword() , true, true, true, true,
 				getGrantedAuthorities(privileges));
 	}
 

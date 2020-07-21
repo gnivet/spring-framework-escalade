@@ -72,7 +72,7 @@ public class LengthController {
 		
 		String userName = principal.getName();
 		
-		User user = this.userRepository.findByUsername(userName);
+		User user = this.userRepository.findByUserName(userName);
 		 
 		
 		Length length = new Length();

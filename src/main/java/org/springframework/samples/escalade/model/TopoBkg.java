@@ -32,7 +32,7 @@ public class TopoBkg  extends NamedEntity  {
 
 	@Column(name = "borrowDate")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")	
-	@Past
+	@Future
 	private Date borrowDate;
 
 	@Column(name = "borrowEndDate")

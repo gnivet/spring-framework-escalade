@@ -60,219 +60,219 @@
 
 
 					<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Site <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-					<li><escalade:menuItem active="${name eq 'sites'}"
-							url="/sites" title="sites">
-							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-							<span>Sites</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'sites'}"
-							url="/areas/{areaId}/sites/new/" title="sites">
-							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-							<span>Sites</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'areas'}"
-							url="/sites/find/" title="sites">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-							<span>Sites</span>
-						</escalade:menuItem></li>
+						data-toggle="dropdown" href="#">Site <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><escalade:menuItem active="${name eq 'areas'}"
+									url="/sites/find/" title="sites">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									<span>Sites</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'sites'}"
+									url="/areas/{areaId}/sites/new/" title="sites">
+									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+									<span>Sites</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'sites'}"
+									url="/sites" title="sites">
+									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+									<span>Sites</span>
+								</escalade:menuItem></li>
 						</ul></li>
-						
-						
-					
+
+
+
 					<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Area <span class="caret"></span></a>
-					<ul class="dropdown-menu">	
-					<escalade:menuItem active="${name eq 'areas'}" url="/areas/new/"
-						title="areas">
-						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<span>Areas</span>
-					</escalade:menuItem>
-					<li><escalade:menuItem active="${name eq 'areas'}"
-							url="/areas/find/" title="areas">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-							<span>Areas</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'areas'}"
-							url="/areas" title="areas">
-							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-							<span>Areas</span>
-						</escalade:menuItem></li>
-					</ul>
-					</li>
-					
-					
+						data-toggle="dropdown" href="#">Area <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+
+							<li><escalade:menuItem active="${name eq 'areas'}"
+									url="/areas/find/" title="areas">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									<span>Areas</span>
+								</escalade:menuItem></li>
+							<escalade:menuItem active="${name eq 'areas'}" url="/areas/new/"
+								title="areas">
+								<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+								<span>Areas</span>
+							</escalade:menuItem>
+							<li><escalade:menuItem active="${name eq 'areas'}"
+									url="/areas" title="areas">
+									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+									<span>Areas</span>
+								</escalade:menuItem></li>
+						</ul></li>
+
+
 					<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Site type <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-					<li><escalade:menuItem active="${name eq 'sitetypes'}"
-							url="/sitetypes/new/" title="sitetypes">
-							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-							<span>Sites Type</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'sitetypes'}"
-							url="/sitetypes/find/" title="sitetypes">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-							<span>Site types</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'sitetypes'}"
-							url="/sitetypes" title="sitetypes">
-							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-							<span>Site's type</span>
-						</escalade:menuItem></li>
-					</ul>
-					</li>	
-					
-					
+						data-toggle="dropdown" href="#">Site type <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li>
+							<li><escalade:menuItem active="${name eq 'sitetypes'}"
+									url="/sitetypes/find/" title="sitetypes">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									<span>Site types</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'sitetypes'}"
+									url="/sitetypes/new/" title="sitetypes">
+									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+									<span>Sites Type</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'sitetypes'}"
+									url="/sitetypes" title="sitetypes">
+									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+									<span>Site's type</span>
+								</escalade:menuItem></li>
+						</ul></li>
+
+
 					<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Zone <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-					<li><escalade:menuItem active="${name eq 'zones'}"
-							url="/zones/find/" title="zones">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-							<span>Zones</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'zones'}"
-							url="/sites/{siteId}/zones/new/" title="zones">
-							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-							<span>Zones</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'zones'}"
-							url="/zones" title="zones">
-							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-							<span>Zones</span>
-						</escalade:menuItem></li>
-					</ul>
-					</li>
-					
+						data-toggle="dropdown" href="#">Zone <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><escalade:menuItem active="${name eq 'zones'}"
+									url="/zones/find/" title="zones">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									<span>Zones</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'zones'}"
+									url="/sites/{siteId}/zones/new/" title="zones">
+									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+									<span>Zones</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'zones'}"
+									url="/zones" title="zones">
+									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+									<span>Zones</span>
+								</escalade:menuItem></li>
+						</ul></li>
+
 					<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Way <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-					<li><escalade:menuItem active="${name eq 'ways'}"
-							url="/ways/find/" title="ways">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-							<span>Ways</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'ways'}"
-							url="/zones/{zoneId}/ways/new/" title="ways">
-							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-							<span>Ways</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'ways'}" url="/ways"
-							title="ways">
-							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-							<span>ways</span>
-						</escalade:menuItem></li>
-					</ul>
-					</li>
-					
+						data-toggle="dropdown" href="#">Way <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><escalade:menuItem active="${name eq 'ways'}"
+									url="/ways/find/" title="ways">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									<span>Ways</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'ways'}"
+									url="/zones/{zoneId}/ways/new/" title="ways">
+									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+									<span>Ways</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'ways'}"
+									url="/ways" title="ways">
+									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+									<span>ways</span>
+								</escalade:menuItem></li>
+						</ul></li>
+
 					<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Length <span class="caret"></span></a>
-					<ul class="dropdown-menu">	
-					<li><escalade:menuItem active="${name eq 'lengths'}"
-							url="/ways/{wayId}/lengths/new/" title="lengths">
-							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-							<span>Lengths</span>
-						</escalade:menuItem></li>					
-					<li><escalade:menuItem active="${name eq 'lengths'}"
-							url="/lengths/find/" title="lengths">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-							<span>Lengths</span>
-						</escalade:menuItem></li>
-						<li><escalade:menuItem active="${name eq 'lengths'}"
-							url="/lengths" title="lengths">
-							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-							<span>Lengths</span>
-						</escalade:menuItem></li>
-					</ul>
-					</li>
-					
+						data-toggle="dropdown" href="#">Length <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+
+							<li><escalade:menuItem active="${name eq 'lengths'}"
+									url="/lengths/find/" title="lengths">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									<span>Lengths</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'lengths'}"
+									url="/ways/{wayId}/lengths/new/" title="lengths">
+									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+									<span>Lengths</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'lengths'}"
+									url="/lengths" title="lengths">
+									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+									<span>Lengths</span>
+								</escalade:menuItem></li>
+						</ul></li>
+
 					<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Point <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-					<li><escalade:menuItem active="${name eq 'points'}"
-							url="/lengths/{lengthId}/points/new/" title="points">
-							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-							<span>Points</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'points'}"
-							url="/points/find/" title="points">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-							<span>Points</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'points'}"
-							url="/points" title="points">
-							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-							<span>Points</span>
-						</escalade:menuItem></li>
-					</ul>
-					</li>
-					
+						data-toggle="dropdown" href="#">Point <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><escalade:menuItem active="${name eq 'points'}"
+									url="/points/find/" title="points">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									<span>Points</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'points'}"
+									url="/lengths/{lengthId}/points/new/" title="points">
+									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+									<span>Points</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'points'}"
+									url="/points" title="points">
+									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+									<span>Points</span>
+								</escalade:menuItem></li>
+						</ul></li>
+
 					<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Comment <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-					<li><escalade:menuItem active="${name eq 'comments'}"
-							url="/comments/find/" title="find comments">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-							<span>Find comments</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'comments'}"
-							url="/sites/{siteId}/comments/new/" title="comments">
-							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-							<span>Comments</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'comments'}"
-							url="/comments" title="comments">
-							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-							<span>Comments</span>
-						</escalade:menuItem></li>
-					</ul>
-					</li>
-					
+						data-toggle="dropdown" href="#">Comment <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><escalade:menuItem active="${name eq 'comments'}"
+									url="/comments/find/" title="find comments">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									<span>Find comments</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'comments'}"
+									url="/sites/{siteId}/comments/new/" title="comments">
+									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+									<span>Comments</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'comments'}"
+									url="/comments" title="comments">
+									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+									<span>Comments</span>
+								</escalade:menuItem></li>
+						</ul></li>
+
 					<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Topo <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-					<li><escalade:menuItem active="${name eq 'topos'}"
-							url="/topos/find/" title="find topos">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-							<span>Find topos</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'topos'}"
-							url="/topos/new/" title="topos">
-							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-							<span>Topos</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'topos'}"
-							url="/topos" title="topos">
-							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-							<span>Topos</span>
-						</escalade:menuItem></li>
-					</ul>
-					</li>
-					
+						data-toggle="dropdown" href="#">Topo <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><escalade:menuItem active="${name eq 'topos'}"
+									url="/topos/find/" title="find topos">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									<span>Find topos</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'topos'}"
+									url="/topos/new/" title="topos">
+									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+									<span>Topos</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'topos'}"
+									url="/topos" title="topos">
+									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+									<span>Topos</span>
+								</escalade:menuItem></li>
+						</ul></li>
+
 					<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Topo booking<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-					<li><escalade:menuItem active="${name eq 'topoBkgs'}"
-							url="/topoBkgs/find/" title="find topoBkgs">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-							<span>Find topo Booking</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'topoBkgs'}"
-							url="/topoBkgs/new/" title="topoBkgs">
-							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-							<span>Topo Bookings</span>
-						</escalade:menuItem></li>
-					<li><escalade:menuItem active="${name eq 'topoBkgs'}"
-							url="/topoBkgs" title="topoBkgs">
-							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-							<span>Topo Bookings</span>
-						</escalade:menuItem></li>
-					</ul>
-					</li>
-					
-					
+						data-toggle="dropdown" href="#">Topo booking<span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><escalade:menuItem active="${name eq 'topoBkgs'}"
+									url="/topoBkgs/find/" title="find topoBkgs">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									<span>Find topo Booking</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'topoBkgs'}"
+									url="/findTopoBkgsByUserName" title="find topoBkgs by username ">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									<span>Find topo Booking by username</span>
+								</escalade:menuItem></li>	
+							<li><escalade:menuItem active="${name eq 'topoBkgs'}"
+									url="/topoBkgs/new/" title="topoBkgs">
+									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+									<span>Topo Bookings</span>
+								</escalade:menuItem></li>
+							<li><escalade:menuItem active="${name eq 'topoBkgs'}"
+									url="/topoBkgs" title="topoBkgs">
+									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+									<span>Topo Bookings</span>
+								</escalade:menuItem></li>
+						</ul></li>
+
+
 					<li><sec:authorize access="isAuthenticated()">
 							<escalade:menuItem active="${name eq 'logout'}"
 								url="/users/logout" title="logoutSuccessfulPage page">

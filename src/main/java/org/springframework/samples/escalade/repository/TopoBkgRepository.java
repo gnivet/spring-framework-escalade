@@ -12,8 +12,7 @@ import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.escaladeException;
 
-
-public interface TopoBkgRepository  {
+public interface TopoBkgRepository {
 
 	List<TopoBkg> findTopoBkgById(Integer id) throws DataAccessException;
 
@@ -21,22 +20,26 @@ public interface TopoBkgRepository  {
 
 	TopoBkg updateTopoBkg(TopoBkg topoBkg) throws escaladeException;
 
-	//Collection<TopoBkg> findTopoBkgByName(String name);
+	Boolean checkToposBookedByID(Integer topoId) throws DataAccessException;
 
-	Boolean checkToposBookedByID(Integer topoId);
+	Topo findTopoBookedBytopoBkgId(@NotNull Integer topoBkgId) throws DataAccessException;
 
-	Topo findTopoBookedBytopoBkgId(@NotNull Integer topoBkgId);
-
-	//TopoBkg findOne(Integer id);
-
-	TopoBkg findSingleTopoBkgById(Integer topoBkgId);
+	TopoBkg findSingleTopoBkgById(Integer topoBkgId) throws DataAccessException;
 
 	@Query("select topoBkg from TopoBkg topoBkg where (topo) in : topo")
-	List<TopoBkg> findByIdinIgnoreCaseIn(@Param("topo") List<String> topo);
-	
-	@Query("select topoBkg from TopoBkg topoBkg where (topo) in : topo")
-	List<TopoBkg> findByIdinIgnoreCaseIn(Topo topo);
+	List<TopoBkg> findByIdinIgnoreCaseIn(@Param("topo") List<String> topo) throws DataAccessException;
 
-	Collection<TopoBkg> findToposBkgs(Integer topo_id);
-	
+	@Query("select topoBkg from TopoBkg topoBkg where (topo) in : topo")
+	List<TopoBkg> findByIdinIgnoreCaseIn(Topo topo) throws DataAccessException;
+
+	Collection<TopoBkg> findToposBkgs(Integer topo_id) throws DataAccessException;
+
+	Collection<TopoBkg> findTopoBkgByName(String name) throws DataAccessException;
+
+	Collection<TopoBkg> findTopoBkgByUserId(Integer userId) throws DataAccessException;
+
+	Collection<TopoBkg> findTopoBkgs() throws DataAccessException;
+
+	Collection<TopoBkg> findTopoBkgByUserName(String userName) throws DataAccessException;
+
 }

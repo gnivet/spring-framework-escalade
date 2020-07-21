@@ -72,7 +72,7 @@ public class WayController {
 
 		String userName = principal.getName();
 		
-		User user = this.userRepository.findByUsername(userName);
+		User user = this.userRepository.findByUserName(userName);
 		
 		
 		Way way = new Way();

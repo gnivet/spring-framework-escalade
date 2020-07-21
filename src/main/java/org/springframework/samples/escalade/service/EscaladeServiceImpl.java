@@ -731,14 +731,53 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 
 
-	
+	@Override
+	public Collection<TopoBkg> findTopoBkgByName(String name) {
+		// TODO Auto-generated method stub
+		return topoBkgRepository.findTopoBkgByName(name);
+	}
 
 
 
-	
 
 
-	
+	@Override
+	public Collection<TopoBkg> findTopoBkgByUserId(Integer userId) {
+		// TODO Auto-generated method stub
+		return topoBkgRepository.findTopoBkgByUserId(userId);
+	}
+
+
+
+
+
+	@Override
+	public Collection<TopoBkg> findTopoBkgByUserId(org.springframework.samples.escalade.model.User userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+
+	@Override
+	public Collection<TopoBkg> findTopoBkgs() {
+		// TODO Auto-generated method stub
+		return topoBkgRepository.findTopoBkgs();
+	}
+
+
+
+
+
+	@Override
+	public Collection<TopoBkg> findTopoBkgByUserName(String userName) {
+		// TODO Auto-generated method stub
+		return topoBkgRepository.findTopoBkgByUserName(userName);
+	}
+
+
 
 	
 		

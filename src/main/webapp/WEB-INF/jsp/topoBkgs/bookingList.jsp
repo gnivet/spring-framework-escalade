@@ -8,7 +8,7 @@
 <escalade:layout pageName="topoBkgs">
 	<h2>Find topo booking</h2>
 	<!-- Research sites by topoBkgs -->
-	  
+	<!--  
 	<spring:url value="/topoBkgs" var="formUrl" />
 	<form:form modelAttribute="topoBkg" action="${fn:escapeXml(formUrl)}"
 		method="get" class="form-horizontal" id="search-topoBkg-form">
@@ -27,42 +27,35 @@
 				<button type="submit" class="btn btn-default">Find site</button>
 			</div>
 		</div>
-	</form:form> 
+	</form:form> -->
 	<h2>topo bookings</h2>
 	<table id="topoBkgsTable" class="table table-striped">
 		<thead>
 			<tr>
 				<th style="width: 1px;">#</th>
 				<th style="width: 250px;">Name</th>	
-				<th style="width: 200px;">accepted</th>
-				<th style="width: 200px;">Borrow date</th>	
-				<th style="width: 200px;">Borrow end date</th>	
-				<!--  <th style="width: 200px;">In progress</th>
-				<th style="width: 200px;">Accepted</th>	 -->	
-													
+				<th style="width: 200px;">accepted</th>							
 			</tr>
 		</thead>
-		<tbody>		
+		<tbody>
 			<c:forEach items="${selections}" var="topoBkg">
+				<tr>
+					
 					<td><spring:url value="/topoBkgs/{topoBkgId}/" var="topoBkgUrl">
-							<!--<spring:param name="topoId" value="${topoBkg.topo.id} " /> -->
+							<spring:param name="topoId" value="${topo.id} " />
 							<spring:param name="topoBkgId" value="${topoBkg.id} " />
-						</spring:url>					
+						</spring:url>
+						<td><a href="${fn:escapeXml(topoBkgUrl)}"><c:out value="${topoBkg.topo_id}"/></a> </td>
+						
 					<td><spring:url value="/topoBkgs/{topoBkgId}/" var="topoBkgUrl">
-							<!-- <spring:param name="topoId" value="${topoBkg.topo.id} " /> -->
+							<spring:param name="topoId" value="${topo.id} " />
 							<spring:param name="topoBkgId" value="${topoBkg.id} " />
 						</spring:url>							
 						<c:if test="${topoBkg.accepted == true}"><a href="${fn:escapeXml(topoBkgUrl)}"><c:out value="${topoBkg.accepted}" /></a></c:if>
-						<!--<c:if test="${topoBkg.accepted == false}"><c:out value="${topoBkg.accepted}" />						
-						</c:if>	-->	
-					</td>
-					<td>
-					<td><c:out value="${topoBkg.borrowDate}" /></td>
-							<td><c:out value="${topoBkg.borrowEndDate}" /></td>					
-					<!--  		<td><c:out value="${topoBkg.inProgress}" /></td>					
-							<td><c:out value="${strAccepted}"/></td> -->
+						<c:if test="${topoBkg.accepted == false}"><c:out value="${topoBkg.accepted}" /></c:if>	
 					</td>	
+				</tr>
 			</c:forEach>
-		</tbody> 
+		</tbody>
 	</table>
 </escalade:layout>

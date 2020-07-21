@@ -105,10 +105,10 @@
 					<tr>
 						<th scope="row">5</th>
 						<td>Topo user's list</td>
-						<td><c:out value="${topoListByUserName}" /></td>
-						<c:if test="${not empty topoListByUserName}">
+						<td><c:out value="${topoListByuserName}" /></td>
+						<c:if test="${not empty topoListByuserName}">
 							<ul>
-								<c:forEach var="listValue" items="${topoListByUserName}">
+								<c:forEach var="listValue" items="${topoListByuserName}">
 									<li>${listValue}</li>
 								</c:forEach>
 							</ul>
@@ -133,6 +133,13 @@
 
 						</c:if>
 					</tr>
+					<tr>
+							<th scope="row">6</th>
+							<td>My booking list:</td>
+							<td><a href="/topoBkgs/topoBkgsList"><button class="btn-link"></button>Booking 									list</a></td>
+						</tr>						
+					
+					
 				</tbody>
 
 

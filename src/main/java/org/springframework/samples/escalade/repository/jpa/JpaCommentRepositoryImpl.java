@@ -58,7 +58,7 @@ public class JpaCommentRepositoryImpl implements CommentRepository {
 		 * userName);
 		 */
 		Query query = this.em.createQuery("select count(*) from Comment comment"
-				+ " join User user on comment.user.id = user.id" + " where user.username like :userName");
+				+ " join User user on comment.user.id = user.id" + " where user.userName like :userName");
 		query.setParameter("userName", userName);
 		return (Long) query.getSingleResult();
 
@@ -68,7 +68,7 @@ public class JpaCommentRepositoryImpl implements CommentRepository {
 	public Long findByUsername(String userName) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery(
-				"select count(*) from Comment comment join User user on comment.user.id = user.id where user.username like :userName");
+				"select count(*) from Comment comment join User user on comment.user.id = user.id where user.userName like :userName");
 		query.setParameter("userName", userName);
 		return (Long) query.getSingleResult();
 	}
@@ -77,7 +77,7 @@ public class JpaCommentRepositoryImpl implements CommentRepository {
 	public Collection<Comment> findCommentByUsername(String userName) throws DataAccessException {
 
 		Query query = this.em.createQuery(
-				"select comment from Comment comment join User user on comment.user.id = user.id where user.username like :userName");
+				"select comment from Comment comment join User user on comment.user.id = user.id where user.userName like :userName");
 		query.setParameter("userName", userName);
 		return query.getResultList();
 

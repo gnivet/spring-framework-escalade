@@ -50,9 +50,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 			
 			 if (principal != null)
 			 {
-			 String username = principal.getName();
+			 String userName = principal.getName();
 			 
-			 User user = this.userRepository.findByUsername(username);
+			 User user = this.userRepository.findByUserName(userName);
 			 model.addAttribute("firstName" , user.getFirstName());
 	    	 
 			 }
@@ -79,7 +79,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 	        	/*
 	        	 * Get the user_id 
 	        	 */
-	        	User user = this.userRepository.findByUsername(userName);	 
+	        	User user = this.userRepository.findByUserName(userName);	 
 	        	
 	        	/*
 	        	 * Get topo list from user_id

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,57 +16,75 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.springframework.core.style.ToStringCreator;
 	
 	
 	@Entity
+	//@NamedQuery(name="User.findTopoBkgByUserName", query="SELECT DISTINCT topoBkg, user FROM User user left join fetch User.topoBkgs WHERE user.userName = :userName")
 	@Table(name = "users")
 	public class User {
 	
-		private Integer id;
-		
-		private String username;
-		
-		private String password;
-		private String passwordConfirm;
-		private Set<Role> roles;
-		
-		private String firstName;
-		
-		private String lastName;
-		private String address;
-		private String postalCode;
-		private String city;
-		private String telephone;		
-		private String email;
-		private Boolean enabled;
-	
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
+		private Integer id;
+
+		@Column(name="userName")
+		private String userName;
+		
+		@Column(name ="password")
+		private String password;
+		@Column(name="passwordConfirm")
+		private String passwordConfirm;
+		
+		
+		@Column(name="firstName")
+		private String firstName;
+		@Column(name="lastName")
+		private String lastName;
+		@Column(name="address")
+		private String address;
+		@Column(name="postalCode")
+		private String postalCode;
+		@Column(name="city")
+		private String city;
+		@Column(name="telephone")
+		private String telephone;	
+		@Column(name="email")
+		private String email;
+		@Column(name="enabled")
+		private Boolean enabled;
 	
-		public Integer getId() {
-			return id;
-		}
-	
-		public void setId(Integer id) {
-			this.id = id;
-		}
-	
+		@OneToMany(targetEntity = Site.class, mappedBy = "user")
+		public List<Site> sites;
+		
+				
 		@ManyToMany
 		@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
-		public Set<Role> getRoles() {
-			return roles;
-		}
+		private Set<Role> roles;
+	
 	
 		@OneToMany(targetEntity = Topo.class, cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
 		private Set<Topo> topos;
 	
 		@OneToMany(targetEntity = TopoBkg.class, cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
 		private Set<TopoBkg> topoBkgs;
-		
+				
 					
+		public Integer getId() {
+			return id;
+		}
+
+		public void setId(Integer id) {
+			this.id = id;
+		}
+
+		public List<Site> getSites() {
+			return sites;
+		}
+
+		public void setSites(List<Site> sites) {
+			this.sites = sites;
+		}
+
 		public void addSite(Site site) {
 			// TODO Auto-generated method stub
 	
@@ -76,149 +95,130 @@ import org.springframework.core.style.ToStringCreator;
 			return null;
 		}
 		
-		public String getUsername() {
-			return username;
+				
+		public String getUserName() {
+			return userName;
 		}
-	
-		public void setUsername(String username) {
-			this.username = username;
+
+		public void setUserName(String userName) {
+			this.userName = userName;
 		}
-	
+
 		public String getPassword() {
 			return password;
 		}
-	
+
 		public void setPassword(String password) {
 			this.password = password;
 		}
-	
+
 		public String getPasswordConfirm() {
 			return passwordConfirm;
 		}
-	
+
 		public void setPasswordConfirm(String passwordConfirm) {
 			this.passwordConfirm = passwordConfirm;
 		}
-	
+
 		public String getFirstName() {
 			return firstName;
 		}
-	
+
 		public void setFirstName(String firstName) {
 			this.firstName = firstName;
 		}
-	
+
 		public String getLastName() {
 			return lastName;
 		}
-	
+
 		public void setLastName(String lastName) {
 			this.lastName = lastName;
 		}
-	
+
 		public String getAddress() {
 			return address;
 		}
-	
+
 		public void setAddress(String address) {
 			this.address = address;
 		}
-	
+
 		public String getPostalCode() {
 			return postalCode;
 		}
-	
+
 		public void setPostalCode(String postalCode) {
 			this.postalCode = postalCode;
 		}
-	
+
 		public String getCity() {
 			return city;
 		}
-	
+
 		public void setCity(String city) {
 			this.city = city;
 		}
-	
+
 		public String getTelephone() {
 			return telephone;
 		}
-	
+
 		public void setTelephone(String telephone) {
 			this.telephone = telephone;
 		}
-	
+
 		public String getEmail() {
 			return email;
 		}
-	
+
 		public void setEmail(String email) {
 			this.email = email;
 		}
-	
+
 		public Boolean getEnabled() {
 			return enabled;
 		}
-	
+
 		public void setEnabled(Boolean enabled) {
 			this.enabled = enabled;
 		}
+
+		public Set<Topo> getTopos() {
+			return topos;
+		}
+
+		public void setTopos(Set<Topo> topos) {
+			this.topos = topos;
+		}
+
+		public Set<TopoBkg> getTopoBkgs() {
+			return topoBkgs;
+		}
+
+		public void setTopoBkgs(Set<TopoBkg> topoBkgs) {
+			this.topoBkgs = topoBkgs;
+		}
+
+		
+		public List<Topo> getTopoList() {
+			return topoList;
+		}
+
+		public void setTopoList(List<Topo> topoList) {
+			this.topoList = topoList;
+		}
+
+			
 	
+		public Set<Role> getRoles() {
+			return roles;
+		}
+
 		public void setRoles(Set<Role> roles) {
 			this.roles = roles;
 		}
-	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		@Transient
-		public User getusername() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		/*
-		 * public boolean isNew() { return this.id == null; }
-		 * 
-		 * 
-		 * 
-		 * public void setNew(boolean isNew) { }
-		 */
-	
-		@Override
-		public String toString() {
-			return new ToStringCreator(this)
-	
-					.append("id", this.getId())
-					// .append("new", this.isNew())
-					.append("lastName", this.getLastName()).append("firstName", this.getFirstName())
-					.append("address", this.address).append("city", this.city).append("telephone", this.telephone)
-					.toString();
-		}
-	
-		/*
-		 * 
-		 */
-		public User getusername(User User) {
-			return User.getusername();
-			// TODO Auto-generated method stub
-	
-		}
-	
-		/*
-		 * Ajout 9/3 2020
-		 *
-		 */
-	
-		@ManyToMany(mappedBy = "user")
-		public List<Site> sites;
-	
+
 		/**
 		 * 
 		 */
@@ -227,15 +227,15 @@ import org.springframework.core.style.ToStringCreator;
 			
 		}
 	
-			
 		
-	
+
+		
+		
 		/**
 		 * @param id
-		 * @param username
+		 * @param userName
 		 * @param password
 		 * @param passwordConfirm
-		 * @param roles
 		 * @param firstName
 		 * @param lastName
 		 * @param address
@@ -244,15 +244,20 @@ import org.springframework.core.style.ToStringCreator;
 		 * @param telephone
 		 * @param email
 		 * @param enabled
+		 * @param sites
+		 * @param roles
+		 * @param topos
+		 * @param topoBkgs
+		 * @param topoList
 		 */
-		public User(String username, String password, String passwordConfirm, Set<Role> roles, String firstName,
+		public User(Integer id, String userName, String password, String passwordConfirm, String firstName,
 				String lastName, String address, String postalCode, String city, String telephone, String email,
-				Boolean enabled) {
-			
-			this.username = username;
+				Boolean enabled, List<Site> sites, Set<Role> roles, Set<Topo> topos, Set<TopoBkg> topoBkgs,
+				List<Topo> topoList) {
+			this.id = id;
+			this.userName = userName;
 			this.password = password;
 			this.passwordConfirm = passwordConfirm;
-			this.roles = roles;
 			this.firstName = firstName;
 			this.lastName = lastName;
 			this.address = address;
@@ -261,28 +266,13 @@ import org.springframework.core.style.ToStringCreator;
 			this.telephone = telephone;
 			this.email = email;
 			this.enabled = enabled;
+			this.sites = sites;
+			this.roles = roles;
+			this.topos = topos;
+			this.topoBkgs = topoBkgs;
+			this.topoList = topoList;
 		}
-	
-			
-		
-		/**
-		 * @param username
-		 * @param password
-		 * @param passwordConfirm
-		 * @param firstName
-		 * @param lastName
-		 * @param email
-		 */
-		public User(String username, String password, String passwordConfirm, String firstName, String lastName,
-				String email) {
-			this.username = username;
-			this.password = password;
-			this.passwordConfirm = passwordConfirm;
-			this.firstName = firstName;
-			this.lastName = lastName;
-			this.email = email;
-		}
-	
+
 		public void addTopoBkg(TopoBkg topoBkg) {
 			// TODO Auto-generated method stub
 			

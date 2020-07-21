@@ -39,7 +39,8 @@ public class Topo extends NamedEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
-
+	
+	/*
 	public TopoBkg getTopo_booking() {
 		return topoBkg;
 	}
@@ -47,10 +48,44 @@ public class Topo extends NamedEntity {
 	public void setTopo_booking(TopoBkg topoBkg) {
 		this.topoBkg = topoBkg;
 	}
-
+	*/
+	/*
 	@OneToOne(targetEntity = TopoBkg.class, mappedBy = "topo")
 	private TopoBkg topoBkg;
+	*/
+	
+	/*
+	@OneToMany(targetEntity = TopoBkg.class, mappedBy = "topo")
+	private TopoBkg topoBkg;
+	*/
+	
+	/*
+	 * https://koor.fr/Java/TutorialJEE/jee_jpa_one_to_many.wp
+	 * 
+	 */
+	
+	@OneToMany( targetEntity = TopoBkg.class, mappedBy = "topo" )
+    private List<TopoBkg> topoBkgs = new ArrayList<>();
+	
+	
+	public List<TopoBkg> getTopoBkgs() {
+		return topoBkgs;
+	}
 
+	public List<TopoBkg> getTopoBkgList() {
+		return topoBkgList;
+	}
+
+	public void setTopoBkgs(List<TopoBkg> topoBkgs) {
+		this.topoBkgs = topoBkgs;
+	}
+
+	public void setTopoBkgList(List<TopoBkg> topoBkgList) {
+		this.topoBkgList = topoBkgList;
+	}
+
+	
+	
 	public String getDescription() {
 		return description;
 	}

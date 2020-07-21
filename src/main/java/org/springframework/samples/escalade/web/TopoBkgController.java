@@ -3,6 +3,7 @@ package org.springframework.samples.escalade.web;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
@@ -12,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.User;
@@ -98,8 +101,10 @@ public class TopoBkgController {
 			Model model, Principal principal, @PathVariable Integer topoId) {
 
 		if (principal.getName() != null) {
-			String userName = principal.getName();
-			User user = this.userRepository.findByUsername(userName);
+			String userName = principal.getName();	
+			
+			
+			User user = this.userRepository.findByUserName(userName);
 			topoBkg.setUser(user);
 		} else {
 			return "redirect:/users/login/";
@@ -118,7 +123,7 @@ public class TopoBkgController {
 		System.out.println("--------------------------" + topo.getName()+ "--------------------------");
 		
 		topo.setAvailable(false);
-		logger.warn("A new topo has been booked" + topo.getName());
+		logger.warn("A new topo has been booked " + topo.getName());
 		if (result.hasErrors()) {
 			return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
 		} else {
@@ -140,51 +145,69 @@ public class TopoBkgController {
 		return "/topoBkgs/findTopoBkgs";
 
 	}
-
+	
 	@GetMapping(value = "/topoBkgs")
-	public String processFindForm(Topo topo, TopoBkg topoBkg, BindingResult result, Map<String, Object> model ) {
+	public String processFindForm(TopoBkg topoBkg, BindingResult result, Map<String, Object> model) {
 
 		// allow parameterless GET request for /areas to return all records
-		
-				/*
-				if (topo.getName() == null) {
-					topo.setName(""); // empty string signifies broadest possible search
-				}
-				*/
-				
-				// find topos by name
-				Collection<Topo> results = this.escaladeService.findTopoByName(topo.getName());
-		/*				
+		if (topoBkg.getName() == null) {
+			topoBkg.setName(""); // empty string signifies broadest possible search
+		}
+
+						
+		// find  topoBkgs by name
+		Collection<TopoBkg> results = this.escaladeService.findTopoBkgByName(topoBkg.getName());
+
 		if (results.isEmpty()) {
-			// no topos found
+			// no topoBkgs found
 			result.rejectValue("name", "notFound", "not found");
 			return "/topoBkgs/findTopoBkgs";
 
 		} else {
-		*/
 			// multiple topos found
-			
-
-			int size = results.size();
-			
-			if (!results.isEmpty()) {
-			for (int i = 0; i < size ; i++)
-			{
-				
-				Collection<TopoBkg> resultat = this.escaladeService.findTopoBkgById(topo.getId());
-				model.put("selection", resultat);					
-			}
-
-					
-			
-		}
+			model.put("selections", results);
 			return "topoBkgs/topoBkgsList";
-	}
+		}
 
-	/*
-	 * @PostMapping(value = "/areas/{areaId}")
-	public String processUpdateAreaForm(Area area, BindingResult result, @PathVariable("areaId")  Integer areaId  ) {
-	 */
+	}
+	
+	@GetMapping(value = "/findTopoBkgsByUserName")
+	public String findtopoBkgsByUserName (Model model,  TopoBkg topoBkg, BindingResult result, Principal principal ) {
+	 String userName = principal.getName();
+		
+		 System.out.println("username-----------------------------:" + userName);
+     User user = userRepository.findByUserName(userName);
+    
+     System.out.println("userId-----------------------------:"+  user.getId());
+     System.out.println("username-----------------------------:"+ userName);
+  // allow parameterless GET request for /areas to return all records
+  		if (topoBkg.getName() == null) {
+  			topoBkg.setName(""); // empty string signifies broadest possible search
+  		}
+  		System.out.println("username-----------------------------:"+ userName);
+  						
+  		// find  topoBkgs by name
+  		
+  		
+  		
+  		//Collection<TopoBkg> results = this.escaladeService.findTopoBkgByUserName(userName);
+  		
+  		Collection<TopoBkg> results = this.userRepository.getAllTopoBkgsUserName(userName);
+
+  		if (results.isEmpty()) {
+  			// no topoBkgs found
+  			result.rejectValue("name", "notFound", "not found");
+  			return "/topoBkgs/findTopoBkgs";
+
+  		} else {
+  			// multiple topos found
+  			model.addAttribute("selections", results);
+  			
+  			return "topoBkgs/topoBkgsList";
+  		}
+	}
+	
+	
 	
 	@GetMapping(value = "/topoBkgs/{topoBkgId}")
 	public String initUpdateTopoBkgForm(@NotNull  @PathVariable("topoBkgId") Integer topoBkgId, @NotNull Model model) {
@@ -342,7 +365,7 @@ public class TopoBkgController {
 	
 		*/
 		 String userName = principal.getName();
-	     User user = userRepository.findByUsername(userName);
+	     User user = userRepository.findByUserName(userName);
          topoBkg.setUser(user);
          Topo topo = topoRepository.findTopoById(topoId); 
          /*
@@ -363,7 +386,7 @@ public class TopoBkgController {
         
         this.escaladeService.saveTopoBkg(topoBkg);
        
-		logger.warn("A new topo has been booked by " + user.getUsername() + " for topo " + topo.getName() );
+		logger.warn("A new topo has been booked by " + user.getUserName() + " for topo " + topo.getName() );
 		return "/welcome" ;
 		
         //return "topoBkgs/topoBkgs";
