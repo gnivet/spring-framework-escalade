@@ -25,4 +25,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	@Query("SELECT t FROM TopoBkg t WHERE t.user.userName LIKE :userName")
 	List<TopoBkg> getAllTopoBkgsUserName(@Param("userName") String userName);
+	
+	
+	@Query("SELECT t FROM TopoBkg t WHERE t.id =:topoBkgId")
+	User findSingleTopoBkgById(@Param("topoBkgId") Integer topoBkgId);
 }

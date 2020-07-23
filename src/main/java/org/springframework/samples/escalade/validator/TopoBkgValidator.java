@@ -53,13 +53,13 @@ public class TopoBkgValidator implements Validator {
         }
         
            
-               	
+        /*       	
         @SuppressWarnings("unused")
 		Boolean accepted = topoBkg.getAccepted();
         if (topoBkg.getAccepted() == null) {
             errors.rejectValue("accepted", REQUIRED, REQUIRED);
         }
-      
+      	*/
     }
 
     /**

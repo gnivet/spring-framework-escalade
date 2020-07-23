@@ -651,9 +651,9 @@ public class EscaladeServiceImpl implements EscaladeService {
 		return topoBkgRepository.findTopoBkgById(topoBkgId);
 	}
 
-
-	public TopoBkg findSingleTopoBkgById(Integer topoBkgId)throws DataAccessException {
-		return topoBkgRepository.findSingleTopoBkgById(topoBkgId);
+	@Override
+   	public TopoBkg findSingleTopoBkgById(Integer topoBkgId)throws DataAccessException {
+		return topoBkgRepository.getAllTopoBkgById(topoBkgId);
 	}
 
 
@@ -727,8 +727,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 		
 	}
 
-
-
+	
 
 
 	@Override

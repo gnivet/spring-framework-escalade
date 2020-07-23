@@ -3,7 +3,6 @@ package org.springframework.samples.escalade.web;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
@@ -13,8 +12,6 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.User;
@@ -207,7 +204,7 @@ public class TopoBkgController {
   		}
 	}
 	
-	
+	/*
 	
 	@GetMapping(value = "/topoBkgs/{topoBkgId}")
 	public String initUpdateTopoBkgForm(@NotNull  @PathVariable("topoBkgId") Integer topoBkgId, @NotNull Model model) {
@@ -216,7 +213,12 @@ public class TopoBkgController {
 		model.addAttribute("topoBkg", new TopoBkg());
 		return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
 	}
-
+	*/
+	
+	
+	 
+	 
+	 
 	
 	
 	@PostMapping(value = "/topoBkgs/{topoBkgId}")
@@ -277,10 +279,10 @@ public class TopoBkgController {
 	 * @return a ModelMap with the model attributes for the view
 	 */
 
-	@RequestMapping("/topoBkgs/{topoBkgId}/topos/{topoId}")
+	@RequestMapping("/topoBkgs/{topoBkgId}")
 	public ModelAndView showtopoBkg(@PathVariable("topoBkgId") Integer topoBkgId) {
-		ModelAndView mav = new ModelAndView("topoBkgs/topoBkgDetails");
-		mav.addObject(this.escaladeService.findSingleTopoBkgById(topoBkgId));
+		ModelAndView mav = new ModelAndView("topoBkgs/topoBkgDetails");		
+		mav.addObject(this.topoBkgRepository.getAllTopoBkgById(topoBkgId));
 		return mav;
 	}
 

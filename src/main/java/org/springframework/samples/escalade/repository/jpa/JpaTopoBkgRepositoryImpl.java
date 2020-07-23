@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.ConstraintViolationException;
@@ -91,21 +92,58 @@ public class JpaTopoBkgRepositoryImpl implements TopoBkgRepository {
 		query.setParameter("topoBkgId", topoBkgId);
 		return (Topo) query.getSingleResult();
 	}
-
+	
+	/*
+	 
+	 with contrats as  (
+select    DISTINCT(excvctr) as contrat,ROW_NUMBER() OVER(ORDER BY excvctr DESC) AS RN  
+ from  ALDDTA.EXCTRVEH 
+)
+SELECT  *
+  FROM contrats
+  WHERE RN BETWEEN 200 AND 400 
+ order by contrat desc
+	 
+	 
+	 
+	 
+	 */
 
 
 	@Override
-	public TopoBkg findSingleTopoBkgById(Integer topoBkgId) {
+	public TopoBkg getAllTopoBkgById(Integer topoBkgId) {
 		// TODO Auto-generated method stub
-		
+				
 		Query query = this.em
-				.createQuery("select topoBkg from TopoBkg topoBkg where topoBkg.topoBkgId = :topoBkgId");		
-		query.setParameter("topoBkgId", topoBkgId);
-		
-		return null;
-		
+				.createQuery("SELECT topoBkg FROM TopoBkg topoBkg  where topoBkg.id = :topoBkgId");
+						
+		query.setParameter("topoBkgId", topoBkgId);		
+		return (TopoBkg) query.getSingleResult();
+			
 	}
 
+	/*
+    @Override
+    public Owner findById(int id) {
+        // using 'join fetch' because a single query should load both owners and pets
+        // using 'left join fetch' because it might happen that an owner does not have pets yet
+        Query query = this.em.createQuery("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id");
+        query.setParameter("id", id);
+        return (Owner) query.getSingleResult();
+    }
+	
+	*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/*
 	 *  If boolean_flag = true ==> topoBkg record can be created
 	 */
@@ -200,7 +238,7 @@ public class JpaTopoBkgRepositoryImpl implements TopoBkgRepository {
 					
 	}
 
-
+	/*
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<TopoBkg> findTopoBkgByUserName(String userName) throws DataAccessException {
@@ -209,9 +247,27 @@ public class JpaTopoBkgRepositoryImpl implements TopoBkgRepository {
 		query.setParameter("userName", "%" + userName + "%");
 		return query.getResultList();
 	}
-
-
-
+	*/
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<TopoBkg> findTopoBkgByUserName(String userName) throws DataAccessException {
+		// TODO Auto-generated method stub user left join fetch user.topoBkgs
+		Query query = this.em.createQuery("(SELECT topoBkg FROM TopoBkg topoBkg left join fetch user.topoBkgs WHERE user.userName = :userName");
+		query.setParameter("userName", "%" + userName + "%");
+		return query.getResultList();
+	}
+	
+	/*
+	@SuppressWarnings("unchecked")
+    public Collection<Owner> findByLastName(String lastName) {
+        // using 'join fetch' because a single query should load both owners and pets
+        // using 'left join fetch' because it might happen that an owner does not have pets yet
+        Query query = this.em.createQuery("SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName");
+        query.setParameter("lastName", lastName + "%");
+        return query.getResultList();
+    }
+	*/
 	
 	
 }

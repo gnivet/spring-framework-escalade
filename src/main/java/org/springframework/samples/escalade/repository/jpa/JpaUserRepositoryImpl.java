@@ -254,18 +254,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 	 
 	 
 	 
-	 
-	/*
-	 * Update to solve getUserName ;
-	 */
-
-	@Override
-	public User findByUserName(String userName) {
-		return this.em.createQuery("select u from User u where u.userName = :userName", User.class)
-                .setParameter("userName", userName)
-                .getSingleResult();
-		
-	}
+	
 
 	@Override
 	public long countByEmail(String email) {
@@ -308,14 +297,23 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		return null;
 	}
 
-	
+	@Override
+	public User findSingleTopoBkgById(Integer topoBkgId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	
-	
+	@Override
+	public User findByUserName(String userName) {
+		// TODO Auto-generated method stub
+		
+		
+			return (User) this.em.createQuery("select u from User u where u.userName = :userName" , User.class)
+	                .setParameter("userName", userName )
+	                .getSingleResult();
+			
+		
+	}
 
-	
-	
-	
-	
 
 }

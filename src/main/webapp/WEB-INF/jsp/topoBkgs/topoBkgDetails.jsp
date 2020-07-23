@@ -7,8 +7,8 @@
 	<h2>Topo booking details</h2>
 	<table class="table table-striped">
 		<tr>
-			<th>Accepted</th>
-			<td><c:out value="${topoBkg.accepted}" /></td>
+			<th>Name</th>
+			<td><c:out value="${topoBkg.topo.name}" /></td>
 		</tr>
 
 		<tr>
@@ -19,21 +19,18 @@
 			<th>Borrow end date</th>
 			<td><c:out value="${topoBkg.borrowEndDate}" /></td>
 		</tr>
-
-		<tr>
-			<th>In progress</th>
-			<td><c:out value="${topoBkg.inProgress}" /></td>
-		</tr>
+		
 		<tr>
 		<th>Accepted</th>
-			<td><c:out value="${strAccepted}" /></td>
+			<td><c:out value="${topoBkg.accepted}" /></td>
 		</tr>
 				
 	</table>
-	
-	<spring:url value="/topoBkgs/{topoBkgId}/topos/" var="editUrl">	
+	<!--  
+	<spring:url value="/topoBkgs/{topoBkgId}" var="editUrl">	
 		<spring:param name="topoBkgId" value="${topoBkg.id}" />
 	</spring:url>
 	<a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit
-		topo booking</a>		
+		topo booking</a>	
+		-->	
 </escalade:layout>

@@ -27,7 +27,7 @@
 					</c:when>
 					<c:otherwise>
 						<button class="btn btn-default" type="submit">Update Area</button>						
-						 <a class="btn btn-default" href='<spring:url value="/areas/${area.id}/sites/new/" htmlEscape="true"/>'>Add site</a>
+						 <a class="btn btn-default" href='<spring:url value="/areas/${area.id}/sites/new" htmlEscape="true"/>'>Add site</a>
 					</c:otherwise>
 				</c:choose>
 			</div>

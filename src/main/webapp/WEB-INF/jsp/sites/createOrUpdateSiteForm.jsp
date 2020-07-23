@@ -24,7 +24,8 @@
 		<br>
         <div class="form-group has-feedback">
         <br>      		<!-- Site's name -->		
-            			<escalade:inputField label="Name" name="name" />
+            			<!--<escalade:inputField label="Name" name="name" /> -->
+            			<input type="text" name="name" value="${area.name}"/>
             			<escalade:inputField label="Birth Date" name="birthDate" /> 
             			  
             			<input type="hidden" name="id" value="${user.id}" />       
