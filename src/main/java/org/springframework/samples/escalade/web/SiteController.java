@@ -16,6 +16,7 @@
 package org.springframework.samples.escalade.web;
 
 import java.security.Principal;
+//import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +66,7 @@ public class SiteController {
 	
 	@Autowired
     public SiteController(EscaladeService escaladeService,
-    		AreaRepository areaRepository, SiteTypeRepository siteTypeRepository ) {
+    	AreaRepository areaRepository, SiteTypeRepository siteTypeRepository, UserRepository userRepository ) {
         this.escaladeService = escaladeService;
         this.userRepository = userRepository;
         this.areaRepository = areaRepository;
@@ -87,14 +88,25 @@ public class SiteController {
 	@GetMapping(value = "/areas/{areaId}/sites/new")
 	public String initCreationForm(  ModelMap model, Principal principal, @PathVariable("areaId") Integer areaId ) {
 
-		if (principal != null)
-		 {
-		 String userName = principal.getName();
-		 
-		 User user = this.userRepository.findByUserName(userName);
-		 model.addAttribute("firstName" , user.getFirstName() );
-		 
-		 }
+		
+		
+		
+
+		if (principal.getName() != null) {
+			String userName = principal.getName();	
+			
+			
+			User user = this.userRepository.findByUserName(userName);
+			 model.addAttribute("firstName" , user.getFirstName() );
+		} else {
+			return "redirect:/users/login/";
+		}
+
+		
+		
+		
+		
+		
 		
 		Site site = new Site();
 		model.put("site", site);

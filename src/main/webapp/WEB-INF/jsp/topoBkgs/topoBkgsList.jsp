@@ -18,6 +18,7 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${selections}" var="topoBkg">
+				<tr>
 				<td>
 					<spring:url value="/topoBkgs/{topoBkgId}/" var="topoBkgUrl">
 						<spring:param name="topoBkgId" value="${topoBkg.id} " />
@@ -39,6 +40,7 @@
 								value="${topoBkg.accepted} " /></a>
 					</c:if>
 				</td>
+				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
