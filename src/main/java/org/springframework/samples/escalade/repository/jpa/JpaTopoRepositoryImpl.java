@@ -50,22 +50,22 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 	
 	
 	@SuppressWarnings("unchecked")
-	public Collection<Topo> findTopoByName(String name) {
+	@Override
+	public Collection<Topo> findTopoByName() throws DataAccessException {
 		// TODO Auto-generated method stub
 
 		Query query = this.em
-				.createQuery("SELECT DISTINCT topo from Topo topo WHERE topo.name LIKE :name");
-		query.setParameter("name", "%" + name + "%");
+				.createQuery("SELECT DISTINCT topo from Topo topo");
+		
 		return query.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<Topo> findTopoAvailableByName(String name) throws DataAccessException {
+	public Collection<Topo> findTopoAvailableByName() throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em
-				.createQuery("SELECT DISTINCT topo from Topo topo WHERE topo.name LIKE :name and topo.available = true");
-		query.setParameter("name", "%" + name + "%");
+				.createQuery("SELECT DISTINCT topo from Topo topo");		
 		
 		return query.getResultList();
 	}

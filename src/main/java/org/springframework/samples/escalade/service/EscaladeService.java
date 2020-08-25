@@ -206,7 +206,7 @@ public interface EscaladeService {
 	
 	TopoBkg saveTopoBkg(TopoBkg topoBkg) throws DataAccessException;
 
-	Collection<Topo> findTopoByName(String name) throws DataAccessException;
+	Collection<Topo> findTopos() throws DataAccessException;
 
 	
 	//NamedEntity updateArea(Area area)throws DataAccessException;
@@ -244,4 +244,6 @@ public interface EscaladeService {
 	Collection<TopoBkg> findTopoBkgs();
 
 	Collection<Topo> findTopoAvailableByUserId(Integer id);
+	
+	
 }

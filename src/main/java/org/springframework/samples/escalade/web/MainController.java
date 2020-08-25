@@ -66,7 +66,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 		@GetMapping(value= "/dashboards/dashboard")
-		public String dashboard( Model model, Comment comment,Topo topo, String commentaryNb, String userName, BindingResult result, Principal principal) {
+		public String dashboard( Model model, Comment comment,Topo topo, String commentaryNb, String userName, String name, BindingResult result, Principal principal) {
 			
 	        	userName = principal.getName();
 	        	
@@ -130,6 +130,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 	        	
 	        	model.addAttribute("topoListByUserName", topoListByUserName);
 	        	 
+	        	/*
+	        	 * Topo list 
+	        	 */
+	        	
+	        	
+				Collection<Topo> topoListByName = this.escaladeService.findTopoAvailableByName(name);    
+	        	
+	        	model.addAttribute("topoListByName", topoListByName);
+	        	 
+	        	
+	        	
+	        	
 	        	
 	        	/*
 	        	 * My topos

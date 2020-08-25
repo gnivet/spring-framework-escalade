@@ -47,9 +47,9 @@
 						</tr>
 						<tr>
 							<th scope="row">3</th>
-							<td>My sites:</td>
-							<td><a href="/areas/new/"><button class="btn-link"></button>Create
-									a new site</a></td>
+							<td>topo list:</td>
+							<td><a href="/topolist"><button class="btn-link"></button>topo list
+									</a></td>
 						</tr>
 						<tr>
 							<th scope="row">4</th>
@@ -115,6 +115,9 @@
 
 						</c:if>
 					</tr>
+					
+					
+					
 					<tr>
 						<th scope="row">6</th>
 						<td>Booking user's list:</td>
@@ -138,6 +141,23 @@
 							<td>My booking list:</td>
 							<td><a href="/topoBkgs/topoBkgsList"><button class="btn-link"></button>Booking list</a></td>
 						</tr>						
+					
+					
+					<tr>
+						<th scope="row">7</th>
+						<td>Topo list</td>
+						<td><c:out value="${topoListByName}" /></td>
+						<c:if test="${not empty topoListByName}">
+							<ul>
+								<c:forEach var="listValue" items="${topoListByName}">
+									<li>${listValue}</li>
+								</c:forEach>
+							</ul>
+
+						</c:if>
+					</tr>
+					
+					
 					
 					
 				</tbody>

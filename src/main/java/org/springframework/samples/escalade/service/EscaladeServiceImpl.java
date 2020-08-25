@@ -556,9 +556,9 @@ public class EscaladeServiceImpl implements EscaladeService {
 
 
 	@Override
-	public Collection<Topo> findTopoByName(String name) throws DataAccessException {
+	public Collection<Topo> findTopos() throws DataAccessException {
 		// TODO Auto-generated method stub
-		return topoRepository.findTopoByName(name);
+		return topoRepository.findTopoByName();
 				
 		
 	}
@@ -592,7 +592,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 	@Override
 	public Collection<Topo> findTopoAvailableByName(String name) throws DataAccessException {
 		// TODO Auto-generated method stub
-		return topoRepository.findTopoAvailableByName(name);
+		return topoRepository.findTopoAvailableByName();
 	}
 
 
@@ -775,6 +775,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 		return topoRepository.findTopoAvailableByUserId(id);
 	}
 
+	
 
 	
 		

@@ -115,6 +115,37 @@ public class TopoController {
 			if (results.isEmpty()) {
 				// no topos found
 				//result.rejectValue("name", "notFound", "not found");
+				//return "/topos/findTopos";
+				System.out.println("Your topo list is empty");
+				return "/dashboards/dashboard";
+
+			} else {
+				// multiple topos found
+				model.put("selections", results);
+				return "topos/toposList";
+			}
+			
+			
+		} else {
+			return "redirect:/users/login/";
+		}
+		
+	}
+
+	@GetMapping(value = "/topolist")
+	public String processFindForm(Topo topo, User  user , String name, BindingResult result, Map<String, Object> model , Principal principal) {
+
+		
+		if (principal.getName() != null) {
+			String userName = principal.getName();
+			user = this.userRepository.findByUserName(userName);
+			
+			
+			Collection<Topo> results = this.escaladeService.findTopos();
+
+			if (results.isEmpty()) {
+				// no topos found
+				//result.rejectValue("name", "notFound", "not found");
 				return "/topos/findTopos";
 
 			} else {
@@ -128,11 +159,19 @@ public class TopoController {
 			return "redirect:/users/login/";
 		}
 		
-		 
-		
-
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@GetMapping(value = "/toposAvailable")
 	public String processFindToposAvailable(Topo topo, BindingResult result, Map<String, Object> model) {
 
