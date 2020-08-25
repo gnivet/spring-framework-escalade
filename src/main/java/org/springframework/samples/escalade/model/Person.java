@@ -1,63 +1,42 @@
 package org.springframework.samples.escalade.model;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
+import java.time.Period;
 
-import org.springframework.samples.escalade.model.BaseEntity;
+import javax.persistence.MappedSuperclass;
 
 /**
  * Simple JavaBean domain object representing an person.
  *
- * @author Ken Krebs
+ * @author Guillaume Nivet
  */
 @MappedSuperclass
 public class Person extends BaseEntity {
 
-    @Column(name = "first_name")
-    @NotEmpty
-    protected String firstName;
+	// private final @Id Long id;
+	private final String firstname, lastname;
+	private final LocalDate birthday;
+	private final int age;
 
-    @Column(name = "last_name")
-    @NotEmpty
-    protected String lastName;
-    
-    @Column(name = "email")
-    @NotEmpty
-    protected String email;    
-    
+	static Person of(String firstname, String lastname, LocalDate birthday) {
 
-    public String getFirstName() {
-        return this.firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-	public String getEmail() {
-		return email;
+		return new Person(null, firstname, lastname, birthday, Period.between(birthday, LocalDate.now()).getYears());
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	Person(Integer id, String firstname, String lastname, LocalDate birthday, int age) {
+
+		this.id = id;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.birthday = birthday;
+		this.age = age;
+
 	}
 
-	/**
-	 * 
-	 */
-	protected Person() {
+	Person withId(Integer id) {
+		return new Person(id, this.firstname, this.lastname, this.birthday, this.age);
 	}
-    
-	
 
+	void setRemarks(String remarks) {
+	}
 }
-

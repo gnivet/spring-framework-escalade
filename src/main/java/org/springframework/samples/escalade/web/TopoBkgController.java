@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.User;
@@ -144,20 +145,21 @@ public class TopoBkgController {
 	}
 	
 	@GetMapping(value = "/topoBkgs")
-	public String processFindForm(TopoBkg topoBkg, BindingResult result, Map<String, Object> model) {
+	public String processFindForm(TopoBkg topoBkg, User user , NamedEntity namedEntity ,Principal principal, BindingResult result, Map<String, Object> model) {
 
 		// allow parameterless GET request for /areas to return all records
 		if (topoBkg.getName() == null) {
 			topoBkg.setName(""); // empty string signifies broadest possible search
 		}
-
-						
-		// find  topoBkgs by name
-		Collection<TopoBkg> results = this.escaladeService.findTopoBkgByName(topoBkg.getName());
-
+		
+		String userName = principal.getName();	
+			
+		Collection<TopoBkg> results = this.escaladeService.findTopoBkgByUserName(userName );
+		
+		
 		if (results.isEmpty()) {
 			// no topoBkgs found
-			result.rejectValue("name", "notFound", "not found");
+			result.rejectValue("name", "notFound", "not found");			
 			return "/topoBkgs/findTopoBkgs";
 
 		} else {

@@ -16,7 +16,6 @@
 package org.springframework.samples.escalade.web;
 
 import java.security.Principal;
-//import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;

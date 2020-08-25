@@ -34,12 +34,14 @@ public interface TopoBkgRepository {
 
 	Collection<TopoBkg> findToposBkgs(Integer topo_id) throws DataAccessException;
 
-	Collection<TopoBkg> findTopoBkgByName(String name) throws DataAccessException;
+
 
 	Collection<TopoBkg> findTopoBkgByUserId(Integer userId) throws DataAccessException;
 
 	Collection<TopoBkg> findTopoBkgs() throws DataAccessException;
 
 	Collection<TopoBkg> findTopoBkgByUserName(String userName) throws DataAccessException;
+
+	Collection<TopoBkg> findTopoBkgByName(String name)throws DataAccessException;
 
 }

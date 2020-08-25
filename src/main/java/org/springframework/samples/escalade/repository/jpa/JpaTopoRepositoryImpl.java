@@ -103,6 +103,20 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 		
 	}
 
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	
+	public Collection<Topo> findTopoAvailableByUserId(Integer id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		Query query = this.em
+				.createQuery("SELECT DISTINCT topo from Topo topo WHERE user_id = :id and topo.available = true");
+		query.setParameter("id", id);
+		
+		return query.getResultList();
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Topo> findTopoByUserId(Integer id) {

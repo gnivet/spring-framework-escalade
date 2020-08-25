@@ -14,6 +14,7 @@
 				<th style="width: 250px;">Name</th>
 				<th style="width: 200px;">Borrow date</th>
 				<th style="width: 200px;">Borrow end date</th>
+				<th style="width: 200px;">Accepted</th>
 			</tr>
 		</thead>
 		<tbody>

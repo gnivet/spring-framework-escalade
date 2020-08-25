@@ -730,13 +730,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 	
 
 
-	@Override
-	public Collection<TopoBkg> findTopoBkgByName(String name) {
-		// TODO Auto-generated method stub
-		return topoBkgRepository.findTopoBkgByName(name);
-	}
-
-
+	
 
 
 
@@ -776,6 +770,10 @@ public class EscaladeServiceImpl implements EscaladeService {
 		return topoBkgRepository.findTopoBkgByUserName(userName);
 	}
 
+	public Collection<Topo> findTopoAvailableByUserId(Integer id) {
+		// TODO Auto-generated method stub
+		return topoRepository.findTopoAvailableByUserId(id);
+	}
 
 
 	

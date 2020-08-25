@@ -136,7 +136,7 @@
 					<tr>
 							<th scope="row">6</th>
 							<td>My booking list:</td>
-							<td><a href="/topoBkgs/topoBkgsList"><button class="btn-link"></button>Booking 									list</a></td>
+							<td><a href="/topoBkgs/topoBkgsList"><button class="btn-link"></button>Booking list</a></td>
 						</tr>						
 					
 					

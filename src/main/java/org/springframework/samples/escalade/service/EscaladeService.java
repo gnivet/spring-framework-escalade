@@ -237,11 +237,11 @@ public interface EscaladeService {
 	
 	Collection<TopoBkg> findTopoBkgByUserName(String userName);
 
-	Collection<TopoBkg> findTopoBkgByName(String name);
-
 	Collection<TopoBkg> findTopoBkgByUserId(Integer userId);
 
 	Collection<TopoBkg> findTopoBkgByUserId(User userId);
 	
 	Collection<TopoBkg> findTopoBkgs();
+
+	Collection<Topo> findTopoAvailableByUserId(Integer id);
 }

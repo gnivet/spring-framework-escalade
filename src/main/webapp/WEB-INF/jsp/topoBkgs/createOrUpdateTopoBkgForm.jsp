@@ -36,10 +36,9 @@
                    		 <escalade:inputField label="Borrow End Date"
 					name="borrowEndDate" />
                    		 <escalade:inputField label="In Progress"
-					name="inProgress" />
-					<!--  
+					name="inProgress" />					
 					 <escalade:inputField label="Accepted"  
-					name="accepted" />	-->                   		 
+					name="accepted" />                 		 
         	</div>        		
         	<div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

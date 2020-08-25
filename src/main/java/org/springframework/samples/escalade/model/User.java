@@ -26,18 +26,22 @@ import javax.persistence.Table;
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Integer id;
-
+		//@NotEmpty(message = "Please enter your user name.")
 		@Column(name="userName")
 		private String userName;
 		
+		//@NotEmpty(message = "Please enter your password.")
 		@Column(name ="password")
 		private String password;
+		
+		//@NotEmpty(message = "Please enter your password confirm.")
 		@Column(name="passwordConfirm")
 		private String passwordConfirm;
 		
-		
+		//@NotEmpty(message = "Please enter your first name.")
 		@Column(name="firstName")
 		private String firstName;
+		//@NotEmpty(message = "Please enter your last name.")
 		@Column(name="lastName")
 		private String lastName;
 		@Column(name="address")
@@ -46,8 +50,10 @@ import javax.persistence.Table;
 		private String postalCode;
 		@Column(name="city")
 		private String city;
+		//@NotEmpty(message = "Please enter your telephone number.")
 		@Column(name="telephone")
-		private String telephone;	
+		private String telephone;
+		//@NotEmpty(message = "Please enter your email addresss.")
 		@Column(name="email")
 		private String email;
 		@Column(name="enabled")

@@ -102,26 +102,34 @@ public class TopoController {
 	}
 
 	@GetMapping(value = "/topos")
-	public String processFindForm(Topo topo, BindingResult result, Map<String, Object> model) {
+	public String processFindForm(Topo topo, User  user ,BindingResult result, Map<String, Object> model , Principal principal) {
 
-		// allow parameterless GET request for /areas to return all records
-		if (topo.getName() == null) {
-			topo.setName(""); // empty string signifies broadest possible search
-		}
+		
+		if (principal.getName() != null) {
+			String userName = principal.getName();
+			user = this.userRepository.findByUserName(userName);
+			
+			
+			Collection<Topo> results = this.escaladeService.findTopoAvailableByUserId(user.getId());
 
-		// find areas by name
-		Collection<Topo> results = this.escaladeService.findTopoByName(topo.getName());
+			if (results.isEmpty()) {
+				// no topos found
+				//result.rejectValue("name", "notFound", "not found");
+				return "/topos/findTopos";
 
-		if (results.isEmpty()) {
-			// no areas found
-			result.rejectValue("name", "notFound", "not found");
-			return "/topos/findTopos";
-
+			} else {
+				// multiple topos found
+				model.put("selections", results);
+				return "topos/toposList";
+			}
+			
+			
 		} else {
-			// multiple topos found
-			model.put("selections", results);
-			return "topos/toposList";
+			return "redirect:/users/login/";
 		}
+		
+		 
+		
 
 	}
 

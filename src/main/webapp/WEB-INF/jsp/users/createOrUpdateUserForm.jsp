@@ -14,13 +14,28 @@
         <div class="form-group has-feedback">
             <escalade:inputField label="First Name" name="firstName"/>
             <escalade:inputField label="Last Name" name="lastName"/>
-            <escalade:inputField label="Email" name="email"/>             
+            <escalade:inputField label="Email" name="email"/> 
+                     
             <escalade:inputField label="Address" name="address"/>
             <escalade:inputField label="Postal code" name="postalCode"/>
             <escalade:inputField label="City" name="city"/>
             <escalade:inputField label="Telephone" name="telephone"/> 
             <escalade:inputField label="Password" name="password"/>  
+            <spring:bind path="password">
+							<div class="form-group ${status.error ? 'has-error' : ''}">
+								<form:input type="password" path="password" class="form-control"
+									placeholder="Password"></form:input>
+								<form:errors path="password"></form:errors>
+							</div>
+						</spring:bind>
             <escalade:inputField label="userName" name="userName"/> 
+            <spring:bind path="userName">
+							<div class="form-group ${status.error ? 'has-error' : ''}">
+								<form:input type="text" path="userName" class="form-control"
+									placeholder="userName" autofocus="true"></form:input>
+								<form:errors path="userName"></form:errors>
+							</div>
+			</spring:bind>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
