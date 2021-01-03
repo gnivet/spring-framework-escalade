@@ -8,6 +8,7 @@ import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Length;
+import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.repository.LengthRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +48,12 @@ public class JpaLengthRepositoryImpl implements LengthRepository{
 				Query query = this.em.createQuery("SELECT length FROM Length length WHERE length.name like :name");
 				query.setParameter("name", "%" + name + "%");
 				return  query.getResultList();
+		}
+
+		@Override
+		public NamedEntity updateLength(Length length) throws DataAccessException {
+			// TODO Auto-generated method stub
+			return null;
 		}
 		
 		

@@ -122,7 +122,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/points/new").hasAnyRole("USER", "ADMIN");
 		
 		
-		
+		http.authorizeRequests().antMatchers("/lengths/*/points/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/findTopos").hasAnyRole("USER", "ADMIN");
@@ -133,11 +133,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/topos/*/topoBkgs/*/topoBkgDetails").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topobookings/").hasAnyRole("USER", "ADMIN");
 		
-		
 		//http.authorizeRequests().antMatchers("/topoBkgs/").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/topoBkgs/*").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topoBkgs/*/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/new").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/topoBkgs/find").hasAnyRole("USER", "ADMIN");
+		//http.authorizeRequests().antMatchers("/topoBkgs/find").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/topoBkgsList").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/findTopoBkgs").hasAnyRole("USER", "ADMIN");
 		//http.authorizeRequests().antMatchers("topoBkgs/topoBkgs").hasAnyRole("USER", "ADMIN");
@@ -150,7 +149,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		//http.authorizeRequests().antMatchers("/topoBkgs/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/findTopoBkgsByUserName/").hasAnyRole("USER", "ADMIN");
 		
-		
+		http.authorizeRequests().antMatchers("topolist/*").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("topos/*").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/*/topoBkgs/*/topoDetails").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/*/edit").hasAnyRole("USER", "ADMIN");

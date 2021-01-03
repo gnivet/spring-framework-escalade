@@ -32,6 +32,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,13 +45,14 @@ public class SiteTypeController {
 
 	private static final String VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM = "sitetypes/createOrUpdateSiteTypeForm";
 	private final EscaladeService escaladeService;	
+	private SiteTypeRepository siteTypeRepository;
 	
 	
 
 	@Autowired
 	public SiteTypeController(EscaladeService escaladeService , SiteTypeRepository siteTypeRepository) {
 		this.escaladeService = escaladeService;
-		
+		this.siteTypeRepository = siteTypeRepository;
 	}
 	
 	
@@ -68,9 +70,9 @@ public class SiteTypeController {
         return VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM;
     }
 	
-	
+		
     @PostMapping(value = "/sitetypes/new")
-    public String processCreationForm( @Valid SiteType siteType, BindingResult result,  Principal principal) {
+    public String processCreationForm(  SiteType siteType, BindingResult result, Integer siteTypeId, Model model, Principal principal) {
     	
     	
 		

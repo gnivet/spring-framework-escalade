@@ -26,11 +26,11 @@
 		</tr>
 				
 	</table>
-	<!--  
+	
 	<spring:url value="/topoBkgs/{topoBkgId}" var="editUrl">	
 		<spring:param name="topoBkgId" value="${topoBkg.id}" />
 	</spring:url>
 	<a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit
 		topo booking</a>	
-		-->	
+		
 </escalade:layout>

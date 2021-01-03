@@ -17,7 +17,6 @@ import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.escaladeException;
-import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.samples.escalade.repository.TopoBkgRepository;
 import org.springframework.samples.escalade.repository.TopoRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
@@ -46,16 +45,16 @@ public class TopoBkgController {
 	private UserRepository userRepository;
 	private TopoBkgRepository topoBkgRepository;
 	private TopoRepository topoRepository;
-	private SiteRepository siteRepository;
+	
 
 	@Autowired
 	public TopoBkgController(EscaladeService escaladeService, UserRepository userRepository,
-			TopoBkgRepository topoBkgRepository, TopoRepository topoRepository, SiteRepository siteRepository) {
+			TopoBkgRepository topoBkgRepository, TopoRepository topoRepository) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
 		this.topoBkgRepository = topoBkgRepository;
 		this.topoRepository = topoRepository;
-		this.siteRepository = siteRepository;
+		
 
 	}
 
@@ -64,18 +63,32 @@ public class TopoBkgController {
 		dataBinder.setDisallowedFields("id");
 		//dataBinder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy/mm/dd"), false));
 	}
+	
+	
 
-	@GetMapping(value = "/topos/{topoId}/topoBkgs/new")
-	public String initCreationForma(Map<String, Object> model, Principal principal, @PathVariable Integer topoId) {
 
-		if (principal != null ) {
+	@GetMapping(value = "/topos/{topoId}/topoBkgs/{accepted}/users/{userId}/new/")
+	public String initCreationForma(Model model, Principal principal, @PathVariable Integer topoId, @PathVariable(value = "accepted")  Boolean accepted, @PathVariable Integer userId) {
+
+		if (principal.getName() != null ) {
+			
+String userName = principal.getName();	
+			
+			
+			User user = this.userRepository.findByUserName(userName);
+			userId = user.getId();
+			
 			
 			Topo topo = new Topo();
 			if (topoId != null) {
 			topo = this.escaladeService.findTopoById(topoId);			
 			
-			TopoBkg topoBkg = new TopoBkg();			
-			model.put("topoBkg", topoBkg);
+			TopoBkg topoBkg = new TopoBkg();	
+			topoBkg.setUser(user);
+			topoBkg.setAccepted(accepted);
+			model.addAttribute("accepted" , accepted);
+			model.addAttribute("topoBkg", topoBkg);
+			model.addAttribute("userId", userId);
 			}else
 			{				
 				return VIEWS_TOPOBKG_CREATE_OR_UPDATE_FORM;
@@ -94,16 +107,23 @@ public class TopoBkgController {
 	// public String newStudent(@ModelAttribute @Valid StudentForm form,
 	// BindingResult bindingResult, Model model) {
 
-	@PostMapping(value = "/topos/{topoId}/topoBkgs/new")
+	@PostMapping(value = "/topos/{topoId}/topoBkgs/{accepted}/users/{userId}/new/")
 	public String processCreationForm(@ModelAttribute("topoBkg") @Valid TopoBkg topoBkg, BindingResult result,
-			Model model, Principal principal, @PathVariable Integer topoId) {
+			Model model, Principal principal, @PathVariable Integer topoId ,  @PathVariable("accepted")  Boolean accepted, @PathVariable Integer userId) {
 
 		if (principal.getName() != null) {
 			String userName = principal.getName();	
 			
 			
+			
 			User user = this.userRepository.findByUserName(userName);
+			userId = user.getId();
+			
 			topoBkg.setUser(user);
+			model.addAttribute("accepted" , accepted);
+			model.addAttribute("userId", userId);
+			topoBkg.setAccepted(accepted);
+			
 		} else {
 			return "redirect:/users/login/";
 		}
@@ -147,10 +167,7 @@ public class TopoBkgController {
 	@GetMapping(value = "/topoBkgs")
 	public String processFindForm(TopoBkg topoBkg, User user , NamedEntity namedEntity ,Principal principal, BindingResult result, Map<String, Object> model) {
 
-		// allow parameterless GET request for /areas to return all records
-		if (topoBkg.getName() == null) {
-			topoBkg.setName(""); // empty string signifies broadest possible search
-		}
+		
 		
 		String userName = principal.getName();	
 			
@@ -170,6 +187,65 @@ public class TopoBkgController {
 
 	}
 	
+	
+	@GetMapping(value = "/topoBkg/find")
+	public String initFindForms(Map<String, Object> model) {
+		model.put("topoBkg", new TopoBkg());
+		return "/topoBkgs/findTopoBkgs";
+
+	}
+	
+	
+
+	
+
+	
+	@GetMapping(value = "/topoBkg")
+	public String processFindForm(TopoBkg topoBkg ,BindingResult result, Map<String, Object> model, Topo topo) {
+
+		// allow parameterless GET request for /areas to return all records
+		if (topoBkg.getTopo() == null) {
+			topoBkg.setTopo(topo); // empty string signifies broadest possible search
+		}
+
+		// find areas by postal code
+		Collection<TopoBkg> results = this.escaladeService.findTopoBkg(null);
+
+		if (results.isEmpty()) {
+			// no areas found
+			result.rejectValue("topo", "notFound", "not found");
+			return "/topoBkgs/findTopoBkgs";			
+
+		} else {
+			// multiple areas found
+			model.put("selections", results);			
+		 return "topoBkgs/topoBkgsList";
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@GetMapping(value = "/findTopoBkgsByUserName")
 	public String findtopoBkgsByUserName (Model model,  TopoBkg topoBkg, BindingResult result, Principal principal ) {
 	 String userName = principal.getName();
@@ -180,9 +256,7 @@ public class TopoBkgController {
      System.out.println("userId-----------------------------:"+  user.getId());
      System.out.println("username-----------------------------:"+ userName);
   // allow parameterless GET request for /areas to return all records
-  		if (topoBkg.getName() == null) {
-  			topoBkg.setName(""); // empty string signifies broadest possible search
-  		}
+  		
   		System.out.println("username-----------------------------:"+ userName);
   						
   		// find  topoBkgs by name
@@ -205,6 +279,8 @@ public class TopoBkgController {
   			return "topoBkgs/topoBkgsList";
   		}
 	}
+	
+	
 	
 	/*
 	

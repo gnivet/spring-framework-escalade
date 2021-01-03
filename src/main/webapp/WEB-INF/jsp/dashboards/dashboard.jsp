@@ -36,7 +36,7 @@
 						<tr>
 							<th scope="row">1</th>
 							<td>My topos:</td>
-							<td><a href="/topos"><button class="btn-link"></button>topo
+							<td><a href="/topolist"><button class="btn-link"></button>topo
 									list available </a></td>
 						</tr>
 						<tr>
@@ -44,13 +44,7 @@
 							<td>My borrowed topo list:</td>
 							<td><a href="/topoBkgs"><button class="btn-link"></button>borrowed
 									topo list </a></td>
-						</tr>
-						<tr>
-							<th scope="row">3</th>
-							<td>topo list:</td>
-							<td><a href="/topolist"><button class="btn-link"></button>topo list
-									</a></td>
-						</tr>
+						</tr>						
 						<tr>
 							<th scope="row">4</th>
 							<td>My site list:</td>
@@ -139,7 +133,7 @@
 					<tr>
 							<th scope="row">6</th>
 							<td>My booking list:</td>
-							<td><a href="/topoBkgs/topoBkgsList"><button class="btn-link"></button>Booking list</a></td>
+							<td><a href="/topoBkgs"><button class="btn-link"></button>Booking list</a></td>
 						</tr>						
 					
 					

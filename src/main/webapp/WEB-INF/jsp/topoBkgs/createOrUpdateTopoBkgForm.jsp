@@ -25,7 +25,7 @@
     </jsp:attribute>
 	<jsp:body>
     <h2>    	 
-        <c:if test="${topoBkg['new']}">New </c:if> Topo booking
+        <c:if test="${topoBkg['new']}">New </c:if> Topo bookings
     </h2>   
     <form:form modelAttribute="topoBkg" class="form-horizontal"
 			id="add-topoBkg-form">	
@@ -37,8 +37,12 @@
 					name="borrowEndDate" />
                    		 <escalade:inputField label="In Progress"
 					name="inProgress" />					
-					 <escalade:inputField label="Accepted"  
-					name="accepted" />                 		 
+					    <escalade:inputField label="Accepted"  
+					name="accepted" /> 
+					<!--  				
+					<c:if test="${topoBkg.accepted == true}"><a href="${fn:escapeXml(topoBkgUrl)}"><c:out value="${topoBkg.accepted}" /></a></c:if>
+						<c:if test="${topoBkg.accepted == false}"><c:out value="${topoBkg.accepted}" /></c:if>
+					-->               		 
         	</div>        		
         	<div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
@@ -48,10 +52,11 @@
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-default" type="submit">Update topo booking</button>
+                         <a class="btn btn-default" href='<spring:url value="/topoBkgs/${topoBkg.id}/" htmlEscape="true"/>'>Add site</a>
                     </c:otherwise>
                 </c:choose>
             </div>
-        </div>
+        </div>       
     </form:form>
  </jsp:body>
 </escalade:layout>

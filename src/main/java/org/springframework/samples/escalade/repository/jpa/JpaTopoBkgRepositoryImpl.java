@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.ConstraintViolationException;
@@ -15,7 +14,6 @@ import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.escaladeException;
 import org.springframework.samples.escalade.repository.TopoBkgRepository;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -150,13 +148,14 @@ public class JpaTopoBkgRepositoryImpl implements TopoBkgRepository {
 		return null;
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<TopoBkg> findToposBkgs(Integer topo_id) {
+	public Collection<TopoBkg> findToposBkgs(Integer id) {
 		// TODO Auto-generated method stub
-		Query query = this.em.createQuery("select topoBkg from  TopoBkg topoBkg where topoBkg.topo_id = :topo_id");
+		Query query = this.em.createQuery("select topoBkg from  TopoBkg topoBkg where topoBkg.topo_id = :id");
 
-		query.setParameter("topoId", topo_id);
+		query.setParameter("id", id);
 
 		return query.getResultList();
 	}
@@ -207,21 +206,19 @@ public class JpaTopoBkgRepositoryImpl implements TopoBkgRepository {
 	 * query.getResultList(); }
 	 */
 
-	@SuppressWarnings("unchecked")
-	/*
-	 * public Collection<TopoBkg> findTopoBkgByUserName(String userName) throws
-	 * DataAccessException { // TODO Auto-generated method stub user left join fetch
-	 * user.topoBkgs Query query = this.em.
-	 * createQuery("(SELECT topoBkg FROM TopoBkg topoBkg left join fetch user.topoBkgs WHERE user.userName = :userName"
-	 * ); query.setParameter("userName", "%" + userName + "%"); return
-	 * query.getResultList(); }
-	 * 
-	 */
-
 	@Override
 	public Collection<TopoBkg> findTopoBkgByName(String name) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public Collection <TopoBkg> findTopoBkg(String name) throws DataAccessException {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("select topoBkg from  TopoBkg topoBkg where topoBkg.topo_id in (select topo_id from Topo topo where topo.name like : name");
+		query.setParameter("name", name + "%");
+		return query.getResultList();
 	}
 
 	/*

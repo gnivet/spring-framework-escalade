@@ -127,14 +127,16 @@ public class WayController {
 	}
 
 	@RequestMapping(value = "/ways/{wayId}", method = RequestMethod.GET)
-	public String initUpdatewayForm(@PathVariable("wayId") Integer wayId, ModelMap model) {
+	public String initUpdatewayForm(@PathVariable("wayId") 
+	Integer wayId, ModelMap model) {
 		Way way = this.escaladeService.findWayById(wayId);
 		model.put("way", way);
 		return VIEWS_WAY_CREATE_OR_UPDATE_FORM;
 	}
 
 	@RequestMapping(value = "/ways/{wayId}", method = RequestMethod.POST)
-	public String processUpdatewayForm(Way way, BindingResult result, @PathVariable("wayId") Integer wayId, Length length ,ModelMap model ) {
+	public String processUpdatewayForm(Way way, BindingResult result, @PathVariable("wayId") 
+	Integer wayId, Length length ,ModelMap model ) {
 		if (result.hasErrors()) {			
 			return VIEWS_WAY_CREATE_OR_UPDATE_FORM;
 		} else {			
@@ -150,7 +152,7 @@ public class WayController {
 	 * @param wayId the ID of the way to display
 	 * @return a ModelMap with the model attributes for the view
 	 */
-	@RequestMapping("/ways/{wayId}")
+	@RequestMapping(value = "/ways/{wayId}")
 	public ModelAndView showway(@PathVariable("wayId") Integer wayId) {
 		ModelAndView mav = new ModelAndView("ways/wayDetails");
 		mav.addObject(this.escaladeService.findWayById(wayId));

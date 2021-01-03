@@ -62,6 +62,8 @@ public interface EscaladeService {
 	Topo findTopoById(Integer id) throws DataAccessException;
 
 	Topo saveTopo(Topo topo) throws DataAccessException;
+	
+	Topo findTopo()  throws DataAccessException;
 
 	/*
 	 * Area
@@ -167,18 +169,21 @@ public interface EscaladeService {
 	
 	Length findLengthById(Integer lengthId)throws DataAccessException;
 
-	
+	NamedEntity updateLength(Length length)throws DataAccessException;
 	
 	
 	
 	/*
 	 * Point
 	 */
-	Point savePoints(Point point) throws DataAccessException;
+	Point savePoint(Point point) throws DataAccessException;
 
 	Collection<Point> findPointByName(String name)throws DataAccessException;
 	
 	Point findPointById(Integer pointId)throws DataAccessException;
+	
+	NamedEntity updatePoint(Point point)throws DataAccessException;
+	
 
 	void saveVisit(@Valid Visit visit)throws DataAccessException;;
 
@@ -242,8 +247,11 @@ public interface EscaladeService {
 	Collection<TopoBkg> findTopoBkgByUserId(User userId);
 	
 	Collection<TopoBkg> findTopoBkgs();
+	Collection<TopoBkg> findTopoBkg(String name);
 
 	Collection<Topo> findTopoAvailableByUserId(Integer id);
+
+	Collection<TopoBkg> findTopoBkgByIda(Integer id) throws DataAccessException;
 	
 	
 }

@@ -19,7 +19,7 @@
 		<h1>
 			<spring:message code="greeting" text="default" />
 		</h1>
-		<h2>TP6 DA Java</h2>
+		<h2>Site d'escalade et de prêt de topos.</h2>
 		<p>©2020 Guillaume Nivet, tous droits réservés</p>
 		<img src="/resources/images/cascadeDuRougetLandscape.JPG"
 			class="img-rounded" alt="cascade Du Rouget" width="304" height="236">

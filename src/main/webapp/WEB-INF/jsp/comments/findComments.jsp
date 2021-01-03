@@ -30,6 +30,6 @@
     </form:form>
 
     
-     <a class="btn btn-default" href='<spring:url value="/comments/new/" htmlEscape="true"/>'>Add comment</a> 
+     <a class="btn btn-default" href='<spring:url value="/comments/new" htmlEscape="true"/>'>Add comment</a> 
     
 </escalade:layout>

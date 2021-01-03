@@ -25,6 +25,8 @@ public interface TopoBkgRepository {
 	Topo findTopoBookedBytopoBkgId(@NotNull Integer topoBkgId) throws DataAccessException;
 
 	TopoBkg getAllTopoBkgById(Integer topoBkgId) throws DataAccessException;
+	
+	Collection <TopoBkg> findTopoBkg(String name) throws DataAccessException;
 
 	@Query("select topoBkg from TopoBkg topoBkg where (topo) in : topo")
 	List<TopoBkg> findByIdinIgnoreCaseIn(@Param("topo") List<String> topo) throws DataAccessException;
@@ -35,6 +37,7 @@ public interface TopoBkgRepository {
 	Collection<TopoBkg> findToposBkgs(Integer topo_id) throws DataAccessException;
 
 
+	
 
 	Collection<TopoBkg> findTopoBkgByUserId(Integer userId) throws DataAccessException;
 

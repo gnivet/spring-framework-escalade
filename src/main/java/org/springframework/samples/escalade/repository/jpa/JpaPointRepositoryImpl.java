@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.repository.PointRepository;
 import org.springframework.stereotype.Repository;
@@ -26,7 +27,7 @@ public class JpaPointRepositoryImpl implements PointRepository{
 		}
 
 		// Add Way to Site form
-		public Point savePoints(Point Point) throws DataAccessException {
+		public Point savePoint(Point Point) throws DataAccessException {
 			if (Point.getId() == null) {
 				this.em.persist(Point);
 			} else {
@@ -50,6 +51,12 @@ public class JpaPointRepositoryImpl implements PointRepository{
 			Query query = this.em.createQuery("SELECT point from Point point WHERE point.name like :name");
 			query.setParameter("name", "%" + name + "%");
 			return  query.getResultList();
+		}
+
+		@Override
+		public NamedEntity updatePoint(Point point) throws DataAccessException {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	
 		

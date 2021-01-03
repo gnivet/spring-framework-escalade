@@ -135,6 +135,12 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 		return (Topo) query.getResultList();
 	}
 
+	@Override
+	public Topo findTopo() throws DataAccessException {
+		return (Topo) this.em.createQuery("SELECT topo FROM Topo topo" , Topo.class)                
+                .getSingleResult();
+	}
+
 	
 	
 

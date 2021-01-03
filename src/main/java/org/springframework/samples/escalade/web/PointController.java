@@ -25,7 +25,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Length;
 import org.springframework.samples.escalade.model.Point;
+import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.User;
+import org.springframework.samples.escalade.model.Way;
+import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
@@ -33,8 +36,10 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -55,44 +60,65 @@ public class PointController {
 		this.userRepository = userRepository;
 	}
 
-
-	
 	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
-	
-	
-	
 
-	@RequestMapping(value = "/lengths/{lengthId}/points/new", method = RequestMethod.GET)
-	public String initCreationForm(Map<String, Object> model , Principal principal ,@PathVariable("lengthId") Integer lengthId ) {
-		
+	
+	
+	@GetMapping(value = "/lengths/{lengthId}/points/new")
+	public String initCreationForm(Map<String, Object> model 
+	, Principal principal)   {
+	
 		String userName = principal.getName();
-		
+				
 		User user = this.userRepository.findByUserName(userName);
-		
 		
 		Point point = new Point();
 		model.put("point", point);
 		return VIEWS_POINT_CREATE_OR_UPDATE_FORM;
 	}
 
-	@RequestMapping(value = "/lengths/{lengthId}/points/new", method = RequestMethod.POST)
-	public String processCreationForm(@Valid Point point, Length length ,BindingResult result ,@PathVariable("lengthId") Integer lengthId,  Model model ) {
+	
+	
+	
+	
+	@PostMapping(value = "/lengths/{lengthId}/points/new")
+	public String processCreationForm(Principal principal, @Valid Point point , 
+	Integer lengthId, BindingResult result ,  
+	Model model, Length length )
+	{
+		
+		
 		
 		if (result.hasErrors()) {
 			return VIEWS_POINT_CREATE_OR_UPDATE_FORM;
 		} else {
-			model.addAttribute("point",length.getId())		;
-			this.escaladeService.savePoints(point);
+			
+			//point.setLength(length);
+			
+			point.setLength(length);
+			if (lengthId != null)
+			{	
+				point.setLength(length);	
+			}
+			
+			
+			model.addAttribute("point",length.getId());
+			point = this.escaladeService.savePoint(point);
+			
+			
+			
+			//this.escaladeService.updatePoint(point);
 			return "redirect:/lengths/{lengthId}/points/new" ;
 		}
 	}
 
-	@RequestMapping(value = "/points/find", method = RequestMethod.GET)
+	
+	
+	@GetMapping(value = "/points/find")
 	public String initFindForm(Map<String, Object> model ) {
 		model.put("point", new Point());
 		return "points/findPoints";
@@ -125,20 +151,20 @@ public class PointController {
 		}
 	}
 
-	@RequestMapping(value = "/points/{pointId}", method = RequestMethod.GET)
+	@GetMapping(value = "/points/{pointId}")
 	public String initUpdatepointForm(@PathVariable("pointId") Integer pointId, Model model) {
 		Point point = this.escaladeService.findPointById(pointId);
 		model.addAttribute(point);
 		return VIEWS_POINT_CREATE_OR_UPDATE_FORM;
 	}
 
-	@RequestMapping(value = "/points/{pointId}", method = RequestMethod.POST)
+	@PostMapping(value = "/points/{pointId}")
 	public String processUpdatepointForm(Point point, BindingResult result, @PathVariable("pointId") Integer pointId, ModelMap model) {
 		if (result.hasErrors()) {
 			return VIEWS_POINT_CREATE_OR_UPDATE_FORM;
 		} else {			
 			point.setId(pointId);
-			this.escaladeService.savePoints(point);
+			this.escaladeService.savePoint(point);
 			return "redirect:/points/{pointId}";
 		}
 	}

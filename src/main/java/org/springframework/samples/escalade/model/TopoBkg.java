@@ -10,14 +10,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
 @Table(name = "topoBkgs")
-public class TopoBkg  extends NamedEntity  {
+public class TopoBkg extends BaseEntity  {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = true)
@@ -33,11 +33,13 @@ public class TopoBkg  extends NamedEntity  {
 	@Column(name = "borrowDate")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")	
 	@Future
+	@NotNull(message = "le champ borrowDate est obligatoire")
 	private Date borrowDate;
 
 	@Column(name = "borrowEndDate")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")	
 	@Future
+	@NotNull(message = "le champ borrowEndDate est obligatoire")
 	private Date borrowEndDate;
 
 	@Column(name = "inProgress" , nullable = true)
@@ -59,13 +61,9 @@ public class TopoBkg  extends NamedEntity  {
 		this.accepted = accepted;
 	}
 
-	public Topo getTopo() {
-		return topo;
-	}
+	
 
-	public void setTopo(Topo topo) {
-		this.topo = topo;
-	}
+	
 
 	
 	
@@ -98,6 +96,17 @@ public class TopoBkg  extends NamedEntity  {
 	 */
 	public TopoBkg() {
 	}
+
+	public Topo getTopo() {
+		return topo;
+	}
+	
+	
+	public void setTopo(Topo topo) {
+		this.topo = topo;
+	}
+
+	
 
 	
 

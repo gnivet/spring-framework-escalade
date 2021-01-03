@@ -55,11 +55,12 @@ import org.springframework.stereotype.Service;
  * for @Transactional and @Cacheable annotations
  *
  * @author Guillaume Nivet
+ * @param <TopoBkgs>
  * 
  */
 
 @Service
-public class EscaladeServiceImpl implements EscaladeService {
+public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	
 	
 	private AreaRepository areaRepository;
@@ -375,9 +376,9 @@ public class EscaladeServiceImpl implements EscaladeService {
 	}
 
 	
-	public Point savePoints(Point point) throws DataAccessException {
+	public Point savePoint(Point point) throws DataAccessException {
 		// TODO Auto-generated method stub
-		return this.pointRepository.savePoints(point);
+		return this.pointRepository.savePoint(point);
 	}
 
 
@@ -566,27 +567,6 @@ public class EscaladeServiceImpl implements EscaladeService {
 	
 	
 	
-	
-	/*
-
-    public Collection<TopoBkg> findTopoBkgByName(String name) throws DataAccessException{
-    	return topoBkgRepository.findTopoBkgByName(name);
-    }
-
-	*/
-
-
-
-
-
-	
-
-
-
-
-
-	
-
 
 
 	@Override
@@ -642,8 +622,9 @@ public class EscaladeServiceImpl implements EscaladeService {
 	}
 
 
-
-
+	
+	
+	
 
 	@Override
 	public List<TopoBkg> findTopoBkgById(Integer topoBkgId) throws DataAccessException {
@@ -761,6 +742,7 @@ public class EscaladeServiceImpl implements EscaladeService {
 	}
 
 
+	
 
 
 
@@ -775,8 +757,75 @@ public class EscaladeServiceImpl implements EscaladeService {
 		return topoRepository.findTopoAvailableByUserId(id);
 	}
 
+
+
+
+
+	@Override
+	public Topo findTopo() throws DataAccessException {
+		// TODO Auto-generated method stub
+		return topoRepository.findTopo();
+	}
+
+
+
+
+
 	
 
+
+
+
+
+	public Collection<TopoBkg> findTopoBkg(String name) {
+		// TODO Auto-generated method stub
+		return topoBkgRepository.findTopoBkg(name);
+	}
+
+
+
+
+
+	@Override
+	public Collection<TopoBkg> findTopoBkgByIda(Integer id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+
+	@Override
+	public NamedEntity updateLength(Length siteToModify) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return lengthRepository.updateLength(siteToModify);
+	}
+
+
+
+
+
+	@Override
+	public NamedEntity updatePoint(Point point) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return pointRepository.updatePoint(point);
+	}
+
+
+
+
+
+	
+
+
+
+
+
+	
+
+	
+	
 	
 		
 }

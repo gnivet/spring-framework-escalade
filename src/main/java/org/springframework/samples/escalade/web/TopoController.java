@@ -110,7 +110,7 @@ public class TopoController {
 			user = this.userRepository.findByUserName(userName);
 			
 			
-			Collection<Topo> results = this.escaladeService.findTopoAvailableByUserId(user.getId());
+			Collection<Topo> results = this.escaladeService.findTopoByUserId(user.getId());
 
 			if (results.isEmpty()) {
 				// no topos found

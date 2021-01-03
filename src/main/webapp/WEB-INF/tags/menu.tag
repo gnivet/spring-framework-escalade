@@ -9,7 +9,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head>	
 <title>Bootstrap Example</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,7 +68,7 @@
 									<span>Sites</span>
 								</escalade:menuItem></li>
 							<li><escalade:menuItem active="${name eq 'sites'}"
-									url="/areas/{areaId}/sites/new/" title="sites">
+									url="/areas/new/" title="sites">
 									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 									<span>Sites</span>
 								</escalade:menuItem></li>
@@ -107,16 +107,16 @@
 						data-toggle="dropdown" href="#">Site type <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li>
-							<li><escalade:menuItem active="${name eq 'sitetypes'}"
+							<!-- <li><escalade:menuItem active="${name eq 'sitetypes'}"
 									url="/sitetypes/find/" title="sitetypes">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 									<span>Site types</span>
 								</escalade:menuItem></li>
 							<li><escalade:menuItem active="${name eq 'sitetypes'}"
-									url="/sitetypes/new/" title="sitetypes">
+									url="/sitetypes/new" title="sitetypes">
 									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 									<span>Sites Type</span>
-								</escalade:menuItem></li>
+								</escalade:menuItem></li> -->
 							<li><escalade:menuItem active="${name eq 'sitetypes'}"
 									url="/sitetypes" title="sitetypes">
 									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
@@ -132,12 +132,12 @@
 									url="/zones/find/" title="zones">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 									<span>Zones</span>
-								</escalade:menuItem></li>
+								</escalade:menuItem></li> <!-- 
 							<li><escalade:menuItem active="${name eq 'zones'}"
 									url="/sites/{siteId}/zones/new/" title="zones">
 									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 									<span>Zones</span>
-								</escalade:menuItem></li>
+								</escalade:menuItem></li>  -->
 							<li><escalade:menuItem active="${name eq 'zones'}"
 									url="/zones" title="zones">
 									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
@@ -152,12 +152,12 @@
 									url="/ways/find/" title="ways">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 									<span>Ways</span>
-								</escalade:menuItem></li>
+								</escalade:menuItem></li> <!--  
 							<li><escalade:menuItem active="${name eq 'ways'}"
 									url="/zones/{zoneId}/ways/new/" title="ways">
 									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 									<span>Ways</span>
-								</escalade:menuItem></li>
+								</escalade:menuItem></li> -->
 							<li><escalade:menuItem active="${name eq 'ways'}"
 									url="/ways" title="ways">
 									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
@@ -173,12 +173,12 @@
 									url="/lengths/find/" title="lengths">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 									<span>Lengths</span>
-								</escalade:menuItem></li>
+								</escalade:menuItem></li> <!--  
 							<li><escalade:menuItem active="${name eq 'lengths'}"
 									url="/ways/{wayId}/lengths/new/" title="lengths">
 									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 									<span>Lengths</span>
-								</escalade:menuItem></li>
+								</escalade:menuItem></li> -->
 							<li><escalade:menuItem active="${name eq 'lengths'}"
 									url="/lengths" title="lengths">
 									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
@@ -193,12 +193,12 @@
 									url="/points/find/" title="points">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 									<span>Points</span>
-								</escalade:menuItem></li>
+								</escalade:menuItem></li> <!--  
 							<li><escalade:menuItem active="${name eq 'points'}"
 									url="/lengths/{lengthId}/points/new/" title="points">
 									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 									<span>Points</span>
-								</escalade:menuItem></li>
+								</escalade:menuItem></li> -->
 							<li><escalade:menuItem active="${name eq 'points'}"
 									url="/points" title="points">
 									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
@@ -214,11 +214,12 @@
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 									<span>Find comments</span>
 								</escalade:menuItem></li>
+								 
 							<li><escalade:menuItem active="${name eq 'comments'}"
-									url="/sites/{siteId}/comments/new/" title="comments">
+									url="/sites/{siteId}/comments/new" title="comments">
 									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-									<span>Comments</span>
-								</escalade:menuItem></li>
+									<span>Comments</span> 
+								</escalade:menuItem></li> 
 							<li><escalade:menuItem active="${name eq 'comments'}"
 									url="/comments" title="comments">
 									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
@@ -233,14 +234,16 @@
 									url="/topos/find/" title="find topos">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 									<span>Find topos</span>
+									  
 								</escalade:menuItem></li>
+								
 							<li><escalade:menuItem active="${name eq 'topos'}"
 									url="/topos/new/" title="topos">
 									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 									<span>Topos</span>
-								</escalade:menuItem></li>
+								</escalade:menuItem></li> 
 							<li><escalade:menuItem active="${name eq 'topos'}"
-									url="/topos" title="topos">
+									url="/topolist" title="topos">
 									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 									<span>Topos</span>
 								</escalade:menuItem></li>
@@ -251,7 +254,7 @@
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><escalade:menuItem active="${name eq 'topoBkgs'}"
-									url="/topoBkgs/find/" title="find topoBkgs">
+									url="/topos/find" title="find topos">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 									<span>Find topo Booking</span>
 								</escalade:menuItem></li>
@@ -259,12 +262,13 @@
 									url="/findTopoBkgsByUserName" title="find topoBkgs by username ">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 									<span>Find topo Booking by username</span>
-								</escalade:menuItem></li>	
+								</escalade:menuItem></li>
+								<!--  	
 							<li><escalade:menuItem active="${name eq 'topoBkgs'}"
-									url="/topoBkgs/new/" title="topoBkgs">
+									url="/topoBkgs/new" title="topoBkgs">
 									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 									<span>Topo Bookings</span>
-								</escalade:menuItem></li>
+								</escalade:menuItem></li> -->
 							<li><escalade:menuItem active="${name eq 'topoBkgs'}"
 									url="/topoBkgs" title="topoBkgs">
 									<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>

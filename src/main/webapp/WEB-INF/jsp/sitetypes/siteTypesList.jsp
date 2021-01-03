@@ -5,7 +5,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
-<escalade:layout pageName="siteTypes">
+<escalade:layout pageName="sitetypes">
 	<h2>Find site's type</h2>
 	<!-- Research sites by site's types -->
 	<spring:url value="/sitetypes" var="formUrl"/>

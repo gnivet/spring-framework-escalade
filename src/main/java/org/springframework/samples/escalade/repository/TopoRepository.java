@@ -49,6 +49,8 @@ public interface TopoRepository {
 
 	Collection<Topo> findTopoAvailableByUserId(Integer id) throws DataAccessException;
 
+	Topo findTopo()throws DataAccessException;
+
 	
 	
     

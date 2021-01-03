@@ -50,6 +50,7 @@ public class CommentController {
 	private final EscaladeService escaladeService;
 	private UserRepository userRepository;
 	private SiteRepository siteRepository;
+	private Site site;
 	
 	@Autowired
 	public CommentController(EscaladeService escaladeService , UserRepository userRepository, SiteRepository siteRepository) {
@@ -87,6 +88,8 @@ public class CommentController {
 		 */
 
 		User user = this.userRepository.findByUserName(userName);
+		
+	
 
 		/**
 		 * Retrieve a <code>Site</code> from the data store by id.
@@ -112,8 +115,9 @@ public class CommentController {
 			 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 			 */
 
-			//Site site = this.escaladeService.findSiteById(siteId);
+			site = this.escaladeService.findSiteById(siteId);
 			comment.setUser(user);
+			comment.setSite(site);
 			if (siteId != null)
 			{	
 				comment.setId(siteId);	

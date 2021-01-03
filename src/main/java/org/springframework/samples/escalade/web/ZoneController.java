@@ -175,8 +175,8 @@ public class ZoneController {
 			{	
 				zoneToModify.setSite(zone.getSite());
 			}
-			this.escaladeService.saveZone(zoneToModify);
-			//this.escaladeService.updateZone(zoneToModify);
+			//this.escaladeService.saveZone(zoneToModify);
+			this.escaladeService.updateZone(zoneToModify);
 			return "redirect:/sites/zones/{zoneId}";
 		}
 	}
