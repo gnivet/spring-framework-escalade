@@ -18,11 +18,11 @@ import javax.validation.constraints.NotNull;
 public class Length extends NamedEntity {
 
 	@Column(name = "cotation")
-	@NotNull
+	//@NotNull
 	private Integer cotation;
 
 	@Column(name = "under_cotation")
-	@NotEmpty
+	//@NotEmpty
 	private String under_cotation;
 
 	/**
@@ -35,12 +35,12 @@ public class Length extends NamedEntity {
 	 */
 
 	@Column(name = "comment")
-	@NotEmpty
+	//@NotEmpty
 	private String comment;
 	
 	
 	@Column(name = "length_status")
-	@NotNull	
+	//@NotNull	
 	private boolean length_status;
 
 	

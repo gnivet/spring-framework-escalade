@@ -23,12 +23,11 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.escalade.model.Comment;
 import org.springframework.samples.escalade.model.Length;
 import org.springframework.samples.escalade.model.Point;
-import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.User;
-import org.springframework.samples.escalade.model.Way;
-import org.springframework.samples.escalade.model.Zone;
+import org.springframework.samples.escalade.repository.LengthRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
 import org.springframework.stereotype.Controller;
@@ -53,9 +52,8 @@ public class PointController {
 	private static final String VIEWS_POINT_CREATE_OR_UPDATE_FORM = "points/createOrUpdatePointForm";
 	private final EscaladeService escaladeService;
 	private UserRepository userRepository;
-
 	@Autowired
-	public PointController(EscaladeService escaladeService , UserRepository userRepository) {
+	public PointController(EscaladeService escaladeService , UserRepository userRepository, LengthRepository lengthRepository) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
 	}
@@ -69,12 +67,14 @@ public class PointController {
 	
 	
 	@GetMapping(value = "/lengths/{lengthId}/points/new")
-	public String initCreationForm(Map<String, Object> model 
-	, Principal principal)   {
+	public String initCreationForm(Map<String, Object> 
+	model ,  Principal principal, @PathVariable("lengthId") Integer lengthId)   {
 	
 		String userName = principal.getName();
-				
+	
+	
 		User user = this.userRepository.findByUserName(userName);
+		
 		
 		Point point = new Point();
 		model.put("point", point);
@@ -87,9 +87,22 @@ public class PointController {
 	
 	@PostMapping(value = "/lengths/{lengthId}/points/new")
 	public String processCreationForm(Principal principal, @Valid Point point , 
-	Integer lengthId, BindingResult result ,  
+			@PathVariable("lengthId") Integer lengthId, BindingResult result ,  
 	Model model, Length length )
 	{
+		
+		
+		String userName = principal.getName();
+
+		/**
+		 * Retrieve a <code>User</code> from the data store by id.
+		 *
+		 * @param userName the userName to search for
+		 * @return the <code>User</code> if found
+		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
+		 */
+
+		User user = this.userRepository.findByUserName(userName);
 		
 		
 		
@@ -97,13 +110,6 @@ public class PointController {
 			return VIEWS_POINT_CREATE_OR_UPDATE_FORM;
 		} else {
 			
-			//point.setLength(length);
-			
-			point.setLength(length);
-			if (lengthId != null)
-			{	
-				point.setLength(length);	
-			}
 			
 			
 			model.addAttribute("point",length.getId());

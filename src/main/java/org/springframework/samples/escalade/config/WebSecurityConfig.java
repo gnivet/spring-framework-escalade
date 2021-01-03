@@ -109,8 +109,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/lengths/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/lengths/find").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/lengths/lengthsList").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/lengths/*/points/new").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/lengths/*/points/*/").hasAnyRole("USER", "ADMIN");
+		//http.authorizeRequests().antMatchers("/lengths/*/points/new").hasAnyRole("USER", "ADMIN");
+		//http.authorizeRequests().antMatchers("/lengths/*/points/*/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/ways/findLengths").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/points/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/points/find").hasAnyRole("USER", "ADMIN");
@@ -122,11 +122,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/points/new").hasAnyRole("USER", "ADMIN");
 		
 		
-		http.authorizeRequests().antMatchers("/lengths/*/points/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/lengths/*/points/new/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/findTopos").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("topos/toposList").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topos/toposList").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/toposAvailable/toposAvailableList").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/*/topoBkgs/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/*/topoBkgs/response/*").hasAnyRole("USER", "ADMIN");

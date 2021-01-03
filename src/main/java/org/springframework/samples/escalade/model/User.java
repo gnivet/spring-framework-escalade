@@ -27,22 +27,22 @@ import javax.validation.constraints.NotEmpty;
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Integer id;
-		@NotEmpty(message = "Please enter your user name.")
+		//@NotEmpty(message = "Please enter your user name.")
 		@Column(name="userName")
 		private String userName;
 		
-		@NotEmpty(message = "Please enter your password.")
+		//@NotEmpty(message = "Please enter your password.")
 		@Column(name ="password")
 		private String password;
 		
-		@NotEmpty(message = "Please enter your password confirm.")
+		//@NotEmpty(message = "Please enter your password confirm.")
 		@Column(name="passwordConfirm")
 		private String passwordConfirm;
 		
-		@NotEmpty(message = "Please enter your first name.")
+		//@NotEmpty(message = "Please enter your first name.")
 		@Column(name="firstName")
 		private String firstName;
-		@NotEmpty(message = "Please enter your last name.")
+		//@NotEmpty(message = "Please enter your last name.")
 		@Column(name="lastName")
 		private String lastName;
 		@Column(name="address")
