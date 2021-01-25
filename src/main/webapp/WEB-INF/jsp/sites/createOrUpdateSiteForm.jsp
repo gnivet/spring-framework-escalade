@@ -55,25 +55,7 @@
 								</option>
 							</c:forEach>
 						 </select> <br />                  		 
-             		</div>   
-             		          		
-            <div class="col-sm-10">
-                          <br /> 
-                   		  <p>Below you can activate/cancel your site:</p>
-					<br />
-						<c:if test="${site.valid eq 'false'}">					     									
-        					<input type="radio" name="site.valid" value="false"
-							id="true" checked />
-						<label for="false">Not valid</label>
-						<br />
-						</c:if>
-						<c:if test="${site.valid eq 'true'}">
-							 
-        					 <input type="radio" name="site.valid" value="true"
-							id="true" checked />		  <label for="true">Valid</label>
-						<br />	
-						</c:if>
-			</div>				
+             		</div> 
 			 <br />	
         </div>
         <div class="form-group">
@@ -85,7 +67,7 @@
                     <c:otherwise>
                         <!-- <button class="btn btn-default" type="submit">Update Site</button> -->
                          <a class="btn btn-default"
-								href='<spring:url value="/sites/${site.id}/zones/new/" htmlEscape="true"/>'>Add zone</a>
+								href='<spring:url value="/sites/${site.id}/zones/new" htmlEscape="true"/>'>Add zone</a>
                           <a class="btn btn-default"
 								href='<spring:url value="/sites/${site.id}/comments/new/" htmlEscape="true"/>'>Add comment</a>
                     </c:otherwise>

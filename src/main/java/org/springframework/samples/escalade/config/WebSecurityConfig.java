@@ -45,12 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 
 		// The pages does not require login
-		/*
-		 * http.authorizeRequests().antMatchers("/", "/users/login", "/logout",
-		 * "/welcome", "/users/new" , "/users/registration" , "/areas/new" , "/areas",
-		 * "/areas/find", "/areas/new", "/comments/find", "/comments/new" , "/comments"
-		 * , "/zones/new") .permitAll();
-		 */
+		
 		http.authorizeRequests().antMatchers("/", "/login", "/logout", "/users/registration", "/users/login",
 				"/welcome", "/error/error").permitAll();
 		// /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
@@ -94,23 +89,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests().antMatchers("/sitetypes/new/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/sitetypes/find").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("/sitetypes/*/sitetypes/new").hasAnyRole("USER", "ADMIN");
-	
-		//http.authorizeRequests().antMatchers("/sitetypes/*/siteTypes/new").hasAnyRole("USER", "ADMIN");
+		
 		http.authorizeRequests().antMatchers("/sitetypes/").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("/sitetypes/sitetypes/").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("/sitetypes/").hasAnyRole("USER", "ADMIN");
+		
 		http.authorizeRequests().antMatchers("/sitetypes/*/").hasAnyRole("USER", "ADMIN");	
 		http.authorizeRequests().antMatchers("/sitetypes/siteTypeDetails").hasAnyRole("USER", "ADMIN");
 		
 		http.authorizeRequests().antMatchers("/escalade/sites/findSites").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("/lengths/new").hasAnyRole("USER", "ADMIN");
+		
 		http.authorizeRequests().antMatchers("/lengths/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/lengths/find").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/lengths/lengthsList").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("/lengths/*/points/new").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("/lengths/*/points/*/").hasAnyRole("USER", "ADMIN");
+		
 		http.authorizeRequests().antMatchers("/escalade/ways/findLengths").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/points/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/points/find").hasAnyRole("USER", "ADMIN");
@@ -133,20 +124,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/topos/*/topoBkgs/*/topoBkgDetails").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topobookings/").hasAnyRole("USER", "ADMIN");
 		
-		//http.authorizeRequests().antMatchers("/topoBkgs/").hasAnyRole("USER", "ADMIN");
+		
 		http.authorizeRequests().antMatchers("/topoBkgs/*/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/new").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("/topoBkgs/find").hasAnyRole("USER", "ADMIN");
+		
 		http.authorizeRequests().antMatchers("/topoBkgs/topoBkgsList").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topoBkgs/findTopoBkgs").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("topoBkgs/topoBkgs").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("/topoBkgs/*/topoBkgs/*/").hasAnyRole("USER", "ADMIN");
+		
 		http.authorizeRequests().antMatchers("/topoBkgs/*/edit/").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("/topoBkgs/*/topos/*").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("/topoBkgs/*/topos").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("/topoBkgs/*/topos/").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("/topoBkgs/*").hasAnyRole("USER", "ADMIN");
-		//http.authorizeRequests().antMatchers("/topoBkgs/").hasAnyRole("USER", "ADMIN");
+		
 		http.authorizeRequests().antMatchers("/findTopoBkgsByUserName/").hasAnyRole("USER", "ADMIN");
 		
 		http.authorizeRequests().antMatchers("topolist/*").hasAnyRole("USER", "ADMIN");
@@ -157,7 +143,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests().antMatchers("/tobook").hasAnyRole("USER", "ADMIN");
 		
-		//http.authorizeRequests().antMatchers("/topos/*/topoBkgs/*").hasAnyRole("USER", "ADMIN");
+		
 		http.authorizeRequests().antMatchers("/updateTopoBkg?id=*").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/updateTopoBkg*").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/updateTopoBkg?id=18302").hasAnyRole("USER", "ADMIN");
@@ -167,7 +153,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests().antMatchers("/zones/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/zones/find").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/sites/*/zones/new").hasAnyRole("USER", "ADMIN");
+				
+		http.authorizeRequests().antMatchers("/sites/*/zones/new/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sites/*/zones/*/").hasAnyRole("USER", "ADMIN");
         
 		// http.authorizeRequests().antMatchers("/areas/").hasAnyRole("USER", "ADMIN");
 		// For ADMIN only. /users/find

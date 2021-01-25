@@ -34,9 +34,9 @@
         <thead>
         <tr>
             <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Birth date</th>
-            <th style="width: 200px;">Valid</th>
-             <th style="width: 200px;">Comment</th>            
+            <th style="width: 200px;">Birth date</th>                                   
+            <th style="width: 200px;">First name</th> 
+            <th style="width: 200px;">Last name</th>  	         
         </tr>
         </thead>
         <tbody>
@@ -51,19 +51,20 @@
                 </td>
                 <td>
                     <c:out value="${site.birthDate}"/>
+                </td>                                            
+                <td>
+                    <c:out value="${site.user.firstName} "/>
+                </td> 
+                               
+                <td>
+                    <c:out value="${site.user.lastName}"/>
                 </td>
-                 <td>
-                    <c:out value="${site.valid}"/>
-                </td>
-                 <td>
-                    <c:out value="${comment.comment}"/>
-                </td>
-                <!--                
+                             
                 <td>
                     <c:forEach var="site" items="${user.sites}">
                         <c:out value="${site.name} "/>
                     </c:forEach>
-                </td> --> 
+                </td> 
             </tr>
         </c:forEach>
         </tbody>

@@ -53,17 +53,11 @@ public class ZoneController {
 	private final EscaladeService escaladeService;
 
 	private UserRepository userRepository;
-	private SiteRepository siteRepository;
-	private ZoneRepository zoneRepository;
-	private WayRepository wayRepository;
-
 	@Autowired
 	public ZoneController(EscaladeService escaladeService, UserRepository userRepository, SiteRepository siteRepository,
 			ZoneRepository zoneRepository, WayRepository wayRepository) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
-		this.siteRepository = siteRepository;
-		this.zoneRepository = zoneRepository;
 
 	}
 

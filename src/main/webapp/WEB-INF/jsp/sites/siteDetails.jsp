@@ -17,12 +17,7 @@
         <tr>
             <th>Birth date</th>
             <td><c:out value="${site.birthDate}"/></td>
-        </tr>
-        <tr>
-            <th>Valid</th>
-            <td><c:out value="${site.valid}"/></td>
-        </tr>
-       
+        </tr>        
     </table>
 
     <spring:url value="/areas/{areaId}" var="editUrl">
