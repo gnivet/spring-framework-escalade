@@ -1,23 +1,6 @@
-/*
- * Copyright 2002-2013 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package org.springframework.samples.escalade.model;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
+	package org.springframework.samples.escalade.model;
+	
+	import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -25,226 +8,293 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
-
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PropertyComparator;
-
-/**
- * Simple JavaBean domain object representing a user.
- * 
- * @author Guillaume Nivet
- */
-
-@Entity
-@Table(name = "users")
-public class User extends Person {
-
-	@Column(name = "address")
-	@NotEmpty
-	private String address;
-
-	@Column(name = "postalcode")
-	@NotEmpty
-	private String postalcode;
-
-	public String getPostalcode() {
-		return postalcode;
-	}
-
-	public void setPostalcode(String postalcode) {
-		this.postalcode = postalcode;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<Area> areas;
-
-	@Column(name = "city")
-	@NotEmpty
-	private String city;
-
-	@Column(name = "telephone")
-	@NotEmpty
-	@Digits(fraction = 0, integer = 10)
-	private String telephone;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<Topo> topos;
-
-	public String getAddress() {
-		return this.address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getCity() {
-		return this.city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getTelephone() {
-		return this.telephone;
-	}
-
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-
-	@Column(name = "username")
-	protected String username;
-
-	public String getUsername() {
-		return this.username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	@Column(name = "password")
-	protected String password;
-
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * Holds value of property roles. FOREIGN KEY (role_id)
-	 */
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "role_id", nullable = true)
-	private Role role;
-
-	/**
-	 * Holds value of property roles. FOREIGN KEY (specialty_id)
-	 */
-
-	/*
-	 * @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	 * 
-	 * @JoinColumn(name = "specialty_id", nullable = true)
-	 */
-
-	/**
-	 * Holds value of property roles. FOREIGN KEY (specialty_id)
-	 */
-
-	@Column(name = "valid")
-	private boolean valid;
-
-	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-
-	public boolean isValid() {
-		return valid;
-	}
-
-	public void setValid(boolean valid) {
-		this.valid = valid;
-	}
-
-	protected Set<Topo> getToposInternal() {
-		if (this.topos == null) {
-			this.topos = new HashSet<>();
+	
+	
+	@Entity
+	//@NamedQuery(name="User.findTopoBkgByUserName", query="SELECT DISTINCT topoBkg, user FROM User user left join fetch User.topoBkgs WHERE user.userName = :userName")
+	@Table(name = "users")
+	public class User {
+	
+		@Id
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
+		private Integer id;
+		//@NotEmpty(message = "Please enter your user name.")
+		@Column(name="userName")
+		private String userName;
+		
+		//@NotEmpty(message = "Please enter your password.")
+		@Column(name ="password")
+		private String password;
+		
+		//@NotEmpty(message = "Please enter your password confirm.")
+		@Column(name="passwordConfirm")
+		private String passwordConfirm;
+		
+		//@NotEmpty(message = "Please enter your first name.")
+		@Column(name="firstName")
+		private String firstName;
+		//@NotEmpty(message = "Please enter your last name.")
+		@Column(name="lastName")
+		private String lastName;
+		@Column(name="address")
+		private String address;
+		@Column(name="postalCode")
+		private String postalCode;
+		@Column(name="city")
+		private String city;
+		//@NotEmpty(message = "Please enter your telephone number.")
+		@Column(name="telephone")
+		private String telephone;
+		//@NotEmpty(message = "Please enter your email addresss.")
+		@Column(name="email")
+		private String email;
+		@Column(name="enabled")
+		private Boolean enabled;
+	
+		@OneToMany(targetEntity = Site.class, mappedBy = "user")
+		public List<Site> sites;
+		
+				
+		@ManyToMany
+		@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
+		private Set<Role> roles;
+	
+	
+		@OneToMany(targetEntity = Topo.class, cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+		private Set<Topo> topos;
+	
+		@OneToMany(targetEntity = TopoBkg.class, cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+		private Set<TopoBkg> topoBkgs;
+				
+					
+		public Integer getId() {
+			return id;
 		}
-		return this.topos;
-	}
 
-	protected void setToposInternal(Set<Topo> topos) {
-		this.topos = topos;
-	}
-
-	public List<Topo> getTopos() {
-		List<Topo> sortedTopos = new ArrayList<>(getToposInternal());
-		PropertyComparator.sort(sortedTopos, new MutableSortDefinition("name", true, true));
-		return Collections.unmodifiableList(sortedTopos);
-	}
-
-	public void addTopo(Topo topo) {
-		getToposInternal().add(topo);
-		topo.setUser(this);
-	}
-
-	/**
-	 * Return the Topo with the given name, or null if none found for this User.
-	 *
-	 * @param name to test
-	 * @return true if topo name is already in use
-	 */
-	public Topo getTopo(String name) {
-		return getTopo(name, false);
-	}
-
-	/**
-	 * Return the Topo with the given name, or null if none found for this User.
-	 *
-	 * @param name to test
-	 * @return true if topo name is already in use
-	 */
-	public Topo getTopo(String name, boolean ignoreNew) {
-		name = name.toLowerCase();
-		for (Topo topo : getToposInternal()) {
-			if (!ignoreNew || !topo.isNew()) {
-				String compName = topo.getName();
-				compName = compName.toLowerCase();
-				if (compName.equals(name)) {
-					return topo;
-				}
-			}
+		public void setId(Integer id) {
+			this.id = id;
 		}
-		return null;
+
+		public List<Site> getSites() {
+			return sites;
+		}
+
+		public void setSites(List<Site> sites) {
+			this.sites = sites;
+		}
+
+		public void addSite(Site site) {
+			// TODO Auto-generated method stub
+	
+		}
+	
+		public Object getSite(String name, boolean b) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+				
+		public String getUserName() {
+			return userName;
+		}
+
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
+
+		public String getPassword() {
+			return password;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
+		public String getPasswordConfirm() {
+			return passwordConfirm;
+		}
+
+		public void setPasswordConfirm(String passwordConfirm) {
+			this.passwordConfirm = passwordConfirm;
+		}
+
+		public String getFirstName() {
+			return firstName;
+		}
+
+		public void setFirstName(String firstName) {
+			this.firstName = firstName;
+		}
+
+		public String getLastName() {
+			return lastName;
+		}
+
+		public void setLastName(String lastName) {
+			this.lastName = lastName;
+		}
+
+		public String getAddress() {
+			return address;
+		}
+
+		public void setAddress(String address) {
+			this.address = address;
+		}
+
+		public String getPostalCode() {
+			return postalCode;
+		}
+
+		public void setPostalCode(String postalCode) {
+			this.postalCode = postalCode;
+		}
+
+		public String getCity() {
+			return city;
+		}
+
+		public void setCity(String city) {
+			this.city = city;
+		}
+
+		public String getTelephone() {
+			return telephone;
+		}
+
+		public void setTelephone(String telephone) {
+			this.telephone = telephone;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		public Boolean getEnabled() {
+			return enabled;
+		}
+
+		public void setEnabled(Boolean enabled) {
+			this.enabled = enabled;
+		}
+
+		public Set<Topo> getTopos() {
+			return topos;
+		}
+
+		public void setTopos(Set<Topo> topos) {
+			this.topos = topos;
+		}
+
+		public Set<TopoBkg> getTopoBkgs() {
+			return topoBkgs;
+		}
+
+		public void setTopoBkgs(Set<TopoBkg> topoBkgs) {
+			this.topoBkgs = topoBkgs;
+		}
+
+		
+		public List<Topo> getTopoList() {
+			return topoList;
+		}
+
+		public void setTopoList(List<Topo> topoList) {
+			this.topoList = topoList;
+		}
+
+			
+	
+		public Set<Role> getRoles() {
+			return roles;
+		}
+
+		public void setRoles(Set<Role> roles) {
+			this.roles = roles;
+		}
+
+		/**
+		 * 
+		 */
+		public User()
+		{
+			
+		}
+	
+		
+
+		
+		
+		/**
+		 * @param id
+		 * @param userName
+		 * @param password
+		 * @param passwordConfirm
+		 * @param firstName
+		 * @param lastName
+		 * @param address
+		 * @param postalCode
+		 * @param city
+		 * @param telephone
+		 * @param email
+		 * @param enabled
+		 * @param sites
+		 * @param roles
+		 * @param topos
+		 * @param topoBkgs
+		 * @param topoList
+		 */
+		public User(Integer id, String userName, String password, String passwordConfirm, String firstName,
+				String lastName, String address, String postalCode, String city, String telephone, String email,
+				Boolean enabled, List<Site> sites, Set<Role> roles, Set<Topo> topos, Set<TopoBkg> topoBkgs,
+				List<Topo> topoList) {
+			this.id = id;
+			this.userName = userName;
+			this.password = password;
+			this.passwordConfirm = passwordConfirm;
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.address = address;
+			this.postalCode = postalCode;
+			this.city = city;
+			this.telephone = telephone;
+			this.email = email;
+			this.enabled = enabled;
+			this.sites = sites;
+			this.roles = roles;
+			this.topos = topos;
+			this.topoBkgs = topoBkgs;
+			this.topoList = topoList;
+		}
+
+		public void addTopoBkg(TopoBkg topoBkg) {
+			// TODO Auto-generated method stub
+			
+		}
+		/*
+		 * R Bi-directionelle
+		 */
+		@OneToMany(cascade = {CascadeType.ALL}, mappedBy="user" )	
+		private List<Topo> topoList= new ArrayList<>();
+		
+		
+		public void addTopo(Topo topo)
+		{
+			topo.setTopo(topo);
+			
+		}
+		
 	}
-
-	/**
-	 * /* Constructor Return firstname with Capitalize at the first Letter*
-	 * 
-	 * @param firstName
-	 * @return
-	 * 
-	 */
-
-	public String getFirstNameWithfirstUppercase(String firstName) {
-		firstName = firstName.toLowerCase();
-
-		firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1, firstName.length());
-		return firstName;
-	}
-
-	/**
-	 * /* Constructor Return name with toUppercase *
-	 * 
-	 * @param firstName
-	 * @param User
-	 * @return
-	 * 
-	 */
-
-	public String getUser(String lastName) {
-
-		this.lastName = lastName.toUpperCase();
-		return lastName;
-	}
-
-	@Override
-	public String toString() {
-		return "User [userId=" + id + ", firstName=" + firstName + ", " + "lastName=" + lastName + "," + "email="
-				+ firstEmail + "," + "address" + address + "," + "postalcode" + postalcode + "," + "city" + city + ","
-				+ "telephone" + telephone + "," + "password" + password + "," + "username" + username + "]";
-
-	}
-
-}

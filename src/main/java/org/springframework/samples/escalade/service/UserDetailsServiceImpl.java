@@ -1,72 +1,58 @@
 package org.springframework.samples.escalade.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
-
-import javax.persistence.EntityManager;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.escalade.dao.AppRoleDAO;
-import org.springframework.samples.escalade.dao.AppUserDAO;
-import org.springframework.samples.escalade.model.AppUser;
+import org.springframework.samples.escalade.model.Role;
+import org.springframework.samples.escalade.model.User;
+import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
-
-@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
- 
+
 	@Autowired
-    private AppUserDAO appUserDAO;
- 
-    @Autowired
-    private AppRoleDAO appRoleDAO;
- 
-    @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        AppUser appUser = this.appUserDAO.findUserAccount(userName);
- 
-        if (appUser == null) {
-            System.out.println("User not found! " + userName);
-            throw new UsernameNotFoundException("User " + userName + " was not found in the database");
-        }
- 
-        System.out.println("Found User: " + appUser);
- 
-        // [ROLE_USER, ROLE_ADMIN,..]
-        List<String> roleNames = this.appRoleDAO.getRoleNames(appUser.getUserId());
- 
-        List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
-        if (roleNames != null) {
-            for (String role : roleNames) {
-                // ROLE_USER, ROLE_ADMIN,..
-                GrantedAuthority authority = new SimpleGrantedAuthority(role);
-                grantList.add(authority);
-            }
-        }
- 
-        UserDetails userDetails = (UserDetails) new User(appUser.getUserName(), //
-                appUser.getEncrytedPassword(), grantList);
- 
-        return userDetails;
-    }
-    
-    
-    @Autowired
-    private EntityManager entityManager;
+	private UserRepository userRepository;
+	
+	/*
+	@Autowired
+	private RoleRepository roleRepository;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	*/
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		User user = userRepository.findByUserName(username);
+		if (user == null) {
 
-    public void save(AppUser appUser) {
-    	if (appUser.getUserId() == null) {
-    		this.entityManager.persist(appUser);
-    	} else {
-    		this.entityManager.merge(appUser);
-    	}
+			return new org.springframework.security.core.userdetails.User(" ", " ", true, true, true, true,
+					getGrantedAuthorities(Collections.singletonList("NOT_ALLOWED")));
 
-    } 
-    
+
+		}
+		Set<Role>roleList= new HashSet<>();
+		roleList= user.getRoles();
+		List<String> privileges = roleList.stream().map(x -> x.getName()).collect(Collectors.toList());
+		
+		return new org.springframework.security.core.userdetails.User(user.getUserName() , user.getPassword() , true, true, true, true,
+				getGrantedAuthorities(privileges));
+	}
+
+	private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		for (String privilege : privileges) {
+			authorities.add(new SimpleGrantedAuthority(privilege));
+		}
+		return authorities;
+	}
+
 }

@@ -1,147 +1,154 @@
-/*
- * Copyright 2002-2013 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.springframework.samples.escalade.repository.jpa;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.escalade.model.Area;
-import org.springframework.samples.escalade.model.Length;
-import org.springframework.samples.escalade.model.Part;
-import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.model.Topo;
-import org.springframework.samples.escalade.model.TopoType;
-import org.springframework.samples.escalade.model.Way;
-import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.TopoRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-/**
- * JPA implementation of the {@link TopoRepository} longerface.
- *
- * @author Guillaume Nivet
- * @since 3.12.2019
- */
 @Repository
+@Transactional
 public class JpaTopoRepositoryImpl implements TopoRepository {
-
+	
 	@PersistenceContext
 	private EntityManager em;
+	
+	@Override
+	public Topo findTopoById(int id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT topo FROM Topo topo WHERE topo.id =:id");
+		query.setParameter("id", id);
+		return (Topo) query.getSingleResult();
+	}
+
+	@Override
+	public Topo saveTopo(Topo topo) throws DataAccessException {
+		// TODO Auto-generated method stub
+		if (topo.getId() == null) {
+			this.em.persist(topo);			
+		} else {
+			this.em.merge(topo);
+		}
+		return topo;
+	}
+
+	@Override
+	public Topo updateTopo(Topo topo) {
+		// TODO Auto-generated method stub
+		if (!this.em.contains(topo))
+			this.em.merge(topo);
+		
+		return topo;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<Topo> findTopoByName() throws DataAccessException {
+		// TODO Auto-generated method stub
+
+		Query query = this.em
+				.createQuery("SELECT DISTINCT topo from Topo topo");
+		
+		return query.getResultList();
+	}
 
 	@SuppressWarnings("unchecked")
-	public List<TopoType> findTopoTypes() {
-		return this.em.createQuery("SELECT ptype FROM TopoType ptype ORDER BY ptype.name").getResultList();
+	@Override
+	public Collection<Topo> findTopoAvailableByName() throws DataAccessException {
+		// TODO Auto-generated method stub
+		Query query = this.em
+				.createQuery("SELECT DISTINCT topo from Topo topo");		
+		
+		return query.getResultList();
 	}
 
-	public Topo findById(long id) {
-		return this.em.find(Topo.class, id);
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Topo> findTopoByUserName(String userName) {
+		// TODO Auto-generated method stub	
+		
+		Query query = this.em.createQuery("SELECT topo FROM Topo topo WHERE topo.user.userName like :userName");
+		
+		query.setParameter("userName", "%" + userName + "%");		 
+		return  query.getResultList();
+	}
+	
+
+	
+
+	
+
+	
+
+	@SuppressWarnings("unchecked")
+	public List<Topo> getJoinInformation(String userName) {
+		// TODO Auto-generated method stub
+		
+		Query query = this.em.createQuery("SELECT new TopoResponse(t.name, t.available, t.comment_date, t.description, u.first_name, u.last_name ) FROM Topo t JOIN u.userName User u where u.userName like: userName");
+		{
+				query.setParameter("userName", "%" + userName + "%");		 
+		//return  query.getResultList();
+		return query.getResultList() ;	}
+				
+		
+		
 	}
 
-	public void save(Topo Topo) {
-		if (Topo.getId() == null) {
-			this.em.persist(Topo);
-		} else {
-			this.em.merge(Topo);
-		}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	
+	public Collection<Topo> findTopoAvailableByUserId(Integer id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		Query query = this.em
+				.createQuery("SELECT DISTINCT topo from Topo topo WHERE user_id = :id and topo.available = true");
+		query.setParameter("id", id);
+		
+		return query.getResultList();
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Topo> findTopoByUserId(Integer id) {
+		// TODO Auto-generated method stub
+	Query query = this.em.createQuery("SELECT topo FROM Topo topo WHERE user_id = :id");
+		
+		query.setParameter("id",  id );		 
+		return  query.getResultList();
 	}
 
-	public Zone findZoneById(long id) {
-		return this.em.find(Zone.class, id);
+	@Override
+	public Topo findTopoByNames(String name) throws DataAccessException {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT topo FROM Topo topo WHERE topo.name like :name");
+		query.setParameter("name", "%" + name + "%" );
+		return (Topo) query.getResultList();
 	}
 
-	// Add Zone to Topo form
-	public void saveZone(Zone Zone) throws DataAccessException {
-		if (Zone.getId() == null) {
-			this.em.persist(Zone);
-		} else {
-			this.em.merge(Zone);
-		}
-
+	@Override
+	public Topo findTopo() throws DataAccessException {
+		return (Topo) this.em.createQuery("SELECT topo FROM Topo topo" , Topo.class)                
+                .getSingleResult();
 	}
 
-	public Way findWayById(long id) {
-		return this.em.find(Way.class, id);
+	
+	
+
+	
+	
+	
 	}
 
-	// Add Way to Topo form
-	public void saveWay(Way Way) throws DataAccessException {
-		if (Way.getId() == null) {
-			this.em.persist(Way);
-		} else {
-			this.em.merge(Way);
-		}
+	
+	
 
-	}
-
-	public Part findPartById(long id) {
-		return this.em.find(Part.class, id);
-	}
-
-	// Add Part to Topo form
-	public void savePart(Part Part) throws DataAccessException {
-		if (Part.getId() == null) {
-			this.em.persist(Part);
-		} else {
-			this.em.merge(Part);
-		}
-
-	}
-
-	public Length findLengthById(long id) {
-		return this.em.find(Length.class, id);
-	}
-
-	// Add Length to Topo form
-	public void saveLength(Length Length) throws DataAccessException {
-		if (Length.getId() == null) {
-			this.em.persist(Length);
-		} else {
-			this.em.merge(Length);
-		}
-
-	}
-
-	public Point findPointById(long id) {
-		return this.em.find(Point.class, id);
-	}
-
-	// Add Point to Topo form
-	public void savePoint(Point Point) throws DataAccessException {
-		if (Point.getId() == null) {
-			this.em.persist(Point);
-		} else {
-			this.em.merge(Point);
-		}
-
-	}
-
-	public Area findAreaById(long id) {
-		return this.em.find(Area.class, id);
-	}
-
-	// Add Area to Topo form
-	public void saveArea(Area Area) throws DataAccessException {
-		if (Area.getId() == null) {
-			this.em.persist(Area);
-		} else {
-			this.em.merge(Area);
-		}
-
-	}
-}

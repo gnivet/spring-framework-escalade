@@ -1,9 +1,14 @@
 package org.springframework.samples.escalade.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -13,11 +18,11 @@ import javax.validation.constraints.NotNull;
 public class Length extends NamedEntity {
 
 	@Column(name = "cotation")
-	@NotNull
+	//@NotNull
 	private Integer cotation;
 
 	@Column(name = "under_cotation")
-	@NotEmpty
+	//@NotEmpty
 	private String under_cotation;
 
 	/**
@@ -30,24 +35,24 @@ public class Length extends NamedEntity {
 	 */
 
 	@Column(name = "comment")
-	@NotEmpty
+	//@NotEmpty
 	private String comment;
-
+	
+	
 	@Column(name = "length_status")
-	@NotNull
+	//@NotNull	
 	private boolean length_status;
 
-	@ManyToOne
-	@JoinColumn(name = "point_id")
-	private PointType type;
+	
+	
+	@ManyToOne(targetEntity = Point.class,  cascade=CascadeType.ALL)
+	@JoinColumn(name = "way_id")
+	private Way way;
+	
+	@OneToMany(targetEntity = Point.class, cascade = CascadeType.ALL, mappedBy = "length" , fetch=FetchType.EAGER)
+    private Set<Point> points;
 
-	public PointType getType() {
-		return type;
-	}
-
-	public void setType(PointType type) {
-		this.type = type;
-	}
+	
 
 	public Integer getCotation() {
 		return cotation;
@@ -65,13 +70,7 @@ public class Length extends NamedEntity {
 		this.under_cotation = under_cotation;
 	}
 
-	/*
-	 * public Point getPoint() { return point; }
-	 * 
-	 * 
-	 * public void setPoint(Point point) { this.point = point; }
-	 */
-
+	
 	public String getComment() {
 		return comment;
 	}
@@ -88,4 +87,27 @@ public class Length extends NamedEntity {
 		this.length_status = length_status;
 	}
 
+	public Set<Point> getPoints() {
+		return points;
+	}
+
+	public void setPoints(Set<Point> point) {
+		this.points = point;
+	}
+
+	public Way getWay() {
+		return way;
+	}
+
+	public void setWay(Way way) {
+		this.way = way;
+	}
+
+	/**
+	 * 
+	 */
+	public Length() {
+	}
+	
+	
 }

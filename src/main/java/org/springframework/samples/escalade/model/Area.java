@@ -15,31 +15,18 @@
  */
 package org.springframework.samples.escalade.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PropertyComparator;
-
-//import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Simple business object representing a Area.
  *
- * @author Guillaume Nivet
- * @author Guillaume Nivet
  * @author Guillaume Nivet
  */
 
@@ -47,41 +34,25 @@ import org.springframework.beans.support.PropertyComparator;
 @Table(name = "areas")
 public class Area extends NamedEntity {
 
-	@ManyToOne
-	@JoinColumn(name = "type_id")
-	private AreaType type;
-
-	public AreaType getType() {
-		return this.type;
-	}
-
-	public void setType(AreaType type) {
-		this.type = type;
-	}
-
+		
 	@Column(name = "street")
+	@NotEmpty
 	private String street;
 
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
 	@Column(name = "postalcode")
-	private String postalcode;
-
+	@NotEmpty String postalcode;	
+	
+	
+	public String setPostalcode(String postalcode) {
+		return this.postalcode = postalcode;
+	}
+	
 	public String getPostalcode() {
 		return postalcode;
 	}
 
-	public void setPostalcode(String postalcode) {
-		this.postalcode = postalcode;
-	}
-
 	@Column(name = "city")
+	@NotEmpty
 	private String city;
 
 	public String getCity() {
@@ -93,6 +64,7 @@ public class Area extends NamedEntity {
 	}
 
 	@Column(name = "country")
+	@NotEmpty
 	private String country;
 
 	public String getCountry() {
@@ -104,6 +76,7 @@ public class Area extends NamedEntity {
 	}
 
 	@Column(name = "gpscoordinate")
+	@NotEmpty
 	private String gpscoordinate;
 
 	public String getGpscoordinate() {
@@ -115,37 +88,34 @@ public class Area extends NamedEntity {
 		this.gpscoordinate = gpscoordinate;
 	}
 
-	// GNI
-	// @OneToMany(cascade = CascadeType.ALL, mappedBy = "area")
-	// private Set<Topo> topos;
-
-	// @OneToMany
-	// @JoinColumn(name = "topos")
-
-	@ManyToOne
-	@JoinColumn(name = "topo_id", nullable = true)
-	private Topo topo;
-
-	public Topo getTopo() {
-		return topo;
+	
+	public String getStreet() {
+		return street;
 	}
 
-	public void setTopo(Topo topo) {
-		this.topo = topo;
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	/*
+	 * You should include cascade="all" (if using xml) or cascade=CascadeType.ALL (if using annotations) on your collection mapping.
+
+		This happens because you have a collection in your entity, and that collection has one or more items which are not present
+		 in the database. By specifying the above options you tell hibernate to save them to the database when saving their parent.
+	 */
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "site_id", nullable = true )
+	private Site site;
+
+	public Site getSite() {
+		return site;
 	}
 
-	@Column(name = "topos")
-	private String topos;
-
-	public String getTopos() {
-		return topos;
+	public void setSite(Site site) {
+		this.site = site;
 	}
-
-	public void setTopos(String topos) {
-		this.topos = topos;
-	}
-
-	@ManyToOne
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
 
@@ -157,34 +127,37 @@ public class Area extends NamedEntity {
 		this.user = user;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "topo", fetch = FetchType.LAZY)
-	private Set<Visit> visits;
-
-	protected Set<Visit> getVisitsInternal() {
-		if (this.visits == null) {
-			this.visits = new HashSet<>();
-		}
-		return this.visits;
+	/**
+	 * 
+	 */
+	public Area() {
 	}
 
-	protected void setVisitsInternal(Set<Visit> visits) {
-		this.visits = visits;
+	/**
+	 * @param street
+	 * @param postalcode
+	 * @param city
+	 * @param country
+	 * @param gpscoordinate
+	 * @param site
+	 * @param user
+	 */
+	public Area(String street, @NotEmpty String postalcode, @NotEmpty String city, String country, String gpscoordinate,
+			Site site, User user) {
+		this.street = street;
+		this.postalcode = postalcode;
+		this.city = city;
+		this.country = country;
+		this.gpscoordinate = gpscoordinate;
+		this.site = site;
+		this.user = user;
 	}
 
-	public List<Visit> getVisits() {
-		List<Visit> sortedVisits = new ArrayList<>(getVisitsInternal());
-		PropertyComparator.sort(sortedVisits, new MutableSortDefinition("date", false, false));
-		return Collections.unmodifiableList(sortedVisits);
-	}
+	
 
-	// public void addVisit(Visit visit) {
-	// getVisitsInternal().add(visit);
-	// visit.setArea(this);
+	
 
-	// }
+	
 
-	public void setVisits(Set<Visit> visits) {
-		this.visits = visits;
-	}
-
+	
 }

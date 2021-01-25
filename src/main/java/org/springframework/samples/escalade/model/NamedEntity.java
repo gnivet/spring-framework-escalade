@@ -17,22 +17,22 @@ package org.springframework.samples.escalade.model;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotEmpty;
-
 
 /**
- * Simple JavaBean domain object adds a name property to <code>BaseEntity</code>. Used as a base class for objects
- * needing these properties.
+ * Simple JavaBean domain object adds a name property to
+ * <code>BaseEntity</code>. Used as a base class for objects needing these
+ * properties.
  *
- * @author Guillaume Nivet
- * @author Guillaume Nivet
+ * @author Ken Krebs
+ * @author Juergen Hoeller
  */
 @MappedSuperclass
 public class NamedEntity extends BaseEntity {
 
-    @Column(name = "name")
-    @NotEmpty
-    private String name;
+	@Column(name = "name")
+	//@NotEmpty(message ="Please add a name")
+	//@Size(min = 2)
+	private String name;
 
     public String getName() {
         return this.name;
@@ -46,5 +46,6 @@ public class NamedEntity extends BaseEntity {
     public String toString() {
         return this.getName();
     }
+
 
 }

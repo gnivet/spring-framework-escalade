@@ -95,13 +95,13 @@ public class MavenWrapperDownloader {
     }
 
     private static void downloadFileFromURL(String urlString, File destination) throws Exception {
-        if (System.getenv("MVNW_USERNAME") != null && System.getenv("MVNW_PASSWORD") != null) {
-            String username = System.getenv("MVNW_USERNAME");
+        if (System.getenv("MVNW_userName") != null && System.getenv("MVNW_PASSWORD") != null) {
+            String userName = System.getenv("MVNW_userName");
             char[] password = System.getenv("MVNW_PASSWORD").toCharArray();
             Authenticator.setDefault(new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(username, password);
+                    return new PasswordAuthentication(userName, password);
                 }
             });
         }
@@ -109,7 +109,7 @@ public class MavenWrapperDownloader {
         ReadableByteChannel rbc;
         rbc = Channels.newChannel(website.openStream());
         FileOutputStream fos = new FileOutputStream(destination);
-        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        fos.getChannel().transferFrom(rbc, 0, Integer.MAX_VALUE);
         fos.close();
         rbc.close();
     }

@@ -6,7 +6,7 @@
 
 <!doctype html>
 <html>
-<escalade:htmlHeader/>
+<escalade:htmlHeader/> 
 
 <body>
 <escalade:bodyHeader menuName="${pageName}"/>

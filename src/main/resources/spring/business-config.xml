@@ -99,4 +99,6 @@
     <beans profile="spring-data-jpa">
         <jpa:repositories base-package="org.springframework.samples.escalade.repository.springdatajpa"/>
     </beans>
+    
+  
 </beans>

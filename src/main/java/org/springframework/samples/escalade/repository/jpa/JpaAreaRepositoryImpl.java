@@ -16,21 +16,26 @@
 package org.springframework.samples.escalade.repository.jpa;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.samples.escalade.model.Area;
+import org.springframework.samples.escalade.model.NamedEntity;
+import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * JPA implementation of the {@link AreaRepository} longerface.
+ * JPA implementation of the {@link AreaRepository} Integererface.
  *
  * @author Guillaume Nivet
  * @since 3.12.2019
  */
+@Transactional
 @Repository
 public class JpaAreaRepositoryImpl implements AreaRepository {
 
@@ -41,13 +46,13 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 	public Collection<Area> findTopoByPostalcode(String postalcode) {
 		// TODO Auto-generated method stub
 
-		Query query = this.em.createQuery("SELECT DISTINCT area from Area area WHERE area.postalcode LIKE :postalcode");
-		query.setParameter("postalcode", postalcode + "%");
+		Query query = this.em
+				.createQuery("SELECT DISTINCT area from Area area WHERE area.postalcode LIKE '%:postalcode%'");
+		query.setParameter("postalcode", "%" + postalcode + "%");
 		return query.getResultList();
 	}
 
-	@Override
-	public Area findById(long id) {
+	public Area findAreaById(Integer id) {
 		// using 'join fetch' because a single query should load both areas and topos
 		// using 'left join fetch' because it might happen that an owner does not have
 		// topos yet
@@ -57,12 +62,71 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 		return (Area) query.getSingleResult();
 	}
 
-	public void save(Area Area) {
-		if (Area.getId() == null) {
-			this.em.persist(Area);
-		} else {
-			this.em.merge(Area);
+	public Area saveArea(Area area) {
+
+		if (area.getId() == null) {
+			this.em.persist(area);
 		}
+
+		else {
+			this.em.merge(area);
+		}
+		return area;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Area> findAll() {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT area FROM Area area");
+
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Area> findByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Site> findAllSite() {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT site FROM Site site");
+
+		return query.getResultList();
+
+	}
+
+	public NamedEntity updateArea(Area area) {
+		if (!this.em.contains(area))
+			this.em.merge(area);
+		return area;
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	public Collection<Area> findSiteByPostalcode(String postalcode) {
+		// TODO Auto-generated method stub
+
+		Query query = this.em.createQuery("select area from Area area WHERE area.postalcode LIKE :postalcode");
+		query.setParameter("postalcode", "%" + postalcode + "%");
+		return query.getResultList();
+
+	}
+
+	@Override
+	public List<Site> sitesList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<Area> listAreas() {
+		// TODO Auto-generated method stub
+		Query query = this.em.createQuery("SELECT area FROM Area area");
+
+		return query.getResultList();
 	}
 
 }

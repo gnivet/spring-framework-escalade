@@ -1,93 +1,173 @@
 package org.springframework.samples.escalade.config;
 
-import javax.sql.DataSource;
-
-import org.springframework.samples.escalade.service.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.samples.escalade.service.UserDetailsServiceImpl;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
- 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
- 
-    @Autowired
-    private DataSource dataSource;
- 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
-    }
- 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
- 
-        // Setting Service to find User in the database.
-        // And Setting PassswordEncoder
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
- 
-    }
- 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
- 
-        http.csrf().disable();
- 
-        // The pages does not require login
-        http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
- 
-        // /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
-        // If no login, it will redirect to /login page.
-        http.authorizeRequests().antMatchers("/userInfo").hasAnyRole("USER", "ADMIN");
-        http.authorizeRequests().antMatchers("/areas").hasAnyRole("USER", "ADMIN");
-        http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
-        http.authorizeRequests().antMatchers("/areas/toposList").hasAnyRole("USER", "ADMIN");
-        http.authorizeRequests().antMatchers("/escalade/areas/toposList").hasAnyRole("USER", "ADMIN");
-        // For ADMIN only.
-        http.authorizeRequests().antMatchers("/admin").hasRole("ADMIN");
- 
-        // When the user has logged in as XX.
-        // But access a page that requires role YY,
-        // AccessDeniedException will be thrown.
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
- 
-        // Config for Login Form
-        http.authorizeRequests().and().formLogin()//
-                // Submit URL of login page.
-                .loginProcessingUrl("/j_spring_security_check") // Submit URL
-                .loginPage("/login")//
-                .defaultSuccessUrl("/userAccountInfo")//
-                .failureUrl("/login?error=true")//
-                .usernameParameter("username")//
-                .passwordParameter("password")
-                // Config for Logout Page
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");              
-               
+
+	@Bean
+	public PasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+		
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return new UserDetailsServiceImpl();
+	}
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		UserDetailsService userDetailsService = userDetailsService();
+		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+	}
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+
+		http.csrf().disable();
+
+		// The pages does not require login
+		
+		http.authorizeRequests().antMatchers("/", "/login", "/logout", "/users/registration", "/users/login",
+				"/welcome", "/error/error").permitAll();
+		// /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
+		// If no login, it will redirect to /login page.
+		
+
+	
+		
+		http.authorizeRequests().antMatchers("/areas/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/areas/new").hasAnyRole("USER", "ADMIN");		
+		
+		http.authorizeRequests().antMatchers("/areas/find").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/areas/sitesList").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/areas/sitesList").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/areas/sitetypesList").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/areas/*/sites/new/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/areas/findSites").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/areas/findAreas").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/areas/findSites").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/comments/find").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/dashboard").hasAnyRole("USER", "ADMIN");
+		
+		
+		http.authorizeRequests().antMatchers("/users/find").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/users").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/users/userInfo").hasAnyRole("USER", "ADMIN");
+		http.logout().logoutUrl("/users/logout").logoutSuccessUrl("/welcome");
+		http.authorizeRequests().antMatchers("/users/createOrUpdateUserForm").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/sites/new").hasAnyRole("USER", "ADMIN");
+		
+		
+		
+		http.authorizeRequests().antMatchers("/sites/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sites/find").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sites/*/comments/new").hasAnyRole("USER", "ADMIN");
+	
+		
+		http.authorizeRequests().antMatchers("/sitetypes/new/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sitetypes/find").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/sitetypes/").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/sitetypes/*/").hasAnyRole("USER", "ADMIN");	
+		http.authorizeRequests().antMatchers("/sitetypes/siteTypeDetails").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/escalade/sites/findSites").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/escalade/areas").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/lengths/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/lengths/find").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/lengths/lengthsList").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/escalade/ways/findLengths").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/points/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/points/find").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/points/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/points/find").hasAnyRole("USER", "ADMIN");
+		
+		
+		http.authorizeRequests().antMatchers("/points/new").hasAnyRole("USER", "ADMIN");
+		
+		
+		http.authorizeRequests().antMatchers("/lengths/*/points/new/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topos/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topos/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topos/findTopos").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topos/toposList").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/toposAvailable/toposAvailableList").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topos/*/topoBkgs/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topos/*/topoBkgs/response/*").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topos/*/topoBkgs/*/topoBkgDetails").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topobookings/").hasAnyRole("USER", "ADMIN");
+		
+		
+		http.authorizeRequests().antMatchers("/topoBkgs/*/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topoBkgs/new").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/topoBkgs/topoBkgsList").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topoBkgs/findTopoBkgs").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/topoBkgs/*/edit/").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/findTopoBkgsByUserName/").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("topolist/*").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("topos/*").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topos/*/topoBkgs/*/topoDetails").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/topos/*/edit").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/edit/*/").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/tobook").hasAnyRole("USER", "ADMIN");
+		
+		
+		http.authorizeRequests().antMatchers("/updateTopoBkg?id=*").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/updateTopoBkg*").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/updateTopoBkg?id=18302").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/tobook/topos/*/").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/way").hasAnyRole("USER", "ADMIN");
+		
+		http.authorizeRequests().antMatchers("/zones/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/zones/find").hasAnyRole("USER", "ADMIN");
+				
+		http.authorizeRequests().antMatchers("/sites/*/zones/new/").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/sites/*/zones/*/").hasAnyRole("USER", "ADMIN");
         
- 
-        // Config Remember Me.
-        http.authorizeRequests().and() //
-                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-                .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
- 
-    }
- 
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
-        db.setDataSource(dataSource);
-        return db;
-    }
- 
+		// http.authorizeRequests().antMatchers("/areas/").hasAnyRole("USER", "ADMIN");
+		// For ADMIN only. /users/find
+		http.authorizeRequests().antMatchers("/admin").hasRole("ADMIN");
+
+		// When the user has logged in as XX.
+		// But access a page that requires role YY,
+		// AccessDeniedException will be thrown.
+		// http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+
+		// Config for Login Form
+
+	}
+
 }

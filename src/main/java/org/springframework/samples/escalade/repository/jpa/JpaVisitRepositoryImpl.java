@@ -28,41 +28,37 @@ import org.springframework.stereotype.Repository;
 /**
  * JPA implementation of the ClinicService interface using EntityManager.
  * <p/>
- * <p>
- * The mappings are defined in "orm.xml" located in the META-INF directory.
+ * <p>The mappings are defined in "orm.xml" located in the META-INF directory.
  *
- * @author Guillaume Nivet
- * @since 3.12.2019
+ * @author Mike Keith
+ * @author Rod Johnson
+ * @author Sam Brannen
+ * @author Michael Isvy
+ * @since 22.4.2006
  */
 @Repository
 public class JpaVisitRepositoryImpl implements VisitRepository {
 
-	@PersistenceContext
-	private EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-	@Override
-	public void save(Visit visit) {
-		if (visit.getId() == null) {
-			this.em.persist(visit);
-		} else {
-			this.em.merge(visit);
-		}
-	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<Visit> findByTopoId(Long topoId) {
-		Query query = this.em.createQuery("SELECT v FROM Visit v where v.topo.id= :id");
-		query.setParameter("id", topoId);
-		return query.getResultList();
-	}
+    @Override
+    public void save(Visit visit) {
+        if (visit.getId() == null) {
+            this.em.persist(visit);
+        } else {
+            this.em.merge(visit);
+        }
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<Visit> findByAreaId(Long areaId) {
-		Query query = this.em.createQuery("SELECT v FROM Visit v where v.area.id= :id");
-		query.setParameter("id", areaId);
-		return query.getResultList();
-	}
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Visit> findBySiteId(Integer siteId) {
+        Query query = this.em.createQuery("SELECT v FROM Visit v where v.site.id= :id");
+        query.setParameter("id", siteId);
+        return query.getResultList();
+    }
 
 }
