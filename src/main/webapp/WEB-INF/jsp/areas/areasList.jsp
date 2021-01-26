@@ -6,7 +6,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags" %>
 <escalade:layout pageName="areas">
-<h2>Find sites</h2>
+<h2>Find areas</h2>
     <!-- Research sites by areas -->
     <spring:url value="/areas" var="formUrl"/>
     <form:form modelAttribute="area" action="${fn:escapeXml(formUrl)}" method="get" class="form-horizontal"
@@ -26,7 +26,7 @@
             </div>
         </div>
     </form:form>
-    <h2>sites</h2>
+    <h2>areas</h2>
     <table id="areasTable" class="table table-striped">
         <thead>
         <tr>

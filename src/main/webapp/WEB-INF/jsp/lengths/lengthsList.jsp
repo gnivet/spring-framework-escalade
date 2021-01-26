@@ -27,7 +27,7 @@
             </div>
         </div>
     </form:form>
-    <h2>sites</h2>
+    <h2>lengths</h2>
 
     <table id="lengthsTable" class="table table-striped">
         <thead>
