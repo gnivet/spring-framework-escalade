@@ -8,7 +8,7 @@
 
 <escalade:layout pageName="ways">
 
-<h2>Find sites</h2>
+<h2>Find ways</h2>
     <!-- Research sites by ways -->
     <spring:url value="/ways" var="formUrl"/>
     <form:form modelAttribute="way" action="${fn:escapeXml(formUrl)}" method="get" class="form-horizontal"
@@ -27,7 +27,7 @@
             </div>
         </div>
     </form:form>
-    <h2>sites</h2>
+    <h2>ways</h2>
 
     <table id="waysTable" class="table table-striped">
         <thead>
