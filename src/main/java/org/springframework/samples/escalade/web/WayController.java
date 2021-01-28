@@ -72,6 +72,7 @@ public class WayController {
 
 		String userName = principal.getName();
 		
+		@SuppressWarnings("unused")
 		User user = this.userRepository.findByUserName(userName);
 		
 		

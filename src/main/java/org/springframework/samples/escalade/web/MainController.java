@@ -25,9 +25,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 	
 	private EscaladeService escaladeService;
 	private UserRepository userRepository;
-	private TopoRepository topoRepository;
 	private TopoBkgRepository topoBkgRepository;
+	@SuppressWarnings("unused")
 	private String userName;
+	@SuppressWarnings("unused")
 	private Principal principal;
 	
 
@@ -36,7 +37,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 		
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
-		this.topoRepository = topoRepository;
 		this.topoBkgRepository = topoBkgRepository;
 		
 	}	

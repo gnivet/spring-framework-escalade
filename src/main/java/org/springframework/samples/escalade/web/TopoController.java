@@ -35,14 +35,11 @@ public class TopoController {
 	private EscaladeService escaladeService;
 	private UserRepository userRepository;
 
-	private TopoRepository topoRepository;
-
 	@Autowired
 	public TopoController(EscaladeService escaladeService, UserRepository userRepository,
 			TopoRepository topoRepository) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
-		this.topoRepository = topoRepository;
 
 	}
 

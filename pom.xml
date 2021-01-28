@@ -62,11 +62,21 @@
 			<version>${webjars-bootstrap.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/tomcat/catalina GN -->
-		<dependency>
+		<!--  <dependency>
 			<groupId>tomcat</groupId>
 			<artifactId>catalina</artifactId>
 			<version>5.5.23</version>
+		</dependency> -->
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
+		<dependency>
+    		<groupId>org.apache.tomcat</groupId>
+   			 <artifactId>tomcat-catalina</artifactId>
+    		<version>9.0.26</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>		
 		<!-- end of webjars -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

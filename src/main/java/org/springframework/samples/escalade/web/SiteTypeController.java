@@ -19,8 +19,6 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.repository.SiteTypeRepository;
@@ -32,7 +30,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,14 +42,9 @@ public class SiteTypeController {
 
 	private static final String VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM = "sitetypes/createOrUpdateSiteTypeForm";
 	private final EscaladeService escaladeService;	
-	private SiteTypeRepository siteTypeRepository;
-	
-	
-
 	@Autowired
 	public SiteTypeController(EscaladeService escaladeService , SiteTypeRepository siteTypeRepository) {
 		this.escaladeService = escaladeService;
-		this.siteTypeRepository = siteTypeRepository;
 	}
 	
 	

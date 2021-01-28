@@ -25,14 +25,11 @@ public class UserController {
 	private UserService userService;
 	private UserValidator userValidator;
 	private SecurityService securityService;
-	private EscaladeService escaladeService;
-
 	@Autowired
 	public UserController(EscaladeService escaladeService, UserService userService, SecurityService securityService) {
 		this.userService = userService;
 		// this.userValidator = userValidator;
 		this.securityService = securityService;
-		this.escaladeService = escaladeService;
 	}
 
 	@GetMapping(value = "/users/registration")

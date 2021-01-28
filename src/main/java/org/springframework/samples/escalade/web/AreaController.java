@@ -54,16 +54,11 @@ public class AreaController {
 	private final EscaladeService escaladeService;
 	
 	private UserRepository userRepository;
-	private AreaRepository areaRepository;
-	private SiteRepository siteRepository;
-
 	@Autowired
 	public AreaController(EscaladeService escaladeService, UserRepository userRepository, AreaRepository areaRepository,
 			SiteRepository siteRepository) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
-		this.areaRepository = areaRepository;
-		this.siteRepository = siteRepository;
 	}
 
 	@InitBinder
