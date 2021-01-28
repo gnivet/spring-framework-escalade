@@ -72,6 +72,7 @@ public class LengthController {
 		
 		String userName = principal.getName();
 		
+		@SuppressWarnings("unused")
 		User user = this.userRepository.findByUserName(userName);
 		 
 		

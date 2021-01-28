@@ -89,6 +89,7 @@ public class ZoneController {
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 
+		@SuppressWarnings("unused")
 		User user = this.userRepository.findByUserName(userName);
 
 		/**

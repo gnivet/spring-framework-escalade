@@ -23,7 +23,6 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.escalade.model.Comment;
 import org.springframework.samples.escalade.model.Length;
 import org.springframework.samples.escalade.model.Point;
 import org.springframework.samples.escalade.model.User;
@@ -73,6 +72,7 @@ public class PointController {
 		String userName = principal.getName();
 	
 	
+		@SuppressWarnings("unused")
 		User user = this.userRepository.findByUserName(userName);
 		
 		
@@ -102,6 +102,7 @@ public class PointController {
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 
+		@SuppressWarnings("unused")
 		User user = this.userRepository.findByUserName(userName);
 		
 		

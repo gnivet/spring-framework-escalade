@@ -49,14 +49,12 @@ public class CommentController {
 	private static final String VIEWS_COMMENT_CREATE_OR_UPDATE_FORM = "comments/createOrUpdateCommentForm";
 	private final EscaladeService escaladeService;
 	private UserRepository userRepository;
-	private SiteRepository siteRepository;
 	private Site site;
 	
 	@Autowired
 	public CommentController(EscaladeService escaladeService , UserRepository userRepository, SiteRepository siteRepository) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
-		this.siteRepository = siteRepository;
 	}
 	
 	@InitBinder
@@ -69,6 +67,7 @@ public class CommentController {
 				
 		Comment comment = new Comment();		
 		String userName = principal.getName();		
+		@SuppressWarnings("unused")
 		User user = this.userRepository.findByUserName(userName);	
 		model.put("comment", comment);
 		return VIEWS_COMMENT_CREATE_OR_UPDATE_FORM;

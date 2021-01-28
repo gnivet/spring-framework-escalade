@@ -79,6 +79,7 @@ String userName = principal.getName();
 			userId = user.getId();
 			
 			
+			@SuppressWarnings("unused")
 			Topo topo = new Topo();
 			if (topoId != null) {
 			topo = this.escaladeService.findTopoById(topoId);			

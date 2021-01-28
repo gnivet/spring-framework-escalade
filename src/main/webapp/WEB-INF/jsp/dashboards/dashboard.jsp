@@ -14,7 +14,7 @@
 <title><c:out value="${title}" /></title>
 	</head>
 	<h2>Dashboard</h2>	
-	<h3 class="mycolor">Topos & Sites</h3>
+	<h3 class="mycolor">Topos and sites</h3>
 	<div>
 		<img src="/resources/images/sites.png" class="rounded float-left"
 			class="rounded mx-auto d-block" alt="cascadeDuRougetLandscape"
