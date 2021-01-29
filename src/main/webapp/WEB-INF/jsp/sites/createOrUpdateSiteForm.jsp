@@ -48,10 +48,10 @@
              			  <br />	 
                    		  <p>Choose your site's type</p>							
 							<br />
-						 <input type="hidden" name="id" value="${sitetype.id}" />   			
+						 <input type="hidden" name="id" value="${siteType.id}" />   			
 						<select name='sitetype'>     
-							<c:forEach items="${sitetypes}" var="sitetype"> 
-							    <option value="${sitetype}">${sitetype.name}
+							<c:forEach items="${siteTypes}" var="sitetype"> 
+							    <option value="${siteType}">${siteType.name}
 								</option>
 							</c:forEach>
 						 </select> <br />                  		 

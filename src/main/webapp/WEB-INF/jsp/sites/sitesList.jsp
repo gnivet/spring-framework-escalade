@@ -34,9 +34,12 @@
         <thead>
         <tr>
             <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Birth date</th>                                   
-            <th style="width: 200px;">First name</th> 
-            <th style="width: 200px;">Last name</th>  	         
+            <th style="width: 200px;">Birth date</th>
+            <th style="width: 200px;">Site's type</th>                                    
+            <th style="width: 400px;">Site's owner</th>                       
+            <th style="width: 400px;">Street</th>                                   
+            <th style="width: 200px;">Postal code</th> 
+            <th style="width: 200px;">City</th>  	       	         
         </tr>
         </thead>
         <tbody>
@@ -51,15 +54,22 @@
                 </td>
                 <td>
                     <c:out value="${site.birthDate}"/>
+                </td>
+                <td>
+                    <c:out value="${site.type.name}"/>
                 </td>                                            
                 <td>
-                    <c:out value="${site.user.firstName} "/>
-                </td> 
-                               
+                    <c:out value="${site.user.userName} "/>
+                </td>       
                 <td>
-                    <c:out value="${site.user.lastName}"/>
-                </td>
-                             
+                    <c:out value="${site.area.street}"/>
+                </td> 
+                <td>
+                    <c:out value="${site.area.postalcode}"/>
+                </td>    
+                <td>
+                    <c:out value="${site.area.city}"/>
+                </td>            
                 <td>
                     <c:forEach var="site" items="${user.sites}">
                         <c:out value="${site.name} "/>
