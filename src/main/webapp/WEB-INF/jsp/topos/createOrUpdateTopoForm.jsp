@@ -36,7 +36,7 @@
         					<input type="radio" name="available" value="true" id="true" /><label
 						for="true">enabled</label><br />
                    		 </div>
-          <div class="col-sm-10" class="form-horizontal" topo ="hidden">
+          <div class="col-sm-10" class="form-horizontal">
        							<p>Please choose your topo type:</p>
 					<br />
       							 <input type="radio" name="type.name" value="cliff"
