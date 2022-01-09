@@ -37,6 +37,7 @@ import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.model.escaladeException;
 
+
 /**
  * Mostly used as a facade so all controllers have a single point of entry
  *
@@ -104,6 +105,9 @@ public interface EscaladeService {
 	Collection<Zone> findZoneByName(String name) throws DataAccessException;
 
 	Collection<Zone> findZones() throws DataAccessException; 
+	
+	Collection<Zone> findZoneBySiteName(String name) throws DataAccessException;
+
 	
 	/*
 	 * Site
@@ -252,6 +256,8 @@ public interface EscaladeService {
 	Collection<Topo> findTopoAvailableByUserId(Integer id);
 
 	Collection<TopoBkg> findTopoBkgByIda(Integer id) throws DataAccessException;
+	
+	
 	
 	
 }

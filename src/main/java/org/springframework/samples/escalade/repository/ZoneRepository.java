@@ -16,8 +16,10 @@ public interface ZoneRepository {
 
 	NamedEntity updateZone(Zone zone);
 
-	Collection<Zone> findZones() throws DataAccessException;	 ;
-	//public List<SiteType> findSiteTypes() throws DataAccessException;	
+	Collection<Zone> findZones() throws DataAccessException;
+
+	Collection<Zone> findZoneBySiteName(String name)throws DataAccessException;
+	
 	
 
 }

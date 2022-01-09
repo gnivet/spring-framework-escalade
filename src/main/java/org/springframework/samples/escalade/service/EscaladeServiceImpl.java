@@ -815,6 +815,16 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 
 
+	@Transactional
+	@Override
+	public Collection<Zone> findZoneBySiteName(String name) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return zoneRepository.findZoneBySiteName(name);
+	}
+
+
+
+
 
 	
 

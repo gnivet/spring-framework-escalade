@@ -23,8 +23,6 @@ public class JpaZoneRepositoryImpl implements ZoneRepository{
 	private EntityManager em;
 	
 
-	
-	
 
 	public Zone findZoneById(Integer id) {
 				
@@ -45,11 +43,6 @@ public class JpaZoneRepositoryImpl implements ZoneRepository{
 
 	}
 
-	
-	
-	
-	
-	
 	
 	
 	public NamedEntity updateZone(Zone zone) {
@@ -74,8 +67,7 @@ public class JpaZoneRepositoryImpl implements ZoneRepository{
 		 query.setParameter("name", "%" + name + "%");
 		 return query.getResultList();
 	}
-	
-	
+		
 	
 	@SuppressWarnings("unchecked")
 	@Transactional
@@ -84,5 +76,15 @@ public class JpaZoneRepositoryImpl implements ZoneRepository{
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT zone FROM Zone zone");
 		return  query.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Collection<Zone> findZoneBySiteName(String name) throws DataAccessException {
+		// TODO Auto-generated method stub
+
+    	Query query = this.em.createQuery("SELECT distinct zone.name, way.name FROM Site site left join Zone zone on zone.id = site.id join Way way on way.id = site.id where site.name like :name");
+		 query.setParameter("name", "%" + name + "%");
+		 return query.getResultList();
 	}
 }

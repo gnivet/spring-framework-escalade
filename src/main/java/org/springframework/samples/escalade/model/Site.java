@@ -29,6 +29,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -41,7 +42,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "sites")
 public class Site extends NamedEntity {
 	
-	
+	//@Id
+    //@GeneratedValue
+    //private int id;
 	
 	@Column(name = "birthDate")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
@@ -67,9 +70,28 @@ public class Site extends NamedEntity {
 	private boolean valid;
 	
 	
-	@OneToMany(targetEntity = Zone.class,  fetch=FetchType.EAGER)
-	@JoinColumn(name = "zone_id", nullable = true)
-	private Set<Zone> zones = new HashSet<Zone>();
+	//@OneToMany(targetEntity = Zone.class,  fetch=FetchType.EAGER)
+	//@JoinColumn(name = "zone_id", nullable = true)
+	//private Set<Zone> zones = new HashSet<Zone>();
+	// https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/
+	
+	@Autowired
+	@OneToMany(mappedBy = "site", 
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	)	
+	// private List zones = new ArrayList<>();
+	 private Set<Zone> zones = new HashSet<Zone>();
+	 
+	 public void addZone(Zone zone) {
+	        zones.add(zone);
+	        zone.setSite(this);
+	    }
+	 
+	    public void removeZone(Zone zone) {
+	        zones.remove(zone);
+	        zone.setSite(null);
+	    } 
 	
 	
 	public boolean isValid() {
@@ -149,6 +171,11 @@ public class Site extends NamedEntity {
 	public Object getVisits() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void setArea(Site site) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

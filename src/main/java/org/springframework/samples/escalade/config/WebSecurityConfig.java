@@ -155,7 +155,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/zones/find").hasAnyRole("USER", "ADMIN");
 				
 		http.authorizeRequests().antMatchers("/sites/*/zones/new/").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/sites/*/zones/*/").hasAnyRole("USER", "ADMIN");
+		//http.authorizeRequests().antMatchers("/sites/*/zones/*/").hasAnyRole("USER", "ADMIN");
         
 		// http.authorizeRequests().antMatchers("/areas/").hasAnyRole("USER", "ADMIN");
 		// For ADMIN only. /users/find

@@ -24,6 +24,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Area;
+import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.samples.escalade.repository.SiteRepository;
@@ -42,7 +43,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-
 /**
  * @author Guillaume Nivet
  */
@@ -52,7 +52,7 @@ public class AreaController {
 
 	private static final String VIEWS_AREA_CREATE_OR_UPDATE_FORM = "areas/createOrUpdateAreaForm";
 	private final EscaladeService escaladeService;
-	
+
 	private UserRepository userRepository;
 	@Autowired
 	public AreaController(EscaladeService escaladeService, UserRepository userRepository, AreaRepository areaRepository,
@@ -65,27 +65,27 @@ public class AreaController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
+
 	@GetMapping(value = "/areas/new")
 	public String initCreationForm(Map<String, Object> model) {
 
 		Area area = new Area();
 		model.put("area", area);
+		Site site = new Site();
+		model.put("site", site);
 		return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping(value = "/areas/new")
-	public String processCreationForm( @ModelAttribute("area") @Valid Area area,  BindingResult result, Integer areaId, Map<String, Object> model ,Principal principal,  Integer siteId) {
-		
-		
-		//public String processCreationForm(@ModelAttribute("topoBkg") @Valid TopoBkg topoBkg, BindingResult result,
-		//		Model model, Principal principal, @PathVariable Integer topoId) {	
-		
-		
-		
+	public String processCreationForm(@ModelAttribute("area") @Valid Area area, BindingResult result, Integer areaId,
+			Map<String, Object> model, Principal principal, Integer siteId, Site site, Area aera) {
+
+		// public String processCreationForm(@ModelAttribute("topoBkg") @Valid TopoBkg
+		// topoBkg, BindingResult result,
+		// Model model, Principal principal, @PathVariable Integer topoId) {
+
 		String userName = principal.getName();
-		
-		
+
 		/**
 		 * Retrieve a <code>User</code> from the data store by id.
 		 *
@@ -94,25 +94,24 @@ public class AreaController {
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 
-		
 		User user = this.userRepository.findByUserName(userName);
-						
-		
+
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 		} else {
-			
-			model.put("area", area);				
+
+			model.put("area", area);
 			area.setUser(user);
-			area = this.escaladeService.saveArea(area);			
-			return "redirect:/areas/" +  area.getId() ;
-			
+			model.put("site", site);
+			aera.setSite(site);
+
+			// topoBkgToModify.setTopo(topoBkg.getTopo());
+			area = this.escaladeService.saveArea(area);
+			//areaSite.setArea(area.getSite());
+			return "redirect:/areas/" + area.getId();
+
 		}
 	}
-	
-
-	
-	
 
 	@GetMapping(value = "/areas/find")
 	public String initFindForm(Map<String, Object> model) {
@@ -120,12 +119,7 @@ public class AreaController {
 		return "/areas/findAreas";
 
 	}
-	
-	
 
-	
-
-	
 	@GetMapping(value = "/areas")
 	public String processFindForm(Area area, BindingResult result, Map<String, Object> model) {
 
@@ -140,42 +134,38 @@ public class AreaController {
 		if (results.isEmpty()) {
 			// no areas found
 			result.rejectValue("postalcode", "notFound", "not found");
-			return "/areas/findAreas";			
+			return "/areas/findAreas";
 
 		} else {
 			// multiple areas found
-			model.put("selections", results);			
-		 return "areas/areasList";
+			model.put("selections", results);
+			return "areas/areasList";
 		}
 
 	}
 
-	
 	@GetMapping(value = "/areas/{areaId}")
-	public String initUpdateAreaForm(@NotNull @PathVariable("areaId") Integer   areaId, @NotNull Model model) {
+	public String initUpdateAreaForm(@NotNull @PathVariable("areaId") Integer areaId, @NotNull Model model) {
 		Area area = this.escaladeService.findAreaById(areaId);
 		model.addAttribute(area);
-		
-		
-		
-		
+
 		return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping(value = "/areas/{areaId}")
-	public String processUpdateAreaForm(Area area, BindingResult result, @PathVariable("areaId")  Integer areaId  ) {
+	public String processUpdateAreaForm(Area area, BindingResult result, @PathVariable("areaId") Integer areaId) {
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 		} else {
 
-			Area areaToModify = this.escaladeService.findAreaById(areaId);			
+			Area areaToModify = this.escaladeService.findAreaById(areaId);
 			areaToModify.setCity(area.getCity());
 			areaToModify.setCountry(area.getCountry());
 			areaToModify.setGpscoordinate(area.getGpscoordinate());
 			areaToModify.setPostalcode(area.getPostalcode());
 			areaToModify.setStreet(area.getStreet());
-			areaToModify.setName(area.getName());				
-			this.escaladeService.updateArea(areaToModify);			
+			areaToModify.setName(area.getName());
+			this.escaladeService.updateArea(areaToModify);
 			return "redirect:/areas/{areaId}";
 		}
 	}
@@ -186,12 +176,12 @@ public class AreaController {
 	 * @param areaId the ID of the area to display
 	 * @return a ModelMap with the model attributes for the view
 	 */
-	
+
 	@RequestMapping("/areas/{areaId}/sites/{siteId}")
 	public ModelAndView showArea(@PathVariable("areaId") Integer areaId) {
 		ModelAndView mav = new ModelAndView("areas/areaDetails");
-		mav.addObject(this.escaladeService.findAreaById(areaId));		
+		mav.addObject(this.escaladeService.findAreaById(areaId));
 		return mav;
 	}
-	
+
 }

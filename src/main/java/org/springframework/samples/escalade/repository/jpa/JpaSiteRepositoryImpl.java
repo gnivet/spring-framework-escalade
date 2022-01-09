@@ -185,8 +185,8 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 	@SuppressWarnings("unchecked")
 	public Collection<Site> findSiteByName(String name) {
 		// TODO Auto-generated method stub
-
-		Query query = this.em.createQuery("SELECT distinct site FROM User user join Site site on site.user.id = user.id  where site.name like :name");
+		Query query = this.em.createQuery("SELECT distinct site FROM Site site where site.name like :name");
+		//Query query = this.em.createQuery("SELECT distinct site FROM User user join Site site on site.user.id = user.id join Zone zone on zone.site.id = site.id where site.name like :name");
 		query.setParameter("name", "%" + name + "%");
 		return query.getResultList();
 	}

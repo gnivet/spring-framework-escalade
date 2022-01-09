@@ -67,9 +67,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 		@GetMapping(value= "/dashboards/dashboard")
 		public String dashboard( Model model, Comment comment,Topo topo, String commentaryNb, String userName, String name, BindingResult result, Principal principal) {
-			
+				if (principal.getName()== null) {
+					return "/welcome" ;
+					
+				}else
+				{	
 	        	userName = principal.getName();
-	        	
+				}
 	        	
 	        	
 	        	/*--------------------------------------------------------------/

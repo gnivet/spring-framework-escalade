@@ -73,6 +73,27 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 		}
 		return area;
 	}
+//modificaction pour générer une pk sur l'entité site  
+	public NamedEntity saveSite(NamedEntity site) {
+
+		if (site.getId() == null) {
+			this.em.persist(site);
+		}
+
+		else {
+			this.em.merge(site);
+		}
+		return site;
+	} 
+	
+	
+	public EntityManager getEm() {
+		return em;
+	}
+
+	public void setEm(EntityManager em) {
+		this.em = em;
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Area> findAll() {

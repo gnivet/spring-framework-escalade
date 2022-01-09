@@ -105,6 +105,9 @@ public class Area extends NamedEntity {
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "site_id", nullable = true )
+	
+	
+
 	private Site site;
 
 	public Site getSite() {
@@ -154,9 +157,11 @@ public class Area extends NamedEntity {
 	}
 
 	
+		
+
 
 	
-
+	
 	
 
 	

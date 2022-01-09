@@ -41,7 +41,7 @@
                         <spring:param name="zoneId" value="${zone.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(zoneUrl)}"><c:out value="${zone.name} "/></a>
-                </td>
+                </td>                    
             </tr>
         </c:forEach>
         </tbody>
