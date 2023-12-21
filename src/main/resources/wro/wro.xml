@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<groups xmlns="http://www.isdc.ro/wro">	
+  <group name="escalade">
+    <css>classpath:META-INF/resources/webjars/bootstrap/3.3.6/less/bootstrap.less</css>
+    <css>/escalade.less</css>
+   </group>
+</groups>
