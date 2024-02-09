@@ -26,11 +26,10 @@ public class Length extends NamedEntity {
 	/**
 	 * Holds value of property roles. FOREIGN KEY (point_id)
 	 */
-	/*
-	 * @ManyToOne
-	 * 
-	 * @JoinColumn(name = "point_id", nullable = true) private Point point;
-	 */
+	
+	  @ManyToOne	  
+	  @JoinColumn(name = "point_id", nullable = true)
+	  private Point point;
 
 	@Column(name = "comment")
 	//@NotEmpty
@@ -40,11 +39,11 @@ public class Length extends NamedEntity {
 	@Column(name = "length_status")
 	//@NotNull	
 	private boolean length_status;
+	
 
 	
-	
-	@ManyToOne(targetEntity = Point.class,  cascade=CascadeType.ALL)
-	@JoinColumn(name = "way_id")
+	@ManyToOne
+	@JoinColumn(name = "way_id",  nullable = true)
 	private Way way;
 	
 	@OneToMany(targetEntity = Point.class, cascade = CascadeType.ALL, mappedBy = "length" , fetch=FetchType.EAGER)

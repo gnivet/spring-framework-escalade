@@ -68,7 +68,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests().antMatchers("/comments/find").hasAnyRole("USER", "ADMIN");
 		
-		http.authorizeRequests().antMatchers("/dashboard").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/dashboards").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/dashboards/dashboard").hasAnyRole("USER", "ADMIN");
 		
 		
 		http.authorizeRequests().antMatchers("/users/find").hasAnyRole("USER", "ADMIN");
@@ -84,7 +85,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests().antMatchers("/sites/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/sites/find").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/sites/*/comments/new").hasAnyRole("USER", "ADMIN");
+		
 	
 		
 		http.authorizeRequests().antMatchers("/sitetypes/new/").hasAnyRole("USER", "ADMIN");
@@ -112,7 +113,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests().antMatchers("/points/new").hasAnyRole("USER", "ADMIN");
 		
-		
+		http.authorizeRequests().antMatchers("/sites/*/comments/new").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/lengths/*/points/new/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/topos/new").hasAnyRole("USER", "ADMIN");
@@ -151,7 +152,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests().antMatchers("/way").hasAnyRole("USER", "ADMIN");
 		
-		http.authorizeRequests().antMatchers("/zones/new").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/zones/new/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/zones/find").hasAnyRole("USER", "ADMIN");
 				
 		http.authorizeRequests().antMatchers("/sites/*/zones/new/").hasAnyRole("USER", "ADMIN");

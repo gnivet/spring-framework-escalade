@@ -14,9 +14,9 @@ public interface CommentRepository {
 	
 	Collection<Comment> findCommentByName(String name) throws DataAccessException;
 
-	Long findCommentNumber(String userName)throws DataAccessException;
+	Integer findCommentNumber(String userName)throws DataAccessException;
 
-	Long findByUsername(String userName)throws DataAccessException;
+	Integer findByUsername(String userName)throws DataAccessException;
 
 	
 	Collection<Comment> findCommentByUsername(String userName)throws DataAccessException;

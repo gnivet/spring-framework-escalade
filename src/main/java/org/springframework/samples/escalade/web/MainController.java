@@ -4,7 +4,6 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Comment;
 import org.springframework.samples.escalade.model.Topo;
 import org.springframework.samples.escalade.model.TopoBkg;
@@ -32,7 +31,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 	private Principal principal;
 	
 
-	@Autowired
 	public MainController(EscaladeService escaladeService , UserRepository userRepository, TopoRepository topoRepository, TopoBkgRepository topoBkgRepository) {
 		
 		this.escaladeService = escaladeService;
@@ -65,7 +63,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 
-		@GetMapping(value= "/dashboards/dashboard")
+		@GetMapping(value= "/dashboards")
 		public String dashboard( Model model, Comment comment,Topo topo, String commentaryNb, String userName, String name, BindingResult result, Principal principal) {
 				if (principal.getName()== null) {
 					return "/welcome" ;
@@ -105,14 +103,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 	        	/*
 	        	 * Comment's user number
 	        	 */
-	        	Long cNb = this.escaladeService.findByUsername(userName);
+	        	Integer cNb = this.escaladeService.findByUsername(userName);       	
 	        	String strcNb = cNb.toString();
 	        	model.addAttribute("strcNb", strcNb);
 	        	
 	        	/*
 	        	 * Number Site's owner:
 	        	 */
-	        	Long sNb = this.escaladeService.findSiteOwnedByUsername(userName);
+	        	Integer sNb = this.escaladeService.findSiteOwnedByUsername(userName);
 	        	String strsNb = sNb.toString();
 	        	model.addAttribute("strsNb", strsNb);
 	        	

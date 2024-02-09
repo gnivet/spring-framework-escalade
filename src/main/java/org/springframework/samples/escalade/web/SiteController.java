@@ -29,11 +29,13 @@ import org.springframework.samples.escalade.model.SiteType;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.AreaRepository;
+import org.springframework.samples.escalade.repository.SiteRepository;
 import org.springframework.samples.escalade.repository.SiteTypeRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.repository.WayRepository;
 import org.springframework.samples.escalade.repository.ZoneRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -46,108 +48,102 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author Guillaume Nivet
-*/
+ */
 
 @Controller
 @Transactional
 public class SiteController {
 
-    private static final String VIEWS_SITES_CREATE_OR_UPDATE_FORM = "sites/createOrUpdateSiteForm";
+	private static final String VIEWS_SITES_CREATE_OR_UPDATE_FORM = "sites/createOrUpdateSiteForm";
 
-    private final EscaladeService escaladeService;
+	private final EscaladeService escaladeService;
 
-
-
-    private AreaRepository areaRepository;
+	private AreaRepository areaRepository;
 	private SiteTypeRepository siteTypeRepository;
 	private UserRepository userRepository;
+	private SiteRepository siteRepository;
+
 	@Autowired
-    public SiteController(EscaladeService escaladeService,
-    	AreaRepository areaRepository, SiteTypeRepository siteTypeRepository, UserRepository userRepository , WayRepository wayRepository, ZoneRepository zoneRepository) {
-        this.escaladeService = escaladeService;
-        this.userRepository = userRepository;
-        this.areaRepository = areaRepository;
-        this.siteTypeRepository = siteTypeRepository;
+	public SiteController(EscaladeService escaladeService, AreaRepository areaRepository,
+			SiteTypeRepository siteTypeRepository, UserRepository userRepository, WayRepository wayRepository,
+			ZoneRepository zoneRepository, SiteRepository siteRepository) {
+		this.escaladeService = escaladeService;
+		this.userRepository = userRepository;
+		this.areaRepository = areaRepository;
+		this.siteTypeRepository = siteTypeRepository;
 
-
-
-
-    }
-
+	}
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
 
+	@GetMapping("/sites/new")
+	public String initCreationForm(Map<String, Object> model) {
+		Site site = new Site();
+		model.put("site", site);		
+		return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
+	}
+		
 
+	@PostMapping("/sites/new")
+	public String processCreationForm(@Valid Site site, BindingResult result) {
+		if (result.hasErrors()) {
+			return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
+		}
+		try {
+			this.siteRepository.site(site);
+		} catch (NullPointerException npe) {
+			System.out.println("Site is null");
+			site.getId();
+		}
+		return "redirect:/sites/" + site.getId();
+	}
 
-
-
-	@SuppressWarnings("unlikely-arg-type")
 	@GetMapping(value = "/areas/{areaId}/sites/new")
-	public String initCreationForm(  ModelMap model, Principal principal, @PathVariable("areaId") Integer areaId ) {
-
-
-
-
+	public String initCreationForm(ModelMap model, Principal principal, @PathVariable("areaId") Integer areaId) {
 
 		if (principal.getName() != null) {
 			String userName = principal.getName();
 
-
 			User user = this.userRepository.findByUserName(userName);
-			 model.addAttribute("firstName" , user.getFirstName() );
+			model.addAttribute("firstName", user.getFirstName());
 		} else {
 			return "redirect:/users/login/";
 		}
 
-
-
-
-
-
-
 		Site site = new Site();
 		model.put("site", site);
-
-
+		
 		// Input Area
-		 Area area = this.areaRepository.findAreaById(areaId);
-		 if (area == null || area.equals(" ") )
-	        {
-	        	System.out.println("area est null" + model + area);
-	        }
+		Area area = this.areaRepository.findAreaById(areaId);
+		if (area == null || area.equals(" ")) {
+			System.out.println("area est null" + model + area);
+		}
 		model.put("area", area);
 
+		List<SiteType> sitetype = this.siteTypeRepository.findAll();
+		if (sitetype == null || sitetype.isEmpty()) {
+			System.out.println("le type est null" + model + sitetype);
+		}
 
+		model.put("sitetype", sitetype);
 
-		List<SiteType> sitetype= this.siteTypeRepository.findAll();
-        if (sitetype == null || sitetype.isEmpty())
-        {
-        	System.out.println("le type est null" + model + sitetype);
-        }
-
-        model.put("sitetype",sitetype);
-
-
-
-
-        return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
-    }
-
+		return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
+	}
 
 	@GetMapping(value = "/sites/{sites}/sitetypes/{siteTypeId}")
-	public String processFindForm(SiteType siteType, BindingResult result, Map<String, Object> model, @PathVariable("siteId") Integer siteId, @PathVariable("siteTypeId") Integer siteTypeId) {
+	public String processFindForm(SiteType siteType, BindingResult result, Map<String, Object> model,
+			@PathVariable("siteId") Integer siteId, @PathVariable("siteTypeId") Integer siteTypeId) {
 
 		if (siteType.getName() == null) {
 			siteType.setName(""); // empty string signifies broadest possible search
 		}
 
-
-
 		// find areas by postal code
-		//Collection<SiteType> results = this.escaladeService.findSiteTypeByName(siteType.getName());
+		// Collection<SiteType> results =
+		// this.escaladeService.findSiteTypeByName(siteType.getName());
 		Collection<SiteType> results = this.escaladeService.findSiteTypes();
 
 		if (results.isEmpty()) {
@@ -162,63 +158,44 @@ public class SiteController {
 		}
 	}
 
+	@PostMapping(value = "/areas/{areaId}/sites/new")
+	public String processCreationForm(ModelMap model, Principal principal, @PathVariable Integer areaId,
+			SiteType siteType, Site site, BindingResult result, Area aera, User user) {
 
-	 	@PostMapping(value = "/areas/{areaId}/sites/new")
-	    public String processCreationForm( ModelMap model, Principal principal, @PathVariable Integer areaId, SiteType siteType, Site site, BindingResult result, Area aera, User user){
+		if (siteType == null) {
+			System.out.println("le type est null" + model + siteType);
+		}
 
-	 		 if (siteType == null )
-	         {
-	         	System.out.println("le type est null" + model + siteType);
-	         }
+		if (principal.getName() != null) {
+			String userName = principal.getName();
+			user = this.userRepository.findByUserName(userName);
 
+		} else {
+			return "redirect:welcome";
+		}
 
+		if (result.hasErrors()) {
+			return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
+		} else
 
-	 		if (principal.getName() != null)
-	 		{
-	 			String userName = principal.getName();
-	 			user = this.userRepository.findByUserName(userName);
-	 			
-				
-				
-	 			
-	 		}else
-	 		{
-	 			 return "redirect:welcome";
-	 		}
-
-	 		
-
-
-	        if (result.hasErrors()) {
-	            return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
-	        } else
-
-	        {
-	        	
+		{
 
 			@SuppressWarnings("unused")
 			Area area = this.areaRepository.findAreaById(areaId);
 
 			System.out.println(model);
-			
-			// Save site 
+
+			// Save site
 			model.put("site", site);
 			site.setUser(user);
- 			site.getBirthDate();
- 			site.getType();
- 			aera.setSite(site);
- 			site.getName();
- 		
-			
-			
+			site.getBirthDate();
+			site.getType();
+			aera.setSite(site);
+			site.getName();
+
 			site = this.escaladeService.saveSite(site);
-			
-			     
-
-
 
 			Collection<SiteType> results = this.escaladeService.findSiteTypes();
-
 
 			if (results.isEmpty()) {
 				// no areas found
@@ -230,140 +207,119 @@ public class SiteController {
 				model.put("selections", results);
 				return "sitetypes/siteTypesList";
 			}
-	        }
+		}
 
-	    }
+	}
 
+	@GetMapping(value = "/sites/find")
+	public String initFindForm(Map<String, Object> model) {
+		model.put("site", new Site());
+		return "/sites/findSites";
 
+	}
 
+	@GetMapping(value = "/sites")
+	public String processFindForm(Area area, User user, Site site, Zone zone, BindingResult result,
+			Map<String, Object> model) {
 
+		// allow parameterless GET request for /areas to return all records
+		if (site.getName() == null) {
+			site.setName(""); // empty string signifies broadest possible search
+		}
 
+		if (zone.getName() == null) {
+			zone.setName(""); // empty string signifies broadest possible search
+		}
 
-	 	@GetMapping(value = "/sites/find")
-		public String initFindForm(Map<String, Object> model) {
-			model.put("site", new Site());
+		// find sites by name
+		Collection<Site> results = this.escaladeService.findSiteByName(site.getName());
+		// Collection<Zone> result2s =
+		// this.escaladeService.findZoneBySiteName(site.getName());
+
+		if (results.isEmpty()) {
+			// no sites found
+			result.rejectValue("name", "notFound", "not found");
 			return "/sites/findSites";
 
+		} else {
+			// multiple sites found
+			model.put("selections", results);
+			return "sites/sitesList";
+		}
+	}
+
+	@GetMapping(value = "zone")
+	public String processFindForm2(Zone zone, Site site, BindingResult result, Map<String, Object> model) {
+
+		// allow parameterless GET request for /areas to return all records
+		if (zone.getName() == null) {
+			zone.setName(""); // empty string signifies broadest possible search
 		}
 
+		// find sites by name
+		Collection<Zone> result2s = this.escaladeService.findZoneBySiteName(site.getName());
 
+		if (result2s.isEmpty()) {
+			// no sites found
+			result.rejectValue("name", "notFound", "not found");
+			return "/zones/findZones";
 
-	 	@GetMapping(value = "/sites")
-		public String processFindForm(Area  area, User user, Site site, Zone zone, BindingResult result, Map<String, Object> model) {
-
-			// allow parameterless GET request for /areas to return all records
-			if (site.getName() == null) {
-				site.setName(""); // empty string signifies broadest possible search
-			}
-
-			if (zone.getName() == null) {
-				zone.setName(""); // empty string signifies broadest possible search
-			}
-
-			// find sites by name
-			Collection<Site> results = this.escaladeService.findSiteByName(site.getName());
-			//Collection<Zone> result2s = this.escaladeService.findZoneBySiteName(site.getName());
-
-			if (results.isEmpty()) {
-				// no sites found
-				result.rejectValue("name", "notFound", "not found");
-				return "/sites/findSites";
-
-			} else {
-				// multiple sites found
-				model.put("selections", results);
-			 return "sites/sitesList";
-			}
-	 	}
-		@GetMapping(value= "zone")
-		public String processFindForm2(Zone zone, Site site, BindingResult result,  Map<String, Object> model) {
-
-			// allow parameterless GET request for /areas to return all records
-			if (zone.getName() == null) {
-				zone.setName(""); // empty string signifies broadest possible search
-			}
-
-			// find sites by name
-			Collection<Zone> result2s = this.escaladeService.findZoneBySiteName(site.getName());
-
-
-
-			if (result2s.isEmpty()) {
-				// no sites found
-				result.rejectValue("name", "notFound", "not found");
-				return "/zones/findZones";
-
-			} else {
-				// multiple sites found
-				model.put("selection2s", result2s);
-			 return "zones/zonesList";
-			}
-
-
-
-
+		} else {
+			// multiple sites found
+			model.put("selection2s", result2s);
+			return "zones/zonesList";
 		}
 
+	}
 
+	@GetMapping(value = "/sites/{siteId}")
+	public String initUpdateForm(@PathVariable("siteId") int siteId, ModelMap model) {
 
-    @GetMapping(value = "/sites/{siteId}")
-    public String initUpdateForm(@PathVariable("siteId") int siteId, ModelMap model) {
+		Site site = this.escaladeService.findSiteById(siteId);
+		Area area = site.getArea();
+		model.put("area", area);
 
-    	Site site = this.escaladeService.findSiteById(siteId);
-    	Area area = site.getArea();
-    	model.put("area", area);
+		/*
+		 * Site Valid
+		 */
+		if (site.isValid()) {
+			site.isValid();
 
-    	/*
-    	 * Site Valid
-    	 */
-    	if (site.isValid())
-    	{
-        site.isValid();
+			/*
+			 * Not valid
+			 */
+		} else {
+			if (!site.isValid()) {
+				site.isValid();
+			}
+		}
 
-        /*
-         * Not valid
-         */
-    	}else {if (!site.isValid())
-    	{
-    		site.isValid();
-    	}
-    	}
+		model.put("site", site);
 
+		SiteType siteType = site.getType();
+		model.put("siteType", siteType);
 
-        model.put("site", site);
+		return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
+	}
 
-        SiteType siteType = site.getType();
-        model.put("siteType", siteType);
+	@PostMapping(value = "/sites/{siteId}")
+	public String processUpdateForm(@PathVariable("siteId") int siteId, @Valid Site site, BindingResult result,
+			User user, ModelMap model) {
 
+		if (result.hasErrors()) {
+			model.put("site", site);
+			return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
+		} else {
+			user.addSite(site);
 
-
-        return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
-    }
-
-    @PostMapping(value = "/sites/{siteId}")
-    public String processUpdateForm(@PathVariable("siteId") int siteId, @Valid Site site, BindingResult result, User user, ModelMap model) {
-
-        if (result.hasErrors()) {
-            model.put("site", site);
-            return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
-        } else {
-            user.addSite(site);
-
-
-        	Site siteToModify = this.escaladeService.findSiteById(siteId);
-        	siteToModify.setType(site.getType());
-        	//siteToModify.setUser(user.getuserName());
-        	siteToModify.setName(site.getName());
-        	siteToModify.setBirthDate(site.getBirthDate());
-            this.escaladeService.updateSite(siteToModify);
-            return "redirect:/sites/{siteId}";
-        }
-    }
-
-
-
-
-
-
+			Site siteToModify = this.escaladeService.findSiteById(siteId);
+			siteToModify.setType(site.getType());
+			siteToModify.setUser(user);
+			siteToModify.setName(site.getName());
+			siteToModify.setBirthDate(site.getBirthDate());
+			this.escaladeService.updateSite(siteToModify);
+			return "redirect:/sites/{siteId}";
+		}
+	}
 
 }

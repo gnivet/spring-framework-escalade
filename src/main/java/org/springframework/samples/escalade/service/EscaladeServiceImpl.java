@@ -22,7 +22,6 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.escalade.model.Area;
@@ -77,7 +76,6 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	private PointRepository pointRepository;
 	private TopoRepository topoRepository;
 	private TopoBkgRepository topoBkgRepository;
-	@Autowired
 	public EscaladeServiceImpl(
 
 			AreaRepository areaRepository, CommentRepository commentRepository, ZoneRepository zoneRepository,
@@ -167,12 +165,14 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 		
 		return areaRepository.saveArea(area);
 	}
+		
 	
-	
-
-	
-	
-
+	@Transactional
+	public Area deleteAreaById(Area area) throws DataAccessException {
+		
+		return areaRepository.deleteAreaById(area.getId());
+	}
+		
 	
 	
 	
@@ -182,9 +182,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 		return areaRepository.updateArea(area);
 		
 	}
-	
-
-	
+		
 
 	@Transactional
 	public Zone saveZone(Zone zone) throws DataAccessException {
@@ -206,13 +204,6 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	}
 
 	
-
-	
-	
-	
-
-	
-
 	@Transactional
 	public Site findSiteById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -240,14 +231,11 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	}
 
 
-
 	@Override
 	public Collection<SiteType> findSiteTypesCollection() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 
 	@Override
@@ -258,13 +246,6 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	}
 	
 	
-
-
-	
-
-
-
-
 	@Override
 	@Transactional
 	public SiteType findById(Integer id) throws DataAccessException {
@@ -280,12 +261,6 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 	
 
-	
-	
-	
-	
-
-
 	@Override
 	@Transactional
 	public SiteType findSiteTypeById(Integer siteTypeId) {
@@ -294,19 +269,11 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	}
 
 
-
-
-	
-	
-
 	@Transactional
 	public Way saveway(Way way) {
 		// TODO Auto-generated method stub
 		return this.wayRepository.saveWay(way);
 	}
-
-
-
 
 	@Transactional
 	public Collection<Way> findWayByName(String name) {
@@ -425,12 +392,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 		// TODO Auto-generated method stub
 		return pointRepository.findPointByName(name);
 	}
-
-
-	/*
-	 * GN
-	 */
-
+    //GN
 
 	@Transactional
 	public Collection<Site> findSiteByName(String name) throws DataAccessException {
@@ -447,13 +409,13 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	}
 	
 	
-	
+	//GN
 
-	@Override
-	public Collection<Site> findSiteByName1(String name) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	//@Override
+	//public Collection<Site> findSiteByName(String name) throws DataAccessException {
+	//	// TODO Auto-generated method stub
+	//	return null;
+	//}
 
 
 
@@ -470,7 +432,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 
 	@Override
-	public Long findCommentNumber(String username) throws DataAccessException {
+	public Integer findCommentNumber(String username) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return commentRepository.findCommentNumber(username);
 	}
@@ -480,7 +442,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 
 	@Override
-	public Long findByUsername(String userName) throws DataAccessException {
+	public Integer findByUsername(String userName) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return commentRepository.findByUsername(userName);
 	}
@@ -490,7 +452,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 
 	@Override
-	public Long findSiteOwnedByUsername(String userName) throws DataAccessException {
+	public Integer findSiteOwnedByUsername(String userName) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return siteRepository.findSiteOwnedByUsername(userName);
 	}
@@ -826,16 +788,15 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 
 
-	
+	@Override
+	public void deleteAreaById(Integer areaId) {
+		// TODO Auto-generated method stub
+		areaRepository.deleteAreaById(areaId);
 
-
-
-
-
-	
+	}
+}
 
 	
 	
 	
 		
-}

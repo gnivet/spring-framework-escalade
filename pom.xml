@@ -17,7 +17,8 @@
 	<description>Spring Framework Escalade</description>
 	<properties>
 		<java.version>1.8</java.version>
-		<start-class>org.springframework.samples.escalade.SpringFrameworkEscaladeApplication
+		<start-class>
+			org.springframework.samples.escalade.SpringFrameworkEscaladeApplication
 		</start-class>
 		<!-- Web dependencies -->
 		<webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>
@@ -67,16 +68,21 @@
 			<artifactId>catalina</artifactId>
 			<version>5.5.23</version>
 		</dependency> -->
-		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
+		<!--
+		https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
 		<dependency>
-    		<groupId>org.apache.tomcat</groupId>
-   			 <artifactId>tomcat-catalina</artifactId>
-    		<version>9.0.26</version>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf</artifactId>			
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>9.0.26</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
-		</dependency>		
+		</dependency>
 		<!-- end of webjars -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -86,7 +92,8 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-thymeleaf</artifactId> 
+		<!-- <dependency> <groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-thymeleaf</artifactId> 
 			</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -99,8 +106,8 @@
 		</dependency>
 		<dependency>
 			<groupId>
-		org.springframework.security		
-		</groupId>
+				org.springframework.security
+			</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server -->
@@ -108,7 +115,8 @@
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org. hibernate.validator/hibernate-validator -->
+		<!-- https://mvnrepository.com/artifact/org.
+		hibernate.validator/hibernate-validator -->
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>

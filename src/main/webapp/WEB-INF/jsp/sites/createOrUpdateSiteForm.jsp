@@ -21,31 +21,8 @@
    </h2>
     <form:form modelAttribute="site"  class="form-horizontal"
 			id="add-site-form">				
-		<br>
-		<%--              
-        <div class="form-group has-feedback">
-        <br>      		<!-- Site's name -->		
-            			<!--<escalade:inputField label="Name" name="name" /> --> 
-            			<div class="col-sm-10" id="c"> 
-            			<input type="text" name="name" class = "form-control-primary" value="${area.name}"disabled/>
-            			<p>BirthDate's site</p>            			
-            			<input type="text" name="birthDate" value="${site.birthDate}"/>    
-            			<input type="hidden" name="id" value="${user.id}" />       
-            			<input type="hidden" name="id" value="${site.id}" />            			     
-            	        </div>    		  	                 	 
-					<div class="col-sm-10" id="c"> 
-                   		  <p>Area's site</p>
-							<br />														 
-						 	<input type="text" class = "alert-info" name="name" value="${area.name}" disabled />
-             		</div>             		
-             		<br />
-             		<br/>             		
-             		<div class="col-sm-10" id="c"> 
-                   		  <p>Site type</p>																				 
-						 	<input type="text" class= "deployment-status-deploying" name="name" value="${siteType.getName()}"disabled/>
-             		</div>        	
-        </div>
-         --%>
+	
+         
         <div class="form-group has-feedback">
 			<escalade:inputField label="Name" name="name" />
 			<escalade:inputField label="Birthdate" name="birthDate" />
@@ -53,6 +30,13 @@
 			
 			
 		</div>	
+		<p>
+        <label for="sitetypes">Type de site</label><br>
+        <select name="sitetypes" id="sitetypes">
+            <option value="Roche" selected>Roches</option>
+            <option value="Falaise">Falaise</option>            
+        </select>
+    	</p>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>

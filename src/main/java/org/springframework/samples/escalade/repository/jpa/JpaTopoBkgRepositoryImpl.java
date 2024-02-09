@@ -183,7 +183,7 @@ public class JpaTopoBkgRepositoryImpl implements TopoBkgRepository {
 	}
 
 	/*
-	 * long result = (Long) this.em .createNativeQuery("select count(1) from topo")
+	 * long result = (Integer) this.em .createNativeQuery("select count(1) from topo")
 	 * .getSingleResult();
 	 */
 

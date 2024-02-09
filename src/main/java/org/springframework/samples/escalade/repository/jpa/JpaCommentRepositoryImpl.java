@@ -48,7 +48,7 @@ public class JpaCommentRepositoryImpl implements CommentRepository {
 	}
 
 	@Override
-	public Long findCommentNumber(String userName) throws DataAccessException {
+	public Integer findCommentNumber(String userName) throws DataAccessException {
 		// TODO Auto-generated method stub
 		/*
 		 * Query query = this.em.createQuery("select count(*) from Site site " +
@@ -60,17 +60,26 @@ public class JpaCommentRepositoryImpl implements CommentRepository {
 		Query query = this.em.createQuery("select count(*) from Comment comment"
 				+ " join User user on comment.user.id = user.id" + " where user.userName like :userName");
 		query.setParameter("userName", userName);
-		return (Long) query.getSingleResult();
+		return (Integer) query.getSingleResult();
 
 	}
 
 	@Override
-	public Long findByUsername(String userName) throws DataAccessException {
+	public Integer findByUsername(String userName) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery(
 				"select count(*) from Comment comment join User user on comment.user.id = user.id where user.userName like :userName");
 		query.setParameter("userName", userName);
-		return (Long) query.getSingleResult();
+		try {
+			return (Integer) query.getSingleResult();
+			
+		}
+		catch(Exception e) {
+			  //  Block of code to handle errors
+			System.out.println("Something went wrong.");
+			}	
+		return null;
+		
 	}
 
 	@SuppressWarnings("unchecked")

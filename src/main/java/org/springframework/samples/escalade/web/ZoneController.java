@@ -39,7 +39,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -124,7 +123,7 @@ public class ZoneController {
 	}
 
 //findZones
-	@GetMapping(value = "/zones")
+	@GetMapping("/zones")
 	public String processFindForm(Zone zone, BindingResult result, Map<String, Object> model) {
 
 		// allow parameterless GET request for /zones to return all records
@@ -134,20 +133,22 @@ public class ZoneController {
 
 		// find zones by zone name
 
-		Collection<Zone> results = this.escaladeService.findZones();
+		Collection<Zone> results = this.escaladeService.findZoneByName(zone.getName());
 		if (results.isEmpty()) {
 			// no zones found
 			result.rejectValue("name", "notFound", "not found");
 			return "zones/findZones";
-
+		
 		} else if (results.size() == 1) { // 1 zone found zone =
-			results.iterator().next();
+		results.iterator().next();
 			return "redirect:/zones/" + zone.getId();
 
 		} else {
 			// multiple zones found
 			model.put("selections", results);
 			return "zones/zonesList";
+			
+						
 		}
 	}
 
@@ -179,10 +180,10 @@ public class ZoneController {
 	/**
 	 * Custom handler for displaying an zone.
 	 *
-	 * @param zoneId the ID of the zone to display
+	 * @param zoneId the ID of the zone to display9
 	 * @return a ModelMap with the model attributes for the view
 	 */
-	@RequestMapping("/zones/{zoneId}")
+	@GetMapping("/zones/{zoneId}")
 	// @RequestMapping("/sites/zones/{zoneId}")
 	public ModelAndView showzone(@PathVariable("zoneId") Integer zoneId) throws Exception {
 		ModelAndView mav = new ModelAndView("zones/zoneDetails");

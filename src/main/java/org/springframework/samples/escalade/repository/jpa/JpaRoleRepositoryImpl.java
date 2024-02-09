@@ -29,7 +29,7 @@ public class JpaRoleRepositoryImpl implements RoleRepository {
 	}
 
 	@Override
-	public List<Role> findAllById(Iterable<Long> ids) {
+	public List<Role> findAllById(Iterable<Integer> ids) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -65,7 +65,7 @@ public class JpaRoleRepositoryImpl implements RoleRepository {
 	}
 
 	@Override
-	public Role getOne(Long id) {
+	public Role getOne(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -95,13 +95,13 @@ public class JpaRoleRepositoryImpl implements RoleRepository {
 	}
 
 	@Override
-	public Optional<Role> findById(Long id) {
+	public Optional<Role> findById(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean existsById(Long id) {
+	public boolean existsById(Integer id) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -113,7 +113,7 @@ public class JpaRoleRepositoryImpl implements RoleRepository {
 	}
 
 	@Override
-	public void deleteById(Long id) {
+	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -187,7 +187,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 
 
 	@Override
-	public List<org.springframework.samples.escalade.model.User> findAllById(Iterable<Long> ids) {
+	public List<org.springframework.samples.escalade.model.User> findAllById(Iterable<Integer> ids) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -195,23 +195,23 @@ public class JpaUserRepositoryImpl implements UserRepository {
 
 
 	@Override
-	public org.springframework.samples.escalade.model.User getOne(Long id) {
+	public org.springframework.samples.escalade.model.User getOne(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
-
+	/*
 	@Override
-	public Optional<org.springframework.samples.escalade.model.User> findById(Long id) {
+	public Optional<org.springframework.samples.escalade.model.User> findUserById(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	*/
 
 
 	@Override
-	public boolean existsById(Long id) {
+	public boolean existsById(Integer id) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -219,7 +219,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 
 
 	@Override
-	public void deleteById(Long id) {
+	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -227,11 +227,12 @@ public class JpaUserRepositoryImpl implements UserRepository {
 
 
 	@Override
-	public org.springframework.samples.escalade.model.User findById(Integer userId) {
+	public Optional<User> findById(Integer userId) {
 		// TODO Auto-generated method stub
 		 Query query = this.em.createQuery("SELECT DISTINCT owner FROM User user left join fetch user.sites WHERE user.userId LIKE :userId");
 	        query.setParameter("userId", userId + "%");
-	        return (org.springframework.samples.escalade.model.User) query.getResultList();
+			return null;
+	        
 	        
 	}
 
@@ -259,7 +260,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 	@Override
 	public long countByEmail(String email) {
 		// TODO Auto-generated method stub
-		return (Long) this.em.createQuery("select count(u) from User u where u.email = :email")
+		return (Integer) this.em.createQuery("select count(u) from User u where u.email = :email")
                 .setParameter("email", email)
                 .getSingleResult();
 	}
@@ -313,6 +314,12 @@ public class JpaUserRepositoryImpl implements UserRepository {
 	                .getSingleResult();
 			
 		
+	}
+
+	@Override
+	public Optional<User> findUserById(Integer id) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
 	}
 
 

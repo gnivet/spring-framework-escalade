@@ -1,3 +1,4 @@
+<!doctype html>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -35,13 +36,18 @@
         <tbody>
         <c:forEach items="${selections}" var="zone">
             <tr>
-                <td>
+                <td>  
                     <spring:url value="/sites{siteId}/zones/{zoneId}" var="zoneUrl">
                     	<spring:param name="siteId" value="${site.id}"/>
                         <spring:param name="zoneId" value="${zone.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(zoneUrl)}"><c:out value="${zone.name} "/></a>
-                </td>                    
+                    </spring:url>  
+                    <spring:url value="/zones/{zoneId}" var="zoneUrl">                    	
+                        <spring:param name="zoneId" value="${zone.id}"/>
+                    </spring:url>                
+                     <a href="${fn:escapeXml(zoneUrl)}"><c:out value="${zone.name} "/></a>
+                      <td><c:out value="${zone.id}" /> </td>
+                      <td><c:out value="${zone.name}" /> </td>
+                </td>              
             </tr>
         </c:forEach>
         </tbody>

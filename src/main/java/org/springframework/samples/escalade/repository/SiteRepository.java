@@ -28,6 +28,7 @@ import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 
+
 /**
  * Repository class for <code>Topo</code> domain objects All method names are compliant with Spring Data naming
  * conventions so this Integererface can easily be extended for Spring Data See here: http://static.springsource.org/spring-data/jpa/docs/current/reference/html/jpa.repositories.html#jpa.query-methods.query-creation
@@ -66,6 +67,12 @@ public interface SiteRepository {
      * @return 
      * @see BaseEntity#isNew
      */
+    
+    /**
+	 * Save an {@link Site} to the data store, either inserting or updating it.
+	 * @param site the {@link Owner} to save
+	 */
+	void site(Site site) throws DataAccessException;;
     
     Site saveSite(Site site)  throws DataAccessException;
    
@@ -164,7 +171,7 @@ public interface SiteRepository {
 
 	List<Site> findAllSite();
 
-	Collection<Site> findSiteByName1(String name);
+	//Collection<Site> findSiteByName(String name);
 
 	
 	
@@ -172,7 +179,7 @@ public interface SiteRepository {
 	
 	public Collection<Site> findSiteByName(String name)throws DataAccessException;
 
-	Long findSiteOwnedByUsername(String userName)throws DataAccessException;
+	Integer findSiteOwnedByUsername(String userName)throws DataAccessException;
 
 	Site findSiteByUsername(String userName)throws DataAccessException;
 

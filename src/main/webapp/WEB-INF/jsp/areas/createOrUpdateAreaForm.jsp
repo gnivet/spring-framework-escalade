@@ -6,10 +6,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
 <escalade:layout pageName="areas">
-	<h2>
+	  <h2>
 		<c:if test="${area['new']}">New </c:if>
 		Area
-	</h2>
+	</h2> 
 	<form:form modelAttribute="area" class="form-horizontal" id="add-area-form">		
 		<div class="form-group has-feedback">
 			<escalade:inputField label="Name" name="name" />
@@ -27,10 +27,10 @@
 					</c:when>
 					<c:otherwise>
 						<button class="btn btn-default" type="submit">Update Area</button>						
-						 <a class="btn btn-default" href='<spring:url value="/areas/${area.id}/sites/new" htmlEscape="true"/>'>Add site</a>
-					</c:otherwise>
-				</c:choose>
+						 <a class="btn btn-default" href='<spring:url value="/areas/${area.id}/sites/new" htmlEscape="true"/>'>Add site</a>  
+					</c:otherwise>					
+				</c:choose>	
 			</div>
 		</div>	
-	</form:form>
+	</form:form>	
 </escalade:layout>

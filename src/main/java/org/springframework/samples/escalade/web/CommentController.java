@@ -64,7 +64,7 @@ public class CommentController {
 		
 	@RequestMapping(value = "/sites/{siteId}/comments/new", method = RequestMethod.GET)
 	public String initCreationForm(Map<String, Object> model , @PathVariable("siteId") Integer site, Principal principal ) {
-				
+		Site sites = new Site();
 		Comment comment = new Comment();		
 		String userName = principal.getName();		
 		@SuppressWarnings("unused")

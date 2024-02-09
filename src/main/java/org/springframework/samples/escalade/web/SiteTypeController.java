@@ -88,7 +88,7 @@ public class SiteTypeController {
         	
 			
 		
-        	siteType = this.escaladeService.saveSiteType(siteType);
+        	//siteType = this.escaladeService.saveSiteType(siteType);
 			
             return "redirect:/sitetypes/" + siteType.getId();
         }

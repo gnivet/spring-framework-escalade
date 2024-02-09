@@ -32,7 +32,7 @@ public class NamedEntity extends BaseEntity {
 	@Column(name = "name")
 	//@NotEmpty(message ="Please add a name")
 	//@Size(min = 2)
-	private String name;
+	public String name;
 
     public String getName() {
         return this.name;

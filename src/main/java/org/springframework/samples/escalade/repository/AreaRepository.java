@@ -30,6 +30,10 @@ public interface AreaRepository  {
 
 	public Collection<Area> listAreas();
 
+	//public Area deleteArea(Area area);
+
+	public Area deleteAreaById(Integer areaId);
+
 	
 
 }

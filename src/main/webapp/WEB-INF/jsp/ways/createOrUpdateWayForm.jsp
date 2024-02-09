@@ -23,7 +23,7 @@
 					</c:when>
 					<c:otherwise>
 						<button class="btn btn-default" type="submit">Update way</button>						
-						 <a class="btn btn-default" href='<spring:url value="/ways/${way.id}/lengths/new/" htmlEscape="true"/>'>Add length</a>
+						 <a class="btn btn-default" href='<spring:url value="/ways/${way.id}/lengths/new" htmlEscape="true"/>'>Add length</a>
 					</c:otherwise>
 				</c:choose>
 			</div>

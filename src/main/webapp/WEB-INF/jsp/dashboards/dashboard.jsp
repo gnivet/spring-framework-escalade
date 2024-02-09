@@ -5,8 +5,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="escalade" tagdir="/WEB-INF/tags"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+	
 <escalade:layout pageName="dashboard">
 	<head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -44,6 +44,12 @@
 							<td>My borrowed topo list:</td>
 							<td><a href="/topoBkgs"><button class="btn-link"></button>borrowed
 									topo list </a></td>
+						</tr>	
+							<tr>
+							<th scope="row">3</th>
+							<td>My ways list:</td>
+							<td><a href="/dashboards/dashboard"><button class="btn-link"></button>way
+									list </a></td>
 						</tr>						
 						<tr>
 							<th scope="row">4</th>
@@ -79,7 +85,7 @@
 								</p>
 							</c:if></td>
 
-					</tr>
+					</tr>					
 					<tr>
 						<th scope="row">2</th>
 						<td>Number Site's owner:</td>

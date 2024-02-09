@@ -63,8 +63,19 @@ public class Site extends NamedEntity {
 	@JoinColumn(name = "area_id", nullable = true)
 	private Area area;
 	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+	@JoinColumn(name = "site_id", nullable = true)
+	private Site site;
 	
-	
+	public Site getSite() {
+		return site;
+	}
+
+	public void setSite(Site site) {
+		this.site = site;
+	}
+
+
 	@Column(name = "valid")
 	@NotNull
 	private boolean valid;
@@ -130,10 +141,8 @@ public class Site extends NamedEntity {
 		return user;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-
+	
+	
 	
 
 	public Set<Zone> getZones() {
@@ -177,6 +186,19 @@ public class Site extends NamedEntity {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	public void setUser(User user) {
+		// TODO Auto-generated method stub
+		this.user = user;
+	}
+
+
+	
+	
+
+
+
 
 	
 	

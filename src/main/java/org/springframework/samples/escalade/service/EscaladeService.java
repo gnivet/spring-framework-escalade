@@ -36,6 +36,9 @@ import org.springframework.samples.escalade.model.Visit;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.model.escaladeException;
+import org.springframework.stereotype.Service;
+
+
 
 
 /**
@@ -44,6 +47,7 @@ import org.springframework.samples.escalade.model.escaladeException;
  * @author Guillaume Nivet
  */
 
+@Service
 public interface EscaladeService {
 
 	/*
@@ -76,7 +80,7 @@ public interface EscaladeService {
 
 	Collection<Area> findSiteByPostalCode(String postalcode) throws DataAccessException;
 	
-	
+	NamedEntity updateArea(Area area)throws DataAccessException;
 
 	/*
 	 * Comment
@@ -91,7 +95,7 @@ public interface EscaladeService {
 
 	Collection<Comment> findCommentByName(String name) throws DataAccessException;
 	
-	Long findCommentNumber(String username) throws DataAccessException;
+	Integer findCommentNumber(String username) throws DataAccessException;
 
 	/*
 	 * Zone
@@ -103,7 +107,8 @@ public interface EscaladeService {
 	
 	
 	Collection<Zone> findZoneByName(String name) throws DataAccessException;
-
+	
+		
 	Collection<Zone> findZones() throws DataAccessException; 
 	
 	Collection<Zone> findZoneBySiteName(String name) throws DataAccessException;
@@ -115,12 +120,11 @@ public interface EscaladeService {
 
 	Site saveSite(Site site) throws DataAccessException;
 
-	 Site findSiteById(Integer id) throws DataAccessException;
+	Site findSiteById(Integer id) throws DataAccessException;
 	
 	Site findSiteOwnedbyUser(String userName) throws DataAccessException;
 	
-	Collection<Site> findSiteByName(String name) throws DataAccessException;
-	
+	Collection<Site> findSiteByName(String name)throws DataAccessException;
 	/*
 	 * SiteType
 	 */
@@ -129,17 +133,11 @@ public interface EscaladeService {
 
 	List<SiteType> findSiteTypesList() throws DataAccessException;
 
-	
-
 	SiteType findById(Integer id) throws DataAccessException;
-	/*
-	 * GN
-	 */
+	
 	Collection<SiteType> findSiteTypeByName(String name);
 
 	SiteType findSiteTypeById(Integer siteTypeId);
-
-
 	
 	Collection<SiteType> findSiteTypes()throws DataAccessException;
 
@@ -153,10 +151,6 @@ public interface EscaladeService {
 
 	Way findWayById(Integer id)throws DataAccessException;
 
-	NamedEntity updateArea(Area area)throws DataAccessException;
-
-	Collection<Site> findSiteByName1(String name)throws DataAccessException;
-
 	NamedEntity updateZone(Zone zone)throws DataAccessException;
 
 	
@@ -168,9 +162,7 @@ public interface EscaladeService {
 	Length saveLength(Length length)throws DataAccessException;
 
 	Collection<Length> findLengthByName(String name)throws DataAccessException;
-	
-	
-	
+		
 	Length findLengthById(Integer lengthId)throws DataAccessException;
 
 	NamedEntity updateLength(Length length)throws DataAccessException;
@@ -191,9 +183,9 @@ public interface EscaladeService {
 
 	void saveVisit(@Valid Visit visit)throws DataAccessException;;
 
-	Long findByUsername(String userName)throws DataAccessException;
+	Integer findByUsername(String userName)throws DataAccessException;
 
-	Long findSiteOwnedByUsername(String userName)throws DataAccessException;
+	Integer findSiteOwnedByUsername(String userName)throws DataAccessException;
 
 	Collection<Comment> findCommentByUsername(String userName)throws DataAccessException;
 
@@ -218,13 +210,11 @@ public interface EscaladeService {
 	Collection<Topo> findTopos() throws DataAccessException;
 
 	
-	//NamedEntity updateArea(Area area)throws DataAccessException;
-	
     Collection <Topo> findTopoAvailableByName(String name) throws DataAccessException;
 
 	Topo findTopoBookedBytopoBkgId(@NotNull Integer topoBkgId)throws DataAccessException;
 	
-	//TopoBkg findOne(Integer id)throws DataAccessException;
+
 	
 	List<Topo> findTopoByUserName(String userName)throws DataAccessException;
 
@@ -256,6 +246,12 @@ public interface EscaladeService {
 	Collection<Topo> findTopoAvailableByUserId(Integer id);
 
 	Collection<TopoBkg> findTopoBkgByIda(Integer id) throws DataAccessException;
+
+	
+
+	public void deleteAreaById(Integer areaId);
+    	
+
 	
 	
 	

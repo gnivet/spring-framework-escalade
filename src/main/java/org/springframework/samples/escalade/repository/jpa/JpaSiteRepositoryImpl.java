@@ -26,8 +26,9 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Guillaume Nivet
  * @since 3.12.2019
  */
-@Repository
+
 @Transactional
+@Repository
 public class JpaSiteRepositoryImpl implements SiteRepository {
 
 	@PersistenceContext
@@ -185,28 +186,35 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 	@SuppressWarnings("unchecked")
 	public Collection<Site> findSiteByName(String name) {
 		// TODO Auto-generated method stub
-		Query query = this.em.createQuery("SELECT distinct site FROM Site site where site.name like :name");
-		//Query query = this.em.createQuery("SELECT distinct site FROM User user join Site site on site.user.id = user.id join Zone zone on zone.site.id = site.id where site.name like :name");
+		//Query query = this.em.createQuery("SELECT distinct site FROM Site site where site.name like :name");
+		Query query = this.em.createQuery("SELECT distinct site FROM User user join Site site on site.user.id = user.id join Zone zone on zone.site.id = site.id where site.name like :name");
 		query.setParameter("name", "%" + name + "%");
 		return query.getResultList();
 	}
 
 	
-
-	
-	
-	@Override
-	public Collection<Site> findSiteByName1(String name) {
+    public Integer findCommentBySite(String userName)throws DataAccessException {
 		// TODO Auto-generated method stub
-		return null;
+    	// select * from Sites join Users on sites.user_id = users.id where users.user_name like '%enora%';
+		Query query = this.em.createQuery("select * from Site site join User user on site.user.id = user.id where user.userName like :userName");
+		query.setParameter("userName", userName);	
+		return   (Integer) query.getSingleResult();
 	}
+     
+	//GN
+	
+	//@Override
+	//public Collection<Site> findSiteByName1(String name) {
+		// TODO Auto-generated method stub
+	//	return null;
+	//}
 
 	@Override
-	public Long findSiteOwnedByUsername(String userName) throws DataAccessException {
+	public Integer findSiteOwnedByUsername(String userName) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("select count(*) from Site site join User user on site.user.id = user.id where user.userName like :userName");
 		query.setParameter("userName", userName);	
-		return   (Long) query.getSingleResult();
+		return   (Integer) query.getSingleResult();
 	}
 
 	@Override
@@ -228,6 +236,16 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 			this.em.merge(site);
 		
 		return site;
+	}
+
+	@Override
+	public void site(Site site) {
+		// TODO Auto-generated method stub
+		if (site.getId() == null) {
+			this.em.persist(site);
+		} else {
+			this.em.merge(site);
+		}
 	}
 
 }

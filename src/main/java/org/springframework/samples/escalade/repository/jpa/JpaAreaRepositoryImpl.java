@@ -22,12 +22,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 /**
  * JPA implementation of the {@link AreaRepository} Integererface.
@@ -149,5 +151,18 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 
 		return query.getResultList();
 	}
+
+	
+	public Area deleteAreaById(Integer areaId) {
+	Query query = this.em.createQuery("delete area from Area WHERE area.areaId = :areaId");
+	query.setParameter("areaId", "%" + areaId + "%");
+	return null;
+	}
+	
+	
+	
+
+
+	
 
 }
