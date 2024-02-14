@@ -44,7 +44,8 @@
                         <button class="btn btn-default" type="submit">Add Site</button>
                     </c:when>
                     <c:otherwise>
-                        <!-- <button class="btn btn-default" type="submit">Update Site</button> -->
+                         <button class="btn btn-default" type="submit">Update Site</button> 
+                         <a class="btn btn-default" href='<spring:url value="/sites/${site.id}/sites/new" htmlEscape="true"/>'>Add area</a>
                          <a class="btn btn-default"
 								href='<spring:url value="/sites/${site.id}/zones/new" htmlEscape="true"/>'>Add zone</a>
                           <a class="btn btn-default"

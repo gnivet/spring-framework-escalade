@@ -38,11 +38,13 @@ public class JpaCommentRepositoryImpl implements CommentRepository {
 
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	public Collection<Comment> findCommentByName(String name) {
 		// TODO Auto-generated method stub
-
-		Query query = this.em.createQuery("SELECT DISTINCT comment from Comment comment WHERE comment.name LIKE :name");
+		Query query = this.em.createQuery("SELECT comment from Comment comment"
+		+ " join comment.site site on site.id = comment.id"
+		+ " WHERE comment.name LIKE :name");
 		query.setParameter("name", "%" + name + "%");
 		return query.getResultList();
 	}

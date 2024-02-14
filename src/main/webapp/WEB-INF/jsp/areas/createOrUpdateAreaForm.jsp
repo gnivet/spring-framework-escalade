@@ -22,14 +22,14 @@
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<c:choose>
-					<c:when test="${area['new']}">
-						<button class="btn btn-default" type="submit">Add Area</button>						
-					</c:when>
-					<c:otherwise>
-						<button class="btn btn-default" type="submit">Update Area</button>						
-						 <a class="btn btn-default" href='<spring:url value="/areas/${area.id}/sites/new" htmlEscape="true"/>'>Add site</a>  
-					</c:otherwise>					
-				</c:choose>	
+                    <c:when test="${area['new']}">
+                        <button class="btn btn-default" type="submit">Add area</button>
+                    </c:when>
+                    <c:otherwise>
+                        <button class="btn btn-default" type="submit">Update area</button>
+                         <a class="btn btn-default" href='<spring:url value="/areas/${area.id}/sites/new" htmlEscape="true"/>'>Add area</a>
+                    </c:otherwise>
+                </c:choose>
 			</div>
 		</div>	
 	</form:form>	

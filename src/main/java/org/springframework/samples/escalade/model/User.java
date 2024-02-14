@@ -19,13 +19,24 @@ import javax.persistence.Table;
 	
 	
 	@Entity
-	//@NamedQuery(name="User.findTopoBkgByUserName", query="SELECT DISTINCT topoBkg, user FROM User user left join fetch User.topoBkgs WHERE user.userName = :userName")
 	@Table(name = "users")
-	public class User {
+	public class User  {
 	
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Integer id;
+		
+		
+		
+		private Integer user_id;
+		
+		public Integer getId() {
+			return id;
+		}
+
+		public void setId(Integer id) {
+			this.id = id;
+		}
 		//@NotEmpty(message = "Please enter your user name.")
 		@Column(name="userName")
 		private String userName;
@@ -74,14 +85,19 @@ import javax.persistence.Table;
 		@OneToMany(targetEntity = TopoBkg.class, cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
 		private Set<TopoBkg> topoBkgs;
 				
-					
-		public Integer getId() {
-			return id;
+		
+		
+		
+		
+		public Integer getUser_id() {
+			return user_id;
 		}
 
-		public void setId(Integer id) {
-			this.id = id;
+		public void setUser_id(Integer user_id) {
+			this.user_id = user_id;
 		}
+
+		
 
 		public List<Site> getSites() {
 			return sites;
@@ -295,5 +311,9 @@ import javax.persistence.Table;
 			topo.setTopo(topo);
 			
 		}
-		
+		@Override  
+		public String toString()   
+		{  
+		return "User [id=" + id + ", uname=" + userName + "]";  
+		}  
 	}

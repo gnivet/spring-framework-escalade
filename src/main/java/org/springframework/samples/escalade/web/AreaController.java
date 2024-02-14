@@ -53,11 +53,13 @@ public class AreaController {
 	private final EscaladeService escaladeService;
 
 	private UserRepository userRepository;
+	private SiteRepository siteRepository;
 	
 	public AreaController(EscaladeService escaladeService, UserRepository userRepository, AreaRepository areaRepository,
 			SiteRepository siteRepository) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
+		this.siteRepository = siteRepository;
 	}
 
 	@InitBinder
@@ -65,7 +67,7 @@ public class AreaController {
 		dataBinder.setDisallowedFields("id");
 	}
 
-	@GetMapping(value = "/areas/new")
+	@GetMapping(value = "/sites/{siteId}/areas/new")
 	public String initCreationForm(Map<String, Object> model) {
 
 		Area area = new Area();
@@ -75,9 +77,9 @@ public class AreaController {
 		return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/areas/new")
+	@PostMapping(value = "/sites/{siteId}/areas/new")
 	public String processCreationForm(@ModelAttribute("area") @Valid Area area, BindingResult result, Integer areaId,
-			Map<String, Object> model, Principal principal, Integer siteId, Site site, Area aera) {
+			Map<String, Object> model, Principal principal, @PathVariable Integer siteId, Site site, Area aera) {
 
 		// public String processCreationForm(@ModelAttribute("topoBkg") @Valid TopoBkg
 		// topoBkg, BindingResult result,
@@ -147,12 +149,12 @@ public class AreaController {
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 		} else {
-
+			
 			model.put("area", area);
 			area.setUser(user);
 			model.put("site", site);
 			aera.setSite(site);
-
+		
 			// topoBkgToModify.setTopo(topoBkg.getTopo());
 			area = this.escaladeService.saveArea(area);
 			//areaSite.setArea(area.getSite());

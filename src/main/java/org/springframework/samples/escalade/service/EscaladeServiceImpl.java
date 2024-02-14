@@ -794,6 +794,15 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 		areaRepository.deleteAreaById(areaId);
 
 	}
+
+
+
+	@Override
+	@Transactional
+	public Collection<Site> ListSites() throws DataAccessException {
+		// TODO Auto-generated method stub
+		return siteRepository.findAll();
+	}
 }
 
 	

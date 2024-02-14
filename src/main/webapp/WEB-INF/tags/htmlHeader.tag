@@ -12,24 +12,19 @@
 	<script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-	
-	
+		
 	<!--  
     <spring:url value="/resources/images/favicon.png" var="favicon"/>
     <link rel="shortcut icon" type="image/x-icon" href="${favicon}">
    	-->
 	
-
     <title>escalade :: a Spring Framework demonstration</title>
 	  
     <%-- CSS generated from LESS --%>
    
     <spring:url value="/webapp/resources/css/escalade.css" var="escaladeCss"/>
     <link href="${escaladeCss}" rel="stylesheet"/>
-	  
-
-	
-	
+	  	
 	
 	<!-- Just for Date Picker -->
   
@@ -37,6 +32,5 @@
     <link href="${jQueryUiCss}" rel="stylesheet"/>
     <spring:url value="/webjars/jquery-ui/1.11.4/jquery-ui.theme.min.css" var="jQueryUiThemeCss"/>
     <link href="${jQueryUiThemeCss}" rel="stylesheet"/>
-  
-    
+      
 </head>

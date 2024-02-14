@@ -250,6 +250,8 @@ public interface EscaladeService {
 	
 
 	public void deleteAreaById(Integer areaId);
+
+	Collection<Site> ListSites()throws DataAccessException;;
     	
 
 	

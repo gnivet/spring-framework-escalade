@@ -68,7 +68,7 @@
 									<span>Sites</span>
 								</escalade:menuItem></li>
 							<li><escalade:menuItem active="${name eq 'sites'}"
-									url="/areas/new/" title="sites">
+									url="/sites/*/areas/new/" title="sites">
 									<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 									<span>Sites</span>
 								</escalade:menuItem></li>
@@ -90,7 +90,7 @@
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 									<span>Areas</span>
 								</escalade:menuItem></li>
-							<escalade:menuItem active="${name eq 'areas'}" url="/areas/new/"
+							<escalade:menuItem active="${name eq 'areas'}" url="/sites/*/areas/new/"
 								title="areas">
 								<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 								<span>Areas</span>

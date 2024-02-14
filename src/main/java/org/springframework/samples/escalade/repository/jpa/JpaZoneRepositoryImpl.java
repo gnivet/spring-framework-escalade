@@ -63,16 +63,17 @@ public class JpaZoneRepositoryImpl implements ZoneRepository {
 	public Collection<Zone> findZoneByName(String name) throws DataAccessException {
 		
 		// TODO Auto-generated method stub
-		// Query query = this.em.createQuery("SELECT DISTINCT comment from Comment
-		// comment WHERE comment.name LIKE :name");
-		//Query query = this.em.createQuery("SELECT distinct site FROM User user join Site site on site.user.id = user.id join Zone zone on zone.site.id = site.id where site.name like :name")
+		
+		//Query query = this.em.createQuery("SELECT distinct site FROM User user join Site site on site.user.id = user.id join Zone zone on zone.site.id = site.id where site.name like :name");
 		//Query query = this.em.createQuery("SELECT DISTINCT user FROM User user left join fetch user.sites WHERE user.userName LIKE :userName");
 		//Query query = this.em.createQuery("SELECT DISTINCT site FROM Zone zone join Site site on zone.site.id = site.id WHERE zone.site.name LIKE :name");
+		//Query query = this.em.createQuery("SELECT DISTINCT site FROM Zone zone join Site site on zone.site.id = site.id WHERE zone.site.name LIKE :name");
+		//Query query = this.em.createQuery("SELECT DISTINCT zone FROM Zone zone WHERE zone.name like :name");	
+		//Query query = this.em.createQuery("SELECT distinct zone FROM Site site left join Zone zone on zone.id = site.id join Way way on way.id = site.id where site.name like :name");
 		//Query query = this.em.createQuery("select zones.name from zones join users on zones.user_id = users.id join sites on sites.id = zones.site_id where zones.name like :name");
-		Query query = this.em.createQuery("select distinct zone.name from Zone zone join User user on zone.user_id = user.id join Site site on site.id = zone.site_id where zone.name like :name");
-		//Query query = this.em.createQuery("SELECT DISTINCT zone.name from Zone zone JOIN Site site on site.id = zone.id WHERE zone.name LIKE :name");
-		query.setParameter("name", "%" + name + "%");
-	
+		//Query query = this.em.createQuery("select distinct zone.name from Zone zone join User user on zone.user_id = user.id join Site site on site.id = zone.site_id where zone.name like :name");
+		Query query = this.em.createQuery("SELECT DISTINCT zone FROM Zone zone WHERE zone.name like :name");
+		query.setParameter("name", "%" + name + "%");	
 		return query.getResultList();
 	}
 

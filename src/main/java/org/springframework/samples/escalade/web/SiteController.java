@@ -132,6 +132,72 @@ public class SiteController {
 
 		return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
 	}
+	
+	/*
+	@GetMapping(value = "/sites/{siteId}/zones/new")
+	public String initCreationForm(Map<String, Object> model, @PathVariable("siteId") Integer siteId) {
+
+		Zone zone = new Zone();
+
+		model.put("zone", zone);
+		return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
+	}
+	*/
+	
+	/*
+	@GetMapping(value= "/sites/{siteId}/zones/new")
+	public String processCreationForm(ModelMap model, Principal principal, @PathVariable Integer siteId,
+			 Site site, BindingResult result, Zone zone, User user) {
+
+		if (site == null) {
+			System.out.println("le site est null" + model + site);
+		}
+
+		if (principal.getName() != null) {
+			String userName = principal.getName();
+			user = this.userRepository.findByUserName(userName);
+
+		} else {
+			return "redirect:welcome";
+		}
+
+		if (result.hasErrors()) {
+			return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
+		} else
+
+		{
+
+			@SuppressWarnings("unused")
+			Site sites = this.siteRepository.findSiteById(siteId);
+
+			System.out.println(model);
+
+			// Save site
+			model.put("site", site);
+			sites.setUser(user);
+			sites.getBirthDate();
+			sites.getType();
+			zone.setSite(site);
+			sites.getName();
+
+			site = this.escaladeService.saveSite(site);
+
+			Collection<SiteType> results = this.escaladeService.findSiteTypes();
+
+			if (results.isEmpty()) {
+				// no areas found
+				result.rejectValue("name", "notFound", "not found");
+				return "sitetypes/findSiteTypes";
+
+			} else {
+				// multiple areas found
+				model.put("selections", results);
+				return "sitetypes/siteTypesList";
+			}
+		}
+
+	}
+	*/
 
 	@GetMapping(value = "/sites/{sites}/sitetypes/{siteTypeId}")
 	public String processFindForm(SiteType siteType, BindingResult result, Map<String, Object> model,
@@ -223,6 +289,7 @@ public class SiteController {
 			Map<String, Object> model) {
 
 		// allow parameterless GET request for /areas to return all records
+	
 		if (site.getName() == null) {
 			site.setName(""); // empty string signifies broadest possible search
 		}
@@ -230,12 +297,10 @@ public class SiteController {
 		if (zone.getName() == null) {
 			zone.setName(""); // empty string signifies broadest possible search
 		}
-
-		// find sites by name
+			
 		Collection<Site> results = this.escaladeService.findSiteByName(site.getName());
-		// Collection<Zone> result2s =
-		// this.escaladeService.findZoneBySiteName(site.getName());
-
+			
+	
 		if (results.isEmpty()) {
 			// no sites found
 			result.rejectValue("name", "notFound", "not found");
@@ -321,5 +386,7 @@ public class SiteController {
 			return "redirect:/sites/{siteId}";
 		}
 	}
+	
+	
 
 }

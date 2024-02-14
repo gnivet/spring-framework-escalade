@@ -36,6 +36,7 @@
             <th style="width: 150px;">Name</th>  
             <th style="width: 150px;">Date</th>         
             <th style="width: 200px;">Comment</th>            
+            <th style="width: 200px;">Site</th>
         </tr>
         </thead>
         <tbody>
@@ -52,6 +53,9 @@
                 </td>               
                  <td>
                     <c:out value="${comment.comment}"/>
+                </td>
+                 <td>
+                    <c:out value="${comment.site.name}"/>
                 </td>
                 
                 <!--                

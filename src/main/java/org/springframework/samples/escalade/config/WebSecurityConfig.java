@@ -51,15 +51,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
 		// If no login, it will redirect to /login page.
 		
-
 	
 		
 		http.authorizeRequests().antMatchers("/areas/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/areas/new").hasAnyRole("USER", "ADMIN");		
-		
+		http.authorizeRequests().antMatchers("/sites/*/areas/new").hasAnyRole("USER", "ADMIN");	
 		http.authorizeRequests().antMatchers("/areas/find").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/areas/sitesList").hasAnyRole("USER", "ADMIN");
-		http.authorizeRequests().antMatchers("/areas/sitesList").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers("/areas/sitesList").hasAnyRole("USER", "ADMIN");		
 		http.authorizeRequests().antMatchers("/areas/sitetypesList").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/areas/*/sites/new/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/areas/findSites").hasAnyRole("USER", "ADMIN");
@@ -85,7 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests().antMatchers("/sites/").hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests().antMatchers("/sites/find").hasAnyRole("USER", "ADMIN");
-		
+		http.authorizeRequests().antMatchers("sites/sitesList").hasAnyRole("USER", "ADMIN");
 	
 		
 		http.authorizeRequests().antMatchers("/sitetypes/new/").hasAnyRole("USER", "ADMIN");

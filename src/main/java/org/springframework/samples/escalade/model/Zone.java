@@ -31,6 +31,16 @@ public class Zone extends NamedEntity{
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;	
 
+	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@OneToMany(targetEntity = Way.class, cascade = CascadeType.ALL, mappedBy = "zone" , fetch=FetchType.EAGER)
     private Set<Way> ways;		
 	
@@ -56,6 +66,11 @@ public class Zone extends NamedEntity{
 	 * 
 	 */
 	public Zone() {
+	}
+
+	@Override
+	public String toString() {
+		return "Zone [site=" + site + ", user=" + user + ", ways=" + ways + "]";
 	}
 		
 		

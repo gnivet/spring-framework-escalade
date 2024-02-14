@@ -67,6 +67,9 @@ public class Site extends NamedEntity {
 	@JoinColumn(name = "site_id", nullable = true)
 	private Site site;
 	
+		 
+	
+	
 	public Site getSite() {
 		return site;
 	}
@@ -191,6 +194,18 @@ public class Site extends NamedEntity {
 	public void setUser(User user) {
 		// TODO Auto-generated method stub
 		this.user = user;
+	}
+
+	public Site(LocalDate birthDate, SiteType type, User user, Area area, Site site, @NotNull boolean valid,
+			Set<Zone> zones) {
+		super();
+		this.birthDate = birthDate;
+		this.type = type;
+		this.user = user;
+		this.area = area;
+		this.site = site;
+		this.valid = valid;
+		this.zones = zones;
 	}
 
 

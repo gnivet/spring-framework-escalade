@@ -21,7 +21,6 @@ import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.Zone;
@@ -52,7 +51,8 @@ public class ZoneController {
 	private final EscaladeService escaladeService;
 
 	private UserRepository userRepository;
-	@Autowired
+	private String userName;
+	private Integer user_id;
 	public ZoneController(EscaladeService escaladeService, UserRepository userRepository, SiteRepository siteRepository,
 			ZoneRepository zoneRepository, WayRepository wayRepository) {
 		this.escaladeService = escaladeService;
@@ -77,9 +77,13 @@ public class ZoneController {
 	@PostMapping(value = "/sites/{siteId}/zones/new")
 	public String processCreationForm(Zone zone, BindingResult result, @PathVariable("siteId") Integer siteId,
 			Map<String, Object> model, Principal principal) {
-
-		String userName = principal.getName();
-
+		
+		try {
+		userName = principal.getName();
+		}catch(Exception npe) 
+		{
+			userName = "";
+		}
 		/**
 		 * Retrieve a <code>User</code> from the data store by id.
 		 *
@@ -90,7 +94,7 @@ public class ZoneController {
 
 		@SuppressWarnings("unused")
 		User user = this.userRepository.findByUserName(userName);
-
+			
 		/**
 		 * Retrieve a <code>Site</code> from the data store by id.
 		 *
@@ -106,9 +110,10 @@ public class ZoneController {
 			model.put("zone", zone);
 
 			Site site = this.escaladeService.findSiteById(siteId);
-
+			zone.setUser(user)	;
+			
 			zone.setSite(site);
-
+			
 			zone = this.escaladeService.saveZone(zone);
 			return "redirect:/sites/{siteId}/zones/" + zone.getId();
 		}
@@ -179,11 +184,11 @@ public class ZoneController {
 
 	/**
 	 * Custom handler for displaying an zone.
-	 *
+	 * 
 	 * @param zoneId the ID of the zone to display9
 	 * @return a ModelMap with the model attributes for the view
 	 */
-	@GetMapping("/zones/{zoneId}")
+	@GetMapping("/sites/{siteId}/zones/{zoneId}")
 	// @RequestMapping("/sites/zones/{zoneId}")
 	public ModelAndView showzone(@PathVariable("zoneId") Integer zoneId) throws Exception {
 		ModelAndView mav = new ModelAndView("zones/zoneDetails");

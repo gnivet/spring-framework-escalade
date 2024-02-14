@@ -49,8 +49,8 @@ public interface SiteRepository {
  
     List<Site> findSite() throws DataAccessException;
     
-
-
+    public List<Site> findAll();
+    
     /**
      * Retrieve a <code>Site</code> from the data store by id.
      *
@@ -173,7 +173,7 @@ public interface SiteRepository {
 
 	//Collection<Site> findSiteByName(String name);
 
-	
+	public Collection<Site> listSites();
 	
 
 	

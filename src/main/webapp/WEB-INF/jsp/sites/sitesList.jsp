@@ -60,19 +60,20 @@
 				</tr>
 			</c:forEach>
 		</tbody>
+		<!--  
 		<tbody>
-			<c:forEach items="${selection2s}" var="siteType">
+			<c:forEach items="${selections}" var="siteType">
 				<tr>					
 					<td> <c:out value="${siteType.name}" /></td>					
 				</tr>
 			</c:forEach>
 		</tbody>
 		<tbody>
-			<c:forEach items="${selection2s}" var="zone">
+			<c:forEach items="${selections}" var="zone">
 				<tr>					
 					<td> <c:out value="${zone.name}" /></td>					
 				</tr>
 			</c:forEach>
-		</tbody>
+		</tbody>  -->
 	</table>	
 </escalade:layout>
