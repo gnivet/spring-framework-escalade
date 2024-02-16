@@ -5,6 +5,6 @@ import org.springframework.samples.escalade.model.Role;
 import org.springframework.stereotype.Repository;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer>{
-	
-	
+
+
 }

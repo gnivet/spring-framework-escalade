@@ -18,7 +18,7 @@
 			<escalade:inputField label="Comment" name="comment" />
 			<input type="hidden" name="siteId" value="${site.id}"/>
 			 <input	type="hidden" name="userId" value="${user.id}" /> 
-				<c:out value="${comment.user.userName} " />
+				<c:out value="${comment.user.user} " />
 		</div>	
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">

@@ -17,15 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class JpaLengthRepositoryImpl implements LengthRepository{
 
-	
+
 		@PersistenceContext
 		private EntityManager em;
 
+		@Override
 		public Length findLengthById(Integer id) {
 			return this.em.find(Length.class, id);
 		}
 
 		// Add Way to Site form
+		@Override
 		public Length saveLength(Length Length) throws DataAccessException {
 			if (Length.getId() == null) {
 				this.em.persist(Length);
@@ -33,19 +35,20 @@ public class JpaLengthRepositoryImpl implements LengthRepository{
 				this.em.merge(Length);
 			}
 			return Length;
-		
+
 		}
 		public Length findById(Integer id) {
 		Query query = this.em.createQuery("SELECT length FROM Length length WHERE length.id =:id");
 		query.setParameter("id", id);
 		return (Length) query.getSingleResult();
 		}
-		
+
+		@Override
 		@SuppressWarnings("unchecked")
 		public Collection<Length> findLengthByName(String name) throws DataAccessException {
 			// TODO Auto-generated method stub
-			
-				Query query = this.em.createQuery("SELECT length FROM Length length WHERE length.name like :name");
+
+				Query query = this.em.createQuery("SELECT length FROM Length length WHERE length.name not like :name");
 				query.setParameter("name", "%" + name + "%");
 				return  query.getResultList();
 		}
@@ -55,10 +58,10 @@ public class JpaLengthRepositoryImpl implements LengthRepository{
 			// TODO Auto-generated method stub
 			return null;
 		}
-		
-		
-		
-		
-		
+
+
+
+
+
 	}
 

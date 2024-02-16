@@ -41,35 +41,51 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "sites")
 public class Site extends NamedEntity {
-	
+
 	//@Id
     //@GeneratedValue
     //private int id;
-	
+
 	@Column(name = "birthDate")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate birthDate;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "type_id")
 	private SiteType type;
 
-	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "area_id", nullable = true)
 	private Area area;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "zone_id", nullable = true)
+	private Zone zone;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "way_id", nullable = true)
+	private Way way;
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "length_id", nullable = true)
+	private Length length;
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "point_id", nullable = true)
+	private Point point;
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "site_id", nullable = true)
 	private Site site;
-	
-		 
-	
-	
+
+
+
+
 	public Site getSite() {
 		return site;
 	}
@@ -82,32 +98,32 @@ public class Site extends NamedEntity {
 	@Column(name = "valid")
 	@NotNull
 	private boolean valid;
-	
-	
+
+
 	//@OneToMany(targetEntity = Zone.class,  fetch=FetchType.EAGER)
 	//@JoinColumn(name = "zone_id", nullable = true)
 	//private Set<Zone> zones = new HashSet<Zone>();
 	// https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/
-	
+
 	@Autowired
-	@OneToMany(mappedBy = "site", 
+	@OneToMany(mappedBy = "site",
 	        cascade = CascadeType.ALL,
 	        orphanRemoval = true
-	)	
+	)
 	// private List zones = new ArrayList<>();
-	 private Set<Zone> zones = new HashSet<Zone>();
-	 
+	 private Set<Zone> zones = new HashSet<>();
+
 	 public void addZone(Zone zone) {
 	        zones.add(zone);
 	        zone.setSite(this);
 	    }
-	 
+
 	    public void removeZone(Zone zone) {
 	        zones.remove(zone);
 	        zone.setSite(null);
-	    } 
-	
-	
+	    }
+
+
 	public boolean isValid() {
 		return valid;
 	}
@@ -116,10 +132,10 @@ public class Site extends NamedEntity {
 		this.valid = valid;
 	}
 
-	
 
-	
-	
+
+
+
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
@@ -127,9 +143,9 @@ public class Site extends NamedEntity {
 	public LocalDate getBirthDate() {
 		return this.birthDate;
 	}
-	
-	
-	
+
+
+
 
 
 	public SiteType getType() {
@@ -144,9 +160,9 @@ public class Site extends NamedEntity {
 		return user;
 	}
 
-	
-	
-	
+
+
+
 
 	public Set<Zone> getZones() {
 		return zones;
@@ -156,8 +172,8 @@ public class Site extends NamedEntity {
 		this.zones = zones;
 	}
 
-	
-	
+
+
 	public Area getArea() {
 		return area;
 	}
@@ -166,18 +182,18 @@ public class Site extends NamedEntity {
 		this.area = area;
 	}
 	/**
-	 * 
+	 *
 	 */
 	public Site() {
 	}
 
-	
-	
+
+
 
 	public void addVisit(Visit visit) {
 		// TODO Auto-generated method stub
-		
-		
+
+
 	}
 
 	public Object getVisits() {
@@ -187,7 +203,7 @@ public class Site extends NamedEntity {
 
 	public void setArea(Site site) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
@@ -209,16 +225,16 @@ public class Site extends NamedEntity {
 	}
 
 
-	
-	
 
 
 
 
-	
-	
 
-	
-	
-	
+
+
+
+
+
+
+
 }

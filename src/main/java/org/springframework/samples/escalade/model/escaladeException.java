@@ -5,12 +5,12 @@ package org.springframework.samples.escalade.model;
 public class escaladeException extends Exception {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	/*
 	 * 	super() sert à appeler un constructeur de la classe parente d'une classe.
-		Ceci est rendu nécessaire lorsque qu'on déclare une classe étendant une autre classe, 
+		Ceci est rendu nécessaire lorsque qu'on déclare une classe étendant une autre classe,
 		et que celle-ci ne possède pas de constructeur avec les mêmes arguments.
 	 */
 	public escaladeException() {
@@ -48,6 +48,6 @@ public class escaladeException extends Exception {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
+
 }

@@ -53,7 +53,7 @@
 				<sec:authorize access="isAuthenticated() == true">
 					<li class="active"></li>
 					<li><escalade:menuItem active="${name eq 'dashboard'}"
-							url="/dashboards/dashboard/" title="dashboard">
+							url="/dashboards/dashboards" title="dashboard">
 							<span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
 							<span>Dashboard</span>
 						</escalade:menuItem></li>

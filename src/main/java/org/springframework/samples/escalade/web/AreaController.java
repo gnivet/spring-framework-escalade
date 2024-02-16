@@ -54,7 +54,7 @@ public class AreaController {
 
 	private UserRepository userRepository;
 	private SiteRepository siteRepository;
-	
+
 	public AreaController(EscaladeService escaladeService, UserRepository userRepository, AreaRepository areaRepository,
 			SiteRepository siteRepository) {
 		this.escaladeService = escaladeService;
@@ -114,7 +114,7 @@ public class AreaController {
 		}
 	}
 
-	
+
 	@GetMapping(value = "/areas/delete")
 	public String initCreationFormD(Map<String, Object> model) {
 
@@ -149,12 +149,12 @@ public class AreaController {
 		if (result.hasErrors()) {
 			return VIEWS_AREA_CREATE_OR_UPDATE_FORM;
 		} else {
-			
+
 			model.put("area", area);
 			area.setUser(user);
 			model.put("site", site);
 			aera.setSite(site);
-		
+
 			// topoBkgToModify.setTopo(topoBkg.getTopo());
 			area = this.escaladeService.saveArea(area);
 			//areaSite.setArea(area.getSite());
@@ -162,8 +162,8 @@ public class AreaController {
 
 		}
 	}
-	
-	
+
+
 	@GetMapping(value = "/areas/find")
 	public String initFindForm(Map<String, Object> model) {
 		model.put("area", new Area());
@@ -235,7 +235,7 @@ public class AreaController {
 		return mav;
 	}
 
-	
+
 	/**
 	 * Delete - Delete an area
 	 * @param id - The id of the area to delete
@@ -247,5 +247,5 @@ public class AreaController {
 		this.escaladeService.deleteAreaById(areaId);
 		return;
 	}
-	
+
 }

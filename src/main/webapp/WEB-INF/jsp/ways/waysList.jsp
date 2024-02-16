@@ -38,19 +38,14 @@
         <tbody>
         <c:forEach items="${selections}" var="way">
             <tr>
-                <td>
+                
                     <spring:url value="/ways/{wayId}" var="wayUrl">
                         <spring:param name="wayId" value="${way.id} "/>                       
                     </spring:url>
-                    <a href="${fn:escapeXml(wayUrl)}"><c:out value="${way.name}"/></a>
-                </td>   
-                <!--              
-                 <td>
-                    <c:forEach var="way" items="${way.lengths}">
-                        <c:out value="${length.name} "/>
-                    </c:forEach>
-                </td>
-                --> 
+                    <td><a href="${fn:escapeXml(wayUrl)}">               
+                    	<c:out value="${way.name}"/>
+                    	</a>
+                    </td>
             </tr>
         </c:forEach>
         </tbody>

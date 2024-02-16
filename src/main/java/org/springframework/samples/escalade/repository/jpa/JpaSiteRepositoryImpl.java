@@ -34,6 +34,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 	@PersistenceContext
 	private EntityManager em;
 
+	@Override
 	public void saveZone(Zone zone) throws DataAccessException {
 		// TODO Auto-generated method stub
 
@@ -45,6 +46,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 
 	}
 
+	@Override
 	public void saveLength(Length length) throws DataAccessException {
 		// TODO Auto-generated method stub
 
@@ -56,6 +58,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 
 	}
 
+	@Override
 	public void savePoint(Point point) throws DataAccessException {
 		// TODO Auto-generated method stub
 
@@ -67,7 +70,8 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 
 	}
 
-	
+
+	@Override
 	@Transactional
 	public Site findSiteById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -77,7 +81,8 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		return (Site) query.getSingleResult();
 	}
 
-	
+
+	@Override
 	public Site saveSite(Site site) throws DataAccessException {
 
 		if (site.getId() == null) {
@@ -91,6 +96,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 
 	}
 
+	@Override
 	public Zone findZoneById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 
@@ -99,6 +105,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		return (Zone) query.getSingleResult();
 	}
 
+	@Override
 	public Way findWayById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 
@@ -107,6 +114,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		return (Way) query.getSingleResult();
 	}
 
+	@Override
 	public Length findLengthById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 
@@ -115,6 +123,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		return (Length) query.getSingleResult();
 	}
 
+	@Override
 	public Point findPointById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT point FROM Point point WHERE point.id =:id");
@@ -122,6 +131,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		return (Point) query.getSingleResult();
 	}
 
+	@Override
 	public NamedEntity findAreaById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT area FROM Area area WHERE area.id =:id");
@@ -129,6 +139,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		return (NamedEntity) query.getSingleResult();
 	}
 
+	@Override
 	public void saveArea(Area area) throws DataAccessException {
 
 		if (area.getId() == null) {
@@ -139,6 +150,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 
 	}
 
+	@Override
 	public Way saveWay(Way way) throws DataAccessException {
 
 		if (way.getId() == null) {
@@ -150,6 +162,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public Collection<Area> findSiteByPostalCode(String postalcode) throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -158,6 +171,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		return query.getResultList();
 	}
 
+	@Override
 	public Integer findSiteOwnedbyUser(String userName, Integer siteId) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em
@@ -167,6 +181,7 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		return siteId;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Site> findAllSite() {
 		// TODO Auto-generated method stub
@@ -192,29 +207,33 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		return query.getResultList();
 	}
 
-	
+
     public Integer findCommentBySite(String userName)throws DataAccessException {
 		// TODO Auto-generated method stub
     	// select * from Sites join Users on sites.user_id = users.id where users.user_name like '%enora%';
 		Query query = this.em.createQuery("select * from Site site join User user on site.user.id = user.id where user.userName like :userName");
-		query.setParameter("userName", userName);	
+		query.setParameter("userName", userName);
 		return   (Integer) query.getSingleResult();
 	}
-     
-	//GN
-	
-	//@Override
-	//public Collection<Site> findSiteByName1(String name) {
-		// TODO Auto-generated method stub
-	//	return null;
-	//}
+
 
 	@Override
-	public Integer findSiteOwnedByUsername(String userName) throws DataAccessException {
+	public Integer findCountSiteOwnedByUsername(String userName) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("select count(*) from Site site join User user on site.user.id = user.id where user.userName like :userName");
-		query.setParameter("userName", userName);	
-		return   (Integer) query.getSingleResult();
+		query.setParameter("userName", userName);
+
+		try {
+			return (Integer) query.getSingleResult();
+			
+		}
+		catch(Exception e) {
+			  //  Block of code to handle errors
+			System.out.println("Something went wrong with site's number.");
+			
+			}
+		return null;
+
 	}
 
 	@Override
@@ -224,17 +243,18 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 						.createQuery("SELECT site FROM Site site  left join  User user on user.userName like :userName");
 				query.setParameter("userName", userName);
 				return (Site) query.getSingleResult();
-				
+
 	}
 
-	
-	
+
+
 	@Override
 	public Site updateSite(Site site) throws DataAccessException {
 		// TODO Auto-generated method stub
-		if (!this.em.contains(site))
+		if (!this.em.contains(site)) {
 			this.em.merge(site);
-		
+		}
+
 		return site;
 	}
 
@@ -254,6 +274,8 @@ public class JpaSiteRepositoryImpl implements SiteRepository {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
 	public Collection<Site> listSites() {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT site FROM site site");

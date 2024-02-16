@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	/*
 	@Autowired
 	private RoleRepository roleRepository;
@@ -42,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		Set<Role>roleList= new HashSet<>();
 		roleList= user.getRoles();
 		List<String> privileges = roleList.stream().map(x -> x.getName()).collect(Collectors.toList());
-		
+
 		return new org.springframework.security.core.userdetails.User(user.getUserName() , user.getPassword() , true, true, true, true,
 				getGrantedAuthorities(privileges));
 	}

@@ -24,6 +24,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.escalade.model.Length;
+import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.model.Way;
 import org.springframework.samples.escalade.model.Zone;
@@ -35,14 +36,11 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * @author Guillaume Nivet 
+ * @author Guillaume Nivet
  */
 @Controller
 @Transactional
@@ -58,36 +56,36 @@ public class WayController {
 		this.userRepository = userRepository;
 	}
 
-	
-	
+
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
-	
-	@RequestMapping(value = "/zones/{zoneId}/ways/new", method = RequestMethod.GET)
+
+
+	@GetMapping("/zones/{zoneId}/ways/new")
 	public String initCreationForm(Map<String, Object> model, Principal principal   ) {
-		
+
 
 		String userName = principal.getName();
-		
+
 		@SuppressWarnings("unused")
 		User user = this.userRepository.findByUserName(userName);
-		
-		
+
+
 		Way way = new Way();
 		model.put("way", way);
 		return VIEWS_WAY_CREATE_OR_UPDATE_FORM;
 	}
-
+	/*
 	@RequestMapping(value = "/zones/{zoneId}/ways/new", method = RequestMethod.POST)
 	public String processCreationForm(Principal principal, @Valid Way way, Integer zoneId, BindingResult result, Model model, Zone zone ) {
-		
+
 		if (result.hasErrors()) {
 			return VIEWS_WAY_CREATE_OR_UPDATE_FORM;
 		} else {
-			
+
 			model.addAttribute("zone", zone.getId() );
 			way = this.escaladeService.saveway(way);
 			return "redirect:/zones/{zoneId}/ways/new";
@@ -100,9 +98,32 @@ public class WayController {
 		return "ways/findWays";
 		// return "ways/{wayId}";
 	}
+	*/
+	
+	@PostMapping("/sites/{siteId}/ways/new")
+	public String processCreationForm2(Principal principal, @Valid Way way, Integer zoneId, BindingResult result, Model model, Site site ) {
 
+		if (result.hasErrors()) {
+			return VIEWS_WAY_CREATE_OR_UPDATE_FORM;
+		} else {
+
+			model.addAttribute("site", site.getId() );
+			way = this.escaladeService.saveway(way);
+			return "redirect:/sites/{siteId}/ways/new";
+		}
+	}
+
+	@GetMapping("/ways/find")
+	public String initFindForm2(Map<String, Object> model) {
+		model.put("way", new Way());
+		return "ways/findWays";
+		// return "ways/{wayId}";
+	}
+	
+	
+	
 //findTopos
-	@RequestMapping(value = "/ways", method = RequestMethod.GET)
+	@GetMapping("/ways")
 	public String processFindForm(Way way, BindingResult result, Map<String, Object> model) {
 
 		// allow parameterless GET request for /ways to return all records
@@ -127,26 +148,26 @@ public class WayController {
 		}
 	}
 
-	@RequestMapping(value = "/ways/{wayId}", method = RequestMethod.GET)
-	public String initUpdatewayForm(@PathVariable("wayId") 
+	@GetMapping("/ways/{wayId}")
+	public String initUpdatewayForm(@PathVariable("wayId")
 	Integer wayId, ModelMap model) {
 		Way way = this.escaladeService.findWayById(wayId);
 		model.put("way", way);
 		return VIEWS_WAY_CREATE_OR_UPDATE_FORM;
 	}
 
-	@RequestMapping(value = "/ways/{wayId}", method = RequestMethod.POST)
-	public String processUpdatewayForm(Way way, BindingResult result, @PathVariable("wayId") 
+	@PostMapping("/ways/{wayId}")
+	public String processUpdatewayForm(Way way, BindingResult result, @PathVariable("wayId")
 	Integer wayId, Length length ,ModelMap model ) {
-		if (result.hasErrors()) {			
+		if (result.hasErrors()) {
 			return VIEWS_WAY_CREATE_OR_UPDATE_FORM;
-		} else {			
+		} else {
 			way.setId(wayId);
 			this.escaladeService.saveway(way);
 			return "redirect:/ways/{wayId}";
 		}
 	}
-	
+
 	/**
 	 * Custom handler for displaying an way.
 	 *

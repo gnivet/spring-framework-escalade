@@ -28,6 +28,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
+import org.springframework.samples.escalade.model.Comment;
 import org.springframework.samples.escalade.model.TopoBkg;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.UserRepository;
@@ -37,7 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * JPA implementation of the {@link OwnerRepository} interface.
  *
- * @author Guillaume Nivet 
+ * @author Guillaume Nivet
  */
 
 @Repository
@@ -55,9 +56,9 @@ public class JpaUserRepositoryImpl implements UserRepository {
      * - creating a Ligtweight class (example here: https://community.jboss.org/wiki/LightweightClass)
      * - Turning on lazy-loading and using {@link OpenSessionInViewFilter}
      */
-   
 
-   
+
+
 
 	@Override
 	public List<org.springframework.samples.escalade.model.User> findAll() {
@@ -71,7 +72,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		return null;
 	}
 
-	
+
 	@Override
 	public <S extends org.springframework.samples.escalade.model.User> List<S> saveAll(Iterable<S> entities) {
 		// TODO Auto-generated method stub
@@ -81,7 +82,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 	@Override
 	public void flush() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -93,16 +94,16 @@ public class JpaUserRepositoryImpl implements UserRepository {
 	@Override
 	public void deleteInBatch(Iterable<org.springframework.samples.escalade.model.User> entities) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteAllInBatch() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
+
 
 	@Override
 	public <S extends org.springframework.samples.escalade.model.User> List<S> findAll(Example<S> example) {
@@ -129,7 +130,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 	}
 
 
-	
+
 
 	@Override
 	public long count() {
@@ -137,25 +138,25 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		return 0;
 	}
 
-	
-	
+
+
 
 	@Override
 	public void delete(org.springframework.samples.escalade.model.User entity) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteAll(Iterable<? extends org.springframework.samples.escalade.model.User> entities) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteAll() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -183,7 +184,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		return false;
 	}
 
-	
+
 
 
 	@Override
@@ -221,7 +222,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
 	@Override
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
@@ -232,14 +233,14 @@ public class JpaUserRepositoryImpl implements UserRepository {
 		 Query query = this.em.createQuery("SELECT DISTINCT owner FROM User user left join fetch user.sites WHERE user.userId LIKE :userId");
 	        query.setParameter("userId", userId + "%");
 			return null;
-	        
-	        
+
+
 	}
 
 
 
 
-	
+
 
 	 @SuppressWarnings("unchecked")
 	    public Collection<User> findByUserNames(String userName) {
@@ -249,13 +250,13 @@ public class JpaUserRepositoryImpl implements UserRepository {
 	        query.setParameter("userName", userName + "%");
 	        return query.getResultList();
 	    }
-	 
-	 
-	 
-	 
-	 
-	 
-	
+
+
+
+
+
+
+
 
 	@Override
 	public long countByEmail(String email) {
@@ -289,7 +290,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
                 .setParameter("lastName", lastName)
                 .setParameter("firstName", firstName)
                 .getResultList();
-         
+
 	}
 
 	@Override
@@ -307,19 +308,25 @@ public class JpaUserRepositoryImpl implements UserRepository {
 	@Override
 	public User findByUserName(String userName) {
 		// TODO Auto-generated method stub
-		
-		
-			return (User) this.em.createQuery("select u from User u where u.userName = :userName" , User.class)
+
+
+			return this.em.createQuery("select u from User u where u.userName = :userName" , User.class)
 	                .setParameter("userName", userName )
 	                .getSingleResult();
-			
-		
+
+
 	}
 
 	@Override
 	public Optional<User> findUserById(Integer id) {
 		// TODO Auto-generated method stub
 		return Optional.empty();
+	}
+
+	@Override
+	public List<Comment> getAllCommentsUserName(String userName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

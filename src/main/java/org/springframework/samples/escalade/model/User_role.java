@@ -13,7 +13,7 @@ public class User_role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer user_id;
-	
+
 	private Integer role_id;
 
 	public Integer getUser_id() {
@@ -33,10 +33,10 @@ public class User_role {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected User_role() {
 	}
-	
-	
+
+
 }

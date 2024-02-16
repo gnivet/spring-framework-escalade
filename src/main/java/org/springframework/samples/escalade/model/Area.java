@@ -34,19 +34,19 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "areas")
 public class Area extends NamedEntity {
 
-		
+
 	@Column(name = "street")
 	@NotEmpty
 	private String street;
 
 	@Column(name = "postalcode")
-	@NotEmpty String postalcode;	
-	
-	
+	@NotEmpty String postalcode;
+
+
 	public String setPostalcode(String postalcode) {
 		return this.postalcode = postalcode;
 	}
-	
+
 	public String getPostalcode() {
 		return postalcode;
 	}
@@ -88,7 +88,7 @@ public class Area extends NamedEntity {
 		this.gpscoordinate = gpscoordinate;
 	}
 
-	
+
 	public String getStreet() {
 		return street;
 	}
@@ -102,11 +102,11 @@ public class Area extends NamedEntity {
 		This happens because you have a collection in your entity, and that collection has one or more items which are not present
 		 in the database. By specifying the above options you tell hibernate to save them to the database when saving their parent.
 	 */
-	
+
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "site_id", nullable = true )
-	
-	
+
+
 
 	private Site site;
 
@@ -117,7 +117,7 @@ public class Area extends NamedEntity {
 	public void setSite(Site site) {
 		this.site = site;
 	}
-	
+
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
@@ -131,7 +131,7 @@ public class Area extends NamedEntity {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public Area() {
 	}
@@ -156,13 +156,13 @@ public class Area extends NamedEntity {
 		this.user = user;
 	}
 
-	
-		
 
 
-	
-	
-	
 
-	
+
+
+
+
+
+
 }

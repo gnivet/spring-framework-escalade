@@ -33,14 +33,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * @author Guillaume Nivet 
+ * @author Guillaume Nivet
  */
 @Controller
 @Transactional
@@ -50,34 +47,36 @@ public class CommentController {
 	private final EscaladeService escaladeService;
 	private UserRepository userRepository;
 	private Site site;
-	
+
 	@Autowired
 	public CommentController(EscaladeService escaladeService , UserRepository userRepository, SiteRepository siteRepository) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
 	}
-	
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-		
-	@RequestMapping(value = "/sites/{siteId}/comments/new", method = RequestMethod.GET)
+
+	@GetMapping("/sites/{siteId}/comments/new")
 	public String initCreationForm(Map<String, Object> model , @PathVariable("siteId") Integer site, Principal principal ) {
 		Site sites = new Site();
-		Comment comment = new Comment();		
-		String userName = principal.getName();		
+		Comment comment = new Comment();
+		String userName = principal.getName();
 		@SuppressWarnings("unused")
-		User user = this.userRepository.findByUserName(userName);	
+		User user = this.userRepository.findByUserName(userName);
 		model.put("comment", comment);
 		return VIEWS_COMMENT_CREATE_OR_UPDATE_FORM;
 	}
 
-	@RequestMapping(value = "/sites/{siteId}/comments/new", method = RequestMethod.POST)
-	public String processCreationForm(Comment comment, BindingResult result, @PathVariable("siteId") Integer siteId,   Map<String, Object> model, Principal principal) {
+	@PostMapping("/sites/{siteId}/comments/new")
+	public String processCreationForm(Comment comment, BindingResult result, @PathVariable("siteId") Integer siteId,   Map<String, Object> model, Principal principal, User user) {
 		
+		if (principal != null)
+		 {
 		String userName = principal.getName();
-
+		
 		/**
 		 * Retrieve a <code>User</code> from the data store by id.
 		 *
@@ -86,9 +85,9 @@ public class CommentController {
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 
-		User user = this.userRepository.findByUserName(userName);
-		
-	
+		user = this.userRepository.findByUserName(userName);
+		 }
+
 
 		/**
 		 * Retrieve a <code>Site</code> from the data store by id.
@@ -98,14 +97,15 @@ public class CommentController {
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 
-				
+
 		if (result.hasErrors()) {
 			return VIEWS_COMMENT_CREATE_OR_UPDATE_FORM;
 		} else {
-			
-			model.put("comment", comment);	
-			
-			
+
+			model.put("comment", comment);
+
+
+		
 			/**
 			 * Retrieve a <code>User</code> from the data store by id.
 			 *
@@ -113,27 +113,28 @@ public class CommentController {
 			 * @return the <code>User</code> if found
 			 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 			 */
-
+			user.getUserName();
 			site = this.escaladeService.findSiteById(siteId);
 			comment.setUser(user);
+			
 			comment.setSite(site);
 			if (siteId != null)
-			{	
-				comment.setId(siteId);	
+			{
+				comment.setId(siteId);
 			}
 			 this.escaladeService.updateComment(comment);
 			return "redirect:/sites/{siteId}/comments/new";
 		}
 	}
 
-	@RequestMapping(value = "/comments/find", method = RequestMethod.GET)
+	@GetMapping("/comments/find")
 	public String initFindForm(Map<String, Object> model) {
 		model.put("comment", new Comment());
 		return "comments/findComments";
 	}
 
 //findSites
-	@RequestMapping(value = "/comments", method = RequestMethod.GET)
+	@GetMapping("/comments")
 	public String processFindForm(Comment comment, BindingResult result, Map<String, Object> model) {
 
 		// allow parameterless GET request for /comments to return all records
@@ -158,19 +159,19 @@ public class CommentController {
 		}
 	}
 
-	@RequestMapping(value = "/comments/{commentId}", method = RequestMethod.GET)
+	@GetMapping("/comments/{commentId}")
 	public String initUpdateCommentForm(@PathVariable("commentId") Integer commentId, Model model) {
 		Comment comment = this.escaladeService.findCommentById(commentId);
 		model.addAttribute(comment);
 		return VIEWS_COMMENT_CREATE_OR_UPDATE_FORM;
 	}
 
-	@RequestMapping(value = "/comments/{commentId}", method = RequestMethod.POST)
+	@PostMapping("/comments/{commentId}")
 	public String processUpdateCommentForm(@Valid Comment comment, BindingResult result, @PathVariable("commentId") Integer commentId) {
 		if (result.hasErrors()) {
 			return VIEWS_COMMENT_CREATE_OR_UPDATE_FORM;
 		} else {
-			
+
 			Comment commentToModify = this.escaladeService.findCommentById(commentId);
 			if (comment.getComment() != null) {
 				commentToModify.setComment(comment.getComment());

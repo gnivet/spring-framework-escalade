@@ -11,10 +11,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TopoRepository {
-	
+
 	@Query("Select topo, user from Topo topo join fetch User user on topo.user_id = user.user.id where user.userName like :userName ")
 	//List<Topo> findTopoByUserName();
-	
+
 
 
 	/*
@@ -32,7 +32,7 @@ public interface TopoRepository {
      * @param Topo the <code>Topo</code> to save
      * @see BaseEntity#isNew
      */
-    
+
     Topo saveTopo(Topo Topo)  throws DataAccessException;
 
 	Topo updateTopo(Topo topo)throws DataAccessException;
@@ -51,9 +51,9 @@ public interface TopoRepository {
 
 	Topo findTopo()throws DataAccessException;
 
-	
-	
-    
+
+
+
     /**
      * Retrieve a <code>Zone</code> from the data store by id.
      *

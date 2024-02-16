@@ -38,11 +38,10 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * @author Guillaume Nivet 
+ * @author Guillaume Nivet
  */
 
 @Controller
@@ -60,42 +59,42 @@ public class LengthController {
 		this.userRepository = userRepository;
 	}
 
-	
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
 
-	@RequestMapping(value = "/ways/{wayId}/lengths/new", method = RequestMethod.GET)
+
+	@GetMapping("/ways/{wayId}/lengths/new")
 	public String initCreationForm(Map<String, Object> model , Principal principal  ) {
-		
+
 		String userName = principal.getName();
-		
+
 		@SuppressWarnings("unused")
 		User user = this.userRepository.findByUserName(userName);
-		 
-		
+
+
 		Length length = new Length();
 		model.put("length", length);
 		return VIEWS_LENGTH_CREATE_OR_UPDATE_FORM;
 	}
 
-	@RequestMapping(value = "/ways/{wayId}/lengths/new", method = RequestMethod.POST)
+	@PostMapping("/ways/{wayId}/lengths/new")
 	public String processCreationForm(Principal principal, @Valid Length length, Integer wayId, BindingResult result , Model model, Way way) {
-		
+
 		if (result.hasErrors()) {
 			return VIEWS_LENGTH_CREATE_OR_UPDATE_FORM;
 		} else {
-			
+
 			model.addAttribute("length",way.getId())		;
-		
+
 		    length = this.escaladeService.saveLength(length);
 			return "redirect:/ways/{wayId}/lengths/new" ;
 		}
 	}
 
-	@RequestMapping(value = "/lengths/find", method = RequestMethod.GET)
+	@GetMapping("/lengths/find")
 	public String initFindForm(Map<String, Object> model) {
 		model.put("length", new Length());
 		return "lengths/findLengths";
@@ -103,7 +102,7 @@ public class LengthController {
 	}
 
 //findTopos
-	@RequestMapping(value = "/lengths", method = RequestMethod.GET)
+	@GetMapping("/lengths")
 	public String processFindForm(Length length, BindingResult result, Map<String, Object> model) {
 
 		// allow parameterless GET request for /lengths to return all records
@@ -125,7 +124,7 @@ public class LengthController {
 			// multiple lengths found
 			model.put("selections", results);
 			return "lengths/lengthsList";
-			
+
 		}
 	}
 
@@ -140,7 +139,7 @@ public class LengthController {
 	public String processUpdatelengthForm(Length length, BindingResult result, @PathVariable("lengthId") Integer lengthId) {
 		if (result.hasErrors()) {
 			return VIEWS_LENGTH_CREATE_OR_UPDATE_FORM;
-		} else {			
+		} else {
 			length.setId(lengthId);
 			this.escaladeService.saveLength(length);
 			return "redirect:/lengths/{lengthId}";
@@ -154,20 +153,20 @@ public class LengthController {
 		model.addAttribute(length);
 		return VIEWS_LENGTH_CREATE_OR_UPDATE_FORM;
 	}
-	
+
 	@PostMapping(value = "/lengths/{lengthId}/points/new")
 	public String processUpdatelengthForm2(Length length, BindingResult result, @PathVariable("lengthId") Integer lengthId) {
 		if (result.hasErrors()) {
 			return VIEWS_LENGTH_CREATE_OR_UPDATE_FORM;
-		} else {			
+		} else {
 			length.setId(lengthId);
 			this.escaladeService.saveLength(length);
 			return "redirect:/lengths/{lengthId}/points";
 		}
 	}
 	*/
-	
-	
+
+
 	/**
 	 * Custom handler for displaying an length.
 	 *

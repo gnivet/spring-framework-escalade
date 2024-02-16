@@ -1,5 +1,5 @@
 	package org.springframework.samples.escalade.model;
-	
+
 	import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -16,20 +16,20 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-	
-	
+
+
 	@Entity
 	@Table(name = "users")
 	public class User  {
-	
+
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Integer id;
-		
-		
-		
+
+
+
 		private Integer user_id;
-		
+
 		public Integer getId() {
 			return id;
 		}
@@ -40,15 +40,15 @@ import javax.persistence.Table;
 		//@NotEmpty(message = "Please enter your user name.")
 		@Column(name="userName")
 		private String userName;
-		
+
 		//@NotEmpty(message = "Please enter your password.")
 		@Column(name ="password")
 		private String password;
-		
+
 		//@NotEmpty(message = "Please enter your password confirm.")
 		@Column(name="passwordConfirm")
 		private String passwordConfirm;
-		
+
 		//@NotEmpty(message = "Please enter your first name.")
 		@Column(name="firstName")
 		private String firstName;
@@ -69,26 +69,26 @@ import javax.persistence.Table;
 		private String email;
 		@Column(name="enabled")
 		private Boolean enabled;
-	
+
 		@OneToMany(targetEntity = Site.class, mappedBy = "user")
 		public List<Site> sites;
 		
-				
+
 		@ManyToMany
 		@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
 		private Set<Role> roles;
-	
-	
+
+
 		@OneToMany(targetEntity = Topo.class, cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
 		private Set<Topo> topos;
-	
+
 		@OneToMany(targetEntity = TopoBkg.class, cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
 		private Set<TopoBkg> topoBkgs;
-				
+
+
 		
-		
-		
-		
+
+
 		public Integer getUser_id() {
 			return user_id;
 		}
@@ -97,7 +97,7 @@ import javax.persistence.Table;
 			this.user_id = user_id;
 		}
 
-		
+
 
 		public List<Site> getSites() {
 			return sites;
@@ -109,15 +109,15 @@ import javax.persistence.Table;
 
 		public void addSite(Site site) {
 			// TODO Auto-generated method stub
-	
+
 		}
-	
+
 		public Object getSite(String name, boolean b) {
 			// TODO Auto-generated method stub
 			return null;
 		}
-		
-				
+
+
 		public String getUserName() {
 			return userName;
 		}
@@ -222,7 +222,7 @@ import javax.persistence.Table;
 			this.topoBkgs = topoBkgs;
 		}
 
-		
+
 		public List<Topo> getTopoList() {
 			return topoList;
 		}
@@ -231,8 +231,8 @@ import javax.persistence.Table;
 			this.topoList = topoList;
 		}
 
-			
-	
+
+
 		public Set<Role> getRoles() {
 			return roles;
 		}
@@ -242,17 +242,17 @@ import javax.persistence.Table;
 		}
 
 		/**
-		 * 
+		 *
 		 */
 		public User()
 		{
-			
-		}
-	
-		
 
-		
-		
+		}
+
+
+
+
+
 		/**
 		 * @param id
 		 * @param userName
@@ -277,7 +277,7 @@ import javax.persistence.Table;
 				Boolean enabled, List<Site> sites, Set<Role> roles, Set<Topo> topos, Set<TopoBkg> topoBkgs,
 				List<Topo> topoList) {
 			this.id = id;
-			this.userName = userName;
+			this.userName = userName;			
 			this.password = password;
 			this.passwordConfirm = passwordConfirm;
 			this.firstName = firstName;
@@ -297,23 +297,37 @@ import javax.persistence.Table;
 
 		public void addTopoBkg(TopoBkg topoBkg) {
 			// TODO Auto-generated method stub
-			
+
 		}
 		/*
 		 * R Bi-directionelle
 		 */
-		@OneToMany(cascade = {CascadeType.ALL}, mappedBy="user" )	
+		@OneToMany(cascade = {CascadeType.ALL}, mappedBy="user" )
 		private List<Topo> topoList= new ArrayList<>();
-		
-		
+
+
 		public void addTopo(Topo topo)
 		{
 			topo.setTopo(topo);
-			
+
 		}
-		@Override  
-		public String toString()   
-		{  
-		return "User [id=" + id + ", uname=" + userName + "]";  
-		}  
+
+		@Override
+		public String toString() {
+			return "User [id=" + id + ", user_id=" + user_id + ", userName=" + userName + ", password=" + password
+					+ ", passwordConfirm=" + passwordConfirm + ", firstName=" + firstName + ", lastName=" + lastName
+					+ ", address=" + address + ", postalCode=" + postalCode + ", city=" + city + ", telephone="
+					+ telephone + ", email=" + email + ", enabled=" + enabled + ", sites=" + sites + ", roles=" + roles
+					+ ", topos=" + topos + ", topoBkgs=" + topoBkgs + ", topoList=" + topoList + ", getId()=" + getId()
+					+ ", getUser_id()=" + getUser_id() + ", getSites()=" + getSites() + ", getUserName()="
+					+ getUserName() + ", getPassword()=" + getPassword() + ", getPasswordConfirm()="
+					+ getPasswordConfirm() + ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName()
+					+ ", getAddress()=" + getAddress() + ", getPostalCode()=" + getPostalCode() + ", getCity()="
+					+ getCity() + ", getTelephone()=" + getTelephone() + ", getEmail()=" + getEmail()
+					+ ", getEnabled()=" + getEnabled() + ", getTopos()=" + getTopos() + ", getTopoBkgs()="
+					+ getTopoBkgs() + ", getTopoList()=" + getTopoList() + ", getRoles()=" + getRoles()
+					+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+					+ "]";
+		}
+		
 	}

@@ -20,18 +20,19 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 
 	@PersistenceContext
 	private EntityManager em;
-	
 
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<SiteType> findSiteTypes() throws DataAccessException {
 		// TODO Auto-generated method stub
 		// return (SiteType) query.getSingleResult();
 
 		Query query = this.em.createQuery("SELECT siteType FROM SiteType siteType ORDER BY siteType.name");
-		return query.getResultList();	
+		return query.getResultList();
 	}
-	
-	 
+
+
 
 	public SiteType findTypeById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -41,6 +42,7 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 		return (SiteType) query.getSingleResult();
 	}
 
+	@Override
 	public SiteType saveSiteType(SiteType siteType) throws DataAccessException {
 
 		if (siteType.getId() == null) {
@@ -48,20 +50,22 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 		} else {
 			this.em.merge(siteType);
 		}
-		return siteType;		
+		return siteType;
 	}
 
-	
-	
-	
+
+
+
+	@Override
 	public Collection<SiteType> findSiteBySiteType(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
-	
-	@SuppressWarnings("unchecked")	
+
+
+	@Override
+	@SuppressWarnings("unchecked")
 	public Collection<SiteType> findSiteTypeByName(String name) {
 		// TODO Auto-generated method stub
 
@@ -69,10 +73,11 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 		query.setParameter("name", "%" + name + "%");
 		return  query.getResultList();
 	}
-	
-	
-	
-	
+
+
+
+
+	@Override
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<SiteType> findAll() {
@@ -80,7 +85,8 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 		Query query = this.em.createQuery("SELECT siteType FROM SiteType siteType");
 		return query.getResultList();
 	}
-	
+
+	@Override
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public Collection<SiteType> getSiteType() {
@@ -106,7 +112,7 @@ public class JpaSiteTypeRepositoryImpl implements SiteTypeRepository {
 	public SiteType findSiteTypeById(Integer id) throws NoResultException {
 		// TODO Auto-generated method stub
 		Query query = this.em.createQuery("SELECT siteType FROM SiteType siteType WHERE siteType.id =:id");
-		query.setParameter("id", id);		
+		query.setParameter("id", id);
 		try {
 	        return (SiteType) (query).getSingleResult();
 	    } catch (NoResultException nre) {

@@ -17,16 +17,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class JpaPointRepositoryImpl implements PointRepository{
 
-	
+
 
 		@PersistenceContext
 		private EntityManager em;
 
+		@Override
 		public Point findPointById(Integer id) {
 			return this.em.find(Point.class, id);
 		}
 
 		// Add Way to Site form
+		@Override
 		public Point savePoint(Point Point) throws DataAccessException {
 			if (Point.getId() == null) {
 				this.em.persist(Point);
@@ -43,6 +45,7 @@ public class JpaPointRepositoryImpl implements PointRepository{
 			return null;
 		}
 
+		@Override
 		@SuppressWarnings("unchecked")
 		@Transactional
 		public Collection<Point> findPointByName(String name) {
@@ -58,8 +61,8 @@ public class JpaPointRepositoryImpl implements PointRepository{
 			// TODO Auto-generated method stub
 			return null;
 		}
-	
-		
-		
-		
+
+
+
+
 }

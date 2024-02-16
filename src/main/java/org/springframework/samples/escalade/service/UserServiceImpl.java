@@ -21,26 +21,26 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
-    
+
    /*
-    * 	
+    *
     */
     //GNI
-    
+
     @Bean
     public SessionLocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
         slr.setDefaultLocale(Locale.US);
         return slr;
     }
-    
+
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
         lci.setParamName("lang");
         return lci;
     }
-    
+
     @Autowired
     private BCryptPasswordEncoder bCryptPassword;
     @Bean
@@ -48,19 +48,21 @@ public class UserServiceImpl implements UserService {
     {
     	return new BCryptPasswordEncoder();
     }
-    
-    
-    
+
+
+
     //GNI
-   
-    
-    public void save(User user) {
+
+
+    @Override
+	public void save(User user) {
         user.setPassword(bCryptPassword.encode(user.getPassword()));
         user.setRoles(new HashSet<>(roleRepository.findAll()));
         userRepository.save(user);
     }
 
-    public User findByUserName(String userName) {
+    @Override
+	public User findByUserName(String userName) {
         return userRepository.findByUserName(userName);
     }
     public List<Role> findByRolename(String role) {
@@ -69,6 +71,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void save(org.springframework.security.core.userdetails.User user) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Transactional
@@ -101,12 +100,12 @@ public class TopoController {
 	@GetMapping(value = "/topos")
 	public String processFindForm(Topo topo, User  user ,BindingResult result, Map<String, Object> model , Principal principal) {
 
-		
+
 		if (principal.getName() != null) {
 			String userName = principal.getName();
 			user = this.userRepository.findByUserName(userName);
-			
-			
+
+
 			Collection<Topo> results = this.escaladeService.findTopoByUserId(user.getId());
 
 			if (results.isEmpty()) {
@@ -121,23 +120,23 @@ public class TopoController {
 				model.put("selections", results);
 				return "topos/toposList";
 			}
-			
-			
+
+
 		} else {
 			return "redirect:/users/login/";
 		}
-		
+
 	}
 
 	@GetMapping(value = "/topolist")
 	public String processFindForm(Topo topo, User  user , String name, BindingResult result, Map<String, Object> model , Principal principal) {
 
-		
+
 		if (principal.getName() != null) {
 			String userName = principal.getName();
 			user = this.userRepository.findByUserName(userName);
-			
-			
+
+
 			Collection<Topo> results = this.escaladeService.findTopos();
 
 			if (results.isEmpty()) {
@@ -150,34 +149,40 @@ public class TopoController {
 				model.put("selections", results);
 				return "topos/toposList";
 			}
-			
-			
+
+
 		} else {
 			return "redirect:/users/login/";
 		}
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
 	@GetMapping(value = "/toposAvailable")
-	public String processFindToposAvailable(Topo topo, BindingResult result, Map<String, Object> model) {
+	public String processFindToposAvailable(Topo topo, BindingResult result, Map<String, Object> model,Principal principal) {
 
-		// allow parameterless GET request for /areas to return all records
-		if (topo.getName() == null) {
-			topo.setName(""); // empty string signifies broadest possible search
-		}
+		
 
-		Collection<Topo> results = this.escaladeService.findTopoAvailableByName(topo.getName());
+		if (principal.getName() != null) {
+			String userName = principal.getName();
+			
+			
+			// allow parameterless GET request for /areas to return all records
+			if (topo.getName() == null) {
+				topo.setName(""); // empty string signifies broadest possible search
+			}	
+		
+		Collection<Topo> results = this.escaladeService.findTopoByUserName(userName);
 		if (results.isEmpty()) {
 			// no areas found
 			result.rejectValue("name", "notFound", "not found");
@@ -189,9 +194,10 @@ public class TopoController {
 			return "topos/toposList";
 		}
 	}
+		return null;}
 	/*
 	 * Topo update
-	 * 
+	 *
 	 */
 
 	@GetMapping(value = "/topos/{topoId}")
@@ -236,13 +242,13 @@ public class TopoController {
 	 * @return a ModelMap with the model attributes for the view
 	 */
 
-	@RequestMapping("/topos/{topoId}/topoBkgs/{topoBkgId}/topoDetails")
+	@GetMapping("/topos/{topoId}/topoBkgs/{topoBkgId}/topoDetails")
 	public ModelAndView showtopo(@PathVariable("topoId") Integer topoId, @PathVariable("topoBkgId") Integer topoBkgId) {
 		ModelAndView mav = new ModelAndView("topos/topoDetails");
 		mav.addObject(this.escaladeService.findTopoById(topoId));
 		return mav;
 	}
-	
+
 	@GetMapping(value = "/FindtoposByUserName")
 	public String processtoposByUserName(Topo topo, BindingResult result, Map<String, Object> model, User user, Principal principal) {
 
@@ -252,7 +258,7 @@ public class TopoController {
 		}
 		String userName = principal.getName();
 		List<Topo> results = this.escaladeService.findTopoByUserName(userName);
-		
+
 		if (results.isEmpty()) {
 			// no areas found
 			result.rejectValue("name", "notFound", "not found");
@@ -264,5 +270,5 @@ public class TopoController {
 			return "topos/toposList";
 		}
 	}
-	
+
 }

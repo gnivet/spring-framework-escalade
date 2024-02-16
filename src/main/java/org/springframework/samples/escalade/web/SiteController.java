@@ -35,7 +35,6 @@ import org.springframework.samples.escalade.repository.UserRepository;
 import org.springframework.samples.escalade.repository.WayRepository;
 import org.springframework.samples.escalade.repository.ZoneRepository;
 import org.springframework.samples.escalade.service.EscaladeService;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -82,10 +81,10 @@ public class SiteController {
 	@GetMapping("/sites/new")
 	public String initCreationForm(Map<String, Object> model) {
 		Site site = new Site();
-		model.put("site", site);		
+		model.put("site", site);
 		return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
 	}
-		
+
 
 	@PostMapping("/sites/new")
 	public String processCreationForm(@Valid Site site, BindingResult result) {
@@ -115,7 +114,7 @@ public class SiteController {
 
 		Site site = new Site();
 		model.put("site", site);
-		
+
 		// Input Area
 		Area area = this.areaRepository.findAreaById(areaId);
 		if (area == null || area.equals(" ")) {
@@ -132,7 +131,7 @@ public class SiteController {
 
 		return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
 	}
-	
+
 	/*
 	@GetMapping(value = "/sites/{siteId}/zones/new")
 	public String initCreationForm(Map<String, Object> model, @PathVariable("siteId") Integer siteId) {
@@ -143,7 +142,7 @@ public class SiteController {
 		return VIEWS_SITES_CREATE_OR_UPDATE_FORM;
 	}
 	*/
-	
+
 	/*
 	@GetMapping(value= "/sites/{siteId}/zones/new")
 	public String processCreationForm(ModelMap model, Principal principal, @PathVariable Integer siteId,
@@ -289,7 +288,7 @@ public class SiteController {
 			Map<String, Object> model) {
 
 		// allow parameterless GET request for /areas to return all records
-	
+
 		if (site.getName() == null) {
 			site.setName(""); // empty string signifies broadest possible search
 		}
@@ -297,10 +296,10 @@ public class SiteController {
 		if (zone.getName() == null) {
 			zone.setName(""); // empty string signifies broadest possible search
 		}
-			
+
 		Collection<Site> results = this.escaladeService.findSiteByName(site.getName());
-			
-	
+
+
 		if (results.isEmpty()) {
 			// no sites found
 			result.rejectValue("name", "notFound", "not found");
@@ -386,7 +385,7 @@ public class SiteController {
 			return "redirect:/sites/{siteId}";
 		}
 	}
-	
-	
+
+
 
 }

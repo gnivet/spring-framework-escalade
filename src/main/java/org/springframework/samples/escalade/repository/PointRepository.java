@@ -12,6 +12,6 @@ public interface PointRepository {
 	Point savePoint(Point point)throws DataAccessException;
 	Point findPointById(Integer pointId)throws DataAccessException;
 	Collection<Point> findPointByName(String name);
-	NamedEntity updatePoint(Point point)throws DataAccessException;	
+	NamedEntity updatePoint(Point point)throws DataAccessException;
 	}
 

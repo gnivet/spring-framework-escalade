@@ -41,16 +41,16 @@ public interface SiteRepository {
      * Retrieve a <code>Site</code> from the data store by id.
      *
      * @param userName the userName to search for
-	 * @param siteId 
+	 * @param siteId
 	 * @return the <code>Site</code> if found
      * @throws org.springframework.dao.DataRetrievalFailureException if not found
      */
     Integer findSiteOwnedbyUser(String userName, Integer siteId) throws DataAccessException;
- 
+
     List<Site> findSite() throws DataAccessException;
-    
+
     public List<Site> findAll();
-    
+
     /**
      * Retrieve a <code>Site</code> from the data store by id.
      *
@@ -64,18 +64,18 @@ public interface SiteRepository {
      * Save a <code>Site</code> to the data store, either inserting or updating it.
      * @param site TODO
      * @param Topo the <code>Site</code> to save
-     * @return 
+     * @return
      * @see BaseEntity#isNew
      */
-    
+
     /**
 	 * Save an {@link Site} to the data store, either inserting or updating it.
 	 * @param site the {@link Owner} to save
 	 */
-	void site(Site site) throws DataAccessException;;
-    
+	void site(Site site) throws DataAccessException;
+
     Site saveSite(Site site)  throws DataAccessException;
-   
+
     /**
      * Retrieve a <code>Zone</code> from the data store by id.
      *
@@ -83,17 +83,17 @@ public interface SiteRepository {
      * @return the <code>Zone</code> if found
      * @throws org.springframework.dao.DataRetrievalFailureException if not found
      */
-    
+
     Zone findZoneById(Integer id)  throws DataAccessException;
-    
+
     /**
      * Save a <code>Zone</code> to the data store, either inserting or updating it.
      *
      * @param Zone the <code>Zone</code> to save
      * @see BaseEntity#isNew
-     */	
+     */
     void saveZone(Zone zone) throws DataAccessException;
-    
+
     /**
      * Retrieve a <code>Way</code> from the data store by id.
      *
@@ -102,17 +102,17 @@ public interface SiteRepository {
      * @throws org.springframework.dao.DataRetrievalFailureException if not found
      */
     Way findWayById(Integer id)  throws DataAccessException;
-    
+
     /**
      * Save a <code>Way</code> to the data store, either inserting or updating it.
      *
      * @param Zone the <code>Way</code> to save
-     * @return 
+     * @return
      * @see BaseEntity#isNew
-     */	
+     */
     Way saveWay(Way Way) throws DataAccessException;
-    
-   
+
+
     /**
      * Save a <code>Part</code> to the data store, either inserting or updating it.
      *
@@ -124,15 +124,15 @@ public interface SiteRepository {
      * @throws org.springframework.dao.DataRetrievalFailureException if not found
      */
     Length findLengthById(Integer id)  throws DataAccessException;
-    
+
     /**
      * Save a <code>Length</code> to the data store, either inserting or updating it.
      *
      * @param Zone the <code>Length</code> to save
      * @see BaseEntity#isNew
-     */	
+     */
     void saveLength(Length Length) throws DataAccessException;
-    
+
     /**
      * Retrieve a <code>PoInteger</code> from the data store by id.
      *
@@ -141,15 +141,15 @@ public interface SiteRepository {
      * @throws org.springframework.dao.DataRetrievalFailureException if not found
      */
     Point findPointById(Integer id)  throws DataAccessException;
-    
+
     /**
      * Save a <code>PoInteger</code> to the data store, either inserting or updating it.
      *
      * @param Zone the <code>PoInteger</code> to save
      * @see BaseEntity#isNew
-     */	
+     */
     void savePoint(Point point) throws DataAccessException;
-    
+
     /**
      * Retrieve a <code>Area</code> from the data store by id.
      *
@@ -158,13 +158,13 @@ public interface SiteRepository {
      * @throws org.springframework.dao.DataRetrievalFailureException if not found
      */
     NamedEntity findAreaById(Integer id)  throws DataAccessException;
-    
+
     /**
      * Save a <code>Area</code> to the data store, either inserting or updating it.
      *
      * @param Zone the <code>Area</code> to save
      * @see BaseEntity#isNew
-     */	
+     */
     void saveArea(Area area) throws DataAccessException;
 
 	Collection<Area> findSiteByPostalCode(String postalcode)  throws DataAccessException;
@@ -174,12 +174,12 @@ public interface SiteRepository {
 	//Collection<Site> findSiteByName(String name);
 
 	public Collection<Site> listSites();
-	
 
-	
+
+
 	public Collection<Site> findSiteByName(String name)throws DataAccessException;
 
-	Integer findSiteOwnedByUsername(String userName)throws DataAccessException;
+	Integer findCountSiteOwnedByUsername(String userName)throws DataAccessException;
 
 	Site findSiteByUsername(String userName)throws DataAccessException;
 
@@ -187,7 +187,7 @@ public interface SiteRepository {
 
 
 
-	
 
-	
+
+
 }

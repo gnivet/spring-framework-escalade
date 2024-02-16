@@ -48,7 +48,7 @@
 							<tr>
 							<th scope="row">3</th>
 							<td>My ways list:</td>
-							<td><a href="/dashboards/dashboard"><button class="btn-link"></button>way
+							<td><a href="/ways"><button class="btn-link"></button>way
 									list </a></td>
 						</tr>						
 						<tr>

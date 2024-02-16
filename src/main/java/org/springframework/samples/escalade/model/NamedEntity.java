@@ -34,11 +34,13 @@ public class NamedEntity extends BaseEntity {
 	//@Size(min = 2)
 	public String name;
 
-    public String getName() {
+    @Override
+	public String getName() {
         return this.name;
     }
 
-    public void setName(String name) {
+    @Override
+	public void setName(String name) {
         this.name = name;
     }
 

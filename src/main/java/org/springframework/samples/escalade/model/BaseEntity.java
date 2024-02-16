@@ -33,9 +33,9 @@ public class BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "base_entity_generator")
 	@SequenceGenerator(name = "base_entity_generator", sequenceName = "base_entity_sequence")
-	
+
    	public Integer id;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -47,9 +47,9 @@ public class BaseEntity {
 	public boolean isNew() {
 		return this.id == null;
 	}
-	
+
 	public String name;
-	
+
 	public String getName() {
 		return name;
 	}
@@ -59,13 +59,13 @@ public class BaseEntity {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public BaseEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-		
-	
+
+
+
 }

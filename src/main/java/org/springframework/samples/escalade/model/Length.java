@@ -1,14 +1,11 @@
 package org.springframework.samples.escalade.model;
 
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,33 +20,15 @@ public class Length extends NamedEntity {
 	//@NotEmpty
 	private String under_cotation;
 
-	/**
-	 * Holds value of property roles. FOREIGN KEY (point_id)
-	 */
-	
-	  @ManyToOne	  
-	  @JoinColumn(name = "point_id", nullable = true)
-	  private Point point;
-
 	@Column(name = "comment")
 	//@NotEmpty
 	private String comment;
-	
-	
+
+
 	@Column(name = "length_status")
-	//@NotNull	
+	//@NotNull
 	private boolean length_status;
-	
 
-	
-	@ManyToOne
-	@JoinColumn(name = "way_id",  nullable = true)
-	private Way way;
-	
-	@OneToMany(targetEntity = Point.class, cascade = CascadeType.ALL, mappedBy = "length" , fetch=FetchType.EAGER)
-    private Set<Point> points;
-
-	
 
 	public Integer getCotation() {
 		return cotation;
@@ -67,7 +46,7 @@ public class Length extends NamedEntity {
 		this.under_cotation = under_cotation;
 	}
 
-	
+
 	public String getComment() {
 		return comment;
 	}
@@ -84,27 +63,22 @@ public class Length extends NamedEntity {
 		this.length_status = length_status;
 	}
 
-	public Set<Point> getPoints() {
-		return points;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id", nullable = true)
+	private User user;
+
+	public User getUser() {
+		return user;
 	}
 
-	public void setPoints(Set<Point> point) {
-		this.points = point;
+	public void setUser(User user) {
+		this.user = user;
 	}
-
-	public Way getWay() {
-		return way;
-	}
-
-	public void setWay(Way way) {
-		this.way = way;
-	}
-
 	/**
-	 * 
+	 *
 	 */
 	public Length() {
 	}
-	
-	
+
+
 }

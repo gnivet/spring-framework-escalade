@@ -22,14 +22,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.samples.escalade.model.Area;
 import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.repository.AreaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 /**
  * JPA implementation of the {@link AreaRepository} Integererface.
@@ -54,6 +52,7 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 		return query.getResultList();
 	}
 
+	@Override
 	public Area findAreaById(Integer id) {
 		// using 'join fetch' because a single query should load both areas and topos
 		// using 'left join fetch' because it might happen that an owner does not have
@@ -64,6 +63,7 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 		return (Area) query.getSingleResult();
 	}
 
+	@Override
 	public Area saveArea(Area area) {
 
 		if (area.getId() == null) {
@@ -75,7 +75,7 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 		}
 		return area;
 	}
-//modificaction pour générer une pk sur l'entité site  
+//modificaction pour générer une pk sur l'entité site
 	public NamedEntity saveSite(NamedEntity site) {
 
 		if (site.getId() == null) {
@@ -86,9 +86,9 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 			this.em.merge(site);
 		}
 		return site;
-	} 
-	
-	
+	}
+
+
 	public EntityManager getEm() {
 		return em;
 	}
@@ -97,6 +97,7 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 		this.em = em;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Area> findAll() {
 		// TODO Auto-generated method stub
@@ -120,13 +121,16 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 
 	}
 
+	@Override
 	public NamedEntity updateArea(Area area) {
-		if (!this.em.contains(area))
+		if (!this.em.contains(area)) {
 			this.em.merge(area);
+		}
 		return area;
 	}
 
-	
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public Collection<Area> findSiteByPostalcode(String postalcode) {
 		// TODO Auto-generated method stub
@@ -152,17 +156,18 @@ public class JpaAreaRepositoryImpl implements AreaRepository {
 		return query.getResultList();
 	}
 
-	
+
+	@Override
 	public Area deleteAreaById(Integer areaId) {
 	Query query = this.em.createQuery("delete area from Area WHERE area.areaId = :areaId");
 	query.setParameter("areaId", "%" + areaId + "%");
 	return null;
 	}
-	
-	
-	
 
 
-	
+
+
+
+
 
 }

@@ -7,11 +7,15 @@ import org.springframework.samples.escalade.model.Way;
 
 
 public interface WayRepository {
-	
+
 	Way findWayById(Integer id) throws DataAccessException;
-	
+
 	Way saveWay(Way way) throws DataAccessException;
 
 	Collection<Way> findWayByName(String name);
-	
+
+	Collection<Way> findWayAvailableByName(String name);
+
+	Collection<Way> findWayByUserName(String userName);
+
 }

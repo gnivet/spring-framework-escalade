@@ -16,16 +16,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class JpaWayRepositoryImpl implements WayRepository{
 
-	
+
 
 		@PersistenceContext
 		private EntityManager em;
 
+		@Override
 		public Way findWayById(Integer id) {
 			return this.em.find(Way.class, id);
 		}
 
-		
+
 		public Way findById(Integer id) throws DataAccessException {
 			// TODO Auto-generated method stub
 
@@ -33,13 +34,14 @@ public class JpaWayRepositoryImpl implements WayRepository{
 			query.setParameter("id", id);
 			return (Way) query.getSingleResult();
 		}
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
 		// Add Way to Site form
+		@Override
 		public Way saveWay(Way way) throws DataAccessException {
 			if (way.getId() == null) {
 				this.em.persist(way);
@@ -51,6 +53,7 @@ public class JpaWayRepositoryImpl implements WayRepository{
 		}
 
 
+		@Override
 		@SuppressWarnings("unchecked")
 		public Collection<Way> findWayByName(String name) throws DataAccessException{
 			// TODO Auto-generated method stub
@@ -58,11 +61,35 @@ public class JpaWayRepositoryImpl implements WayRepository{
 			query.setParameter("name", "%" + name + "%");
 			return  query.getResultList();
 		}
-		
-		
 
-		
-		
-		
-	
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public Collection<Way> findWayAvailableByName(String name) {
+			// TODO Auto-generated method stub
+			
+			Query query = this.em
+					.createQuery("SELECT DISTINCT way from Way way");
+			query.setParameter("name", "%" + name + "%");
+			return query.getResultList();
+		}
+
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public Collection<Way> findWayByUserName(String userName) {
+			// TODO Auto-generated method stub
+
+			Query query = this.em.createQuery("SELECT way FROM Way way WHERE way.user.userName like :userName");
+
+			query.setParameter("userName", "%" + userName + "%");
+			return  query.getResultList();
+		}
+
+
+
+
+
+
+
 }

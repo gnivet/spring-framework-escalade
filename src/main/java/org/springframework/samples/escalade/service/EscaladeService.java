@@ -67,7 +67,7 @@ public interface EscaladeService {
 	Topo findTopoById(Integer id) throws DataAccessException;
 
 	Topo saveTopo(Topo topo) throws DataAccessException;
-	
+
 	Topo findTopo()  throws DataAccessException;
 
 	/*
@@ -79,7 +79,7 @@ public interface EscaladeService {
 	Area saveArea(Area area) throws DataAccessException;
 
 	Collection<Area> findSiteByPostalCode(String postalcode) throws DataAccessException;
-	
+
 	NamedEntity updateArea(Area area)throws DataAccessException;
 
 	/*
@@ -94,7 +94,7 @@ public interface EscaladeService {
 	Comment findCommentById(Integer id) throws DataAccessException;
 
 	Collection<Comment> findCommentByName(String name) throws DataAccessException;
-	
+
 	Integer findCommentNumber(String username) throws DataAccessException;
 
 	/*
@@ -104,16 +104,16 @@ public interface EscaladeService {
 	Zone saveZone(Zone zone) throws DataAccessException;
 
 	Zone findZoneById(Integer id) throws DataAccessException;
-	
-	
+
+
 	Collection<Zone> findZoneByName(String name) throws DataAccessException;
-	
-		
-	Collection<Zone> findZones() throws DataAccessException; 
-	
+
+
+	Collection<Zone> findZones() throws DataAccessException;
+
 	Collection<Zone> findZoneBySiteName(String name) throws DataAccessException;
 
-	
+
 	/*
 	 * Site
 	 */
@@ -121,9 +121,9 @@ public interface EscaladeService {
 	Site saveSite(Site site) throws DataAccessException;
 
 	Site findSiteById(Integer id) throws DataAccessException;
-	
+
 	Site findSiteOwnedbyUser(String userName) throws DataAccessException;
-	
+
 	Collection<Site> findSiteByName(String name)throws DataAccessException;
 	/*
 	 * SiteType
@@ -134,17 +134,17 @@ public interface EscaladeService {
 	List<SiteType> findSiteTypesList() throws DataAccessException;
 
 	SiteType findById(Integer id) throws DataAccessException;
-	
+
 	Collection<SiteType> findSiteTypeByName(String name);
 
 	SiteType findSiteTypeById(Integer siteTypeId);
-	
+
 	Collection<SiteType> findSiteTypes()throws DataAccessException;
 
 	/*
 	 * Way
 	 */
-	
+
 	Way saveway(Way way)throws DataAccessException;
 
 	Collection<Way> findWayByName(String name)throws DataAccessException;
@@ -153,39 +153,39 @@ public interface EscaladeService {
 
 	NamedEntity updateZone(Zone zone)throws DataAccessException;
 
-	
+
 
 	/*
 	 * Length
 	 */
-	
+
 	Length saveLength(Length length)throws DataAccessException;
 
 	Collection<Length> findLengthByName(String name)throws DataAccessException;
-		
+
 	Length findLengthById(Integer lengthId)throws DataAccessException;
 
 	NamedEntity updateLength(Length length)throws DataAccessException;
-	
-	
-	
+
+
+
 	/*
 	 * Point
 	 */
 	Point savePoint(Point point) throws DataAccessException;
 
 	Collection<Point> findPointByName(String name)throws DataAccessException;
-	
-	Point findPointById(Integer pointId)throws DataAccessException;
-	
-	NamedEntity updatePoint(Point point)throws DataAccessException;
-	
 
-	void saveVisit(@Valid Visit visit)throws DataAccessException;;
+	Point findPointById(Integer pointId)throws DataAccessException;
+
+	NamedEntity updatePoint(Point point)throws DataAccessException;
+
+
+	void saveVisit(@Valid Visit visit)throws DataAccessException;
 
 	Integer findByUsername(String userName)throws DataAccessException;
 
-	Integer findSiteOwnedByUsername(String userName)throws DataAccessException;
+	Integer findCountSiteOwnedByUsername(String userName)throws DataAccessException;
 
 	Collection<Comment> findCommentByUsername(String userName)throws DataAccessException;
 
@@ -200,62 +200,69 @@ public interface EscaladeService {
 
 	//Collection<TopoBkg> findTopoBkgByName(String name)throws DataAccessException;
 
-	
+
 
 	TopoBkg updateTopoBkg(TopoBkg topoBkgToModify)throws  escaladeException;
 
-	
+
 	TopoBkg saveTopoBkg(TopoBkg topoBkg) throws DataAccessException;
 
 	Collection<Topo> findTopos() throws DataAccessException;
 
-	
-    Collection <Topo> findTopoAvailableByName(String name) throws DataAccessException;
+
+    Collection <Topo> findTopoAvailableByName() throws DataAccessException;
 
 	Topo findTopoBookedBytopoBkgId(@NotNull Integer topoBkgId)throws DataAccessException;
-	
 
-	
+
+
 	List<Topo> findTopoByUserName(String userName)throws DataAccessException;
 
-	User findUserIdByUserName(String userName);
+	User findUserIdByUserName(String userName)throws DataAccessException;;
 
-	List<Topo> findTopoByUserId(Integer id);
-	
+	List<Topo> findTopoByUserId(Integer id)throws DataAccessException;;
+
 	TopoBkg findSingleTopoBkgById(Integer topoBkgId)throws DataAccessException;
 
 	List<TopoBkg> findTopoBkgById(Integer topoBkgId) throws DataAccessException;
 
-	Topo findTopoByNames(String name);
+	Topo findTopoByNames(String name)throws DataAccessException;;
 
 	Collection<TopoBkg> findToposBkgs(Integer id)throws DataAccessException;
 
 	Collection<Area> listAreas()throws DataAccessException;
 
 	Site updateSite( Site siteToModify)throws DataAccessException;
-	
-	Collection<TopoBkg> findTopoBkgByUserName(String userName);
 
-	Collection<TopoBkg> findTopoBkgByUserId(Integer userId);
+	Collection<TopoBkg> findTopoBkgByUserName(String userName)throws DataAccessException;;
 
-	Collection<TopoBkg> findTopoBkgByUserId(User userId);
-	
-	Collection<TopoBkg> findTopoBkgs();
-	Collection<TopoBkg> findTopoBkg(String name);
+	Collection<TopoBkg> findTopoBkgByUserId(Integer userId)throws DataAccessException;;
 
-	Collection<Topo> findTopoAvailableByUserId(Integer id);
+	Collection<TopoBkg> findTopoBkgByUserId(User userId)throws DataAccessException;;
+
+	Collection<TopoBkg> findTopoBkgs()throws DataAccessException;;
+	Collection<TopoBkg> findTopoBkg(String name)throws DataAccessException;;
+
+	Collection<Topo> findTopoAvailableByUserId(Integer id)throws DataAccessException;;
 
 	Collection<TopoBkg> findTopoBkgByIda(Integer id) throws DataAccessException;
 
-	
 
-	public void deleteAreaById(Integer areaId);
 
-	Collection<Site> ListSites()throws DataAccessException;;
-    	
+	public void deleteAreaById(Integer areaId)throws DataAccessException;;
 
-	
-	
-	
-	
+	Collection<Site> ListSites()throws DataAccessException;
+
+	Collection<Way> findWayAvailableByName(String name)throws DataAccessException;
+
+
+	Integer findCountNumberCommentByUsername(String userName)throws DataAccessException;
+
+	Collection<Way> findWayByUserName(String userName)throws DataAccessException;;
+
+
+
+
+
+
 }

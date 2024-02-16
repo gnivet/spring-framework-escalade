@@ -47,9 +47,15 @@
                          <button class="btn btn-default" type="submit">Update Site</button> 
                          <a class="btn btn-default" href='<spring:url value="/sites/${site.id}/sites/new" htmlEscape="true"/>'>Add area</a>
                          <a class="btn btn-default"
-								href='<spring:url value="/sites/${site.id}/zones/new" htmlEscape="true"/>'>Add zone</a>
-                          <a class="btn btn-default"
-								href='<spring:url value="/sites/${site.id}/comments/new/" htmlEscape="true"/>'>Add comment</a>
+								href='<spring:url value="/sites/${site.id}/zones/new" htmlEscape="true"/>'>Add zone</a>                        
+						 <a class="btn btn-default"
+								href='<spring:url value="/sites/${site.id}/ways/new/" htmlEscape="true"/>'>Add way</a> 
+						 <a class="btn btn-default"
+								href='<spring:url value="/sites/${site.id}/lengths/new/" htmlEscape="true"/>'>Add length</a>	
+						 <a class="btn btn-default"
+								href='<spring:url value="/sites/${site.id}/points/new/" htmlEscape="true"/>'>Add point</a>
+						 <a class="btn btn-default"
+								href='<spring:url value="/sites/${site.id}/comments/new/" htmlEscape="true"/>'>Add comment</a>	
                     </c:otherwise>
                 </c:choose>
             </div>

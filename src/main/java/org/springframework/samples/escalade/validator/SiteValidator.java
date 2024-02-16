@@ -27,7 +27,7 @@ import org.springframework.validation.Validator;
  * We're not using Bean Validation annotations here because it is easier to define such validation rule in Java.
  * </p>
  *
- * @author Guillaume Nivet 
+ * @author Guillaume Nivet
  */
 public class SiteValidator implements Validator {
 
@@ -46,12 +46,12 @@ public class SiteValidator implements Validator {
         if (site.isNew() && site.getUser() == null) {
             errors.rejectValue("type", REQUIRED, REQUIRED);
         }
-        	
+
         // birth date validation
         if (site.getBirthDate() == null) {
             errors.rejectValue("birthDate", REQUIRED, REQUIRED);
         }
-       
+
     }
 
     /**

@@ -16,10 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class JpaTopoRepositoryImpl implements TopoRepository {
-	
+
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Override
 	public Topo findTopoById(int id) throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -32,7 +32,7 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 	public Topo saveTopo(Topo topo) throws DataAccessException {
 		// TODO Auto-generated method stub
 		if (topo.getId() == null) {
-			this.em.persist(topo);			
+			this.em.persist(topo);
 		} else {
 			this.em.merge(topo);
 		}
@@ -42,13 +42,14 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 	@Override
 	public Topo updateTopo(Topo topo) {
 		// TODO Auto-generated method stub
-		if (!this.em.contains(topo))
+		if (!this.em.contains(topo)) {
 			this.em.merge(topo);
-		
+		}
+
 		return topo;
 	}
-	
-	
+
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Topo> findTopoByName() throws DataAccessException {
@@ -56,74 +57,65 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 
 		Query query = this.em
 				.createQuery("SELECT DISTINCT topo from Topo topo");
-		
+
 		return query.getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Collection<Topo> findTopoAvailableByName() throws DataAccessException {
-		// TODO Auto-generated method stub
-		Query query = this.em
-				.createQuery("SELECT DISTINCT topo from Topo topo");		
-		
-		return query.getResultList();
-	}
 
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Topo> findTopoByUserName(String userName) {
-		// TODO Auto-generated method stub	
-		
+		// TODO Auto-generated method stub
+
 		Query query = this.em.createQuery("SELECT topo FROM Topo topo WHERE topo.user.userName like :userName");
-		
-		query.setParameter("userName", "%" + userName + "%");		 
+
+		query.setParameter("userName", "%" + userName + "%");
 		return  query.getResultList();
 	}
-	
 
-	
 
-	
 
-	
+
+
+
+
 
 	@SuppressWarnings("unchecked")
 	public List<Topo> getJoinInformation(String userName) {
 		// TODO Auto-generated method stub
-		
+
 		Query query = this.em.createQuery("SELECT new TopoResponse(t.name, t.available, t.comment_date, t.description, u.first_name, u.last_name ) FROM Topo t JOIN u.userName User u where u.userName like: userName");
 		{
-				query.setParameter("userName", "%" + userName + "%");		 
+				query.setParameter("userName", "%" + userName + "%");
 		//return  query.getResultList();
 		return query.getResultList() ;	}
-				
-		
-		
+
+
+
 	}
 
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	
+
 	public Collection<Topo> findTopoAvailableByUserId(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Query query = this.em
 				.createQuery("SELECT DISTINCT topo from Topo topo WHERE user_id = :id and topo.available = true");
 		query.setParameter("id", id);
-		
+
 		return query.getResultList();
 	}
-	
-	
+
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Topo> findTopoByUserId(Integer id) {
 		// TODO Auto-generated method stub
 	Query query = this.em.createQuery("SELECT topo FROM Topo topo WHERE user_id = :id");
-		
-		query.setParameter("id",  id );		 
+
+		query.setParameter("id",  id );
 		return  query.getResultList();
 	}
 
@@ -137,18 +129,24 @@ public class JpaTopoRepositoryImpl implements TopoRepository {
 
 	@Override
 	public Topo findTopo() throws DataAccessException {
-		return (Topo) this.em.createQuery("SELECT topo FROM Topo topo" , Topo.class)                
+		return this.em.createQuery("SELECT topo FROM Topo topo" , Topo.class)
                 .getSingleResult();
 	}
 
-	
-	
-
-	
-	
-	
+	@Override
+	public Collection<Topo> findTopoAvailableByName() throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	
-	
+
+
+
+
+
+
+	}
+
+
+
 

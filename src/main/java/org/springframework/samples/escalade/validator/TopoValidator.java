@@ -27,7 +27,7 @@ import org.springframework.validation.Validator;
  * We're not using Bean Validation annotations here because it is easier to define such validation rule in Java.
  * </p>
  *
- * @author Guillaume Nivet 
+ * @author Guillaume Nivet
  */
 public class TopoValidator implements Validator {
 
@@ -41,23 +41,23 @@ public class TopoValidator implements Validator {
         if (!StringUtils.hasLength(name)) {
             errors.rejectValue("name", REQUIRED, REQUIRED);
         }
-        
+
         // description validation
         String description = topo.getDescription();
         if (!StringUtils.hasLength(description)) {
             errors.rejectValue("description", REQUIRED, REQUIRED);
         }
-       
+
         // type validation
         if (topo.isNew() && topo.getUser() == null) {
             errors.rejectValue("type", REQUIRED, REQUIRED);
         }
-        	
+
         // birth date validation
         if (topo.getDescription() == null) {
             errors.rejectValue("description", REQUIRED, REQUIRED);
         }
-       
+
     }
 
     /**

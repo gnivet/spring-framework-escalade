@@ -20,6 +20,7 @@ public class JpaCommentRepositoryImpl implements CommentRepository {
 	@PersistenceContext
 	private EntityManager em;
 
+	@Override
 	public Comment findCommentById(Integer id) {
 
 		Query query = this.em.createQuery("SELECT comment FROM Comment comment WHERE comment.id =:id");
@@ -27,6 +28,7 @@ public class JpaCommentRepositoryImpl implements CommentRepository {
 		return (Comment) query.getSingleResult();
 	}
 
+	@Override
 	public Comment saveComment(Comment comment) {
 
 		if (comment.getId() == null) {
@@ -38,7 +40,8 @@ public class JpaCommentRepositoryImpl implements CommentRepository {
 
 	}
 
-	
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public Collection<Comment> findCommentByName(String name) {
 		// TODO Auto-generated method stub
@@ -65,25 +68,38 @@ public class JpaCommentRepositoryImpl implements CommentRepository {
 		return (Integer) query.getSingleResult();
 
 	}
-
+	
 	@Override
-	public Integer findByUsername(String userName) throws DataAccessException {
+	public Integer findCountNumberCommentByUsername(String userName) throws DataAccessException {
 		// TODO Auto-generated method stub
+	
 		Query query = this.em.createQuery(
 				"select count(*) from Comment comment join User user on comment.user.id = user.id where user.userName like :userName");
 		query.setParameter("userName", userName);
+		
+		
 		try {
 			return (Integer) query.getSingleResult();
 			
 		}
 		catch(Exception e) {
 			  //  Block of code to handle errors
-			System.out.println("Something went wrong.");
-			}	
+			System.out.println("Something went wrong with comment's number.");
+			
+			}
 		return null;
-		
+
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
 	@SuppressWarnings("unchecked")
 	public Collection<Comment> findCommentByUsername(String userName) throws DataAccessException {
 
@@ -97,9 +113,18 @@ public class JpaCommentRepositoryImpl implements CommentRepository {
 	@Override
 	public NamedEntity updateComment(Comment comment) throws DataAccessException {
 		// TODO Auto-generated method stub
-		if (!this.em.contains(comment))
+		if (!this.em.contains(comment)) {
 			this.em.merge(comment);
+		}
 		return comment;
 	}
+
+	@Override
+	public Integer findByUsername(String userName) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }

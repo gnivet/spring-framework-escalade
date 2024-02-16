@@ -27,8 +27,8 @@ public class UserValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 
 		User user = (User) obj;
-				
-		
+
+
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "NotEmpty");
 		if (user.getUserName().length() < 6 || user.getUserName().length() > 32) {
 			errors.rejectValue("userName", "Size.user.userName");
@@ -55,13 +55,13 @@ public class UserValidator implements Validator {
 					errors.rejectValue("password", REQUIRED, REQUIRED);
 
 				}
-				
-				
-				
+
+
+
 			}
-			
-			
-			
+
+
+
 			String firstName = user.getFirstName();
 			if (StringUtils.hasLength(firstName)) {
 				errors.rejectValue("firstName", REQUIRED, REQUIRED);
@@ -72,13 +72,13 @@ public class UserValidator implements Validator {
 				errors.rejectValue("lastName", REQUIRED, REQUIRED);
 
 			}
-			
+
 			String address = user.getAddress();
 			if (!StringUtils.hasLength(address)) {
 				errors.rejectValue("address", REQUIRED, REQUIRED);
 
 			}
-			
+
 			String postalCode = user.getPostalCode();
 			if (!StringUtils.hasLength(postalCode)) {
 				errors.rejectValue("postalCode", REQUIRED, REQUIRED);
@@ -89,19 +89,19 @@ public class UserValidator implements Validator {
 				errors.rejectValue("city", REQUIRED, REQUIRED);
 
 			}
-			
+
 			String email = user.getEmail();
 			if (!StringUtils.hasLength(email)) {
 				errors.rejectValue("email", REQUIRED, REQUIRED);
 
 			}
-			
+
 			String telephone  = user.getTelephone();
 			if (!StringUtils.hasLength(telephone)) {
 				errors.rejectValue("telephone", REQUIRED, REQUIRED);
 
 			}
-			
+
 		}
 	}
 }

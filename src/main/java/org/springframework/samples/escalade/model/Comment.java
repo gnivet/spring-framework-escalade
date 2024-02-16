@@ -21,16 +21,18 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "comments")
 public class Comment extends NamedEntity {
 
-		
-	
+
+
 	@ManyToOne
 	@JoinColumn(name = "site_id", nullable = true)
-	private Site site;	
+	private Site site;
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = true)
-	private User user;	
+	private User user;
 	
+
 	@Column(name = "comment")
 	@NotEmpty
 	private String comment;
@@ -49,16 +51,7 @@ public class Comment extends NamedEntity {
 	public void setSite(Site site) {
 		this.site = site;
 	}
-
-		
 	
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
 
 	public String getComment() {
 		return this.comment;
@@ -67,8 +60,16 @@ public class Comment extends NamedEntity {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
-		
+
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public LocalDate getDate() {
 		return date;
 	}
@@ -76,18 +77,18 @@ public class Comment extends NamedEntity {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
+
 	
-	
-	
-	
+
+
 
 	public Comment() {
 		// TODO Auto-generated constructor stub
 		this.date = LocalDate.now();
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	}

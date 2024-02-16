@@ -41,33 +41,33 @@ import org.springframework.web.servlet.ModelAndView;
 public class SiteTypeController {
 
 	private static final String VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM = "sitetypes/createOrUpdateSiteTypeForm";
-	private final EscaladeService escaladeService;	
+	private final EscaladeService escaladeService;
 	@Autowired
 	public SiteTypeController(EscaladeService escaladeService , SiteTypeRepository siteTypeRepository) {
 		this.escaladeService = escaladeService;
 	}
-	
-	
+
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
-	 
-	
+
+
+
 	@GetMapping(value = "/sitetypes/new")
     public String initCreationForm(Map<String, Object> model) {
         SiteType siteType = new SiteType();
         model.put("siteType", siteType);
         return VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM;
     }
-	
-		
+
+
     @PostMapping(value = "/sitetypes/new")
     public String processCreationForm(  SiteType siteType, BindingResult result, Integer siteTypeId, Model model, Principal principal) {
-    	
-    	
-		
+
+
+
 		/**
 		 * Retrieve a <code>User</code> from the data store by id.
 		 *
@@ -76,33 +76,33 @@ public class SiteTypeController {
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 
-		
-		
-		
-    			     	
+
+
+
+
     	//siteType = this.siteTypeRepository.findSiteTypeById(siteTypeId);
         if (result.hasErrors()) {
             return VIEWS_SITETYPE_CREATE_OR_UPDATE_FORM;
         } else {
-           
-        	
-			
-		
+
+
+
+
         	//siteType = this.escaladeService.saveSiteType(siteType);
-			
+
             return "redirect:/sitetypes/" + siteType.getId();
         }
     }
-       
+
     @GetMapping(value = "/sitetypes/find")
 	public String initFindForm(Map<String, Object> model) {
-		model.put("siteType", new SiteType());		
+		model.put("siteType", new SiteType());
 		 return "/sitetypes/findSiteTypes";
 	}
 
-    
-   	
-      
+
+
+
 //findSite
 	@GetMapping(value = "/sitetypes")
 	public String processFindForm(SiteType siteType, BindingResult result, Map<String, Object> model) {
@@ -111,17 +111,17 @@ public class SiteTypeController {
 			siteType.setName(""); // empty string signifies broadest possible search
 		}
 
-		
-		
+
+
 		// find areas by postal code
 		//Collection<SiteType> results = this.escaladeService.findSiteTypeByName(siteType.getName());
 		Collection<SiteType> results = this.escaladeService.findSiteTypes();
-		
+
 		if (results.isEmpty()) {
 			// no areas found
 			result.rejectValue("name", "notFound", "not found");
 			return "sitetypes/findSiteTypes";
-			
+
 		} else {
 			// multiple areas found
 			model.put("selections", results);
@@ -148,7 +148,7 @@ public class SiteTypeController {
 			return "redirect:/sitetypes/{siteTypeId}";
 		}
 	}
-	
+
 	/**
 	 * Custom handler for displaying an site type.
 	 *
@@ -162,5 +162,5 @@ public class SiteTypeController {
 		return mav;
 	}
 
-	
+
 }

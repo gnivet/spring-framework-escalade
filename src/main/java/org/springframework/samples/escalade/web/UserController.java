@@ -78,11 +78,13 @@ public class UserController {
 	public String login(Model model, String error, String logout) {
 		model.addAttribute("user", new User());
 
-		if (error != null)
+		if (error != null) {
 			model.addAttribute("error", "Your username and password is invalid.");
+		}
 
-		if (logout != null)
+		if (logout != null) {
 			model.addAttribute("message", "You have been logged out successfully.");
+		}
 
 		return "/users/login";
 	}

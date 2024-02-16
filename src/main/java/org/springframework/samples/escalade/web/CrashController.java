@@ -16,11 +16,11 @@ public class CrashController {
 
     @GetMapping(value = "/error/error")
     public String triggerException() {
-    	    	
+
         throw new RuntimeException("Expected: controller used to showcase what " +
             "happens when an exception is thrown");
     }
 
-    
+
 }
 

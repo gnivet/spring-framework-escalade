@@ -29,7 +29,7 @@ import org.springframework.validation.Validator;
  * We're not using Bean Validation annotations here because it is easier to define such validation rule in Java.
  * </p>
  *
- * @author Guillaume Nivet 
+ * @author Guillaume Nivet
  */
 public class TopoBkgValidator implements Validator {
 
@@ -38,22 +38,22 @@ public class TopoBkgValidator implements Validator {
     @Override
     public void validate(Object obj, Errors errors) {
         TopoBkg topoBkg = (TopoBkg) obj;
-        
-        
-        
-                
+
+
+
+
         Date borrowDate = topoBkg.getBorrowDate();
         if (!StringUtils.hasLength((CharSequence) borrowDate)) {
             errors.rejectValue("borrowDate", REQUIRED, REQUIRED);
         }
-        
+
         Date borrowEndDate = topoBkg.getBorrowEndDate();
         if (!StringUtils.hasLength((CharSequence) borrowEndDate)) {
             errors.rejectValue("borrowEndDate", REQUIRED, REQUIRED);
         }
-        
-           
-        /*       	
+
+
+        /*
         @SuppressWarnings("unused")
 		Boolean accepted = topoBkg.getAccepted();
         if (topoBkg.getAccepted() == null) {

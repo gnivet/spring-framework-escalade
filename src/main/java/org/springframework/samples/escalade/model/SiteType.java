@@ -32,7 +32,7 @@ public class SiteType extends NamedEntity {
 				+ getId() + ", isNew()=" + isNew() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + "]";
 	}
 
-	
-	
+
+
 
 }

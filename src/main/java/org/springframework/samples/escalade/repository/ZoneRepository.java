@@ -7,13 +7,13 @@ import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Zone;
 
 public interface ZoneRepository {
-	
-	Zone findZoneById(Integer id) throws DataAccessException;	
-	
+
+	Zone findZoneById(Integer id) throws DataAccessException;
+
 	Zone saveZone(Zone zone)throws DataAccessException;
-	
+
 	Collection<Zone> findZoneByName(String name)throws DataAccessException;
-	
+
 	Collection<Zone> findZoneByNames(String name)throws DataAccessException;
 
 	NamedEntity updateZone(Zone zone);
@@ -23,7 +23,7 @@ public interface ZoneRepository {
 	Collection<Zone> findZoneBySiteName(String name)throws DataAccessException;
 
 	Collection<Zone> findZoneByNames() throws DataAccessException;
-	
-	
+
+
 
 }

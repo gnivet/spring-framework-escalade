@@ -37,10 +37,10 @@ import org.springframework.samples.escalade.service.EscaladeService;
  * /WEB-INF/mvc-core-config.xml
  *
  * @author Guillaume Nivet
- * 
+ *
  */
 public class SiteTypeFormatter implements Formatter<SiteType> {
-	
+
 	private  EscaladeService escaladeService ;
 
 	@Autowired
@@ -66,8 +66,8 @@ public class SiteTypeFormatter implements Formatter<SiteType> {
 		throw new ParseException("type not found: " + text, 0);
 	}
 
-	
-	
-	
+
+
+
 
 }

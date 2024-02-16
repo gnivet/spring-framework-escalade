@@ -55,19 +55,19 @@ import org.springframework.stereotype.Service;
  *
  * @author Guillaume Nivet
  * @param <TopoBkgs>
- * 
+ *
  */
 
 @Service
 public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
-	
-	
+
+
 	private AreaRepository areaRepository;
-	
+
 	private CommentRepository commentRepository;
-	
+
 	private ZoneRepository zoneRepository;
-	
+
 	private SiteRepository siteRepository;
 	private SiteTypeRepository siteTypeRepository;
 
@@ -97,133 +97,148 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 	}
 
-	
 
-	
 
+
+
+	@Override
 	@Transactional
 	public Comment findCommentById(Integer id) throws DataAccessException{
 		return commentRepository.findCommentById(id);
 	}
 //Comment findCommentById(Integer commentId)throws DataAccessException;
+	@Override
 	@Transactional
 	public Collection<Comment> findCommentByName(String name) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return commentRepository.findCommentByName(name);
 	}
-	
+
 	@Transactional
 	public void saveComment(Comment comment, org.springframework.samples.escalade.model.User user, Site site) throws DataAccessException {
-		
+
 		commentRepository.saveComment(comment);
-		
+
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
+	@Override
 	@Transactional
 	public Topo findTopoById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return topoRepository.findTopoById(id);
 	}
-	
+
+	@Override
 	@Transactional
 	public Topo saveTopo(Topo topo) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return this.topoRepository.saveTopo(topo);
-		
-		
+
+
 	}
 
-	
 
-	
 
+
+
+	@Override
 	@Transactional
 	public String findLoggedInusername() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	@Transactional
 	public void autoLogin(String username, String password) throws DataAccessException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
+	@Override
 	@Transactional
 	public Collection<SiteType> findSiteTypes() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return siteTypeRepository.findSiteTypes();
 	}
 
-	
+
+	@Override
 	@Transactional
 	public Area saveArea(Area area) throws DataAccessException {
-		
+
 		return areaRepository.saveArea(area);
 	}
-		
-	
+
+
 	@Transactional
 	public Area deleteAreaById(Area area) throws DataAccessException {
-		
+
 		return areaRepository.deleteAreaById(area.getId());
 	}
-		
-	
-	
-	
+
+
+
+
 	@Override
 	@Transactional
 	public NamedEntity updateArea(Area area) {
 		return areaRepository.updateArea(area);
-		
-	}
-		
 
+	}
+
+
+	@Override
 	@Transactional
 	public Zone saveZone(Zone zone) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return this.zoneRepository.saveZone(zone);
-		
+
 	}
-	
+
+	@Override
 	@Transactional
 	public Zone findZoneById(Integer zoneId) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return zoneRepository.findZoneById(zoneId);
 	}
 
+	@Override
 	@Transactional
 	public Collection<Zone> findZoneByName(String name) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return zoneRepository.findZoneByName(name);
 	}
 
-	
+
+	@Override
 	@Transactional
 	public Site findSiteById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return siteRepository.findSiteById(id);
 	}
 
+	@Override
 	@Transactional
 	public Area findAreaById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return areaRepository.findAreaById(id);
 	}
-	
 
 
+
+	@Override
 	@Transactional
 	public org.springframework.samples.escalade.model.User findUserByID(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
 	@Transactional
 	public Collection<User> findUsers() throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -244,8 +259,8 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
+
+
 	@Override
 	@Transactional
 	public SiteType findById(Integer id) throws DataAccessException {
@@ -253,13 +268,14 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 		return siteTypeRepository.findSiteTypeById(id);
 	}
 
+	@Override
 	@Transactional
 	public Way findWayById(Integer id) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return wayRepository.findWayById(id);
 	}
 
-	
+
 
 	@Override
 	@Transactional
@@ -269,24 +285,26 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	}
 
 
+	@Override
 	@Transactional
 	public Way saveway(Way way) {
 		// TODO Auto-generated method stub
 		return this.wayRepository.saveWay(way);
 	}
 
+	@Override
 	@Transactional
 	public Collection<Way> findWayByName(String name) {
 		// TODO Auto-generated method stub
 		return wayRepository.findWayByName(name);
 	}
-	
+
 	@Transactional
 	public Way finWayById(Integer wayId) {
 		return wayRepository.findWayById(wayId);
 	}
-	
-	
+
+
 
 	@Override
 	@Transactional
@@ -296,31 +314,33 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 		return siteRepository.findSiteById(id);
 	}
 
-		
 
-	
+
+
+	@Override
 	@Transactional
 	public Collection<Area> findSiteByPostalCode(String postalcode) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return areaRepository.findSiteByPostalcode(postalcode);
 	}
 
-	
 
 
 
+
+	@Override
 	@Transactional
 	public Site saveSite(Site site) throws DataAccessException {
 		return siteRepository.saveSite(site);
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 
 
 
-	
+
 
 
 
@@ -337,12 +357,13 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 	@Override
 	public Length saveLength(Length length) throws DataAccessException {
-		
+
 		// TODO Auto-generated method stub
 		return this.lengthRepository.saveLength(length);
 	}
 
-	
+
+	@Override
 	public Point savePoint(Point point) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return this.pointRepository.savePoint(point);
@@ -352,7 +373,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 
 
-	
+
 
 
 
@@ -367,6 +388,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 
 
+	@Override
 	@Transactional
 	public Collection<Length> findLengthByName(String name) throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -387,6 +409,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 
 
+	@Override
 	@Transactional
 	public Collection<Point> findPointByName(String name) throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -394,6 +417,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	}
     //GN
 
+	@Override
 	@Transactional
 	public Collection<Site> findSiteByName(String name) throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -402,13 +426,14 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 
 
+	@Override
 	@Transactional
 	public Collection<SiteType> findSiteTypeByName(String name) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return siteTypeRepository.findSiteTypeByName(name);
 	}
-	
-	
+
+
 	//GN
 
 	//@Override
@@ -424,7 +449,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	@Override
 	public void saveVisit(@Valid Visit visit) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
@@ -439,27 +464,27 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 
 
-
-
-	@Override
-	public Integer findByUsername(String userName) throws DataAccessException {
+	public Integer findCountNumberCommentByUsername(String userName) throws DataAccessException {
 		// TODO Auto-generated method stub
-		return commentRepository.findByUsername(userName);
+		return commentRepository.findCountNumberCommentByUsername(userName);
 	}
 
 
 
 
 
+
+
 	@Override
-	public Integer findSiteOwnedByUsername(String userName) throws DataAccessException {
+	public Integer findCountSiteOwnedByUsername(String userName) throws DataAccessException {
 		// TODO Auto-generated method stub
-		return siteRepository.findSiteOwnedByUsername(userName);
+		return siteRepository.findCountSiteOwnedByUsername(userName);
 	}
 
+	@Override
 	public Collection<Comment> findCommentByUsername(String userName)throws DataAccessException{
 		return commentRepository.findCommentByUsername(userName);
-		
+
 	}
 
 
@@ -470,7 +495,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	public Comment saveComment(Comment comment) throws DataAccessException {
 		return this.commentRepository.saveComment(comment);
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
@@ -491,7 +516,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	public SiteType saveSiteType(SiteType siteType) {
 		return this.siteTypeRepository.saveSiteType(siteType);
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
@@ -501,7 +526,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	@Override
 	public void updateComment(SiteType siteTypeToModify) throws DataAccessException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
@@ -522,21 +547,16 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	public Collection<Topo> findTopos() throws DataAccessException {
 		// TODO Auto-generated method stub
 		return topoRepository.findTopoByName();
-				
-		
-	}
-	
-	
-	
-	
 
 
-	@Override
-	public Collection<Topo> findTopoAvailableByName(String name) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return topoRepository.findTopoAvailableByName();
 	}
 
+
+
+
+
+
+	
 
 
 
@@ -551,11 +571,12 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 
 
-	
 
 
 
-	
+
+
+	@Override
 	public List<Topo> findTopoByUserName(String userName) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return topoRepository.findTopoByUserName(userName);
@@ -584,9 +605,9 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	}
 
 
-	
-	
-	
+
+
+
 
 	@Override
 	public List<TopoBkg> findTopoBkgById(Integer topoBkgId) throws DataAccessException {
@@ -667,13 +688,13 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	public Site updateSite(Site siteToModify) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return siteRepository.updateSite(siteToModify);
-		
+
 	}
 
-	
 
 
-	
+
+
 
 
 
@@ -704,7 +725,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 	}
 
 
-	
+
 
 
 
@@ -714,6 +735,7 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 		return topoBkgRepository.findTopoBkgByUserName(userName);
 	}
 
+	@Override
 	public Collection<Topo> findTopoAvailableByUserId(Integer id) {
 		// TODO Auto-generated method stub
 		return topoRepository.findTopoAvailableByUserId(id);
@@ -733,12 +755,13 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 
 
 
-	
 
 
 
 
 
+
+	@Override
 	public Collection<TopoBkg> findTopoBkg(String name) {
 		// TODO Auto-generated method stub
 		return topoBkgRepository.findTopoBkg(name);
@@ -803,9 +826,49 @@ public class EscaladeServiceImpl<TopoBkgs> implements EscaladeService {
 		// TODO Auto-generated method stub
 		return siteRepository.findAll();
 	}
+
+
+
+
+
+	@Override
+	public Collection<Way> findWayAvailableByName(String name) {
+		// TODO Auto-generated method stub
+		return wayRepository.findWayAvailableByName(name);
+	}
+
+
+
+
+
+	@Override
+	public Integer findByUsername(String userName) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+
+	@Override
+	public Collection<Topo> findTopoAvailableByName() throws DataAccessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+
+	@Override
+	public Collection<Way> findWayByUserName(String userName) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return wayRepository.findWayByUserName(userName);
+	}
 }
 
-	
-	
-	
-		
+
+
+
+

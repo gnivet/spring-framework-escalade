@@ -36,16 +36,12 @@
         <c:forEach items="${selections}" var="point">
             <tr>
                 <td>
-                    <spring:url value="/points/{pointId}" var="pointUrl">
-                        <spring:param name="pointId" value="${point.id} "/>                       
+                    <spring:url value="/sites{siteId}/points/{pointId}" var="pointUrl">
+                        <spring:param name="pointId" value="${point.id} "/>
+                         <spring:param name="siteId" value="${site.id} "/>                         
                     </spring:url>
                     <a href="${fn:escapeXml(pointUrl)}"><c:out value="${point.name}"/></a>
-                </td>                
-                 <td>            
-                    <c:forEach var="point" items="${point.length}">
-                        <c:out value="${length.name} "/>
-                    </c:forEach>
-                </td>
+                </td> 
             </tr>
         </c:forEach>        
         </tbody>

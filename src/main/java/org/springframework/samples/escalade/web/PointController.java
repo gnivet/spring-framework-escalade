@@ -23,8 +23,10 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.escalade.model.BaseEntity;
 import org.springframework.samples.escalade.model.Length;
 import org.springframework.samples.escalade.model.Point;
+import org.springframework.samples.escalade.model.Site;
 import org.springframework.samples.escalade.model.User;
 import org.springframework.samples.escalade.repository.LengthRepository;
 import org.springframework.samples.escalade.repository.UserRepository;
@@ -39,11 +41,10 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * @author Guillaume Nivet 
+ * @author Guillaume Nivet
  */
 @Controller
 public class PointController {
@@ -51,47 +52,49 @@ public class PointController {
 	private static final String VIEWS_POINT_CREATE_OR_UPDATE_FORM = "points/createOrUpdatePointForm";
 	private final EscaladeService escaladeService;
 	private UserRepository userRepository;
+	private int site;
 	@Autowired
 	public PointController(EscaladeService escaladeService , UserRepository userRepository, LengthRepository lengthRepository) {
 		this.escaladeService = escaladeService;
 		this.userRepository = userRepository;
 	}
 
-	
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
 
-	
-	
-	@GetMapping(value = "/lengths/{lengthId}/points/new")
-	public String initCreationForm(Map<String, Object> 
-	model ,  Principal principal, @PathVariable("lengthId") Integer lengthId)   {
-	
+
+
+	@GetMapping(value = "/sites/{siteId}/points/new")
+	public String initCreationForm(Map<String, Object>
+	model ,  Principal principal, @PathVariable("siteId") Integer siteId)   {
+
 		String userName = principal.getName();
-	
-	
+
+
 		@SuppressWarnings("unused")
 		User user = this.userRepository.findByUserName(userName);
-		
-		
+
+
 		Point point = new Point();
 		model.put("point", point);
 		return VIEWS_POINT_CREATE_OR_UPDATE_FORM;
 	}
 
-	
-	
-	
-	
-	@PostMapping(value = "/lengths/{lengthId}/points/new")
-	public String processCreationForm(Principal principal, @Valid Point point , 
-			@PathVariable("lengthId") Integer lengthId, BindingResult result ,  
+
+
+
+
+	@SuppressWarnings("null")
+	@PostMapping(value = "/sites/{siteId}/points/new")
+	public String processCreationForm(Principal principal, @Valid Point point ,
+			@PathVariable("siteId") Integer siteId, BindingResult result ,
 	Model model, Length length )
 	{
-		
-		
+
+
 		String userName = principal.getName();
 
 		/**
@@ -104,27 +107,34 @@ public class PointController {
 
 		@SuppressWarnings("unused")
 		User user = this.userRepository.findByUserName(userName);
+
 		
-		
-		
+
 		if (result.hasErrors()) {
 			return VIEWS_POINT_CREATE_OR_UPDATE_FORM;
 		} else {
+
+			 userName  = principal.getName();
+			
+			if (siteId != null)
+			{
+				point.setId(siteId);
+			}
+				
 			
 			
-			
-			model.addAttribute("point",length.getId());
+			model.addAttribute("point",siteId);
 			point = this.escaladeService.savePoint(point);
-			
-			
-			
+
+
+
 			//this.escaladeService.updatePoint(point);
-			return "redirect:/lengths/{lengthId}/points/new" ;
+			return "redirect:/sites/{siteId}/points/new" ;
 		}
 	}
 
-	
-	
+
+
 	@GetMapping(value = "/points/find")
 	public String initFindForm(Map<String, Object> model ) {
 		model.put("point", new Point());
@@ -133,7 +143,7 @@ public class PointController {
 	}
 
 //findTopos
-	@RequestMapping(value = "/points", method = RequestMethod.GET)
+	@GetMapping("/points")
 	public String processFindForm(Point point, BindingResult result, Map<String, Object> model) {
 
 		// allow parameterless GET request for /points to return all records
@@ -158,34 +168,37 @@ public class PointController {
 		}
 	}
 
-	@GetMapping(value = "/points/{pointId}")
-	public String initUpdatepointForm(@PathVariable("pointId") Integer pointId, Model model) {
+	@GetMapping(value = "/sites/{siteId}/points/{pointId}")
+	public String initUpdatepointForm(@PathVariable("pointId") Integer pointId, Model model,
+			@PathVariable("siteId") Integer siteId) {
 		Point point = this.escaladeService.findPointById(pointId);
 		model.addAttribute(point);
 		return VIEWS_POINT_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/points/{pointId}")
-	public String processUpdatepointForm(Point point, BindingResult result, @PathVariable("pointId") Integer pointId, ModelMap model) {
+	@PostMapping(value = "/sites/{siteId}/points/{pointId}")
+	public String processUpdatepointForm(Point point, BindingResult result, 
+			@PathVariable("pointId") Integer pointId, ModelMap model , @PathVariable("siteId") Integer siteId) {
+		
 		if (result.hasErrors()) {
 			return VIEWS_POINT_CREATE_OR_UPDATE_FORM;
-		} else {			
+		} else {
 			point.setId(pointId);
 			this.escaladeService.savePoint(point);
 			return "redirect:/points/{pointId}";
 		}
 	}
 
-	
-	
-	
+
+
+
 	/**
 	 * Custom handler for displaying an point.
 	 *
 	 * @param pointId the ID of the point to display
 	 * @return a ModelMap with the model attributes for the view
 	 */
-	@RequestMapping("/points/{pointId}")
+	@RequestMapping("/sites/{siteId}/points/{pointId}")
 	public ModelAndView showpoint(@PathVariable("pointId") Integer pointId) {
 		ModelAndView mav = new ModelAndView("points/pointDetails");
 		mav.addObject(this.escaladeService.findPointById(pointId));

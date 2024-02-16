@@ -9,7 +9,6 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.escalade.model.Comment;
 import org.springframework.samples.escalade.model.NamedEntity;
 import org.springframework.samples.escalade.model.Zone;
 import org.springframework.samples.escalade.repository.ZoneRepository;
@@ -24,6 +23,7 @@ public class JpaZoneRepositoryImpl implements ZoneRepository {
 	private EntityManager em;
 	private Session session;
 
+	@Override
 	public Zone findZoneById(Integer id) {
 
 		Query query = this.em.createQuery("SELECT zone FROM Zone zone WHERE zone.id =:id");
@@ -32,6 +32,7 @@ public class JpaZoneRepositoryImpl implements ZoneRepository {
 
 	}
 
+	@Override
 	public Zone saveZone(Zone zone) throws DataAccessException {
 
 		if (zone.getId() == null) {
@@ -43,40 +44,53 @@ public class JpaZoneRepositoryImpl implements ZoneRepository {
 
 	}
 
+	@Override
 	public NamedEntity updateZone(Zone zone) {
-		if (!this.em.contains(zone))
+		if (!this.em.contains(zone)) {
 			this.em.merge(zone);
+		}
 		return zone;
 	}
 
 	@SuppressWarnings("unchecked")
 	public Collection<Zone> findZones(String name) throws DataAccessException {
-		name = "Zone A";
-		Query query = this.em.createQuery("SELECT DISTINCT name FROM Zone zone WHERE zone.name like :name");
+		//name = "Zone A";
+		Query query = this.em.createQuery("SELECT DISTINCT zone FROM Zone zone WHERE zone.name like :name");
 		query.setParameter("name", "%" + name + "%");
 		return query.getResultList();
 	}
 
-	
+
+
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public Collection<Zone> findZoneByName(String name) throws DataAccessException {
-		
+
 		// TODO Auto-generated method stub
-		
+
 		//Query query = this.em.createQuery("SELECT distinct site FROM User user join Site site on site.user.id = user.id join Zone zone on zone.site.id = site.id where site.name like :name");
 		//Query query = this.em.createQuery("SELECT DISTINCT user FROM User user left join fetch user.sites WHERE user.userName LIKE :userName");
 		//Query query = this.em.createQuery("SELECT DISTINCT site FROM Zone zone join Site site on zone.site.id = site.id WHERE zone.site.name LIKE :name");
 		//Query query = this.em.createQuery("SELECT DISTINCT site FROM Zone zone join Site site on zone.site.id = site.id WHERE zone.site.name LIKE :name");
-		//Query query = this.em.createQuery("SELECT DISTINCT zone FROM Zone zone WHERE zone.name like :name");	
+		//Query query = this.em.createQuery("SELECT DISTINCT zone FROM Zone zone WHERE zone.name like :name");
 		//Query query = this.em.createQuery("SELECT distinct zone FROM Site site left join Zone zone on zone.id = site.id join Way way on way.id = site.id where site.name like :name");
 		//Query query = this.em.createQuery("select zones.name from zones join users on zones.user_id = users.id join sites on sites.id = zones.site_id where zones.name like :name");
 		//Query query = this.em.createQuery("select distinct zone.name from Zone zone join User user on zone.user_id = user.id join Site site on site.id = zone.site_id where zone.name like :name");
-		Query query = this.em.createQuery("SELECT DISTINCT zone FROM Zone zone WHERE zone.name like :name");
-		query.setParameter("name", "%" + name + "%");	
-		return query.getResultList();
+		Query query = this.em.createQuery("SELECT zone from Zone zone"
+				+ " join zone.site site on site.id = zone.id"
+				+ " WHERE zone.name LIKE :name");
+				query.setParameter("name", "%" + name + "%");
+				return query.getResultList();
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<Zone> findAll() {
@@ -85,6 +99,7 @@ public class JpaZoneRepositoryImpl implements ZoneRepository {
 		return query.getResultList();
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public Collection<Zone> findZoneBySiteName(String name) throws DataAccessException {

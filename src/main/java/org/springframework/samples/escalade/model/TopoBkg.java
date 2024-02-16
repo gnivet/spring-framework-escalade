@@ -23,7 +23,7 @@ public class TopoBkg extends BaseEntity  {
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
 
-	@Column(name = "accepted" , nullable = true)	
+	@Column(name = "accepted" , nullable = true)
 	private Boolean accepted;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -31,13 +31,13 @@ public class TopoBkg extends BaseEntity  {
 	private Topo topo;
 
 	@Column(name = "borrowDate")
-	@DateTimeFormat(pattern = "yyyy/MM/dd")	
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@Future
 	@NotNull(message = "le champ borrowDate est obligatoire")
 	private Date borrowDate;
 
 	@Column(name = "borrowEndDate")
-	@DateTimeFormat(pattern = "yyyy/MM/dd")	
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@Future
 	@NotNull(message = "le champ borrowEndDate est obligatoire")
 	private Date borrowEndDate;
@@ -61,12 +61,12 @@ public class TopoBkg extends BaseEntity  {
 		this.accepted = accepted;
 	}
 
-	
 
-	
 
-	
-	
+
+
+
+
 	public Date getBorrowDate() {
 		return borrowDate;
 	}
@@ -92,7 +92,7 @@ public class TopoBkg extends BaseEntity  {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public TopoBkg() {
 	}
@@ -100,18 +100,18 @@ public class TopoBkg extends BaseEntity  {
 	public Topo getTopo() {
 		return topo;
 	}
-	
-	
+
+
 	public void setTopo(Topo topo) {
 		this.topo = topo;
 	}
 
-	
-
-	
 
 
 
-	
+
+
+
+
 
 }

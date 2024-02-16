@@ -11,15 +11,15 @@ import org.springframework.samples.escalade.model.Site;
 
 
 public interface AreaRepository  {
-	
-	
+
+
 	public Area saveArea(Area area);
 
 	public Area findAreaById(Integer id) throws DataAccessException;
 
-	
+
 	public List<Area> findAll();
-	
+
 	public List<Area> findByName(String name);
 
 	public List<Site> sitesList();
@@ -34,6 +34,6 @@ public interface AreaRepository  {
 
 	public Area deleteAreaById(Integer areaId);
 
-	
+
 
 }

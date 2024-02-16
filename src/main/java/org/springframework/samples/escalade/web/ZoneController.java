@@ -77,10 +77,10 @@ public class ZoneController {
 	@PostMapping(value = "/sites/{siteId}/zones/new")
 	public String processCreationForm(Zone zone, BindingResult result, @PathVariable("siteId") Integer siteId,
 			Map<String, Object> model, Principal principal) {
-		
+
 		try {
 		userName = principal.getName();
-		}catch(Exception npe) 
+		}catch(Exception npe)
 		{
 			userName = "";
 		}
@@ -92,9 +92,9 @@ public class ZoneController {
 		 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 		 */
 
-		@SuppressWarnings("unused")
+		//@SuppressWarnings("unused")
 		User user = this.userRepository.findByUserName(userName);
-			
+
 		/**
 		 * Retrieve a <code>Site</code> from the data store by id.
 		 *
@@ -110,11 +110,11 @@ public class ZoneController {
 			model.put("zone", zone);
 
 			Site site = this.escaladeService.findSiteById(siteId);
-			zone.setUser(user)	;
 			
+			zone.setUser(user);
 			zone.setSite(site);
-			
 			zone = this.escaladeService.saveZone(zone);
+			
 			return "redirect:/sites/{siteId}/zones/" + zone.getId();
 		}
 	}
@@ -143,7 +143,7 @@ public class ZoneController {
 			// no zones found
 			result.rejectValue("name", "notFound", "not found");
 			return "zones/findZones";
-		
+
 		} else if (results.size() == 1) { // 1 zone found zone =
 		results.iterator().next();
 			return "redirect:/zones/" + zone.getId();
@@ -152,8 +152,8 @@ public class ZoneController {
 			// multiple zones found
 			model.put("selections", results);
 			return "zones/zonesList";
-			
-						
+
+
 		}
 	}
 
@@ -173,7 +173,7 @@ public class ZoneController {
 			Zone zoneToModify = this.escaladeService.findZoneById(zoneId);
 			zoneToModify.setName(zone.getName());
 			if (zone.getSite()!= null)
-			{	
+			{
 				zoneToModify.setSite(zone.getSite());
 			}
 			//this.escaladeService.saveZone(zoneToModify);
@@ -184,7 +184,7 @@ public class ZoneController {
 
 	/**
 	 * Custom handler for displaying an zone.
-	 * 
+	 *
 	 * @param zoneId the ID of the zone to display9
 	 * @return a ModelMap with the model attributes for the view
 	 */
